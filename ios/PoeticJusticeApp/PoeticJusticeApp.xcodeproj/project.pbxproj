@@ -1,0 +1,436 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		40C6E2241A65EF7A0010DECF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E2231A65EF7A0010DECF /* AppDelegate.swift */; };
+		40C6E2261A65EF7A0010DECF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E2251A65EF7A0010DECF /* FirstViewController.swift */; };
+		40C6E2281A65EF7A0010DECF /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E2271A65EF7A0010DECF /* SecondViewController.swift */; };
+		40C6E22B1A65EF7A0010DECF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40C6E2291A65EF7A0010DECF /* Main.storyboard */; };
+		40C6E22D1A65EF7A0010DECF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40C6E22C1A65EF7A0010DECF /* Images.xcassets */; };
+		40C6E2301A65EF7A0010DECF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40C6E22E1A65EF7A0010DECF /* LaunchScreen.xib */; };
+		40C6E23C1A65EF7A0010DECF /* PoeticJusticeAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E23B1A65EF7A0010DECF /* PoeticJusticeAppTests.swift */; };
+		40C6E2461A65FB8C0010DECF /* NetOpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E2451A65FB8C0010DECF /* NetOpers.swift */; };
+		40C6E2481A66B32F0010DECF /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E2471A66B32F0010DECF /* SwiftyJSON.swift */; };
+		40C6E24A1A66B4790010DECF /* NetUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E2491A66B4790010DECF /* NetUtils.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		40C6E2361A65EF7A0010DECF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 40C6E2161A65EF7A0010DECF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 40C6E21D1A65EF7A0010DECF;
+			remoteInfo = PoeticJusticeApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		40C6E21E1A65EF7A0010DECF /* PoeticJusticeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PoeticJusticeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		40C6E2221A65EF7A0010DECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40C6E2231A65EF7A0010DECF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		40C6E2251A65EF7A0010DECF /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		40C6E2271A65EF7A0010DECF /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		40C6E22A1A65EF7A0010DECF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		40C6E22C1A65EF7A0010DECF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		40C6E22F1A65EF7A0010DECF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		40C6E2351A65EF7A0010DECF /* PoeticJusticeAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PoeticJusticeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		40C6E23A1A65EF7A0010DECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40C6E23B1A65EF7A0010DECF /* PoeticJusticeAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoeticJusticeAppTests.swift; sourceTree = "<group>"; };
+		40C6E2451A65FB8C0010DECF /* NetOpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetOpers.swift; sourceTree = "<group>"; };
+		40C6E2471A66B32F0010DECF /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		40C6E2491A66B4790010DECF /* NetUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetUtils.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		40C6E21B1A65EF7A0010DECF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40C6E2321A65EF7A0010DECF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		40C6E2151A65EF7A0010DECF = {
+			isa = PBXGroup;
+			children = (
+				40C6E2201A65EF7A0010DECF /* PoeticJusticeApp */,
+				40C6E2381A65EF7A0010DECF /* PoeticJusticeAppTests */,
+				40C6E21F1A65EF7A0010DECF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		40C6E21F1A65EF7A0010DECF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				40C6E21E1A65EF7A0010DECF /* PoeticJusticeApp.app */,
+				40C6E2351A65EF7A0010DECF /* PoeticJusticeAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		40C6E2201A65EF7A0010DECF /* PoeticJusticeApp */ = {
+			isa = PBXGroup;
+			children = (
+				40C6E2471A66B32F0010DECF /* SwiftyJSON.swift */,
+				40C6E2231A65EF7A0010DECF /* AppDelegate.swift */,
+				40C6E2251A65EF7A0010DECF /* FirstViewController.swift */,
+				40C6E2271A65EF7A0010DECF /* SecondViewController.swift */,
+				40C6E2291A65EF7A0010DECF /* Main.storyboard */,
+				40C6E22C1A65EF7A0010DECF /* Images.xcassets */,
+				40C6E22E1A65EF7A0010DECF /* LaunchScreen.xib */,
+				40C6E2211A65EF7A0010DECF /* Supporting Files */,
+				40C6E2451A65FB8C0010DECF /* NetOpers.swift */,
+				40C6E2491A66B4790010DECF /* NetUtils.swift */,
+			);
+			path = PoeticJusticeApp;
+			sourceTree = "<group>";
+		};
+		40C6E2211A65EF7A0010DECF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				40C6E2221A65EF7A0010DECF /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		40C6E2381A65EF7A0010DECF /* PoeticJusticeAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				40C6E23B1A65EF7A0010DECF /* PoeticJusticeAppTests.swift */,
+				40C6E2391A65EF7A0010DECF /* Supporting Files */,
+			);
+			path = PoeticJusticeAppTests;
+			sourceTree = "<group>";
+		};
+		40C6E2391A65EF7A0010DECF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				40C6E23A1A65EF7A0010DECF /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		40C6E21D1A65EF7A0010DECF /* PoeticJusticeApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 40C6E23F1A65EF7A0010DECF /* Build configuration list for PBXNativeTarget "PoeticJusticeApp" */;
+			buildPhases = (
+				40C6E21A1A65EF7A0010DECF /* Sources */,
+				40C6E21B1A65EF7A0010DECF /* Frameworks */,
+				40C6E21C1A65EF7A0010DECF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PoeticJusticeApp;
+			productName = PoeticJusticeApp;
+			productReference = 40C6E21E1A65EF7A0010DECF /* PoeticJusticeApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		40C6E2341A65EF7A0010DECF /* PoeticJusticeAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 40C6E2421A65EF7A0010DECF /* Build configuration list for PBXNativeTarget "PoeticJusticeAppTests" */;
+			buildPhases = (
+				40C6E2311A65EF7A0010DECF /* Sources */,
+				40C6E2321A65EF7A0010DECF /* Frameworks */,
+				40C6E2331A65EF7A0010DECF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				40C6E2371A65EF7A0010DECF /* PBXTargetDependency */,
+			);
+			name = PoeticJusticeAppTests;
+			productName = PoeticJusticeAppTests;
+			productReference = 40C6E2351A65EF7A0010DECF /* PoeticJusticeAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		40C6E2161A65EF7A0010DECF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Miga Collabs";
+				TargetAttributes = {
+					40C6E21D1A65EF7A0010DECF = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					40C6E2341A65EF7A0010DECF = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 40C6E21D1A65EF7A0010DECF;
+					};
+				};
+			};
+			buildConfigurationList = 40C6E2191A65EF7A0010DECF /* Build configuration list for PBXProject "PoeticJusticeApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 40C6E2151A65EF7A0010DECF;
+			productRefGroup = 40C6E21F1A65EF7A0010DECF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				40C6E21D1A65EF7A0010DECF /* PoeticJusticeApp */,
+				40C6E2341A65EF7A0010DECF /* PoeticJusticeAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		40C6E21C1A65EF7A0010DECF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40C6E22B1A65EF7A0010DECF /* Main.storyboard in Resources */,
+				40C6E2301A65EF7A0010DECF /* LaunchScreen.xib in Resources */,
+				40C6E22D1A65EF7A0010DECF /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40C6E2331A65EF7A0010DECF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		40C6E21A1A65EF7A0010DECF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40C6E2281A65EF7A0010DECF /* SecondViewController.swift in Sources */,
+				40C6E24A1A66B4790010DECF /* NetUtils.swift in Sources */,
+				40C6E2461A65FB8C0010DECF /* NetOpers.swift in Sources */,
+				40C6E2241A65EF7A0010DECF /* AppDelegate.swift in Sources */,
+				40C6E2481A66B32F0010DECF /* SwiftyJSON.swift in Sources */,
+				40C6E2261A65EF7A0010DECF /* FirstViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40C6E2311A65EF7A0010DECF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40C6E23C1A65EF7A0010DECF /* PoeticJusticeAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		40C6E2371A65EF7A0010DECF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 40C6E21D1A65EF7A0010DECF /* PoeticJusticeApp */;
+			targetProxy = 40C6E2361A65EF7A0010DECF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		40C6E2291A65EF7A0010DECF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40C6E22A1A65EF7A0010DECF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		40C6E22E1A65EF7A0010DECF /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40C6E22F1A65EF7A0010DECF /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		40C6E23D1A65EF7A0010DECF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		40C6E23E1A65EF7A0010DECF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		40C6E2401A65EF7A0010DECF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = PoeticJusticeApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		40C6E2411A65EF7A0010DECF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = PoeticJusticeApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		40C6E2431A65EF7A0010DECF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PoeticJusticeAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PoeticJusticeApp.app/PoeticJusticeApp";
+			};
+			name = Debug;
+		};
+		40C6E2441A65EF7A0010DECF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PoeticJusticeAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PoeticJusticeApp.app/PoeticJusticeApp";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		40C6E2191A65EF7A0010DECF /* Build configuration list for PBXProject "PoeticJusticeApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40C6E23D1A65EF7A0010DECF /* Debug */,
+				40C6E23E1A65EF7A0010DECF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		40C6E23F1A65EF7A0010DECF /* Build configuration list for PBXNativeTarget "PoeticJusticeApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40C6E2401A65EF7A0010DECF /* Debug */,
+				40C6E2411A65EF7A0010DECF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		40C6E2421A65EF7A0010DECF /* Build configuration list for PBXNativeTarget "PoeticJusticeAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40C6E2431A65EF7A0010DECF /* Debug */,
+				40C6E2441A65EF7A0010DECF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 40C6E2161A65EF7A0010DECF /* Project object */;
+}

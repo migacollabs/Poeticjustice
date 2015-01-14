@@ -1,0 +1,35 @@
+App:
+    AppId: 1601
+    DomainId: 1357913579135792
+    UploadDirectory: poeticjustice/uploads/
+    #AssetDepot: s3://
+    AssetDepot: depot
+    AsyncFamily: Threading
+    BackgroundModules: [poeticjustice.bgprocs]
+Web:
+    ScanPackage: poeticjustice
+    TemplateDir: poeticjustice/templates
+    StaticDirs:
+        assets: poeticjustice/assets
+        player: poeticjustice/player
+        css: poeticjustice/css
+        scripts: poeticjustice/scripts
+        foundation: poeticjustice/foundation
+    SiteName: localhost
+    Port: 8088
+Resources:
+    Database:
+        User: postgres
+        Password: 
+        Host: localhost
+        Port: 5432
+        Schema: poeticjustice
+        CreateTables: True
+    ORM:
+        PoolSize: 20
+        MaxOverflow: 10
+        ConvertUnicode: True
+        Echo: True
+    Contexts: poeticjustice.contexts
+    Models: poeticjustice.models
+    Schema: poeticjustice/domain.plr

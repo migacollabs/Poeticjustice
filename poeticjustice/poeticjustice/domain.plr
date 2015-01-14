@@ -1,0 +1,292 @@
+PYAELLAC:
+    DeclBase: PyaellaSQLAlchemyBase
+    MetaCls: PyaellaDataModelMetaclass
+    ReflMetaCls: PyaellaReflectiveModelMetaclass
+    ReflCls: PyaellaReflectiveModelMetaclass
+    SuperCls: PyaellaDataModel
+
+(ApplicationDomain):
+
+    Fields:
+        id: Column(BigInteger, 
+                Sequence('application_domains_id_seq', start=22220), 
+                CheckConstraint('id<2468024680246802'), 
+                server_default=text("nextval('application_domains_id_seq')"), 
+                primary_key=True)
+        name: Column(String(64), unique=True, nullable=True)
+    Options:
+        - add_tr_standard_mod.sql.mako
+
+    Doc: |
+
+        An ApplicationDomain defines an arbitrary boundry or demarcation based
+        on business application and/or notions respective to corporate or conglomerate 
+        entities. This does not specifically mean a 'domain name' but a unique identifier
+        like a domain name is perfectly acceptable.
+
+        An ApplicationDomain could span multiple servers, `clouds`, or any related topography.
+
+        Basic premise:
+
+            It may be best to use ApplicationDomain as a way to `white label`
+            or segment a database or a cluster for companies, domains.
+
+            An ApplicationDomain has to be unique within each instatianated
+            Pyaella subdomain. Meaning... the name of an ApplicationDomain 
+            has to be unique in the database.
+
+
+(Application):
+
+    Fields:
+        id: Column(Integer, 
+                Sequence('applications_id_seq', start=1601), 
+                CheckConstraint('id<2600'), 
+                server_default=text("nextval('applications_id_seq')"), 
+                primary_key=True)
+        name: Column(String(64), unique=True, nullable=True)
+        key_sequence: Column(String(36))
+    Relations:
+        application_domain_id: Column(BigInteger, ForeignKey('application_domains.id'))
+    Rules:
+        Unique: [id, application_domain_id]
+    Options:
+        - add_tr_standard_mod.sql.mako
+
+    Doc: |
+
+        An Application is an application or web-app associated 
+        to an ApplicationDomain.
+
+
+(Group):
+    Fields:
+        name: Column(String(32), nullable=False)
+        description: Column(String(64), nullable=False)
+        display_name: Column(String(64), nullable=False)
+    Rules:
+        Unique: [name, application_group_type_id]
+    Relations:
+        application_group_type_id: Column(Integer, ForeignKey('application_group_type_lu.id'))
+    Options:
+        - add_tr_standard_mod.sql.mako
+
+    Doc: |
+
+        The Group model defines names of Role Based Access Control, at a 'higher'
+        level than a User Type as defined by UserTypeLookup. A Group is considered
+        System or Database lever RBAC, such as 'SuperUser', 'Editor', 'Viewer', and 
+        can be applied to C.R.U.D in a UI of an application.
+
+(ApplicationGroupTypeLookup):
+    Fields:
+        name: Column(String(32), unique=True, nullable=False)
+        display_name: Column(String(64), unique=True)
+        description: Column(String(64), nullable=False)
+    Values:
+        name: [
+            mividio_rs,
+            mividio_personal
+        ]
+        display_name: [
+            Real Estate,
+            Personal
+        ]
+        description: [
+            Real Estate Mividio Application,
+            Personal Mividio Application
+        ]
+    Rules:
+        Unique: [name]
+    Options:
+        - add_tr_standard_lu_mod.sql.mako
+
+    Doc: |
+
+        An ApplicationGroupTypeLookup model is a LookupTable that defines
+        types of application groups, a high-level segmentation of usage
+
+
+(UserXGroup):
+    Relations:
+        user_id: Column(BigInteger, ForeignKey('users.id'))
+        group_id: Column(Integer, ForeignKey('groups.id'))
+    Rules:
+        Unique: [user_id, group_id]
+    Options:
+        - add_tr_standard_mod.sql.mako
+
+    Doc: |
+
+        An Association model for User and Group... ie. Which User is
+        a member of which Group.
+
+
+(UserTypeLookup):
+    Fields:
+        name: Column(String(32), unique=True, nullable=False)
+        display_name: Column(String(64), unique=True)
+        description: Column(String(64), nullable=False)
+    Values:
+        name: [
+            sys,
+            player
+        ]
+        display_name: [
+            SuperUser,
+            Player
+        ]
+        description: [
+            System Administrator,
+            Player
+        ]
+    Rules:
+        Unique: [name]
+    Options:
+        - add_tr_standard_lu_mod.sql.mako
+
+
+(UserXUserTypeLookup):
+    Relations:
+        user_id: Column(BigInteger, ForeignKey('users.id'), primary_key=True)
+        user_type_id: Column(Integer, ForeignKey('user_type_lu.id'), primary_key=True)
+    Rules:
+        Unique: [user_id, user_type_id]
+    Options:
+        - add_tr_standard_mod.sql.mako
+
+
+(User):
+    Fields:
+        id: Column(BigInteger, 
+                Sequence('users_id_seq', start=11111), 
+                CheckConstraint('id<111111111111'), 
+                server_default=text("nextval('users_id_seq')"), 
+                primary_key=True)
+        user_name: Column(String(50), unique=True)
+        email_address: Column(String(255), nullable=False, unique=True)
+        twitter_name: Column(String(255))
+        facebook_name: Column(String(255))
+        password: Column(String(128), 
+            CheckConstraint('"char_length"(password)>8'), nullable=False)
+        is_active: Column(Boolean, default=True)
+        subnational: Column(String(255))
+        country_code: Column(String(3), nullable=False)
+        mobile_number: Column(String(15))
+        access_token: Column(String(128))
+        device_token: Column(Text)
+        profile_pic: Column(String)
+        user_prefs: Column(Text)
+        user_score: Column(Integer)
+    Relations:
+        user_types: relationship('UserXUserTypeLookup')
+    Rules:
+        Unique: [user_name, email_address]
+    Options:
+        - add_tr_standard_mod.sql.mako
+
+
+(VerseCategoryTypeLookup):
+    Fields:
+        name: Column(String(32), unique=True, nullable=False)
+        display_name: Column(String(64), unique=True)
+        description: Column(String(64), nullable=False)
+    Values:
+        name: [
+            battle,
+            friends,
+            party,
+            love,
+            nature,
+            music,
+            movies,
+            tv,
+            sports,
+            holidays,
+            food,
+            puns,
+            fashion,
+            school,
+            tech,
+            math
+        ]
+        display_name: [
+            Battle,
+            Friends,
+            Party,
+            Love,
+            Nature,
+            Music,
+            Movies,
+            Tv,
+            Sports,
+            Holidays,
+            Food,
+            Puns,
+            Fashion,
+            School,
+            Tech,
+            Math
+        ]
+        description: [
+            Battle,
+            Friends,
+            Party,
+            Love,
+            Nature,
+            Music,
+            Movies,
+            Tv,
+            Sports,
+            Holidays,
+            Food,
+            Puns,
+            Fashion,
+            School,
+            Tech,
+            Math
+        ]
+
+
+(Verse):
+    Fields:
+        title: Column(String, nullable=True)
+        user_ids: Column(ARRAY(Integer))
+    Relations:
+        verse_category_type_id: Column(Integer, ForeignKey('verse_category_type_lu.id'))
+        current_user_id: Column(BigInteger, ForeignKey('users.id'))
+        next_user_id: Column(BigInteger, ForeignKey('users.id'))
+
+
+(UserLineXVerse):
+    Fields:
+        line_text: Column(String)
+        line_score: Column(Integer)
+        position: Column(Integer, nullable=False, default=0)
+    Relations:
+        user_id: Column(BigInteger, ForeignKey('users.id'))
+
+
+
+AFTER_CREATE_SQL:
+    Literal: |
+
+        INSERT INTO groups
+            (
+                name, description, display_name
+            )
+        VALUES
+            ('su', 'Super user role with access to all application data and logic', 'Super User'),
+            ('admin', 'Role allowed to admin application business logic', 'Administrator'),
+            ('editor', 'Role allowed to edit data', 'Editor'),
+            ('user', 'Role allowed to view data', 'User');
+
+
+
+
+
+
+
+
+
+
