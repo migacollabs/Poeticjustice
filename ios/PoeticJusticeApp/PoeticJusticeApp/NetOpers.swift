@@ -32,6 +32,8 @@ class NetOpers {
     
     func login(params : Dictionary<String, AnyObject>, url : String) {
         
+        println("NetOpers.login called")
+        
         var request = NSMutableURLRequest(URL: NSURL(string: url)!)
         
         request.HTTPShouldHandleCookies = true
@@ -55,9 +57,11 @@ class NetOpers {
                                         
                                         if let x = results["key"] as? String{
                                             self.userKey = x
+                                            println("UserKey \(x)")
                                             
                                             if let y = results["id"] as? Int{
                                                 self.userId = y
+                                                println("UserId \(y)")
                                             }
                                         }
                                         
@@ -65,7 +69,9 @@ class NetOpers {
                         }
                         
                         if (json != nil){
-                            ()
+                            
+                            () // do more with the json object
+                            
                         }
                         
                     }

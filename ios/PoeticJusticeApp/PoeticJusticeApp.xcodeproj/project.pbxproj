@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		402617CB1A66E22D001D1BA5 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 402617CA1A66E22D001D1BA5 /* Config.plist */; };
 		40C6E2241A65EF7A0010DECF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E2231A65EF7A0010DECF /* AppDelegate.swift */; };
 		40C6E2261A65EF7A0010DECF /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E2251A65EF7A0010DECF /* FirstViewController.swift */; };
 		40C6E2281A65EF7A0010DECF /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C6E2271A65EF7A0010DECF /* SecondViewController.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		402617CA1A66E22D001D1BA5 /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		40C6E21E1A65EF7A0010DECF /* PoeticJusticeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PoeticJusticeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40C6E2221A65EF7A0010DECF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40C6E2231A65EF7A0010DECF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 		40C6E2211A65EF7A0010DECF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				402617CA1A66E22D001D1BA5 /* Config.plist */,
 				40C6E2221A65EF7A0010DECF /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -204,6 +207,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				402617CB1A66E22D001D1BA5 /* Config.plist in Resources */,
 				40C6E22B1A65EF7A0010DECF /* Main.storyboard in Resources */,
 				40C6E2301A65EF7A0010DECF /* LaunchScreen.xib in Resources */,
 				40C6E22D1A65EF7A0010DECF /* Images.xcassets in Resources */,
@@ -421,6 +425,7 @@
 				40C6E2411A65EF7A0010DECF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		40C6E2421A65EF7A0010DECF /* Build configuration list for PBXNativeTarget "PoeticJusticeAppTests" */ = {
 			isa = XCConfigurationList;
@@ -429,6 +434,7 @@
 				40C6E2441A65EF7A0010DECF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -12,10 +12,49 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        var myDict: NSDictionary?
+        if let path = NSBundle.mainBundle().pathForResource("Config", ofType: "plist") {
+            myDict = NSDictionary(contentsOfFile: path)
+        }
+        if let dict = myDict {
+            // Use your dict here
+            if let ah = dict["appserver_hostname"] as String?{
+                
+                println("Connecting to \(ah)")
+                
+                if let tu = dict["test_user_email_address"] as String?{
+                    
+                    println("Connectintg as \(tu)")
+                    
+                    var params = Dictionary<String,AnyObject>()
+                    params["login"] = tu
+                    params["form.submitted"] = true
+                    params["country_code"] = "USA"
+                    
+                    var login_url = ah + "/login"
+                    
+                    NetOpers.sharedInstance.login(params, url: login_url)
+                    
+                }else{
+                    
+                    () // do no test user email address msg
+                    
+                }
+            }else{
+                
+                () // do no app server error msg
+                
+            }
+            
+        }
+        
         return true
     }
 
