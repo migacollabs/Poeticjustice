@@ -22,15 +22,19 @@ class NetOpers {
     }
     
     let session: NSURLSession? = nil
+    var loginHandler: LoginViewController?
     
     var userId: Int? = nil
     var userKey: String? = nil
+    var user: User? = nil
     
     init(){
         self.session = NSURLSession.sharedSession()
     }
     
     func login(params : Dictionary<String, AnyObject>, url : String) {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         println("NetOpers.login called")
         
@@ -47,6 +51,7 @@ class NetOpers {
                     if data != nil {
                         
                         var json: JSON? = nil
+                        var user_data: NSDictionary?
                         
                         if let jsonResult: NSDictionary =
                             NSJSONSerialization.JSONObjectWithData(
@@ -54,6 +59,8 @@ class NetOpers {
                                 error: nil) as? NSDictionary{
                                     
                                     if let results = jsonResult["user"] as? NSDictionary{
+                                        
+                                        user_data = results
                                         
                                         if let x = results["key"] as? String{
                                             self.userKey = x
@@ -66,6 +73,22 @@ class NetOpers {
                                         }
                                         
                                     }
+                        }
+                        
+                        if self.userId != nil && self.userKey != nil && user_data != nil{
+                            
+                            println("im here!")
+                            
+                            self.user = User(userData: user_data!)
+                            
+                            if let lh = self.loginHandler{
+                                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                                dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        lh.on_login()
+                                    })
+                                })
+                            }
                         }
                         
                         if (json != nil){
@@ -85,6 +108,7 @@ class NetOpers {
                     // swift :(
                 }
             }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             
         })
         
