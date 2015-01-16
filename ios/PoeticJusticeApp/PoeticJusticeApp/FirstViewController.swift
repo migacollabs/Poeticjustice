@@ -10,15 +10,41 @@ import UIKit
 
 class FirstViewController: UIViewController, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var football: UIImageView!
+
+    @IBOutlet weak var topic1: UIButton!
+    @IBOutlet weak var topic2: UIButton!
+    @IBOutlet weak var topic3: UIButton!
+    @IBOutlet weak var topic4: UIButton!
+    @IBOutlet weak var topic5: UIButton!
+    @IBOutlet weak var topic6: UIButton!
+    @IBOutlet weak var topic7: UIButton!
+    @IBOutlet weak var topic8: UIButton!
+    @IBOutlet weak var topic9: UIButton!
+    @IBOutlet weak var topic10: UIButton!
+    @IBOutlet weak var topic11: UIButton!
+    @IBOutlet weak var topic12: UIButton!
+    @IBOutlet weak var topic13: UIButton!
+    @IBOutlet weak var topic14: UIButton!
+    @IBOutlet weak var topic15: UIButton!
+    @IBOutlet weak var topic16: UIButton!
+    @IBOutlet weak var topic17: UIButton!
+    @IBOutlet weak var topic18: UIButton!
+    @IBOutlet weak var topic19: UIButton!
+    @IBOutlet weak var topic20: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let tapr = UITapGestureRecognizer(target:self, action:Selector("clickEventOnImage:"))
-        tapr.numberOfTapsRequired = 1
-        tapr.delegate = self
-        self.football.addGestureRecognizer(tapr)
+        
+        self.topic1.setImage(
+            UIImage(named: "Ghost.png"), forState: .Normal)
+        self.topic1.tag = 1
+        self.topic1.addTarget(self, action: "selectedTopic:", forControlEvents: .TouchUpInside)
+        
+        self.topic2.setImage(
+            UIImage(named: "American-Football.png"), forState: .Normal)
+        self.topic2.tag = 2
+        self.topic2.addTarget(self, action: "selectedTopic:", forControlEvents: .TouchUpInside)
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,7 +67,6 @@ class FirstViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func configureView(){
         // enable / disable topic icons
-        ()
     }
     
     
@@ -50,8 +75,8 @@ class FirstViewController: UIViewController, UIGestureRecognizerDelegate {
         println(recognizer)
     }
     
-    @IBAction func selectedThing(sender: AnyObject) {
-        println("selected lightbulb")
+    @IBAction func selectedFootball(sender: AnyObject) {
+        println("selected football")
         println(sender)
     }
     @IBAction func selectedLolly(sender: AnyObject) {
@@ -59,5 +84,15 @@ class FirstViewController: UIViewController, UIGestureRecognizerDelegate {
         println(sender)
     }
 
+    @IBAction func selectedCassette(sender: AnyObject) {
+        println("selected cassette")
+        println(sender)
+    }
+    
+    @IBAction func selectedTopic(sender: AnyObject) {
+        println("selected a topic")
+        println(sender.tag)
+    }
+    
 }
 
