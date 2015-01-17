@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  PoeticJusticeApp
 //
-//  Created by Mat Mathews on 1/13/15.
+//  Created by Mat Mathews on 1/16/15.
 //  Copyright (c) 2015 Miga Collabs. All rights reserved.
 //
 
@@ -12,14 +12,10 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
+
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
-        // MIGA-TUTS: This is basically the app entry point. Everything is hooked up
-        // and ready to go, so singletons can be initialized, plists can be read,
-        // maybe pass data to the view controllers, etc..
-        
         return true
     }
 

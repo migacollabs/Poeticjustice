@@ -1,14 +1,14 @@
 //
-//  SecondViewController.swift
+//  ViewController.swift
 //  PoeticJusticeApp
 //
-//  Created by Mat Mathews on 1/13/15.
+//  Created by Mat Mathews on 1/16/15.
 //  Copyright (c) 2015 Miga Collabs. All rights reserved.
 //
 
 import UIKit
 
-class SecondViewController: UIViewController {
+class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,5 +21,13 @@ class SecondViewController: UIViewController {
     }
 
 
+    @IBAction func openHelp(sender: AnyObject) {
+        let vc = HelpViewController(nibName: "HelpViewController", bundle: nil)
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    @IBAction func onStart(sender: AnyObject) {
+        
+    }
 }
 

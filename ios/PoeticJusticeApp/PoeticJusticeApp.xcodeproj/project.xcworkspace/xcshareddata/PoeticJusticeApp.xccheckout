@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8D36B1C5-5A35-4127-BFC7-3C6BB0C74536</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PoeticJusticeApp</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7664F0E17400FECB634324769911D31452C0AF8F</key>
+		<string>https://github.com/migacollabs/Poeticjustice.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ios/PoeticJusticeApp/PoeticJusticeApp.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7664F0E17400FECB634324769911D31452C0AF8F</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/migacollabs/Poeticjustice.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7664F0E17400FECB634324769911D31452C0AF8F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7664F0E17400FECB634324769911D31452C0AF8F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Poeticjustice</string>
+		</dict>
+	</array>
+</dict>
+</plist>

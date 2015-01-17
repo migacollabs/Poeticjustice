@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "40C6E21D1A65EF7A0010DECF"
+               BlueprintIdentifier = "40530C511A69B923007063AF"
                BuildableName = "PoeticJusticeApp.app"
                BlueprintName = "PoeticJusticeApp"
                ReferencedContainer = "container:PoeticJusticeApp.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "40C6E2341A65EF7A0010DECF"
+               BlueprintIdentifier = "40530C661A69B924007063AF"
                BuildableName = "PoeticJusticeAppTests.xctest"
                BlueprintName = "PoeticJusticeAppTests"
                ReferencedContainer = "container:PoeticJusticeApp.xcodeproj">
@@ -46,7 +46,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "40C6E2341A65EF7A0010DECF"
+               BlueprintIdentifier = "40530C661A69B924007063AF"
                BuildableName = "PoeticJusticeAppTests.xctest"
                BlueprintName = "PoeticJusticeAppTests"
                ReferencedContainer = "container:PoeticJusticeApp.xcodeproj">
@@ -56,7 +56,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "40C6E21D1A65EF7A0010DECF"
+            BlueprintIdentifier = "40530C511A69B923007063AF"
             BuildableName = "PoeticJusticeApp.app"
             BlueprintName = "PoeticJusticeApp"
             ReferencedContainer = "container:PoeticJusticeApp.xcodeproj">
@@ -75,7 +75,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "40C6E21D1A65EF7A0010DECF"
+            BlueprintIdentifier = "40530C511A69B923007063AF"
             BuildableName = "PoeticJusticeApp.app"
             BlueprintName = "PoeticJusticeApp"
             ReferencedContainer = "container:PoeticJusticeApp.xcodeproj">
@@ -93,7 +93,7 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "40C6E21D1A65EF7A0010DECF"
+            BlueprintIdentifier = "40530C511A69B923007063AF"
             BuildableName = "PoeticJusticeApp.app"
             BlueprintName = "PoeticJusticeApp"
             ReferencedContainer = "container:PoeticJusticeApp.xcodeproj">

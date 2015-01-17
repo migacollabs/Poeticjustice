@@ -22,6 +22,13 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    @IBAction func openTestView(sender: AnyObject) {
+        println(sender)
+    }
+    
+    
+    
     @IBAction func goButtonAction(sender: AnyObject) {
         // function called when the login button on the login view is touched
         
