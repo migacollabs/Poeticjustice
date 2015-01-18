@@ -60,12 +60,12 @@
                             <mask key="constraints">
                                 <exclude reference="SL6-6v-56D"/>
                                 <exclude reference="YLT-2g-swd"/>
-                                <exclude reference="0q7-9L-Ia3"/>
-                                <exclude reference="63i-5d-tEm"/>
-                                <exclude reference="HoL-2L-2XF"/>
                                 <exclude reference="1pE-Ia-Aw5"/>
                                 <exclude reference="arV-xS-1nU"/>
                                 <exclude reference="vwT-j6-qbM"/>
+                                <exclude reference="0q7-9L-Ia3"/>
+                                <exclude reference="63i-5d-tEm"/>
+                                <exclude reference="HoL-2L-2XF"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -77,12 +77,12 @@
                             <mask key="constraints">
                                 <include reference="SL6-6v-56D"/>
                                 <include reference="YLT-2g-swd"/>
-                                <include reference="0q7-9L-Ia3"/>
-                                <include reference="63i-5d-tEm"/>
-                                <include reference="HoL-2L-2XF"/>
                                 <include reference="1pE-Ia-Aw5"/>
                                 <include reference="arV-xS-1nU"/>
                                 <include reference="vwT-j6-qbM"/>
+                                <include reference="0q7-9L-Ia3"/>
+                                <include reference="63i-5d-tEm"/>
+                                <include reference="HoL-2L-2XF"/>
                             </mask>
                         </variation>
                     </view>
