@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Front-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="vXZ-lx-hvc" customClass="ViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -15,9 +15,23 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username or Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bV9-8M-68w">
+                                <rect key="frame" x="214" y="285" width="173" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="173" id="N7H-be-5lX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bV9-8M-68w" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="Hhl-fH-OCk"/>
+                            <constraint firstItem="bV9-8M-68w" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="cPX-Mg-gKd"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="lKw-zX-5q8"/>
+                    <navigationItem key="navigationItem" title="Front" id="lKw-zX-5q8"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
