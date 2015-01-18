@@ -7,37 +7,31 @@
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="vXZ-lx-hvc" customClass="ViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username or Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dE2-iN-Z4z">
-                                <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username or Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dE2-iN-Z4z">
+                                <rect key="frame" x="84" y="353" width="246" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="202" y="385" width="196" height="30"/>
-                                </variation>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iM6-wl-11q">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <rect key="frame" x="184" y="393" width="46" height="30"/>
                                 <state key="normal" title="Start!">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="277" y="423" width="46" height="30"/>
-                                </variation>
                                 <connections>
                                     <action selector="onStart:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lF5-jO-gmq"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wzu-00-CC0">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <rect key="frame" x="184" y="436" width="46" height="30"/>
                                 <state key="normal" title="?">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -66,12 +60,12 @@
                             <mask key="constraints">
                                 <exclude reference="SL6-6v-56D"/>
                                 <exclude reference="YLT-2g-swd"/>
-                                <exclude reference="1pE-Ia-Aw5"/>
-                                <exclude reference="arV-xS-1nU"/>
-                                <exclude reference="vwT-j6-qbM"/>
                                 <exclude reference="0q7-9L-Ia3"/>
                                 <exclude reference="63i-5d-tEm"/>
                                 <exclude reference="HoL-2L-2XF"/>
+                                <exclude reference="1pE-Ia-Aw5"/>
+                                <exclude reference="arV-xS-1nU"/>
+                                <exclude reference="vwT-j6-qbM"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -83,26 +77,30 @@
                             <mask key="constraints">
                                 <include reference="SL6-6v-56D"/>
                                 <include reference="YLT-2g-swd"/>
-                                <include reference="1pE-Ia-Aw5"/>
-                                <include reference="arV-xS-1nU"/>
-                                <include reference="vwT-j6-qbM"/>
                                 <include reference="0q7-9L-Ia3"/>
                                 <include reference="63i-5d-tEm"/>
                                 <include reference="HoL-2L-2XF"/>
+                                <include reference="1pE-Ia-Aw5"/>
+                                <include reference="arV-xS-1nU"/>
+                                <include reference="vwT-j6-qbM"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="lKw-zX-5q8"/>
+                    <connections>
+                        <outlet property="userNameOrEmail" destination="dE2-iN-Z4z" id="ZYO-qi-QC0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="951" y="135.75"/>
+            <point key="canvasLocation" x="951" y="135"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kL4-Di-rMu">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Odf-Bs-tcl" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8mv-kR-hcD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -315,6 +315,7 @@
 		40D6ACCF1A6B200A0083ACFA /* Zoom-out.png in Resources */ = {isa = PBXBuildFile; fileRef = 40D6ABA71A6B20090083ACFA /* Zoom-out.png */; };
 		40D6ACD01A6B200A0083ACFA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D6ABA81A6B20090083ACFA /* User.swift */; };
 		40D6ACD11A6B200A0083ACFA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D6ABA91A6B20090083ACFA /* LoginViewController.swift */; };
+		40D6ACD31A6B471D0083ACFA /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40D6ACD21A6B471D0083ACFA /* Config.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -640,6 +641,7 @@
 		40D6ABA71A6B20090083ACFA /* Zoom-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Zoom-out.png"; sourceTree = "<group>"; };
 		40D6ABA81A6B20090083ACFA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		40D6ABA91A6B20090083ACFA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		40D6ACD21A6B471D0083ACFA /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -707,6 +709,7 @@
 			isa = PBXGroup;
 			children = (
 				40530C561A69B923007063AF /* Info.plist */,
+				40D6ACD21A6B471D0083ACFA /* Config.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1266,6 +1269,7 @@
 				40D6AC191A6B20090083ACFA /* Heart.png in Resources */,
 				40D6ACA51A6B200A0083ACFA /* Toggle.png in Resources */,
 				40D6AC001A6B20090083ACFA /* Eraser.png in Resources */,
+				40D6ACD31A6B471D0083ACFA /* Config.plist in Resources */,
 				40530C5F1A69B923007063AF /* Images.xcassets in Resources */,
 				40D6ACC31A6B200A0083ACFA /* Wallet.png in Resources */,
 				40D6AC8C1A6B200A0083ACFA /* Spectacles.png in Resources */,
