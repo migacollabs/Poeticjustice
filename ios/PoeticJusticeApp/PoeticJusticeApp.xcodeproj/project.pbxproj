@@ -315,6 +315,10 @@
 		40D6ACCF1A6B200A0083ACFA /* Zoom-out.png in Resources */ = {isa = PBXBuildFile; fileRef = 40D6ABA71A6B20090083ACFA /* Zoom-out.png */; };
 		40D6ACD01A6B200A0083ACFA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D6ABA81A6B20090083ACFA /* User.swift */; };
 		40D6ACD11A6B200A0083ACFA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D6ABA91A6B20090083ACFA /* LoginViewController.swift */; };
+		468D41651A6B4684004A7BAA /* Button Press.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41611A6B4684004A7BAA /* Button Press.wav */; };
+		468D41661A6B4684004A7BAA /* Chalk.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41621A6B4684004A7BAA /* Chalk.wav */; };
+		468D41671A6B4684004A7BAA /* Pencil.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41631A6B4684004A7BAA /* Pencil.wav */; };
+		468D41681A6B4684004A7BAA /* Typing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41641A6B4684004A7BAA /* Typing.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -640,6 +644,10 @@
 		40D6ABA71A6B20090083ACFA /* Zoom-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Zoom-out.png"; sourceTree = "<group>"; };
 		40D6ABA81A6B20090083ACFA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		40D6ABA91A6B20090083ACFA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		468D41611A6B4684004A7BAA /* Button Press.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Button Press.wav"; path = "../../../../../Studio One/Songs/Poetic Justice App/Poetic Justice Sound Effects/Mixdown/Button Press.wav"; sourceTree = "<group>"; };
+		468D41621A6B4684004A7BAA /* Chalk.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Chalk.wav; path = "../../../../../Studio One/Songs/Poetic Justice App/Poetic Justice Sound Effects/Mixdown/Chalk.wav"; sourceTree = "<group>"; };
+		468D41631A6B4684004A7BAA /* Pencil.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pencil.wav; path = "../../../../../Studio One/Songs/Poetic Justice App/Poetic Justice Sound Effects/Mixdown/Pencil.wav"; sourceTree = "<group>"; };
+		468D41641A6B4684004A7BAA /* Typing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Typing.wav; path = "../../../../../Studio One/Songs/Poetic Justice App/Poetic Justice Sound Effects/Mixdown/Typing.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -681,6 +689,7 @@
 		40530C541A69B923007063AF /* PoeticJusticeApp */ = {
 			isa = PBXGroup;
 			children = (
+				468D41601A6B4653004A7BAA /* audio */,
 				40D6AA811A6B20080083ACFA /* NetOpers.swift */,
 				40D6AA821A6B20080083ACFA /* NetUtils.swift */,
 				40D6AA831A6B20080083ACFA /* SwiftyJSON.swift */,
@@ -1026,6 +1035,17 @@
 			path = topic.icons;
 			sourceTree = "<group>";
 		};
+		468D41601A6B4653004A7BAA /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				468D41611A6B4684004A7BAA /* Button Press.wav */,
+				468D41621A6B4684004A7BAA /* Chalk.wav */,
+				468D41631A6B4684004A7BAA /* Pencil.wav */,
+				468D41641A6B4684004A7BAA /* Typing.wav */,
+			);
+			name = audio;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1211,6 +1231,7 @@
 				40D6AC281A6B20090083ACFA /* Knife.png in Resources */,
 				40D6ABDD1A6B20090083ACFA /* Classic-Sneaks.png in Resources */,
 				40D6ABB81A6B20090083ACFA /* Backpack.png in Resources */,
+				468D41651A6B4684004A7BAA /* Button Press.wav in Resources */,
 				40D6ACA81A6B200A0083ACFA /* Traffic-cone.png in Resources */,
 				40D6AC801A6B200A0083ACFA /* Shuttle.png in Resources */,
 				40D6AC901A6B200A0083ACFA /* Star.png in Resources */,
@@ -1233,10 +1254,12 @@
 				40D6ACA31A6B200A0083ACFA /* Ticket.png in Resources */,
 				40D6ABF01A6B20090083ACFA /* Cymbal.png in Resources */,
 				40D6AC771A6B200A0083ACFA /* Satchel.png in Resources */,
+				468D41661A6B4684004A7BAA /* Chalk.wav in Resources */,
 				40D6ABE91A6B20090083ACFA /* Conversation.png in Resources */,
 				40D6AC741A6B200A0083ACFA /* Roset.png in Resources */,
 				40D6AC351A6B20090083ACFA /* Map-&-Pin.png in Resources */,
 				40D6ABD31A6B20090083ACFA /* Cassette.png in Resources */,
+				468D41671A6B4684004A7BAA /* Pencil.wav in Resources */,
 				40D6AC981A6B200A0083ACFA /* Sword.png in Resources */,
 				40D6ABFF1A6B20090083ACFA /* Envelope.png in Resources */,
 				40D6AC371A6B20090083ACFA /* Map.png in Resources */,
@@ -1287,6 +1310,7 @@
 				40D6ACA61A6B200A0083ACFA /* Tool-box.png in Resources */,
 				40D6AC251A6B20090083ACFA /* Key.png in Resources */,
 				40D6AC721A6B200A0083ACFA /* Rocket.png in Resources */,
+				468D41681A6B4684004A7BAA /* Typing.wav in Resources */,
 				40D6AC991A6B200A0083ACFA /* Synth.png in Resources */,
 				40D6ABC51A6B20090083ACFA /* Bone.png in Resources */,
 				40D6ABC71A6B20090083ACFA /* Bookmark.png in Resources */,
