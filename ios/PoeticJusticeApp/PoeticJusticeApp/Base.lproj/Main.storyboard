@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Odf-Bs-tcl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Odf-Bs-tcl">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -13,83 +13,11 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username or Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dE2-iN-Z4z">
-                                <rect key="frame" x="84" y="353" width="246" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iM6-wl-11q">
-                                <rect key="frame" x="184" y="393" width="46" height="30"/>
-                                <state key="normal" title="Start!">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onStart:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lF5-jO-gmq"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wzu-00-CC0">
-                                <rect key="frame" x="184" y="436" width="46" height="30"/>
-                                <state key="normal" title="?">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="openHelp:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="V5V-ov-SgL"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerY" secondItem="Wzu-00-CC0" secondAttribute="centerY" constant="-76" id="0q7-9L-Ia3"/>
-                            <constraint firstItem="iM6-wl-11q" firstAttribute="top" secondItem="dE2-iN-Z4z" secondAttribute="bottom" constant="8" id="1pE-Ia-Aw5"/>
-                            <constraint firstItem="Wzu-00-CC0" firstAttribute="top" secondItem="iM6-wl-11q" secondAttribute="bottom" constant="8" id="63i-5d-tEm"/>
-                            <constraint firstAttribute="centerX" secondItem="Wzu-00-CC0" secondAttribute="centerX" id="HoL-2L-2XF"/>
-                            <constraint firstAttribute="centerY" secondItem="dE2-iN-Z4z" secondAttribute="centerY" id="SL6-6v-56D"/>
-                            <constraint firstAttribute="centerX" secondItem="dE2-iN-Z4z" secondAttribute="centerX" constant="-0.5" id="YLT-2g-swd"/>
-                            <constraint firstAttribute="centerX" secondItem="iM6-wl-11q" secondAttribute="centerX" id="arV-xS-1nU"/>
-                            <constraint firstAttribute="centerY" secondItem="iM6-wl-11q" secondAttribute="centerY" constant="-38" id="vwT-j6-qbM"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="dE2-iN-Z4z"/>
-                                <exclude reference="iM6-wl-11q"/>
-                                <exclude reference="Wzu-00-CC0"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="SL6-6v-56D"/>
-                                <exclude reference="YLT-2g-swd"/>
-                                <exclude reference="1pE-Ia-Aw5"/>
-                                <exclude reference="arV-xS-1nU"/>
-                                <exclude reference="vwT-j6-qbM"/>
-                                <exclude reference="0q7-9L-Ia3"/>
-                                <exclude reference="63i-5d-tEm"/>
-                                <exclude reference="HoL-2L-2XF"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular">
-                            <mask key="subviews">
-                                <include reference="dE2-iN-Z4z"/>
-                                <include reference="iM6-wl-11q"/>
-                                <include reference="Wzu-00-CC0"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="SL6-6v-56D"/>
-                                <include reference="YLT-2g-swd"/>
-                                <include reference="1pE-Ia-Aw5"/>
-                                <include reference="arV-xS-1nU"/>
-                                <include reference="vwT-j6-qbM"/>
-                                <include reference="0q7-9L-Ia3"/>
-                                <include reference="63i-5d-tEm"/>
-                                <include reference="HoL-2L-2XF"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="lKw-zX-5q8"/>
-                    <connections>
-                        <outlet property="userNameOrEmail" destination="dE2-iN-Z4z" id="ZYO-qi-QC0"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -100,7 +28,6 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Odf-Bs-tcl" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8mv-kR-hcD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -112,7 +39,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zEk-R9-uGt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="178" y="797"/>
+            <point key="canvasLocation" x="96" y="135"/>
         </scene>
     </scenes>
 </document>

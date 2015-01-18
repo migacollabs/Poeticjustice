@@ -87,6 +87,12 @@ class ViewController: UIViewController {
   
     }
     
+    func on_login(){
+        println("on_login called")
+    }
+    
+
+    
     
 }
 

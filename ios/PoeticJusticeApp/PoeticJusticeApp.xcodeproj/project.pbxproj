@@ -316,10 +316,10 @@
 		40D6ACD01A6B200A0083ACFA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D6ABA81A6B20090083ACFA /* User.swift */; };
 		40D6ACD11A6B200A0083ACFA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D6ABA91A6B20090083ACFA /* LoginViewController.swift */; };
 		40D6ACD31A6B471D0083ACFA /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40D6ACD21A6B471D0083ACFA /* Config.plist */; };
-		468D41651A6B4684004A7BAA /* Button Press.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41611A6B4684004A7BAA /* Button Press.wav */; };
-		468D41661A6B4684004A7BAA /* Chalk.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41621A6B4684004A7BAA /* Chalk.wav */; };
-		468D41671A6B4684004A7BAA /* Pencil.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41631A6B4684004A7BAA /* Pencil.wav */; };
-		468D41681A6B4684004A7BAA /* Typing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41641A6B4684004A7BAA /* Typing.wav */; };
+		9746359C1A6C39EB0032A211 /* Button Press.wav in Resources */ = {isa = PBXBuildFile; fileRef = 974635981A6C39EB0032A211 /* Button Press.wav */; };
+		9746359D1A6C39EB0032A211 /* Chalk.wav in Resources */ = {isa = PBXBuildFile; fileRef = 974635991A6C39EB0032A211 /* Chalk.wav */; };
+		9746359E1A6C39EB0032A211 /* Pencil.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9746359A1A6C39EB0032A211 /* Pencil.wav */; };
+		9746359F1A6C39EB0032A211 /* Typing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9746359B1A6C39EB0032A211 /* Typing.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -646,10 +646,10 @@
 		40D6ABA81A6B20090083ACFA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		40D6ABA91A6B20090083ACFA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		40D6ACD21A6B471D0083ACFA /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
-		468D41611A6B4684004A7BAA /* Button Press.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Button Press.wav"; path = "../../../../../Studio One/Songs/Poetic Justice App/Poetic Justice Sound Effects/Mixdown/Button Press.wav"; sourceTree = "<group>"; };
-		468D41621A6B4684004A7BAA /* Chalk.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Chalk.wav; path = "../../../../../Studio One/Songs/Poetic Justice App/Poetic Justice Sound Effects/Mixdown/Chalk.wav"; sourceTree = "<group>"; };
-		468D41631A6B4684004A7BAA /* Pencil.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pencil.wav; path = "../../../../../Studio One/Songs/Poetic Justice App/Poetic Justice Sound Effects/Mixdown/Pencil.wav"; sourceTree = "<group>"; };
-		468D41641A6B4684004A7BAA /* Typing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Typing.wav; path = "../../../../../Studio One/Songs/Poetic Justice App/Poetic Justice Sound Effects/Mixdown/Typing.wav"; sourceTree = "<group>"; };
+		974635981A6C39EB0032A211 /* Button Press.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "Button Press.wav"; path = "audio/Button Press.wav"; sourceTree = "<group>"; };
+		974635991A6C39EB0032A211 /* Chalk.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Chalk.wav; path = audio/Chalk.wav; sourceTree = "<group>"; };
+		9746359A1A6C39EB0032A211 /* Pencil.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pencil.wav; path = audio/Pencil.wav; sourceTree = "<group>"; };
+		9746359B1A6C39EB0032A211 /* Typing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Typing.wav; path = audio/Typing.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1041,10 +1041,10 @@
 		468D41601A6B4653004A7BAA /* audio */ = {
 			isa = PBXGroup;
 			children = (
-				468D41611A6B4684004A7BAA /* Button Press.wav */,
-				468D41621A6B4684004A7BAA /* Chalk.wav */,
-				468D41631A6B4684004A7BAA /* Pencil.wav */,
-				468D41641A6B4684004A7BAA /* Typing.wav */,
+				974635981A6C39EB0032A211 /* Button Press.wav */,
+				974635991A6C39EB0032A211 /* Chalk.wav */,
+				9746359A1A6C39EB0032A211 /* Pencil.wav */,
+				9746359B1A6C39EB0032A211 /* Typing.wav */,
 			);
 			name = audio;
 			sourceTree = "<group>";
@@ -1185,6 +1185,7 @@
 				40D6AC4F1A6B20090083ACFA /* Paper-Plane.png in Resources */,
 				40D6ACBC1A6B200A0083ACFA /* Vintage-Computer.png in Resources */,
 				40D6ABDA1A6B20090083ACFA /* Cigarette.png in Resources */,
+				9746359D1A6C39EB0032A211 /* Chalk.wav in Resources */,
 				40D6AC811A6B200A0083ACFA /* Sign-post.png in Resources */,
 				40D6AC7F1A6B200A0083ACFA /* Shop.png in Resources */,
 				40D6AC151A6B20090083ACFA /* Graph.png in Resources */,
@@ -1207,6 +1208,7 @@
 				40D6AC831A6B200A0083ACFA /* Skull.png in Resources */,
 				40D6ABC61A6B20090083ACFA /* Book.png in Resources */,
 				40D6ABDE1A6B20090083ACFA /* Cleaver.png in Resources */,
+				9746359C1A6C39EB0032A211 /* Button Press.wav in Resources */,
 				40D6AC561A6B20090083ACFA /* Pill.png in Resources */,
 				40D6AC701A6B200A0083ACFA /* Rock-On.png in Resources */,
 				40D6ABC41A6B20090083ACFA /* Blimp.png in Resources */,
@@ -1234,7 +1236,6 @@
 				40D6AC281A6B20090083ACFA /* Knife.png in Resources */,
 				40D6ABDD1A6B20090083ACFA /* Classic-Sneaks.png in Resources */,
 				40D6ABB81A6B20090083ACFA /* Backpack.png in Resources */,
-				468D41651A6B4684004A7BAA /* Button Press.wav in Resources */,
 				40D6ACA81A6B200A0083ACFA /* Traffic-cone.png in Resources */,
 				40D6AC801A6B200A0083ACFA /* Shuttle.png in Resources */,
 				40D6AC901A6B200A0083ACFA /* Star.png in Resources */,
@@ -1257,12 +1258,10 @@
 				40D6ACA31A6B200A0083ACFA /* Ticket.png in Resources */,
 				40D6ABF01A6B20090083ACFA /* Cymbal.png in Resources */,
 				40D6AC771A6B200A0083ACFA /* Satchel.png in Resources */,
-				468D41661A6B4684004A7BAA /* Chalk.wav in Resources */,
 				40D6ABE91A6B20090083ACFA /* Conversation.png in Resources */,
 				40D6AC741A6B200A0083ACFA /* Roset.png in Resources */,
 				40D6AC351A6B20090083ACFA /* Map-&-Pin.png in Resources */,
 				40D6ABD31A6B20090083ACFA /* Cassette.png in Resources */,
-				468D41671A6B4684004A7BAA /* Pencil.wav in Resources */,
 				40D6AC981A6B200A0083ACFA /* Sword.png in Resources */,
 				40D6ABFF1A6B20090083ACFA /* Envelope.png in Resources */,
 				40D6AC371A6B20090083ACFA /* Map.png in Resources */,
@@ -1314,7 +1313,6 @@
 				40D6ACA61A6B200A0083ACFA /* Tool-box.png in Resources */,
 				40D6AC251A6B20090083ACFA /* Key.png in Resources */,
 				40D6AC721A6B200A0083ACFA /* Rocket.png in Resources */,
-				468D41681A6B4684004A7BAA /* Typing.wav in Resources */,
 				40D6AC991A6B200A0083ACFA /* Synth.png in Resources */,
 				40D6ABC51A6B20090083ACFA /* Bone.png in Resources */,
 				40D6ABC71A6B20090083ACFA /* Bookmark.png in Resources */,
@@ -1348,6 +1346,7 @@
 				40D6ABDC1A6B20090083ACFA /* Clapper-Board.png in Resources */,
 				40D6ABEA1A6B20090083ACFA /* Cooker.png in Resources */,
 				40D6AC5D1A6B20090083ACFA /* Pizza.png in Resources */,
+				9746359F1A6C39EB0032A211 /* Typing.wav in Resources */,
 				40D6AC9D1A6B200A0083ACFA /* Tea-Pot.png in Resources */,
 				40D6ABAD1A6B20090083ACFA /* 90s-controller.png in Resources */,
 				40D6ABCE1A6B20090083ACFA /* Bulb.png in Resources */,
@@ -1415,6 +1414,7 @@
 				40D6ABE21A6B20090083ACFA /* Cloud-Cross.png in Resources */,
 				40D6ABE01A6B20090083ACFA /* Cloche.png in Resources */,
 				40D6ACA01A6B200A0083ACFA /* Test-Tube.png in Resources */,
+				9746359E1A6C39EB0032A211 /* Pencil.wav in Resources */,
 				40D6AC8A1A6B200A0083ACFA /* Spanner.png in Resources */,
 				40D6AC291A6B20090083ACFA /* Lamp.png in Resources */,
 				40D6ACB31A6B200A0083ACFA /* Unhappy.png in Resources */,

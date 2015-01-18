@@ -22,7 +22,7 @@ class NetOpers {
     }
     
     let session: NSURLSession? = nil
-    var loginHandler: LoginViewController?
+    var loginHandler: ViewController?
     
     var userId: Int? = nil
     var userKey: String? = nil
