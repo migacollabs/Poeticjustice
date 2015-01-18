@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class HelpViewController: UIViewController {
 
@@ -41,6 +42,18 @@ class HelpViewController: UIViewController {
             println("the controller is nil")
         }
         
+    }
+    
+    let buttonSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("audio/Button Press", ofType: "wav")!)
+    
+    func playButtonSound(){
+        let beepPlayer = AVAudioPlayer(contentsOfURL: buttonSound, error: nil)
+        beepPlayer.prepareToPlay()
+        beepPlayer.play()
+    }
+    
+    @IBAction func handleButtonPress(sender: AnyObject) {
+        playButtonSound()
     }
 
     /*
