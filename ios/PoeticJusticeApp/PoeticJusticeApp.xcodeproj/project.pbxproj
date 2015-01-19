@@ -320,6 +320,7 @@
 		468D41821A6C449F004A7BAA /* Chalk.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D417E1A6C449F004A7BAA /* Chalk.wav */; };
 		468D41831A6C449F004A7BAA /* Pencil.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D417F1A6C449F004A7BAA /* Pencil.wav */; };
 		468D41841A6C449F004A7BAA /* Typing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41801A6C449F004A7BAA /* Typing.wav */; };
+		468D41861A6D6EE4004A7BAA /* Help Example.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41851A6D6EE4004A7BAA /* Help Example.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -650,6 +651,7 @@
 		468D417E1A6C449F004A7BAA /* Chalk.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Chalk.wav; sourceTree = "<group>"; };
 		468D417F1A6C449F004A7BAA /* Pencil.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pencil.wav; sourceTree = "<group>"; };
 		468D41801A6C449F004A7BAA /* Typing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Typing.wav; sourceTree = "<group>"; };
+		468D41851A6D6EE4004A7BAA /* Help Example.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Help Example.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1041,6 +1043,7 @@
 		468D41601A6B4653004A7BAA /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				468D41851A6D6EE4004A7BAA /* Help Example.wav */,
 				468D417D1A6C449F004A7BAA /* Button Press.wav */,
 				468D417E1A6C449F004A7BAA /* Chalk.wav */,
 				468D417F1A6C449F004A7BAA /* Pencil.wav */,
@@ -1429,6 +1432,7 @@
 				40D6AC8E1A6B200A0083ACFA /* Spoon.png in Resources */,
 				40D6AC4C1A6B20090083ACFA /* Palaroid-Camera.png in Resources */,
 				40D6AC3B1A6B20090083ACFA /* Milk-Bottle.png in Resources */,
+				468D41861A6D6EE4004A7BAA /* Help Example.wav in Resources */,
 				40D6AC1E1A6B20090083ACFA /* Ice-Cream.png in Resources */,
 				40D6ABB31A6B20090083ACFA /* American-Football.png in Resources */,
 			);

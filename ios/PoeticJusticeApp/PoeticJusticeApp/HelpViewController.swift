@@ -27,7 +27,7 @@ class HelpViewController: UIViewController {
     func playButtonSound(){
         var error:NSError?
         
-        if let path = NSBundle.mainBundle().pathForResource("Button Press", ofType: "wav") {
+        if let path = NSBundle.mainBundle().pathForResource("Help Example", ofType: "wav") {
             audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path), fileTypeHint: "wav", error: &error)
             
             if let sound = audioPlayer {
