@@ -675,7 +675,8 @@ params["login"] = "mat@miga.me"
 params["password"] = "Aa12345678"
 params["form.submitted"] = true
 
-var login_url = "http://localhost:8888/login"
+
+var login_url = "http://mivid.io:8888/login"
 
 login(params, login_url)
 
