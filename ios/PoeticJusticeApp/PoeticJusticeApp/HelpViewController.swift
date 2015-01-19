@@ -22,37 +22,27 @@ class HelpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func goSomewhereElse(sender: AnyObject) {
-        
-//        // here we could open up a xib with its controller by pushing it onto
-//        // the navCntl stack... which handles the pop off for us
-//        let vc = TopicsViewController(nibName: "TopicsViewController", bundle: nil)
-//        navigationController?.pushViewController(vc, animated: true)
-        
-        
-        // but we can also grab a view controller from a different storyboard doing this
-        // and still pushing onto the same nav.. maybe we really can split up the use case 'domains'
-        // by storyboard.. dunno
-        var gameplayStoryboard: UIStoryboard = UIStoryboard(name:"GamePlayStoryboard", bundle:nil)
-        var controller:AnyObject? = gameplayStoryboard.instantiateViewControllerWithIdentifier("GamePlayViewController")
-        if controller != nil{
-            println("we have the controller")
-            self.navigationController?.pushViewController(controller! as UIViewController, animated: true)
-        }else{
-            println("the controller is nil")
-        }
-        
-    }
-    
-    let buttonSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("Button Press", ofType: "wav")!)
+    var audioPlayer : AVAudioPlayer?
     
     func playButtonSound(){
-        let beepPlayer = AVAudioPlayer(contentsOfURL: buttonSound, error: nil)
-        beepPlayer.prepareToPlay()
-        beepPlayer.play()
+        var error:NSError?
+        
+        if let path = NSBundle.mainBundle().pathForResource("Button Press", ofType: "wav") {
+            audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path), fileTypeHint: "wav", error: &error)
+            
+            if let sound = audioPlayer {
+                
+                sound.prepareToPlay()
+                
+                sound.play()
+                println("play sound")
+            }
+        }
+        println(error)
     }
     
     @IBAction func handleButtonPress(sender: AnyObject) {
+        println("button press sound")
         playButtonSound()
     }
 
