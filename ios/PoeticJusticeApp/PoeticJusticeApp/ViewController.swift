@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
         
     }
+    
     @IBAction func onStart(sender: AnyObject) {
         
         println(self.userNameOrEmail.text)

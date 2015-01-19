@@ -44,7 +44,7 @@ class HelpViewController: UIViewController {
         
     }
     
-    let buttonSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("audio/Button Press", ofType: "wav")!)
+    let buttonSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("Button Press", ofType: "wav")!)
     
     func playButtonSound(){
         let beepPlayer = AVAudioPlayer(contentsOfURL: buttonSound, error: nil)
