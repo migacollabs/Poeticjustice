@@ -321,6 +321,8 @@
 		468D41831A6C449F004A7BAA /* Pencil.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D417F1A6C449F004A7BAA /* Pencil.wav */; };
 		468D41841A6C449F004A7BAA /* Typing.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41801A6C449F004A7BAA /* Typing.wav */; };
 		468D41861A6D6EE4004A7BAA /* Help Example.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41851A6D6EE4004A7BAA /* Help Example.wav */; };
+		468D418D1A6DC53D004A7BAA /* WriteLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468D418B1A6DC53C004A7BAA /* WriteLineViewController.swift */; };
+		468D418E1A6DC53D004A7BAA /* WriteLineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 468D418C1A6DC53D004A7BAA /* WriteLineViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -652,6 +654,8 @@
 		468D417F1A6C449F004A7BAA /* Pencil.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pencil.wav; sourceTree = "<group>"; };
 		468D41801A6C449F004A7BAA /* Typing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Typing.wav; sourceTree = "<group>"; };
 		468D41851A6D6EE4004A7BAA /* Help Example.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Help Example.wav"; sourceTree = "<group>"; };
+		468D418B1A6DC53C004A7BAA /* WriteLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteLineViewController.swift; sourceTree = "<group>"; };
+		468D418C1A6DC53D004A7BAA /* WriteLineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WriteLineViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -712,6 +716,8 @@
 				40530C7C1A6AA977007063AF /* TopicsViewController.xib */,
 				40530C7F1A6B0A17007063AF /* GamePlayStoryboard.storyboard */,
 				40530C811A6B0F5F007063AF /* GamePlayViewController.swift */,
+				468D418B1A6DC53C004A7BAA /* WriteLineViewController.swift */,
+				468D418C1A6DC53D004A7BAA /* WriteLineViewController.xib */,
 			);
 			path = PoeticJusticeApp;
 			sourceTree = "<group>";
@@ -1386,6 +1392,7 @@
 				40530C7E1A6AA977007063AF /* TopicsViewController.xib in Resources */,
 				40D6AC471A6B20090083ACFA /* Open-Letter.png in Resources */,
 				40D6AC9E1A6B200A0083ACFA /* Tee.png in Resources */,
+				468D418E1A6DC53D004A7BAA /* WriteLineViewController.xib in Resources */,
 				40D6ACA11A6B200A0083ACFA /* Thermometer.png in Resources */,
 				40D6AC521A6B20090083ACFA /* PDF-File.png in Resources */,
 				40D6AC031A6B20090083ACFA /* Filing-Cabinate.png in Resources */,
@@ -1456,6 +1463,7 @@
 				40530C821A6B0F5F007063AF /* GamePlayViewController.swift in Sources */,
 				40D6ABAB1A6B20090083ACFA /* NetUtils.swift in Sources */,
 				40D6ABAC1A6B20090083ACFA /* SwiftyJSON.swift in Sources */,
+				468D418D1A6DC53D004A7BAA /* WriteLineViewController.swift in Sources */,
 				40530C791A69B983007063AF /* HelpViewController.swift in Sources */,
 				40D6ACD01A6B200A0083ACFA /* User.swift in Sources */,
 				40530C7D1A6AA977007063AF /* TopicsViewController.swift in Sources */,
