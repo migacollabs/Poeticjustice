@@ -174,7 +174,7 @@ PYAELLAC:
         country_code: Column(String(3), nullable=False)
         mobile_number: Column(String(15))
         access_token: Column(String(128))
-        device_token: Column(Text)
+        device_tokens: Column(ARRAY(Text))
         profile_pic: Column(String)
         user_prefs: Column(Text)
         user_score: Column(Integer)
@@ -193,76 +193,69 @@ PYAELLAC:
         description: Column(String(64), nullable=False)
     Values:
         name: [
-            battle,
-            friends,
-            party,
-            love,
-            nature,
-            music,
-            movies,
-            tv,
+            misc,
             sports,
-            holidays,
-            food,
-            puns,
-            fashion,
+            games,
+            entertainment,
             school,
-            tech,
-            math
+            food,
+            science,
+            nature,
+            seasonal
         ]
         display_name: [
-            Battle,
-            Friends,
-            Party,
-            Love,
-            Nature,
-            Music,
-            Movies,
-            Tv,
+            Misc,
             Sports,
-            Holidays,
-            Food,
-            Puns,
-            Fashion,
+            Games,
+            Entertainment,
             School,
-            Tech,
-            Math
+            Food,
+            Science,
+            Nature,
+            Seasonal
         ]
         description: [
-            Battle,
-            Friends,
-            Party,
-            Love,
-            Nature,
-            Music,
-            Movies,
-            Tv,
+            Misc,
             Sports,
-            Holidays,
-            Food,
-            Puns,
-            Fashion,
+            Games,
+            Entertainment,
             School,
-            Tech,
-            Math
+            Food,
+            Science,
+            Nature,
+            Seasonal
         ]
+
+
+(VerseCategoryTopic):
+    Fields:
+        name: Column(String(64), nullable=False)
+        min_points_req: Column(Integer, default=0, nullable=False)
+        score_modifier: Column(Integer, default=1, nullable=False)
+        main_icon_name: Column(String(32))
+    Relations:
+        verse_category_type_id: Column(Integer, ForeignKey('verse_category_type_lu.id'))
+    Rules:
+        Unique: [name, verse_category_type_id]
+    Options:
+        - add_tr_standard_mod.sql.mako
 
 
 (Verse):
     Fields:
         title: Column(String, nullable=True)
-        user_ids: Column(ARRAY(Integer))
+        user_ids: Column(ARRAY(Integer), nullable=True)
     Relations:
-        verse_category_type_id: Column(Integer, ForeignKey('verse_category_type_lu.id'))
-        current_user_id: Column(BigInteger, ForeignKey('users.id'))
-        next_user_id: Column(BigInteger, ForeignKey('users.id'))
+        verse_category_topic_id: Column(Integer, ForeignKey('verse_category_topics.id'))
+        current_user_id: Column(BigInteger, ForeignKey('users.id'), nullable=True)
+        next_user_id: Column(BigInteger, ForeignKey('users.id'), nullable=True)
 
 
-(UserLineXVerse):
+(LineXVerse):
     Fields:
         line_text: Column(String)
         line_score: Column(Integer)
-        position: Column(Integer, nullable=False, default=0)
+        added: Column(Boolean, default=False, nullable=False)
     Relations:
         user_id: Column(BigInteger, ForeignKey('users.id'))
 
@@ -270,6 +263,7 @@ PYAELLAC:
 
 AFTER_CREATE_SQL:
     Literal: |
+
 
         INSERT INTO groups
             (
@@ -280,6 +274,26 @@ AFTER_CREATE_SQL:
             ('admin', 'Role allowed to admin application business logic', 'Administrator'),
             ('editor', 'Role allowed to edit data', 'Editor'),
             ('user', 'Role allowed to view data', 'User');
+
+
+
+        INSERT INTO verse_category_topics 
+            (
+                name, min_points_req, score_modifier, main_icon_name, verse_category_type_id
+            )
+        VALUES
+            ('Love', 0, 1, 'Heart.png', 1),
+            ('Trouble', 0, 1, 'Skull.png', 1),
+            ('70s', 0, 1, 'Oil-Lamp.png', 1);
+
+
+
+        INSERT INTO verses
+            (
+                title, verse_category_topic_id
+            )
+        VALUES
+            ('Test Verse', 3);
 
 
 
