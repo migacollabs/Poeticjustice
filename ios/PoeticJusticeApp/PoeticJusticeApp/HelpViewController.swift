@@ -21,6 +21,10 @@ class HelpViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func testButton(sender: AnyObject) {
+        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
     var audioPlayer : AVAudioPlayer?
     
