@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username or Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bV9-8M-68w">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bV9-8M-68w">
                                 <rect key="frame" x="214" y="285" width="173" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="173" id="N7H-be-5lX"/>
@@ -25,12 +25,12 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i2S-BA-YsS">
-                                <rect key="frame" x="281" y="323" width="38" height="30"/>
+                                <rect key="frame" x="285" y="323" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="ErY-9s-fRd"/>
                                     <constraint firstAttribute="width" constant="38" id="V6x-XB-zOy"/>
                                 </constraints>
-                                <state key="normal" title="Start!">
+                                <state key="normal" title="Go!">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -45,6 +45,9 @@
                                         <include reference="V6x-XB-zOy"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="on_go:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="XeT-rk-ehp"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Snv-wq-erl">
                                 <rect key="frame" x="285" y="381" width="30" height="30"/>
@@ -59,15 +62,25 @@
                                     <action selector="openHelp:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="j7k-jY-Hn8"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick a Screen Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EiU-MT-TlO">
+                                <rect key="frame" x="214" y="247" width="173" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="173" id="HX7-oB-zQg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="i2S-BA-YsS" firstAttribute="top" secondItem="bV9-8M-68w" secondAttribute="bottom" constant="8" id="2n5-wm-W5l"/>
+                            <constraint firstItem="bV9-8M-68w" firstAttribute="top" secondItem="EiU-MT-TlO" secondAttribute="bottom" constant="8" id="6eJ-Dn-FDR"/>
                             <constraint firstAttribute="centerX" secondItem="i2S-BA-YsS" secondAttribute="centerX" id="E2m-d4-J97"/>
                             <constraint firstItem="bV9-8M-68w" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="Hhl-fH-OCk"/>
                             <constraint firstAttribute="centerX" secondItem="i2S-BA-YsS" secondAttribute="centerX" constant="8" id="I5L-JP-N1s">
                                 <variation key="widthClass=compact" constant="0.0"/>
                             </constraint>
+                            <constraint firstAttribute="centerX" secondItem="EiU-MT-TlO" secondAttribute="centerX" constant="-0.5" id="IOc-t5-oVS"/>
                             <constraint firstAttribute="centerY" secondItem="Snv-wq-erl" secondAttribute="centerY" constant="-96" id="RyD-eW-ru1"/>
                             <constraint firstAttribute="centerX" secondItem="Snv-wq-erl" secondAttribute="centerX" id="TUi-aC-lrd"/>
                             <constraint firstAttribute="centerY" secondItem="i2S-BA-YsS" secondAttribute="centerY" constant="-38" id="Tdm-FB-exn"/>
@@ -92,6 +105,10 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Front" id="lKw-zX-5q8"/>
+                    <connections>
+                        <outlet property="email_address" destination="bV9-8M-68w" id="yrU-WA-ceF"/>
+                        <outlet property="username" destination="EiU-MT-TlO" id="xPS-HH-CCJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

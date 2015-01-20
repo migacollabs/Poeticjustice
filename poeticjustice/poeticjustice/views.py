@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import datetime
 import traceback
 import logging
@@ -94,6 +95,44 @@ def create_new_user(request):
             pass
 
 
+def _active_user(user, session):
+
+    user.password = sha512("NOPASSWORD").hexdigest()
+    user.access_token = \
+        sha512(
+            str(user.id) + str(user.initial_entry_date) + default_hashkey
+        ).hexdigest()
+    user.device_token = "NODEVICETOKEN"
+    user.country_code = 'USA'
+    user.is_active = True
+
+    user.save(session=session)
+
+    grp_lut = LutValues(model=Group)
+    utl_lut = LutValues(model=UserTypeLookup)
+
+    grp_ids = set()
+    grp_ids.add(grp_lut.get_id('user'))
+
+    UserXUserTypeLookup(
+        user_id=user.id, 
+        user_type_id=utl_lut.get_id('player')
+        ).save(session=session)
+
+    grp_ids.add(grp_lut.get_id('editor'))
+
+    # add to correct group (permission role)
+    grp_ids = list(grp_ids)
+    grp_ids.sort()
+    # lowest is best
+    uxg = UserXGroup(
+        user_id=user.id, 
+        group_id=grp_ids[0]
+        )
+    uxg.save(session=session)
+    return user
+
+
 @view_config(
     name='new',
     request_method='POST',
@@ -121,7 +160,6 @@ def create_new_user_post(request):
                 # This is a brand new user
                 user = User(**kwds)
 
-            user.password = sha512("NOPASSWORD").hexdigest()
             user.access_token = \
                 sha512(
                     str(user.id) + str(user.initial_entry_date) + default_hashkey
@@ -131,7 +169,7 @@ def create_new_user_post(request):
 
         site_addr = get_site_addr()
 
-        user.save(session)
+        user.save(session=session)
 
         grp_lut = LutValues(model=Group)
         utl_lut = LutValues(model=UserTypeLookup)
@@ -214,21 +252,25 @@ def login_post(request):
     if 'form.submitted' in request.params:
         login = request.params['login']
         password = sha512("NOPASSWORD").hexdigest()
-        print 'SUPPLIED PASSWORD', password
-        print 'LOGIN', login
         user = get_user(login)
-        print 'USER', user
         if user:
-            print 'USER PASSWORD', user.password
             if user.password == password:
                 headers = remember(request, login)
                 redirect = came_from if came_from != '/login' else '/u/data'
-                print 'LOGGED IN ->', came_from, " ", redirect
                 return HTTPFound(location='/u/data', headers=headers)
+        else:
+            with SQLAlchemySessionFactory() as session:
+                user_obj = User(email_address=login, 
+                    user_name=request.params['user_name'] if 'user_name' in request.params else None)
+                user_obj = _active_user(user_obj, session)
+                time.sleep(6)
+                user = get_user(login, force_refresh=True)
+                headers = remember(request, login)
+                redirect = came_from if came_from != '/login' else '/u/data'
+                return HTTPFound(location='/u/data', headers=headers)
+        
         message = 'Failed login'
-        print 'Failed login'
 
-    print 'RETURN OK'
     return dict(
         message=message,
         url=request.application_url + '/login',

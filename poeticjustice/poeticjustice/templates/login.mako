@@ -31,6 +31,18 @@
                 ${
                     pymf.add_input(
                         "text", 
+                        name_="user_name", 
+                        id_="user-name",
+                        placeholder="Pick a Screen name",
+                        required=True, 
+                        pattern="alphanumeric"
+                    )
+                }
+                <small class="error">Your Screen Name will be public</small>
+
+                ${
+                    pymf.add_input(
+                        "text", 
                         name_="login", 
                         id_="login",
                         placeholder="Enter Your Email Address",

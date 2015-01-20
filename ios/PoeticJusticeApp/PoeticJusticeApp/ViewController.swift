@@ -10,7 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var userNameOrEmail: UITextField!
+    @IBOutlet weak var user_name: UITextField!
+    @IBOutlet weak var email_address: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +30,7 @@ class ViewController: UIViewController {
         
     }
     
-    @IBAction func onStart(sender: AnyObject) {
-        
-        println(self.userNameOrEmail.text)
+    @IBAction func on_go(sender: AnyObject) {
         
         // create a new obj-c 'native' dictionary optional, meaning the myDict
         // var can be nil.
@@ -59,16 +58,13 @@ class ViewController: UIViewController {
                 params["form.submitted"] = true
                 params["country_code"] = "USA"
                 
-                if let em = self.userNameOrEmail.text{
+                if let em = self.email_address.text{
                     params["login"] = em
                     
-                }else{
-                    
-                    if let tu = dict["test_user_email_address"] as String?{
-                        params["login"] = tu
-                        
-                    }
-                    
+                }
+                
+                if let un = self.user_name.text{
+                    params["user_name"] = un
                 }
                 
                 if let login_em = params["login"] as? String{
