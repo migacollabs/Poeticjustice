@@ -237,48 +237,67 @@ def login_get(request):
     name='login',
     request_method='POST',
     context='poeticjustice:contexts.AppRoot',
-    renderer='login.mako')
+    renderer='json')
 @forbidden_view_config(renderer='login.mako')
 def login_post(request):
-    print 'login post called', request
-    login_url = request.resource_url(request.context, 'login')
-    referrer = request.url
-    if referrer == login_url:
-        referrer = '/'
-    came_from = request.params.get('came_from', referrer)
-    message = ''
-    login = ''
-    password = ''
-    if 'form.submitted' in request.params:
-        login = request.params['login']
-        password = sha512("NOPASSWORD").hexdigest()
-        user = get_user(login)
-        if user:
-            if user.password == password:
-                headers = remember(request, login)
-                redirect = came_from if came_from != '/login' else '/u/data'
-                return HTTPFound(location='/u/data', headers=headers)
-        else:
+    try:
+        print 'login post called', request
+        login_url = request.resource_url(request.context, 'login')
+        referrer = request.url
+        if referrer == login_url:
+            referrer = '/'
+        came_from = request.params.get('came_from', referrer)
+        message = ''
+        login = ''
+        password = ''
+        if 'form.submitted' in request.params:
+            login = request.params['login']
+            password = sha512("NOPASSWORD").hexdigest()
+            user = get_user(login)
             with SQLAlchemySessionFactory() as session:
-                user_obj = User(email_address=login, 
-                    user_name=request.params['user_name'] if 'user_name' in request.params else None)
-                user_obj = _active_user(user_obj, session)
-                time.sleep(6)
-                user = get_user(login, force_refresh=True)
-                headers = remember(request, login)
-                redirect = came_from if came_from != '/login' else '/u/data'
-                return HTTPFound(location='/u/data', headers=headers)
-        
-        message = 'Failed login'
+                if user:
+                    if user.password == password:
+                        headers = remember(request, login)
+                        request.response.headerlist.extend(headers)
+                        U = ~User
+                        user_obj = session.query(U).filter(U.email_address==login).first()
+                        return dict(
+                            status='Ok',
+                            user=User(entity=user_obj).to_dict(),
+                            logged_in=authenticated_userid(request)
+                            )
+                else:
+                    user_obj = User(email_address=login, 
+                        user_name=request.params['user_name'] if 'user_name' in request.params else None)
+                    user_obj = _active_user(user_obj, session)
+                    user = get_user(login, force_refresh=True)
+                    headers = remember(request, login)
+                    request.response.headerlist.extend(headers)
+                    return dict(
+                        status='Ok',
+                        user=User(entity=user_obj).to_dict(),
+                        logged_in=authenticated_userid(request)
+                        )
 
-    return dict(
-        message=message,
-        url=request.application_url + '/login',
-        came_from=came_from,
-        login=login,
-        password=password,
-        logged_in=authenticated_userid(request)
-    )
+
+        return dict(
+            message='Failed login',
+            url=request.application_url + '/login',
+            came_from=came_from,
+            login=login,
+            logged_in=authenticated_userid(request)
+        )
+
+    except HTTPFound: raise
+    except:
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Bad Request')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
 
 
 @view_config(
@@ -287,6 +306,7 @@ def login_post(request):
     context='poeticjustice:contexts.Users',
     renderer='json')
 def user_data(request):
+    print 'user_data called', request
     try:
         args = list(request.subpath)
         kwds = _process_subpath(args)

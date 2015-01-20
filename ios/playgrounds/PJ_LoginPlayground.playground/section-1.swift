@@ -616,6 +616,8 @@ func login(params : Dictionary<String, AnyObject>, url : String) {
             println(httpResponse.statusCode)
             if httpResponse.statusCode == 200 {
                 
+                println(data)
+                
                 if data != nil {
                     
                     var json: JSON? = nil
@@ -626,10 +628,7 @@ func login(params : Dictionary<String, AnyObject>, url : String) {
                             error: nil) as? NSDictionary{
                                 
                         if let results = jsonResult["user"] as? NSDictionary{
-                            var device_token:String = results["device_token"] as String
-                            if let dt = results["device_token"] as? String{
-                                println(dt)
-                            }
+                            println(results)
                                 
                         }
                     }
@@ -657,6 +656,7 @@ func login(params : Dictionary<String, AnyObject>, url : String) {
                 
             }else{
                 print("Error signing in")
+                
                 // do something, figure out how to do async error handling
                 // without exceptions, because there are no exceptions in
                 // swift :(
@@ -672,11 +672,11 @@ func login(params : Dictionary<String, AnyObject>, url : String) {
 var params = Dictionary<String,AnyObject>()
 
 params["login"] = "mat@miga.me"
-params["password"] = "Aa12345678"
+params["user_name"] = "mateyuzo"
 params["form.submitted"] = true
 
 
-var login_url = "http://mivid.io:8888/login"
+var login_url = "http://localhost:8888/login"
 
 login(params, login_url)
 
