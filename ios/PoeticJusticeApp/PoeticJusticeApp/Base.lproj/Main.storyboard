@@ -107,7 +107,7 @@
                     <navigationItem key="navigationItem" title="Front" id="lKw-zX-5q8"/>
                     <connections>
                         <outlet property="email_address" destination="bV9-8M-68w" id="yrU-WA-ceF"/>
-                        <outlet property="username" destination="EiU-MT-TlO" id="xPS-HH-CCJ"/>
+                        <outlet property="user_name" destination="EiU-MT-TlO" id="ZIZ-yf-dex"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
