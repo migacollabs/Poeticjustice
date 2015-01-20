@@ -32,8 +32,6 @@ class ViewController: UIViewController {
     
     @IBAction func on_go(sender: AnyObject) {
         
-        // create a new obj-c 'native' dictionary optional, meaning the myDict
-        // var can be nil.
         var myDict: NSDictionary?
         
         // use a optional let assignment thing to check for the existence of
@@ -85,11 +83,19 @@ class ViewController: UIViewController {
     }
     
     func on_login(){
-        println("on_login called")
+
+        var sb = UIStoryboard(name: "GamePlayStoryboard", bundle: nil)
+        var controller = sb.instantiateViewControllerWithIdentifier("GamePlayViewController") as UIViewController
+        self.presentViewController(controller, animated: true, completion: nil)
+        
     }
     
 
-    
-    
+
 }
+
+
+
+
+
 

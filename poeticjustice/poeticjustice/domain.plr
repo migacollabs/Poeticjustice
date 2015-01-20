@@ -169,7 +169,8 @@ PYAELLAC:
         facebook_name: Column(String(255))
         password: Column(String(128), 
             CheckConstraint('"char_length"(password)>8'), nullable=False)
-        is_active: Column(Boolean, default=True)
+        is_active: Column(Boolean, default=True, nullable=False)
+        is_invite: Column(Boolean, default=False, nullable=False)
         subnational: Column(String(255))
         country_code: Column(String(3), nullable=False)
         mobile_number: Column(String(15))
@@ -177,7 +178,8 @@ PYAELLAC:
         device_tokens: Column(ARRAY(Text))
         profile_pic: Column(String)
         user_prefs: Column(Text)
-        user_score: Column(Integer)
+        user_score: Column(Integer, default=0, nullable=False)
+        allow_public_listing: Column(Boolean, default=True)
     Relations:
         user_types: relationship('UserXUserTypeLookup')
     Rules:
@@ -258,7 +260,7 @@ PYAELLAC:
         added: Column(Boolean, default=False, nullable=False)
     Relations:
         user_id: Column(BigInteger, ForeignKey('users.id'))
-
+        verse_id: Column(BigInteger, ForeignKey('users.id'))
 
 
 AFTER_CREATE_SQL:
