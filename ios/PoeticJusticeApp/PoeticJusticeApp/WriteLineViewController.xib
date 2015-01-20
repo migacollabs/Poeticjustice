@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
+                <outlet property="setLine" destination="5Qn-Ca-z5G" id="6c9-il-i8g"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -101,6 +102,9 @@ Or maybe in a train, or better yet a plane //
                     <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="697" y="388" width="30" height="30"/>
                     </variation>
+                    <connections>
+                        <action selector="incrementScore:" destination="-1" eventType="touchUpInside" id="mnN-Gm-rH6"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWL-DL-QRA">
                     <rect key="frame" x="459" y="372" width="30" height="30"/>
@@ -110,6 +114,9 @@ Or maybe in a train, or better yet a plane //
                     <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="646" y="388" width="30" height="30"/>
                     </variation>
+                    <connections>
+                        <action selector="decrementScore:" destination="-1" eventType="touchUpInside" id="xAE-Bw-Lte"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOv-vj-Wiz">
                     <rect key="frame" x="455" y="517" width="72" height="30"/>
@@ -122,6 +129,9 @@ Or maybe in a train, or better yet a plane //
                     <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="655" y="545" width="72" height="30"/>
                     </variation>
+                    <connections>
+                        <action selector="sendLine:" destination="-1" eventType="touchUpInside" id="kfq-jd-APW"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

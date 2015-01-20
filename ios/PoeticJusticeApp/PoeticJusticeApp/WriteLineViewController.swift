@@ -9,6 +9,10 @@
 import UIKit
 
 class WriteLineViewController: UIViewController {
+    
+    // TODO: is there a way to reset this?
+    var score : Int = 1;
+    var line : String = "";
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +25,20 @@ class WriteLineViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func decrementScore(sender: AnyObject) {
+        score = 0;
+    }
+    
+    @IBAction func incrementScore(sender: AnyObject) {
+        score = 2;
+    }
 
+    @IBOutlet weak var setLine: UITextView!
+    
+    @IBAction func sendLine(sender: AnyObject) {
+        println("Clicked send with score " + String(score) + " " +
+        setLine.text)
+    }
     /*
     // MARK: - Navigation
 
