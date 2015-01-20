@@ -14,71 +14,147 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IyE-3H-G15">
-                    <rect key="frame" x="73" y="165" width="454" height="215"/>
-                    <color key="backgroundColor" white="0.95063219572368429" alpha="1" colorSpace="calibratedWhite"/>
-                    <string key="text">I play a guitar so in life I won't go far //
-That's probably true, unless you play in a car //
-Or play in a plane, maybe in a train //</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTl-ux-cd3">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTl-ux-cd3">
                     <rect key="frame" x="73" y="63" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="48" id="T2J-f3-n9Q"/>
+                    </constraints>
                     <state key="normal" image="Acoustic-Guitar.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Music" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oap-lG-cFG">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Music" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oap-lG-cFG">
                     <rect key="frame" x="136" y="63" width="391" height="48"/>
                     <fontDescription key="fontDescription" type="system" pointSize="26"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
+                    <variation key="widthClass=regular" misplaced="YES">
+                        <rect key="frame" x="136" y="63" width="591" height="48"/>
+                    </variation>
                 </label>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="I feel shame because this verse is lame" translatesAutoresizingMaskIntoConstraints="NO" id="5Qn-Ca-z5G">
-                    <rect key="frame" x="73" y="455" width="454" height="74"/>
-                    <color key="backgroundColor" white="0.95063219572368429" alpha="1" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Verse In-Progress:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0M9-xM-guv">
-                    <rect key="frame" x="73" y="131" width="454" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Enter line:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TXo-6d-sGA">
-                    <rect key="frame" x="73" y="426" width="454" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOv-vj-Wiz">
-                    <rect key="frame" x="455" y="545" width="72" height="30"/>
-                    <state key="normal" title="Send">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iP-Nd-z1k">
-                    <rect key="frame" x="497" y="388" width="30" height="30"/>
-                    <state key="normal" title="+1">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWL-DL-QRA">
-                    <rect key="frame" x="446" y="388" width="30" height="30"/>
-                    <state key="normal" title="-1">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="breaker19mayday // 199 points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pz-eP-0uX">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="breaker19mayday // 199 points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pz-eP-0uX">
                     <rect key="frame" x="73" y="34" width="454" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="4a5-8h-LpZ"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="I feel shame because this verse in lame" translatesAutoresizingMaskIntoConstraints="NO" id="5Qn-Ca-z5G">
+                    <rect key="frame" x="73" y="458" width="454" height="46"/>
+                    <color key="backgroundColor" white="0.95063219572368429" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="46" id="itY-AU-uUL"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="73" y="455" width="654" height="74"/>
+                    </variation>
+                </textView>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nht-Ol-Vn8">
+                    <rect key="frame" x="73" y="163" width="454" height="201"/>
+                    <color key="backgroundColor" white="0.97039473684210542" alpha="1" colorSpace="calibratedWhite"/>
+                    <string key="text">I play a guitar so in life I won't go far //
+That might be true unless you play in a car //
+Or maybe in a train, or better yet a plane //
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+1920</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verse In-Progress:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0M9-xM-guv">
+                    <rect key="frame" x="73" y="134" width="454" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="73" y="131" width="654" height="21"/>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Write a line:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6t-mw-f2l">
+                    <rect key="frame" x="73" y="429" width="460" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iP-Nd-z1k">
+                    <rect key="frame" x="497" y="372" width="30" height="30"/>
+                    <state key="normal" title="+1">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="697" y="388" width="30" height="30"/>
+                    </variation>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWL-DL-QRA">
+                    <rect key="frame" x="459" y="372" width="30" height="30"/>
+                    <state key="normal" title="-1">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="646" y="388" width="30" height="30"/>
+                    </variation>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOv-vj-Wiz">
+                    <rect key="frame" x="455" y="517" width="72" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="72" id="g51-H5-x0V"/>
+                    </constraints>
+                    <state key="normal" title="Send">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="655" y="545" width="72" height="30"/>
+                    </variation>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="oap-lG-cFG" firstAttribute="trailing" secondItem="0M9-xM-guv" secondAttribute="trailing" id="0ua-ec-bCp"/>
+                <constraint firstItem="0M9-xM-guv" firstAttribute="leading" secondItem="nht-Ol-Vn8" secondAttribute="leading" id="1Tj-Tc-ShR"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="leading" secondItem="w6t-mw-f2l" secondAttribute="leading" id="2fK-aa-hKZ"/>
+                <constraint firstItem="0M9-xM-guv" firstAttribute="top" secondItem="kTl-ux-cd3" secondAttribute="bottom" constant="23" id="3Qi-Lb-nJa"/>
+                <constraint firstItem="5Qn-Ca-z5G" firstAttribute="trailing" secondItem="4iP-Nd-z1k" secondAttribute="trailing" id="F8a-ca-axX"/>
+                <constraint firstItem="5Qn-Ca-z5G" firstAttribute="top" secondItem="w6t-mw-f2l" secondAttribute="bottom" constant="8" symbolic="YES" id="Gy9-7F-uU0"/>
+                <constraint firstItem="kWL-DL-QRA" firstAttribute="top" secondItem="nht-Ol-Vn8" secondAttribute="bottom" constant="8" symbolic="YES" id="KPM-d5-0DP"/>
+                <constraint firstItem="4iP-Nd-z1k" firstAttribute="baseline" secondItem="kWL-DL-QRA" secondAttribute="baseline" id="Oql-ma-YLD"/>
+                <constraint firstItem="0M9-xM-guv" firstAttribute="leading" secondItem="kTl-ux-cd3" secondAttribute="leading" id="P8o-zU-GC8"/>
+                <constraint firstItem="w6t-mw-f2l" firstAttribute="top" secondItem="kWL-DL-QRA" secondAttribute="bottom" constant="27" id="SWG-Pw-tZk"/>
+                <constraint firstItem="sOv-vj-Wiz" firstAttribute="top" secondItem="5Qn-Ca-z5G" secondAttribute="bottom" constant="13" id="T5K-XM-hc9"/>
+                <constraint firstItem="4iP-Nd-z1k" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="UKY-C8-TEU"/>
+                <constraint firstItem="kTl-ux-cd3" firstAttribute="top" secondItem="oap-lG-cFG" secondAttribute="top" id="WIG-RG-t80"/>
+                <constraint firstItem="4pz-eP-0uX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="34" id="WRE-px-6Ng"/>
+                <constraint firstItem="5Qn-Ca-z5G" firstAttribute="leading" secondItem="w6t-mw-f2l" secondAttribute="leading" id="XDa-sA-i5s"/>
+                <constraint firstItem="oap-lG-cFG" firstAttribute="leading" secondItem="kTl-ux-cd3" secondAttribute="trailing" constant="15" id="bCT-7v-Vo7"/>
+                <constraint firstItem="kTl-ux-cd3" firstAttribute="leading" secondItem="4pz-eP-0uX" secondAttribute="leading" id="d7g-8e-k10"/>
+                <constraint firstItem="4pz-eP-0uX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="73" id="e4l-VG-74p"/>
+                <constraint firstItem="sOv-vj-Wiz" firstAttribute="trailing" secondItem="5Qn-Ca-z5G" secondAttribute="trailing" id="ezd-wm-QzR"/>
+                <constraint firstItem="kTl-ux-cd3" firstAttribute="top" secondItem="4pz-eP-0uX" secondAttribute="bottom" constant="8" symbolic="YES" id="l5u-Kq-A3a"/>
+                <constraint firstItem="0M9-xM-guv" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="l86-35-6so"/>
+                <constraint firstItem="4iP-Nd-z1k" firstAttribute="leading" secondItem="kWL-DL-QRA" secondAttribute="trailing" constant="8" symbolic="YES" id="mVi-y0-MNi"/>
+                <constraint firstItem="0M9-xM-guv" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="orz-gT-S7i"/>
+                <constraint firstItem="4pz-eP-0uX" firstAttribute="trailing" secondItem="oap-lG-cFG" secondAttribute="trailing" id="pls-lY-21g"/>
+                <constraint firstItem="oap-lG-cFG" firstAttribute="bottom" secondItem="kTl-ux-cd3" secondAttribute="bottom" id="tli-0k-6cf"/>
+                <constraint firstAttribute="trailing" secondItem="w6t-mw-f2l" secondAttribute="trailing" constant="67" id="tts-FP-ARr"/>
+                <constraint firstAttribute="bottom" secondItem="sOv-vj-Wiz" secondAttribute="bottom" constant="53" id="uo9-Fy-Sno"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="0M9-xM-guv" secondAttribute="bottom" constant="8" symbolic="YES" id="v3h-eH-de5"/>
+            </constraints>
         </view>
     </objects>
     <resources>
