@@ -170,7 +170,7 @@ PYAELLAC:
         password: Column(String(128), 
             CheckConstraint('"char_length"(password)>8'), nullable=False)
         is_active: Column(Boolean, default=True, nullable=False)
-        is_invite: Column(Boolean, default=False, nullable=False)
+        is_invited: Column(Boolean, default=False, nullable=False)
         subnational: Column(String(255))
         country_code: Column(String(3), nullable=False)
         mobile_number: Column(String(15))
@@ -184,8 +184,17 @@ PYAELLAC:
         user_types: relationship('UserXUserTypeLookup')
     Rules:
         Unique: [user_name, email_address]
+    EntityMixes: [
+        poeticjustice.mixes.UserMix
+    ]
     Options:
         - add_tr_standard_mod.sql.mako
+
+
+(UserXUser):
+    Relations:
+        user_id: Column(BigInteger, ForeignKey('users.id'), primary_key=True)
+        friend_id: Column(BigInteger, ForeignKey('users.id'), primary_key=True)
 
 
 (VerseCategoryTypeLookup):

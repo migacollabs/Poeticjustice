@@ -299,7 +299,6 @@ def login_post(request):
             pass
 
 
-
 @view_config(
     name='data',
     request_method='GET',

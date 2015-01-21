@@ -23,7 +23,7 @@ from pyaella.dinj import BorgLexicon, __borg_lex__
 Base = declarative_base(cls=PyaellaSQLAlchemyBase)
 ReflBase = declarative_base(cls=DeferredReflection)
 
-__autogen_date__ = "2015-01-20 13:56:50.490044"
+__autogen_date__ = "2015-01-21 10:39:38.713763"
 
 __schema_file__ = os.path.join(os.path.dirname(__file__), "domain.plr")
 
@@ -38,6 +38,7 @@ __all__ = [
 	"UserTypeLookup",
 	"UserXUserTypeLookup",
 	"User",
+	"UserXUser",
 	"VerseCategoryTypeLookup",
 	"VerseCategoryTopic",
 	"Verse",
@@ -134,7 +135,14 @@ class UserXUserTypeLookup(PyaellaDataModel):
 		PyaellaDataModel.__init__(self, base=base, **kw)
 
 
-class User(PyaellaDataModel):
+class User(Mixable, PyaellaDataModel):
+	__metaclass__ = PyaellaDataModelMetaclass
+	
+	def __init__(self, base=Base, **kw):
+		PyaellaDataModel.__init__(self, base=base, **kw)
+
+
+class UserXUser(PyaellaDataModel):
 	__metaclass__ = PyaellaDataModelMetaclass
 	
 	def __init__(self, base=Base, **kw):
