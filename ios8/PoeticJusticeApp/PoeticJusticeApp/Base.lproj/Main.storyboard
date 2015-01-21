@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <scenes>
+        <!--Layout Help View Controller-->
+        <scene sceneID="7sg-ed-XPd">
+            <objects>
+                <viewController id="BwZ-3x-SF5" customClass="LayoutHelpViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ldo-CV-pwS"/>
+                        <viewControllerLayoutGuide type="bottom" id="ofe-y0-GkQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="zyq-vE-moT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ytg-mB-LSQ">
+                                <rect key="frame" x="282" y="250" width="36" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Ytg-mB-LSQ" firstAttribute="centerX" secondItem="zyq-vE-moT" secondAttribute="centerX" id="XAV-dm-tfY"/>
+                            <constraint firstItem="Ytg-mB-LSQ" firstAttribute="top" secondItem="ldo-CV-pwS" secondAttribute="bottom" constant="186" id="tcH-6D-Iyp"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="2MB-eB-myB"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k5y-TM-yT1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2366" y="496"/>
+        </scene>
+        <!--Layout Friends View Controller-->
+        <scene sceneID="wg7-f3-ORb">
+            <objects>
+                <viewController id="8rJ-Kc-sve" customClass="LayoutFriendsViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
+                        <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Friends" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="zEq-FU-wV5">
+                                <rect key="frame" x="251" y="222" width="121" height="42"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="zEq-FU-wV5" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" constant="251" id="7w5-uR-dWC"/>
+                            <constraint firstItem="zEq-FU-wV5" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" constant="158" id="FXx-6r-knG"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="JnU-gw-eJA"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1696" y="-264"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="yl2-sM-qoP">
+            <objects>
+                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
+                        <rect key="frame" x="0.0" y="975" width="768" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="brX-lC-5T5" kind="relationship" relationship="viewControllers" id="Lmy-j3-b5G"/>
+                        <segue destination="tH8-qL-sQC" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
+                        <segue destination="AeA-99-QN9" kind="relationship" relationship="viewControllers" id="sEa-UC-LFh"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="190" y="-310"/>
+        </scene>
+        <!--Topics-->
+        <scene sceneID="GNt-vz-OuE">
+            <objects>
+                <viewController title="Topics" id="FiA-hQ-i8D" customClass="LayoutTopicsViewController" customModule="PoeticJusticeApp" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pdN-w3-Dad"/>
+                        <viewControllerLayoutGuide type="bottom" id="uRN-JC-8v0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qGy-w5-zO1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topics" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67A-dw-aC8">
+                                <rect key="frame" x="279" y="289" width="50" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="67A-dw-aC8" firstAttribute="leading" secondItem="qGy-w5-zO1" secondAttribute="leading" constant="279" id="6pt-R6-s1V"/>
+                            <constraint firstItem="67A-dw-aC8" firstAttribute="top" secondItem="pdN-w3-Dad" secondAttribute="bottom" constant="225" id="svg-Ap-Nao"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="4nG-cj-U7v"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tDB-es-D7u" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="678" y="462"/>
+        </scene>
+        <!--Write Line View Controller-->
+        <scene sceneID="ZDc-Bd-Oqg">
+            <objects>
+                <viewController id="Bp8-VX-3UL" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8wE-xp-UWx"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nkc-mm-X8D"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nb4-X2-mlN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A0V-37-tZK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="678" y="1238"/>
+        </scene>
+        <!--Topics-->
+        <scene sceneID="wi8-tA-F8D">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="brX-lC-5T5" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Topics" image="90s-controller.png" badgeValue="Topics" id="PXL-XY-EGs"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="22h-D3-f8R">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FiA-hQ-i8D" kind="relationship" relationship="rootViewController" id="XzN-84-4DC"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kuZ-13-ylq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="26" y="462"/>
+        </scene>
+        <!--Help-->
+        <scene sceneID="sDM-tW-n1o">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AeA-99-QN9" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Help" image="90s-controller.png" badgeValue="Help" selectedImage="90s-controller.png" id="sp7-Wv-Yb3"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="V1h-E8-M70">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BwZ-3x-SF5" kind="relationship" relationship="rootViewController" id="GJz-MM-dPd"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ixA-nF-19E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1554" y="496"/>
+        </scene>
+        <!--Friends-->
+        <scene sceneID="YdZ-wN-EVs">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tH8-qL-sQC" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Friends" image="Zoom-in.png" badgeValue="Friends" id="cPa-gy-q4n"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="39J-Cg-6o6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="rootViewController" id="aVZ-jG-iua"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g8w-fF-0Yk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="884" y="-264"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="90s-controller.png" width="48" height="48"/>
+        <image name="Zoom-in.png" width="48" height="48"/>
+    </resources>
+</document>

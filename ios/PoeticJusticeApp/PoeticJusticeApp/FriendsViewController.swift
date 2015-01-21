@@ -21,6 +21,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier : "cell")
         self.myTableView.dataSource = self
+        
+        println(items)
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,5 +38,18 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
         cell.textLabel?.text = self.items[indexPath.row]
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //CODE TO BE RUN ON CELL TOUCH
+        println("touched")
+    }
+    
+    func addFriend(userId : Int) {
+        
+    }
+    
+    func findRandomFriends(count : Int) {
+    
     }
 }

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		40530C581A69B923007063AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40530C571A69B923007063AF /* AppDelegate.swift */; };
-		40530C5A1A69B923007063AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40530C591A69B923007063AF /* ViewController.swift */; };
+		40530C5A1A69B923007063AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40530C591A69B923007063AF /* LoginViewController.swift */; };
 		40530C5D1A69B923007063AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 40530C5B1A69B923007063AF /* Main.storyboard */; };
 		40530C5F1A69B923007063AF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 40530C5E1A69B923007063AF /* Images.xcassets */; };
 		40530C621A69B923007063AF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40530C601A69B923007063AF /* LaunchScreen.xib */; };
@@ -314,7 +314,6 @@
 		40D6ACCE1A6B200A0083ACFA /* Zoom-in.png in Resources */ = {isa = PBXBuildFile; fileRef = 40D6ABA61A6B20090083ACFA /* Zoom-in.png */; };
 		40D6ACCF1A6B200A0083ACFA /* Zoom-out.png in Resources */ = {isa = PBXBuildFile; fileRef = 40D6ABA71A6B20090083ACFA /* Zoom-out.png */; };
 		40D6ACD01A6B200A0083ACFA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D6ABA81A6B20090083ACFA /* User.swift */; };
-		40D6ACD11A6B200A0083ACFA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D6ABA91A6B20090083ACFA /* LoginViewController.swift */; };
 		40D6ACD31A6B471D0083ACFA /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40D6ACD21A6B471D0083ACFA /* Config.plist */; };
 		468D41811A6C449F004A7BAA /* Button Press.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D417D1A6C449F004A7BAA /* Button Press.wav */; };
 		468D41821A6C449F004A7BAA /* Chalk.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D417E1A6C449F004A7BAA /* Chalk.wav */; };
@@ -325,6 +324,10 @@
 		468D418E1A6DC53D004A7BAA /* WriteLineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 468D418C1A6DC53D004A7BAA /* WriteLineViewController.xib */; };
 		468D41911A6F21F8004A7BAA /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468D418F1A6F21F8004A7BAA /* FriendsViewController.swift */; };
 		468D41921A6F21F8004A7BAA /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 468D41901A6F21F8004A7BAA /* FriendsViewController.xib */; };
+		46E3DCCB1A702FBC006D059A /* Layout.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46E3DCCA1A702FBB006D059A /* Layout.storyboard */; };
+		46E3DCCD1A7037B4006D059A /* LayoutTopics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3DCCC1A7037B4006D059A /* LayoutTopics.swift */; };
+		46E3DCCF1A7037F6006D059A /* LayoutFriends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3DCCE1A7037F6006D059A /* LayoutFriends.swift */; };
+		46E3DCD11A70381A006D059A /* LayoutHelp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3DCD01A70381A006D059A /* LayoutHelp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -341,7 +344,7 @@
 		40530C521A69B923007063AF /* PoeticJusticeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PoeticJusticeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		40530C561A69B923007063AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		40530C571A69B923007063AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		40530C591A69B923007063AF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		40530C591A69B923007063AF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		40530C5C1A69B923007063AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		40530C5E1A69B923007063AF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		40530C611A69B923007063AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -649,7 +652,6 @@
 		40D6ABA61A6B20090083ACFA /* Zoom-in.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Zoom-in.png"; sourceTree = "<group>"; };
 		40D6ABA71A6B20090083ACFA /* Zoom-out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Zoom-out.png"; sourceTree = "<group>"; };
 		40D6ABA81A6B20090083ACFA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		40D6ABA91A6B20090083ACFA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		40D6ACD21A6B471D0083ACFA /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		468D417D1A6C449F004A7BAA /* Button Press.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Button Press.wav"; sourceTree = "<group>"; };
 		468D417E1A6C449F004A7BAA /* Chalk.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Chalk.wav; sourceTree = "<group>"; };
@@ -660,6 +662,10 @@
 		468D418C1A6DC53D004A7BAA /* WriteLineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WriteLineViewController.xib; sourceTree = "<group>"; };
 		468D418F1A6F21F8004A7BAA /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		468D41901A6F21F8004A7BAA /* FriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsViewController.xib; sourceTree = "<group>"; };
+		46E3DCCA1A702FBB006D059A /* Layout.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Layout.storyboard; sourceTree = "<group>"; };
+		46E3DCCC1A7037B4006D059A /* LayoutTopics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutTopics.swift; sourceTree = "<group>"; };
+		46E3DCCE1A7037F6006D059A /* LayoutFriends.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutFriends.swift; sourceTree = "<group>"; };
+		46E3DCD01A70381A006D059A /* LayoutHelp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutHelp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -707,9 +713,8 @@
 				40D6AA831A6B20080083ACFA /* SwiftyJSON.swift */,
 				40D6AA841A6B20080083ACFA /* topic.icons */,
 				40D6ABA81A6B20090083ACFA /* User.swift */,
-				40D6ABA91A6B20090083ACFA /* LoginViewController.swift */,
 				40530C571A69B923007063AF /* AppDelegate.swift */,
-				40530C591A69B923007063AF /* ViewController.swift */,
+				40530C591A69B923007063AF /* LoginViewController.swift */,
 				40530C5B1A69B923007063AF /* Main.storyboard */,
 				40530C771A69B983007063AF /* HelpViewController.swift */,
 				40530C781A69B983007063AF /* HelpViewController.xib */,
@@ -724,6 +729,10 @@
 				468D418C1A6DC53D004A7BAA /* WriteLineViewController.xib */,
 				468D418F1A6F21F8004A7BAA /* FriendsViewController.swift */,
 				468D41901A6F21F8004A7BAA /* FriendsViewController.xib */,
+				46E3DCCA1A702FBB006D059A /* Layout.storyboard */,
+				46E3DCCC1A7037B4006D059A /* LayoutTopics.swift */,
+				46E3DCCE1A7037F6006D059A /* LayoutFriends.swift */,
+				46E3DCD01A70381A006D059A /* LayoutHelp.swift */,
 			);
 			path = PoeticJusticeApp;
 			sourceTree = "<group>";
@@ -1172,6 +1181,7 @@
 				40D6ACC41A6B200A0083ACFA /* Warning-Sign.png in Resources */,
 				40D6ABD51A6B20090083ACFA /* Cheese-Burger.png in Resources */,
 				40D6AC0C1A6B20090083ACFA /* Fries.png in Resources */,
+				46E3DCCB1A702FBC006D059A /* Layout.storyboard in Resources */,
 				40D6AC551A6B20090083ACFA /* Pie-Chart.png in Resources */,
 				40D6AC391A6B20090083ACFA /* Melon.png in Resources */,
 				40D6AC1A1A6B20090083ACFA /* High-Heel.png in Resources */,
@@ -1466,9 +1476,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40530C5A1A69B923007063AF /* ViewController.swift in Sources */,
+				40530C5A1A69B923007063AF /* LoginViewController.swift in Sources */,
 				40530C821A6B0F5F007063AF /* GamePlayViewController.swift in Sources */,
 				40D6ABAB1A6B20090083ACFA /* NetUtils.swift in Sources */,
+				46E3DCCF1A7037F6006D059A /* LayoutFriends.swift in Sources */,
 				40D6ABAC1A6B20090083ACFA /* SwiftyJSON.swift in Sources */,
 				468D41911A6F21F8004A7BAA /* FriendsViewController.swift in Sources */,
 				468D418D1A6DC53D004A7BAA /* WriteLineViewController.swift in Sources */,
@@ -1476,8 +1487,9 @@
 				40D6ACD01A6B200A0083ACFA /* User.swift in Sources */,
 				40530C7D1A6AA977007063AF /* TopicsViewController.swift in Sources */,
 				40530C581A69B923007063AF /* AppDelegate.swift in Sources */,
-				40D6ACD11A6B200A0083ACFA /* LoginViewController.swift in Sources */,
+				46E3DCD11A70381A006D059A /* LayoutHelp.swift in Sources */,
 				40D6ABAA1A6B20090083ACFA /* NetOpers.swift in Sources */,
+				46E3DCCD1A7037B4006D059A /* LayoutTopics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
