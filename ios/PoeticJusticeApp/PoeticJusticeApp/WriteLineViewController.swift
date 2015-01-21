@@ -13,6 +13,7 @@ class WriteLineViewController: UIViewController {
     // TODO: is there a way to reset this?
     var score : Int = 1;
     var line : String = "";
+    var verseId : Int = 0;
 
     override func viewDidLoad() {
         super.viewDidLoad()

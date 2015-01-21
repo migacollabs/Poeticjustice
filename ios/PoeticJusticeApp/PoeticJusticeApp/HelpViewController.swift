@@ -13,6 +13,8 @@ class HelpViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Help"
 
         // Do any additional setup after loading the view.
     }
@@ -22,7 +24,7 @@ class HelpViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     @IBAction func testButton(sender: AnyObject) {
-        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
+        let vc = FriendsViewController(nibName: "FriendsViewController", bundle: nil)
         navigationController?.pushViewController(vc, animated: true)
     }
     
