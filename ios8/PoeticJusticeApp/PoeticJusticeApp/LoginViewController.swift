@@ -1,3 +1,4 @@
+
 //
 //  ViewController.swift
 //  PoeticJusticeApp
@@ -8,8 +9,8 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class LoginViewController: UIViewController {
+    
     @IBOutlet weak var user_name: UITextField!
     @IBOutlet weak var email_address: UITextField!
     
@@ -17,13 +18,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
     @IBAction func openHelp(sender: AnyObject) {
         let vc = HelpViewController(nibName: "HelpViewController", bundle: nil)
         navigationController?.pushViewController(vc, animated: true)
@@ -79,23 +80,17 @@ class ViewController: UIViewController {
                 () // do no app server error msg
             }
         }
-  
+        
     }
     
     func on_login(){
-
+        
         var sb = UIStoryboard(name: "GamePlayStoryboard", bundle: nil)
         var controller = sb.instantiateViewControllerWithIdentifier("GamePlayViewController") as UIViewController
         self.presentViewController(controller, animated: true, completion: nil)
         
     }
     
-
-
+    
+    
 }
-
-
-
-
-
-
