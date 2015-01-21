@@ -22,6 +22,8 @@ class NetOpers {
     }
     
     let session: NSURLSession? = nil
+    
+    var appserver_hostname: String?
     var loginHandler: ViewController?
     
     var userId: Int? = nil
@@ -30,6 +32,20 @@ class NetOpers {
     
     init(){
         self.session = NSURLSession.sharedSession()
+        
+        var myDict: NSDictionary?
+        
+        // use a optional let assignment thing to check for the existence of
+        // the Config plist file.
+        if let path = NSBundle.mainBundle().pathForResource("Config", ofType: "plist") {
+            myDict = NSDictionary(contentsOfFile: path)
+        }
+        
+        if let dict = myDict {
+            if let ah = dict["appserver_hostname"] as String?{
+                self.appserver_hostname = ah
+            }
+        }
     }
     
 
@@ -224,97 +240,66 @@ class NetOpers {
         task?.resume()
     }
     
-    func update_main_player_score(increment_by:Int){
-        if self.userId != nil{
+    func update_main_player_score(increment_by:Int) -> Bool{
+        if self.userId != nil && self.appserver_hostname != nil{
             
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-            
-            var request = NSMutableURLRequest(URL: NSURL(string: "/u/update/score")!)
+            var url_string:String = self.appserver_hostname! + "/u/update/score"
             
             var params = Dictionary<String, AnyObject>()
             params["id"] = self.userId
-            params["update_score_by_increment"] = increment_by
-
+            params["score_increment"] = increment_by
             
-            request.HTTPShouldHandleCookies = true
-            request.HTTPMethod = "POST"
-            request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
+            self.post(url_string, params: params)
             
-            var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-                if let httpResponse = response as? NSHTTPURLResponse {
-                    if httpResponse.statusCode == 200 {
-                        
-                        if data != nil {
-                            
-                            var json: JSON? = nil
-                            var user_data: NSDictionary?
-                            
-                            if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                                data, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as? NSDictionary{
-                                    
-                                    if let results = jsonResult["user"] as? NSDictionary{
-                                        
-                                        user_data = results
-                                        
-                                        if let x = results["key"] as? String{
-                                            self.userKey = x
-                                            
-                                            if let y = results["id"] as? Int{
-                                                self.userId = y
-                                            }
-                                        }
-                                    }
-                            }
-                            
-                            if self.userId != nil && self.userKey != nil && user_data != nil{
-                                
-                                self.user = User(userData: user_data!)
-                                
-                                if let lh = self.loginHandler{
-                                    let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                                    dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
-                                        dispatch_async(dispatch_get_main_queue(), {
-                                            lh.on_login()
-                                        })
-                                    })
-                                }
-                            }
-                            
-                            if (json != nil){
-                                
-                                () // do more with the json object
-                                
-                            }
-                            
-                        }
-                        
-                    }else{
-                        print("Error signing in")
-                        // do something, figure out how to do async error handling
-                        // without exceptions, because there are no exceptions in
-                        // swift :(
-                    }
-                }
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                
-            })
-            
-            task?.resume()
+            return true
             
         }else{
-            () //show an error
+            // cant show an err here because its not view 
+            return false
         }
     }
     
+    func update_player_score(increment_by:Int) -> Bool{
+        if self.userId != nil && self.appserver_hostname != nil{
+            
+            var url_string:String = self.appserver_hostname! + "/u/update/player-score"
+            
+            var params = Dictionary<String, AnyObject>()
+            params["id"] = self.userId
+            params["score_increment"] = increment_by
+            
+            self.post(url_string, params: params)
+            
+            return true
+            
+        }else{
+            // cant show an err here because its not view
+            return false
+        }
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
+    func update_verse_score(verse_id:Int, increment_by:Int) -> Bool{
+        if self.userId != nil && self.appserver_hostname != nil{
+            
+            var url_string:String = self.appserver_hostname! + "/v/update/score"
+            
+            var params = Dictionary<String, AnyObject>()
+            params["id"] = verse_id
+            params["score_increment"] = increment_by
+            
+            self.post(url_string, params: params)
+            
+            return true
+            
+        }else{
+            // cant show an err here because its not view
+            return false
+        }
+    }
     
 }
+
+
+
+
+
