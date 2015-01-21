@@ -36,9 +36,11 @@ class WriteLineViewController: UIViewController {
 
     @IBOutlet weak var setLine: UITextView!
     
+    
     @IBAction func sendLine(sender: AnyObject) {
         println("Clicked send with score " + String(score) + " " +
         setLine.text)
+        
     }
     /*
     // MARK: - Navigation

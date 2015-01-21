@@ -46,10 +46,11 @@ class NetOpers {
                 self.appserver_hostname = ah
             }
         }
+        
+        
     }
     
-
-    func get(url: String){
+    func get(url: String, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ){
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -57,48 +58,34 @@ class NetOpers {
         request.HTTPShouldHandleCookies = true
         request.HTTPMethod = "GET"
         
-        var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            if let httpResponse = response as? NSHTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    
-                    // do something.. a delegate callback somehow?
-                    
-                }
-            }
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        })
-        
+        var task = self.session?.dataTaskWithRequest(request, completionHandler: completion_handler?)
         task?.resume()
     }
     
-    func post(url: String, params: Dictionary<String, AnyObject>) {
+    func post(url: String, params: Dictionary<String, AnyObject>, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         var request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPShouldHandleCookies = true
         request.HTTPMethod = "POST"
-        
         request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
         
-        var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            if let httpResponse = response as? NSHTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    
-                    // do something.. a delegate callback somehow?
-                    
-                }else{
-                    print("Error posting")
-                    // do something, figure out how to do async error handling
-                    // without exceptions, because there are no exceptions in
-                    // swift :(
-                }
-            }
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
-        })
+        var task = self.session?.dataTaskWithRequest(request, completionHandler: completion_handler?)
+        
+        task?.resume()
+    }
+    
+    func put(url: String, params: Dictionary<String, AnyObject>, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ) {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPShouldHandleCookies = true
+        request.HTTPMethod = "PUT"
+        request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
+        
+        var task = self.session?.dataTaskWithRequest(request, completionHandler: completion_handler?)
         
         task?.resume()
     }
@@ -136,7 +123,7 @@ class NetOpers {
         
     }
     
-    func put(url: String, params: Dictionary<String, AnyObject>) {
+    func put(url: String, params: Dictionary<String, AnyObject>, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         

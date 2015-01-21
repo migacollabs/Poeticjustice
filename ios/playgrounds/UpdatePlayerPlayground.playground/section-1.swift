@@ -598,9 +598,31 @@ func get_json_value(json: JSON, key_name: String) -> AnyObject?{
     return nil
 }
 
+func closure_func(data:NSData?, response: NSURLResponse?, error: NSError? ){
+    
+    println("in closure")
+
+    if let inner_httpResponse = response as? NSHTTPURLResponse {
+        
+        println(inner_httpResponse.statusCode)
+        
+        if let inner_result: NSDictionary =
+            NSJSONSerialization.JSONObjectWithData(
+                data!, options: NSJSONReadingOptions.MutableContainers,
+                error: nil) as? NSDictionary{
+                    
+                    println(inner_result)
+                    
+        }
+        
+    }
+}
 
 
-func login(params : Dictionary<String, AnyObject>, url : String) {
+// typealias closureType = (data:NSData?, response: NSURLResponse?, error: NSError?) -> (Void)
+
+
+func login(params: Dictionary<String, AnyObject>, url: String,  passable_func:((NSData?, NSURLResponse?, NSError?)->Void)?){
     
     var request = NSMutableURLRequest(URL: NSURL(string: url)!)
     
@@ -642,22 +664,8 @@ func login(params : Dictionary<String, AnyObject>, url : String) {
                             
                             println("ready")
                             
-                            var inner_task = session.dataTaskWithRequest(inner_request, completionHandler: {data, response, error -> Void in
-                                if let inner_httpResponse = response as? NSHTTPURLResponse {
-                                    
-                                    println(inner_httpResponse.statusCode)
-                                    
-                                    if let inner_result: NSDictionary =
-                                    NSJSONSerialization.JSONObjectWithData(
-                                    data, options: NSJSONReadingOptions.MutableContainers,
-                                    error: nil) as? NSDictionary{
-                                                
-                                        println(inner_result)
-                                                
-                                    }
-                                    
-                                }
-                            })
+                            
+                            var inner_task = session.dataTaskWithRequest(inner_request, completionHandler: passable_func?)
                             
                             inner_task.resume()
                             
@@ -667,6 +675,8 @@ func login(params : Dictionary<String, AnyObject>, url : String) {
                 
             }else{
                 print("Error signing in")
+                
+                
                 
                 // do something, figure out how to do async error handling
                 // without exceptions, because there are no exceptions in
@@ -689,7 +699,7 @@ params["form.submitted"] = true
 
 var login_url = "http://localhost:8888/login"
 
-login(params, login_url)
+login(params, login_url, closure_func)
 
 
 
