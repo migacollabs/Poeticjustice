@@ -32,11 +32,128 @@ class NetOpers {
         self.session = NSURLSession.sharedSession()
     }
     
-    func login(params : Dictionary<String, AnyObject>, url : String) {
+
+    func get(url: String){
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        println("NetOpers.login called")
+        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPShouldHandleCookies = true
+        request.HTTPMethod = "GET"
+        
+        var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            if let httpResponse = response as? NSHTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    
+                    // do something.. a delegate callback somehow?
+                    
+                }
+            }
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        })
+        
+        task?.resume()
+    }
+    
+    func post(url: String, params: Dictionary<String, AnyObject>) {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPShouldHandleCookies = true
+        request.HTTPMethod = "POST"
+        
+        request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
+        
+        var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            if let httpResponse = response as? NSHTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    
+                    // do something.. a delegate callback somehow?
+                    
+                }else{
+                    print("Error posting")
+                    // do something, figure out how to do async error handling
+                    // without exceptions, because there are no exceptions in
+                    // swift :(
+                }
+            }
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+        })
+        
+        task?.resume()
+    }
+    
+    func sync_post(url: String, params: Dictionary<String, AnyObject>) -> NSDictionary?{
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPShouldHandleCookies = true
+        request.HTTPMethod = "POST"
+        request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
+        var response: NSURLResponse?
+        var error: NSErrorPointer = nil
+        var dataVal: NSData? =  NSURLConnection.sendSynchronousRequest(
+            request, returningResponse: &response, error:error)
+        if error == nil {
+            if dataVal != nil {
+                if let actual_response = response as? NSHTTPURLResponse {
+                    if actual_response.statusCode == 200{
+                        var jsonDictifiedResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataVal!, options: NSJSONReadingOptions.MutableContainers, error: error) as NSDictionary
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        
+                        return jsonDictifiedResult
+                    }
+                }
+            }
+        }
+        
+        // where is the swift finally?
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        
+        return nil
+        
+    }
+    
+    func put(url: String, params: Dictionary<String, AnyObject>) {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPShouldHandleCookies = true
+        request.HTTPMethod = "PUT"
+        
+        request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
+        
+        var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+            if let httpResponse = response as? NSHTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    
+                    // do something.. a delegate callback somehow?
+                    
+                }else{
+                    print("Error posting")
+                    // do something, figure out how to do async error handling
+                    // without exceptions, because there are no exceptions in
+                    // swift :(
+                }
+            }
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+        })
+        
+        task?.resume()
+    }
+    
+    func login(params : Dictionary<String, AnyObject>, url : String) {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         var request = NSMutableURLRequest(URL: NSURL(string: url)!)
         
@@ -53,31 +170,25 @@ class NetOpers {
                         var json: JSON? = nil
                         var user_data: NSDictionary?
                         
-                        if let jsonResult: NSDictionary =
-                            NSJSONSerialization.JSONObjectWithData(
-                                data, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as? NSDictionary{
+                        if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as? NSDictionary{
+                            
+                            if let results = jsonResult["user"] as? NSDictionary{
+                                
+                                user_data = results
+                                
+                                if let x = results["key"] as? String{
+                                    self.userKey = x
                                     
-                                    if let results = jsonResult["user"] as? NSDictionary{
-                                        
-                                        user_data = results
-                                        
-                                        if let x = results["key"] as? String{
-                                            self.userKey = x
-                                            println("UserKey \(x)")
-                                            
-                                            if let y = results["id"] as? Int{
-                                                self.userId = y
-                                                println("UserId \(y)")
-                                            }
-                                        }
-                                        
+                                    if let y = results["id"] as? Int{
+                                        self.userId = y
                                     }
+                                }
+                            }
                         }
                         
                         if self.userId != nil && self.userKey != nil && user_data != nil{
-                            
-                            println("im here!")
                             
                             self.user = User(userData: user_data!)
                             
@@ -99,8 +210,6 @@ class NetOpers {
                         
                     }
                     
-
-                    
                 }else{
                     print("Error signing in")
                     // do something, figure out how to do async error handling
@@ -114,5 +223,98 @@ class NetOpers {
         
         task?.resume()
     }
+    
+    func update_main_player_score(increment_by:Int){
+        if self.userId != nil{
+            
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            
+            var request = NSMutableURLRequest(URL: NSURL(string: "/u/update/score")!)
+            
+            var params = Dictionary<String, AnyObject>()
+            params["id"] = self.userId
+            params["update_score_by_increment"] = increment_by
+
+            
+            request.HTTPShouldHandleCookies = true
+            request.HTTPMethod = "POST"
+            request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
+            
+            var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        
+                        if data != nil {
+                            
+                            var json: JSON? = nil
+                            var user_data: NSDictionary?
+                            
+                            if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                data, options: NSJSONReadingOptions.MutableContainers,
+                                error: nil) as? NSDictionary{
+                                    
+                                    if let results = jsonResult["user"] as? NSDictionary{
+                                        
+                                        user_data = results
+                                        
+                                        if let x = results["key"] as? String{
+                                            self.userKey = x
+                                            
+                                            if let y = results["id"] as? Int{
+                                                self.userId = y
+                                            }
+                                        }
+                                    }
+                            }
+                            
+                            if self.userId != nil && self.userKey != nil && user_data != nil{
+                                
+                                self.user = User(userData: user_data!)
+                                
+                                if let lh = self.loginHandler{
+                                    let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                                    dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            lh.on_login()
+                                        })
+                                    })
+                                }
+                            }
+                            
+                            if (json != nil){
+                                
+                                () // do more with the json object
+                                
+                            }
+                            
+                        }
+                        
+                    }else{
+                        print("Error signing in")
+                        // do something, figure out how to do async error handling
+                        // without exceptions, because there are no exceptions in
+                        // swift :(
+                    }
+                }
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                
+            })
+            
+            task?.resume()
+            
+        }else{
+            () //show an error
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
