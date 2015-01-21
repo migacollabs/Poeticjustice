@@ -323,6 +323,8 @@
 		468D41861A6D6EE4004A7BAA /* Help Example.wav in Resources */ = {isa = PBXBuildFile; fileRef = 468D41851A6D6EE4004A7BAA /* Help Example.wav */; };
 		468D418D1A6DC53D004A7BAA /* WriteLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468D418B1A6DC53C004A7BAA /* WriteLineViewController.swift */; };
 		468D418E1A6DC53D004A7BAA /* WriteLineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 468D418C1A6DC53D004A7BAA /* WriteLineViewController.xib */; };
+		468D41911A6F21F8004A7BAA /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468D418F1A6F21F8004A7BAA /* FriendsViewController.swift */; };
+		468D41921A6F21F8004A7BAA /* FriendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 468D41901A6F21F8004A7BAA /* FriendsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -656,6 +658,8 @@
 		468D41851A6D6EE4004A7BAA /* Help Example.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Help Example.wav"; sourceTree = "<group>"; };
 		468D418B1A6DC53C004A7BAA /* WriteLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WriteLineViewController.swift; sourceTree = "<group>"; };
 		468D418C1A6DC53D004A7BAA /* WriteLineViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WriteLineViewController.xib; sourceTree = "<group>"; };
+		468D418F1A6F21F8004A7BAA /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		468D41901A6F21F8004A7BAA /* FriendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -718,6 +722,8 @@
 				40530C811A6B0F5F007063AF /* GamePlayViewController.swift */,
 				468D418B1A6DC53C004A7BAA /* WriteLineViewController.swift */,
 				468D418C1A6DC53D004A7BAA /* WriteLineViewController.xib */,
+				468D418F1A6F21F8004A7BAA /* FriendsViewController.swift */,
+				468D41901A6F21F8004A7BAA /* FriendsViewController.xib */,
 			);
 			path = PoeticJusticeApp;
 			sourceTree = "<group>";
@@ -1294,6 +1300,7 @@
 				40D6AC691A6B20090083ACFA /* Radio.png in Resources */,
 				40D6AC6F1A6B200A0083ACFA /* Robot-2.png in Resources */,
 				40D6ACCF1A6B200A0083ACFA /* Zoom-out.png in Resources */,
+				468D41921A6F21F8004A7BAA /* FriendsViewController.xib in Resources */,
 				40D6ABB91A6B20090083ACFA /* Bag.png in Resources */,
 				40D6ACC81A6B200A0083ACFA /* WiFi.png in Resources */,
 				40D6AC191A6B20090083ACFA /* Heart.png in Resources */,
@@ -1463,6 +1470,7 @@
 				40530C821A6B0F5F007063AF /* GamePlayViewController.swift in Sources */,
 				40D6ABAB1A6B20090083ACFA /* NetUtils.swift in Sources */,
 				40D6ABAC1A6B20090083ACFA /* SwiftyJSON.swift in Sources */,
+				468D41911A6F21F8004A7BAA /* FriendsViewController.swift in Sources */,
 				468D418D1A6DC53D004A7BAA /* WriteLineViewController.swift in Sources */,
 				40530C791A69B983007063AF /* HelpViewController.swift in Sources */,
 				40D6ACD01A6B200A0083ACFA /* User.swift in Sources */,
