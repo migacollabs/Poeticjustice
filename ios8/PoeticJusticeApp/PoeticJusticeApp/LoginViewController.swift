@@ -84,7 +84,15 @@ class LoginViewController: UIViewController {
     
     func on_login() {
         // TODO: user data is already set?  can unlock each tab/view as necessary now?
+        
+        let alertController = UIAlertController(title: "Msg", message:
+            "Logged in!", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     
 }
+
+

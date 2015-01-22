@@ -12,7 +12,7 @@ import Foundation
 
 
 class NetOpers {
-
+    
     // Singleton
     class var sharedInstance: NetOpers {
         struct Static {
@@ -24,7 +24,7 @@ class NetOpers {
     let session: NSURLSession? = nil
     
     var appserver_hostname: String?
-    var loginHandler: LoginViewController?
+    var loginHandler: AnyObject?
     
     var userId: Int? = nil
     var userKey: String? = nil
@@ -46,10 +46,21 @@ class NetOpers {
                 self.appserver_hostname = ah
             }
         }
+        
+        
     }
     
-
-    func get(url: String){
+    func _load_topics(on_topics_loaded:((NSData?, NSURLResponse?, NSError?)->Void)?) -> Bool{
+        if self.appserver_hostname != nil{
+            var url:String = self.appserver_hostname! + "/m/search/VerseCategoryTopic"
+            self.get(url, completion_handler: on_topics_loaded)
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func get(url: String, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ){
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -57,48 +68,34 @@ class NetOpers {
         request.HTTPShouldHandleCookies = true
         request.HTTPMethod = "GET"
         
-        var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            if let httpResponse = response as? NSHTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    
-                    // do something.. a delegate callback somehow?
-                    
-                }
-            }
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        })
-        
+        var task = self.session?.dataTaskWithRequest(request, completionHandler: completion_handler?)
         task?.resume()
     }
     
-    func post(url: String, params: Dictionary<String, AnyObject>) {
+    func post(url: String, params: Dictionary<String, AnyObject>, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         var request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPShouldHandleCookies = true
         request.HTTPMethod = "POST"
-        
         request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
         
-        var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            if let httpResponse = response as? NSHTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    
-                    // do something.. a delegate callback somehow?
-                    
-                }else{
-                    print("Error posting")
-                    // do something, figure out how to do async error handling
-                    // without exceptions, because there are no exceptions in
-                    // swift :(
-                }
-            }
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
-        })
+        var task = self.session?.dataTaskWithRequest(request, completionHandler: completion_handler?)
+        
+        task?.resume()
+    }
+    
+    func put(url: String, params: Dictionary<String, AnyObject>, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ) {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        request.HTTPShouldHandleCookies = true
+        request.HTTPMethod = "PUT"
+        request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
+        
+        var task = self.session?.dataTaskWithRequest(request, completionHandler: completion_handler?)
         
         task?.resume()
     }
@@ -136,37 +133,6 @@ class NetOpers {
         
     }
     
-    func put(url: String, params: Dictionary<String, AnyObject>) {
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
-        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
-        request.HTTPShouldHandleCookies = true
-        request.HTTPMethod = "PUT"
-        
-        request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
-        
-        var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            if let httpResponse = response as? NSHTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    
-                    // do something.. a delegate callback somehow?
-                    
-                }else{
-                    print("Error posting")
-                    // do something, figure out how to do async error handling
-                    // without exceptions, because there are no exceptions in
-                    // swift :(
-                }
-            }
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
-        })
-        
-        task?.resume()
-    }
-    
     func login(params : Dictionary<String, AnyObject>, url : String) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
@@ -187,35 +153,35 @@ class NetOpers {
                         var user_data: NSDictionary?
                         
                         if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                        data, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as? NSDictionary{
-                            
-                            if let results = jsonResult["user"] as? NSDictionary{
+                            data, options: NSJSONReadingOptions.MutableContainers,
+                            error: nil) as? NSDictionary{
                                 
-                                user_data = results
-                                
-                                if let x = results["key"] as? String{
-                                    self.userKey = x
+                                if let results = jsonResult["user"] as? NSDictionary{
                                     
-                                    if let y = results["id"] as? Int{
-                                        self.userId = y
+                                    user_data = results
+                                    
+                                    if let x = results["key"] as? String{
+                                        self.userKey = x
+                                        
+                                        if let y = results["id"] as? Int{
+                                            self.userId = y
+                                        }
                                     }
                                 }
-                            }
                         }
                         
                         if self.userId != nil && self.userKey != nil && user_data != nil{
                             
                             self.user = User(userData: user_data!)
                             
-                            if let lh = self.loginHandler{
-                                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                                dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        lh.on_login()
-                                    })
-                                })
-                            }
+//                            if let lh = self.loginHandler{
+//                                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+//                                dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
+//                                    dispatch_async(dispatch_get_main_queue(), {
+//                                        lh.on_login()
+//                                    })
+//                                })
+//                            }
                         }
                         
                         if (json != nil){
@@ -240,7 +206,7 @@ class NetOpers {
         task?.resume()
     }
     
-    func update_main_player_score(increment_by:Int) -> Bool{
+    func update_main_player_score(increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
         if self.userId != nil && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/u/update/score"
@@ -249,17 +215,17 @@ class NetOpers {
             params["id"] = self.userId
             params["score_increment"] = increment_by
             
-            self.post(url_string, params: params)
+            self.post(url_string, params: params, on_score_updated?)
             
             return true
             
         }else{
-            // cant show an err here because its not view 
+            // cant show an err here because its not view
             return false
         }
     }
     
-    func update_player_score(increment_by:Int) -> Bool{
+    func update_player_score(increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
         if self.userId != nil && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/u/update/player-score"
@@ -268,17 +234,16 @@ class NetOpers {
             params["id"] = self.userId
             params["score_increment"] = increment_by
             
-            self.post(url_string, params: params)
+            self.post(url_string, params: params, on_score_updated?)
             
             return true
             
         }else{
-            // cant show an err here because its not view
             return false
         }
     }
     
-    func update_verse_score(verse_id:Int, increment_by:Int) -> Bool{
+    func update_verse_score(verse_id:Int, increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
         if self.userId != nil && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/v/update/score"
@@ -287,12 +252,11 @@ class NetOpers {
             params["id"] = verse_id
             params["score_increment"] = increment_by
             
-            self.post(url_string, params: params)
+            self.post(url_string, params: params, on_score_updated?)
             
             return true
             
         }else{
-            // cant show an err here because its not view
             return false
         }
     }

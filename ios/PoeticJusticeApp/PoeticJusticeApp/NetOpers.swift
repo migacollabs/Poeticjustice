@@ -24,7 +24,7 @@ class NetOpers {
     let session: NSURLSession? = nil
     
     var appserver_hostname: String?
-    var loginHandler: ViewController?
+    var loginHandler: AnyObject?
     
     var userId: Int? = nil
     var userKey: String? = nil
@@ -121,37 +121,6 @@ class NetOpers {
         
         return nil
         
-    }
-    
-    func put(url: String, params: Dictionary<String, AnyObject>, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ) {
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
-        var request = NSMutableURLRequest(URL: NSURL(string: url)!)
-        request.HTTPShouldHandleCookies = true
-        request.HTTPMethod = "PUT"
-        
-        request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
-        
-        var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            if let httpResponse = response as? NSHTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    
-                    // do something.. a delegate callback somehow?
-                    
-                }else{
-                    print("Error posting")
-                    // do something, figure out how to do async error handling
-                    // without exceptions, because there are no exceptions in
-                    // swift :(
-                }
-            }
-            
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
-        })
-        
-        task?.resume()
     }
     
     func login(params : Dictionary<String, AnyObject>, url : String) {
