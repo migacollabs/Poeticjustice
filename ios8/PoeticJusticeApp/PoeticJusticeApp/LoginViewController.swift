@@ -25,13 +25,9 @@ class LoginViewController: UIViewController {
     }
     
     
-    @IBAction func openHelp(sender: AnyObject) {
-        let vc = HelpViewController(nibName: "HelpViewController", bundle: nil)
-        navigationController?.pushViewController(vc, animated: true)
-        
-    }
-    
     @IBAction func on_go(sender: AnyObject) {
+        
+        println("attempting login...")
         
         var myDict: NSDictionary?
         
@@ -73,6 +69,9 @@ class LoginViewController: UIViewController {
                     NetOpers.sharedInstance.loginHandler = self
                     NetOpers.sharedInstance.login(params, url: login_url)
                     
+                    // TODO: open up a clickable topics view
+                    tabBarController?.selectedIndex = 1
+                    
                 }else{
                     () // do no user email address msg
                 }
@@ -83,14 +82,9 @@ class LoginViewController: UIViewController {
         
     }
     
-    func on_login(){
-        
-        var sb = UIStoryboard(name: "GamePlayStoryboard", bundle: nil)
-        var controller = sb.instantiateViewControllerWithIdentifier("GamePlayViewController") as UIViewController
-        self.presentViewController(controller, animated: true, completion: nil)
-        
+    func on_login() {
+        // TODO: user data is already set?  can unlock each tab/view as necessary now?
     }
-    
     
     
 }
