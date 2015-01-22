@@ -23,7 +23,7 @@ from pyaella.dinj import BorgLexicon, __borg_lex__
 Base = declarative_base(cls=PyaellaSQLAlchemyBase)
 ReflBase = declarative_base(cls=DeferredReflection)
 
-__autogen_date__ = "2015-01-21 10:39:38.713763"
+__autogen_date__ = "2015-01-22 14:16:34.970310"
 
 __schema_file__ = os.path.join(os.path.dirname(__file__), "domain.plr")
 

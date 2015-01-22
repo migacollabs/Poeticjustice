@@ -67,7 +67,12 @@ class LoginViewController: UIViewController {
                     println("Connectintg as \(login_em)")
                     
                     NetOpers.sharedInstance.loginHandler = self
-                    NetOpers.sharedInstance.login(params, url: login_url)
+                    NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
+                        
+                        // we are logged in!
+                        self.show_alert("Login", message: "Successfully logged in", controller_title: "Thanks!")
+                        
+                    })
                     
                     // TODO: open up a clickable topics view
                     tabBarController?.selectedIndex = 1
@@ -82,17 +87,24 @@ class LoginViewController: UIViewController {
         
     }
     
-    func on_login() {
-        // TODO: user data is already set?  can unlock each tab/view as necessary now?
+    func show_alert(title:String, message:String, controller_title:String){
         
-        let alertController = UIAlertController(title: "Msg", message:
-            "Logged in!", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
         
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    
 }
+
+
+
+
+
+
+
+
+
+
 
 

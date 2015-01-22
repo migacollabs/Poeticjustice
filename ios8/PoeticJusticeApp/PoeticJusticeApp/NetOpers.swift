@@ -133,7 +133,7 @@ class NetOpers {
         
     }
     
-    func login(params : Dictionary<String, AnyObject>, url : String) {
+    func login(params : Dictionary<String, AnyObject>, url: String, on_login:()->(Void) ) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -174,14 +174,13 @@ class NetOpers {
                             
                             self.user = User(userData: user_data!)
                             
-//                            if let lh = self.loginHandler{
-//                                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-//                                dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
-//                                    dispatch_async(dispatch_get_main_queue(), {
-//                                        lh.on_login()
-//                                    })
-//                                })
-//                            }
+                            let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                            dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    on_login()
+                                })
+                            })
+                            
                         }
                         
                         if (json != nil){
