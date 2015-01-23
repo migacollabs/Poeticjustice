@@ -6,16 +6,72 @@
 //  Copyright (c) 2015 Miga Col.Labs. All rights reserved.
 //
 
+import Foundation
+
+class Friend {
+    let friend_data: NSDictionary
+    
+    init(rec:NSDictionary){
+        self.friend_data = rec
+    }
+    
+    var friend_id: AnyObject? {
+        get {
+            if let x = self.friend_data["friend_id"] as? Int{
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var email_address: AnyObject? {
+        get {
+            if let x = self.friend_data["email_address"] as? String{
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var user_name: AnyObject? {
+        get {
+            if let x = self.friend_data["user_name"] as? String{
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var approved: AnyObject? {
+        get {
+            if let x = self.friend_data["approved"] as? Bool{
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var display_name : AnyObject? {
+        if let x = self.friend_data["approved"] as? Bool{
+            return email_address
+        } else {
+            return user_name
+        }
+    }
+}
+
 import UIKit
 
 class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var myTableView: UITableView!
     
-    var items : [Int] = []
+    var friends : [Friend] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Manage Friends"
         
         self.myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier : "cell")
         self.myTableView.dataSource = self
@@ -37,13 +93,20 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     data!, options: NSJSONReadingOptions.MutableContainers,
                     error: nil) as NSDictionary
                 
-                if let results = jsonResult["results"] as? NSArray{
-                    for friend in results{
-                        println(friend) // TODO: how to get the "friend_id"?
+                if let len = jsonResult["length"] as? Int{
+                    if let results = jsonResult["results"] as? NSArray{
+                        for friend in results {
+                            
+                            var f = Friend(rec:friend as NSDictionary)
+                            self.friends.append(f)
+                            
+                        }
                     }
                 }
-                
             }
+        }
+        if (error != nil) {
+            println(error)
         }
 //        println(response)
 //        println(data);
@@ -118,12 +181,16 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView : UITableView, numberOfRowsInSection section : Int) -> Int {
-        return items.count
+        return friends.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
-        cell.textLabel?.text = String(self.items[indexPath.row])
+        if let f = self.friends[indexPath.row] as Friend? {
+            if let d = f.display_name as? String {
+                cell.textLabel?.text = d
+            }
+        }
         return cell
     }
     

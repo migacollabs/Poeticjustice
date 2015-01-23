@@ -122,6 +122,57 @@ def update_user_score(request):
     request_method='POST',
     context='poeticjustice:contexts.Topics',
     renderer='json')
+def get_user_friends(request):
+    print 'get_user_friends called', request
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                user = User(entity=session.merge(user))
+
+                friends = []
+                for u, uxu in session.query(User, UserXUser).\
+                    filter(User.user_id==UserXUser.user_id).\
+                    filter(User.user_id==auth_usrid):
+                    friends.add({'friend_id':uxu.friend_id, 'approved':uxu.approved,
+                        'email_address':u.email_address, 'user_name':u.user_name})
+
+            return friends
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
+    name='random',
+    request_method='POST',
+    context='poeticjustice:contexts.Topics',
+    renderer='json')
 def get_random_topics(request):
     print 'get_random_topics called', request
     try:
