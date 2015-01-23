@@ -113,7 +113,13 @@ class TopicsViewController: UIViewController {
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
         if motion == .MotionShake {
-            self.topicButton.setImage(UIImage(named: "Cassette.png"), forState: .Normal)
+            
+            if self.topic_order.count > 0{
+                self.topic_order = self.shuffle(self.topic_order)
+                var tid = self.topic_order[0]
+                var topic = self.topics[tid] as Topic
+                self.topicButton.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
+            }
         }
     }
     
