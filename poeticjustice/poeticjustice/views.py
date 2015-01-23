@@ -241,7 +241,7 @@ def login_get(request):
 @forbidden_view_config(renderer='login.mako')
 def login_post(request):
     try:
-        print 'login post called', request
+        print '\nlogin post called\n', request
         login_url = request.resource_url(request.context, 'login')
         referrer = request.url
         if referrer == login_url:
@@ -279,7 +279,7 @@ def login_post(request):
                         logged_in=authenticated_userid(request)
                         )
 
-
+        print 'FAILED LOGIN'
         return dict(
             message='Failed login',
             url=request.application_url + '/login',

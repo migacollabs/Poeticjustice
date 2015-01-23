@@ -17,6 +17,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        NetOpers.sharedInstance.loginHandler = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -66,7 +68,6 @@ class LoginViewController: UIViewController {
                     
                     println("Connectintg as \(login_em)")
                     
-                    NetOpers.sharedInstance.loginHandler = self
                     NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
                         
                         // we are logged in!
@@ -74,8 +75,8 @@ class LoginViewController: UIViewController {
                         
                     })
                     
-                    // TODO: open up a clickable topics view
-                    tabBarController?.selectedIndex = 1
+//                    // TODO: open up a clickable topics view
+//                    tabBarController?.selectedIndex = 1
                     
                 }else{
                     () // do no user email address msg
@@ -85,6 +86,11 @@ class LoginViewController: UIViewController {
             }
         }
         
+    }
+    
+    func on_login(){
+        // TODO: open up a clickable topics view
+        tabBarController?.selectedIndex = 1
     }
     
     func show_alert(title:String, message:String, controller_title:String){

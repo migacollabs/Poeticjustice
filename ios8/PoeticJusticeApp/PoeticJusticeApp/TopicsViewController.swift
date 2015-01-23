@@ -36,32 +36,29 @@ class TopicsViewController: UIViewController {
                 
                 if data != nil {
                     
+                    var data_str = NSString(data:data!, encoding:NSUTF8StringEncoding)
+                    
                     if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: nil) as? NSDictionary{
                             
-                            if let results = jsonResult["results"] as? NSArray{
-                                
-
+                            if let len = jsonResult["length"] as? Int{
+                                if let results = jsonResult["results"] as? NSArray{
+                                    for topic in results{
+                                        println(topic)
+                                    }
+                                }
                             }
+                            
+                    }else{
+                        self.dispatch_alert("Error", message: "No Topics", controller_title: "Ok")
                     }
 
                 }
                 
             }else{
                 
-                let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
-                    dispatch_async(dispatch_get_main_queue(), {
-                        
-                        let alertController = UIAlertController(title: "Error", message:
-                            "There was an error!", preferredStyle: UIAlertControllerStyle.Alert)
-                        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-                        
-                        self.presentViewController(alertController, animated: true, completion: nil)
-                        
-                    })
-                })
+                self.dispatch_alert("Error", message: "Cannot load Topics", controller_title: "Ok")
 
             }
         }
@@ -69,6 +66,29 @@ class TopicsViewController: UIViewController {
     
     func get_topics(){
         NetOpers.sharedInstance._load_topics(on_loaded_topics_completion)
+    }
+    
+    func dispatch_alert(title:String, message:String, controller_title:String){
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            })
+        })
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     /*

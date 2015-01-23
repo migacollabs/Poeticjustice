@@ -24,7 +24,7 @@ class NetOpers {
     let session: NSURLSession? = nil
     
     var appserver_hostname: String?
-    var loginHandler: AnyObject?
+    var loginHandler: LoginViewController?
     
     var userId: Int? = nil
     var userKey: String? = nil
@@ -53,6 +53,7 @@ class NetOpers {
     func _load_topics(on_topics_loaded:((NSData?, NSURLResponse?, NSError?)->Void)?) -> Bool{
         if self.appserver_hostname != nil{
             var url:String = self.appserver_hostname! + "/m/search/VerseCategoryTopic"
+            println(url)
             self.get(url, completion_handler: on_topics_loaded)
             return true
         }else{
@@ -177,7 +178,11 @@ class NetOpers {
                             let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
                             dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
                                 dispatch_async(dispatch_get_main_queue(), {
-                                    on_login()
+                                    if self.loginHandler != nil{
+                                        self.loginHandler!.on_login()
+                                    }else{
+                                        on_login()
+                                    }
                                 })
                             })
                             
