@@ -10,6 +10,8 @@ import UIKit
 
 class TopicsViewController: UIViewController {
 
+    @IBOutlet weak var topicButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.get_topics()
@@ -31,6 +33,9 @@ class TopicsViewController: UIViewController {
     }
     
     func on_loaded_topics_completion(data:NSData?, response:NSURLResponse?, error:NSError?){
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        
         if let httpResponse = response as? NSHTTPURLResponse {
             if httpResponse.statusCode == 200 {
                 
@@ -89,6 +94,13 @@ class TopicsViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
         
         self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+        if motion == .MotionShake {
+            self.topicButton.setImage(UIImage(named: "Cassette.png"), forState: .Normal)
+        }
     }
     
     /*

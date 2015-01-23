@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TopicsViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
+                <outlet property="topicButton" destination="Slf-VG-r1V" id="aIr-NS-zQf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
