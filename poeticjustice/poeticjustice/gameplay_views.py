@@ -117,6 +117,58 @@ def update_user_score(request):
             pass
 
 
+@view_config(
+    name='random',
+    request_method='POST',
+    context='poeticjustice:contexts.Topics',
+    renderer='json')
+def get_random_topics(request):
+    print 'get_random_topics called', request
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                user = User(entity=session.merge(user))
+
+                print kwds['xids']
+
+                exclude_topic_ids = sets()
+
+
+            return dict(
+                logged_in=auth_usrid,
+                user=user.to_dict()
+            )
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
 
 
 

@@ -279,7 +279,6 @@ def login_post(request):
                         logged_in=authenticated_userid(request)
                         )
 
-        print 'FAILED LOGIN'
         return dict(
             message='Failed login',
             url=request.application_url + '/login',

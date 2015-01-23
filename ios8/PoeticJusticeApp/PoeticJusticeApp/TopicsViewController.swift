@@ -12,6 +12,9 @@ class TopicsViewController: UIViewController {
 
     @IBOutlet weak var topicButton: UIButton!
     
+    var topics = Dictionary<Int, AnyObject>()
+    var topic_order:[Int] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.get_topics()
@@ -50,7 +53,12 @@ class TopicsViewController: UIViewController {
                             if let len = jsonResult["length"] as? Int{
                                 if let results = jsonResult["results"] as? NSArray{
                                     for topic in results{
-                                        println(topic)
+                                        
+                                        var t = Topic(rec:topic as NSDictionary)
+                                        var tid = t.id! as Int
+                                        self.topics[tid] = t
+                                        self.topic_order.append(tid)
+                                        
                                     }
                                 }
                             }
@@ -60,6 +68,12 @@ class TopicsViewController: UIViewController {
                     }
 
                 }
+                
+                if self.topic_order.count > 0{
+                    self.topic_order = self.shuffle(self.topic_order)
+                }
+                
+                println(self.topic_order)
                 
             }else{
                 
@@ -101,6 +115,15 @@ class TopicsViewController: UIViewController {
         if motion == .MotionShake {
             self.topicButton.setImage(UIImage(named: "Cassette.png"), forState: .Normal)
         }
+    }
+    
+    func shuffle<C: MutableCollectionType where C.Index == Int>(var list: C) -> C {
+        let count = countElements(list)
+        for i in 0..<(count - 1) {
+            let j = Int(arc4random_uniform(UInt32(count - i))) + i
+            swap(&list[i], &list[j])
+        }
+        return list
     }
     
     /*
