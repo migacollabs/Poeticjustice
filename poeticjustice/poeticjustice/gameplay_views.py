@@ -118,18 +118,17 @@ def update_user_score(request):
 
 
 @view_config(
-    name='random',
-    request_method='POST',
-    context='poeticjustice:contexts.Topics',
+    name='userfriends',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
     renderer='json')
 def get_user_friends(request):
     print 'get_user_friends called', request
     try:
         args = list(request.subpath)
-        kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
-        ac = get_app_config()
-        dconfig = get_dinj_config(ac)
+        kwds = _process_subpath(args)
         auth_usrid = authenticated_userid(request)
+
         user, user_type_names, user_type_lookup = (
             get_current_rbac_user(auth_usrid,
                 accept_user_type_names=[
@@ -144,8 +143,8 @@ def get_user_friends(request):
                 U, UxU = ~User, ~UserXUser
                 friends = []
                 for u, uxu in session.query(U, UxU).\
-                    filter(U.user_id==UxU.user_id).\
-                    filter(U.user_id==auth_usrid):
+                    filter(U.id==UxU.user_id).\
+                    filter(U.id==user.id):
                     friends.add({'friend_id':uxu.friend_id, 'approved':uxu.approved,
                         'email_address':u.email_address, 'user_name':u.user_name})
 
