@@ -216,6 +216,106 @@ def create_new_user_post(request):
         except:
             pass
 
+
+@view_config(
+    name='invite',
+    request_method='POST',
+    context='poeticjustice:contexts.Users',
+    permission='edit',
+    renderer='json')
+def invite_new_user_post(request):
+    """ """
+    try:
+        print 'invite_new_user_post', request
+        args = list(request.subpath)
+        kwds = _process_subpath(
+            request.subpath, formUrlEncodedParams=request.POST)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        with SQLAlchemySessionFactory() as session:
+
+            invite_user = (session.query(~User)
+                        .filter((~User).email_address==kwds['email_address'].lower())
+                        ).first()
+
+            if invite_user:
+                raise HTTPConflict
+            else:
+                # This is a brand new user
+                invite_user = User(**kwds)
+
+            invite_user.access_token = \
+                sha512(
+                    str(invite_user.id) + str(invite_user.initial_entry_date) + default_hashkey
+                ).hexdigest()
+            # invite_user.device_token = "NODEVICETOKEN"
+            invite_user.is_active = True
+            
+
+        site_addr = get_site_addr()
+
+        invite_user.save(session=session)
+
+        grp_lut = LutValues(model=Group)
+        utl_lut = LutValues(model=UserTypeLookup)
+
+        grp_ids = set()
+        grp_ids.add(grp_lut.get_id('user'))
+
+        UserXUserTypeLookup(
+            user_id=invite_user.id, 
+            user_type_id=utl_lut.get_id('player')
+            ).save(session=session)
+
+        grp_ids.add(grp_lut.get_id('editor'))
+
+        # add to correct group (permission role)
+        grp_ids = list(grp_ids)
+        grp_ids.sort()
+        # lowest is best
+        UserXGroup(
+            user_id=invite_user.id, 
+            group_id=grp_ids[0]
+            ).save(session=session)
+
+        UserXUser(
+            user_id=user.id,
+            friend_Id=invite_user.id
+            ).save(session=session)
+
+
+        result = make_result_repr(
+            User,
+            [invite_user],
+            logged_in=auth_usrid,
+        )
+
+        return result
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
 @view_config(
     name='login',
     request_method='GET',

@@ -42,6 +42,8 @@ class TopicsViewController: UIViewController {
         if let httpResponse = response as? NSHTTPURLResponse {
             if httpResponse.statusCode == 200 {
                 
+                var user = NetOpers.sharedInstance.user
+                
                 if data != nil {
                     
                     var data_str = NSString(data:data!, encoding:NSUTF8StringEncoding)
@@ -53,11 +55,18 @@ class TopicsViewController: UIViewController {
                             if let len = jsonResult["length"] as? Int{
                                 if let results = jsonResult["results"] as? NSArray{
                                     for topic in results{
+                                        println(topic)
                                         
                                         var t = Topic(rec:topic as NSDictionary)
-                                        var tid = t.id! as Int
-                                        self.topics[tid] = t
-                                        self.topic_order.append(tid)
+                                        if t.min_points_req? as Int == 0 || user?.user_score? as Int >= t.min_points_req? as Int{
+                                            var tid = t.id! as Int
+                                            self.topics[tid] = t
+                                            self.topic_order.append(tid)
+                                            
+                                        }else{
+                                            println("skipping Topic")
+                                        }
+
                                         
                                     }
                                 }
