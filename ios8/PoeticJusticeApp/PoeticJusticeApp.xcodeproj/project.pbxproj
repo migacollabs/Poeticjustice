@@ -327,6 +327,7 @@
 		46E3DF761A707CBE006D059A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3DF741A707CBE006D059A /* LoginViewController.swift */; };
 		46E3DF771A707CBE006D059A /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46E3DF751A707CBE006D059A /* LoginViewController.xib */; };
 		46E3DF791A70811A006D059A /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E3DF781A708119006D059A /* Config.plist */; };
+		46E3DF7B1A72C56E006D059A /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3DF7A1A72C56E006D059A /* Topic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -664,6 +665,7 @@
 		46E3DF741A707CBE006D059A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		46E3DF751A707CBE006D059A /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		46E3DF781A708119006D059A /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
+		46E3DF7A1A72C56E006D059A /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -710,6 +712,7 @@
 				46E3DD1E1A7045A7006D059A /* audio */,
 				46E3DD1A1A70403C006D059A /* User.swift */,
 				46E3DD161A704005006D059A /* TopicsViewController.swift */,
+				46E3DF7A1A72C56E006D059A /* Topic.swift */,
 				46E3DD171A704005006D059A /* TopicsViewController.xib */,
 				46E3DD0E1A703F25006D059A /* WriteLineViewController.swift */,
 				46E3DD0F1A703F25006D059A /* WriteLineViewController.xib */,
@@ -1473,6 +1476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46E3DF761A707CBE006D059A /* LoginViewController.swift in Sources */,
+				46E3DF7B1A72C56E006D059A /* Topic.swift in Sources */,
 				46E3DF731A707BC5006D059A /* LayoutLoginViewController.swift in Sources */,
 				46E3DD071A703E71006D059A /* NetOpers.swift in Sources */,
 				46E3DD081A703E71006D059A /* NetUtils.swift in Sources */,
