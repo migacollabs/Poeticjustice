@@ -335,7 +335,7 @@ AFTER_CREATE_SQL:
             ('Skating', 0, 1, 'Skateboard.png', 2),
             ('NFL vs Rugby', 0, 2, 'Conversation.png', 2),
 
-            ('Video Games', 0, 1, 'Game-Pad-.png', 3),
+            ('Video Games', 0, 1, 'Game-Pad.png', 3),
             ('Vintage Games', 16, 1, 'Vintage-Handheld.png', 3),
             ('Arcade Games', 48, 1, 'Ghost.png', 3),
             ('Board Games', 96, 2, 'Dice.png', 3),
@@ -382,7 +382,7 @@ AFTER_CREATE_SQL:
             ('UFOs', 0, 1, 'UFO.png', 7),
 
             ('Earth', 0, 1, 'Earth.png', 8),
-            ('Flowers', 0, 1, 'Flowers.png', 8),
+            ('Flowers', 0, 1, 'Flower.png', 8),
             ('Rain', 0, 1, 'Light-Showers.png', 8),
             ('Trees', 0, 1, 'Pine-Tree.png', 8),
             ('Rainbows', 0, 1, 'Rainbow.png', 8),

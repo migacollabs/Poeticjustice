@@ -30,15 +30,13 @@ class TopicsViewController: UIViewController {
 
     @IBAction func handleTopicButton(sender: AnyObject) {
         
-        var tid = (sender as UIButton).tag
-        println(tid)
-        println(self.topics)
-        
+        var tag = (sender as UIButton).tag
+        var tid = self.topic_order[tag-1]
         var topic = self.topics[tid] as Topic
-        
         let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
         vc.topic = topic
         navigationController?.pushViewController(vc, animated: false)
+        
         println("loading WriteLineViewController")
         // don't remove the nav bar so the user can go back
     }

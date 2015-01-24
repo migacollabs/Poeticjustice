@@ -175,6 +175,8 @@ class NetOpers {
                             
                             self.user = User(userData: user_data!)
                             
+                            sleep(1)
+                            
                             let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
                             dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
                                 dispatch_async(dispatch_get_main_queue(), {

@@ -357,8 +357,6 @@ def login_post(request):
             password = sha512("NOPASSWORD").hexdigest()
             user = get_user(login)
 
-            print '\nlogin email_address', login
-
             with SQLAlchemySessionFactory() as session:
                 if user:
                     if user.password == password:
@@ -380,18 +378,17 @@ def login_post(request):
                         # save this user
                         user_obj = _active_user(user_obj, session)
 
-                    print '\nuser email_address', user_obj.email_address
-
-                    user = get_user(login)
+                    user = get_user(login, force_refresh=True)
                    
                     headers = remember(request, login)
                     request.response.headerlist.extend(headers)
 
-                    print '\nlogin successful'
+                    time.sleep(1)
+
                     return dict(
                         status='Ok',
                         user=User(entity=user_obj).to_dict(),
-                        logged_in=authenticated_userid(request)
+                        logged_in=user_obj.email_address
                         )
 
         return dict(
