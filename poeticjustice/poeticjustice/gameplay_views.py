@@ -137,15 +137,16 @@ def get_user_friends(request):
                 ]
             )
         )
-        if user and user.is_active:
+
+        if user and user.is_active and user.email_address==auth_usrid:
             with SQLAlchemySessionFactory() as session:
                 user = User(entity=session.merge(user))
                 U, UxU = ~User, ~UserXUser
                 friends = []
                 for u, uxu in session.query(U, UxU).\
-                    filter(U.id==UxU.user_id).\
-                    filter(U.id==user.id):
-                    friends.add({'friend_id':uxu.friend_id, 'approved':uxu.approved,
+                    filter(U.id==UxU.friend_id).\
+                    filter(UxU.user_id==user.id):
+                    friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
                         'email_address':u.email_address, 'user_name':u.user_name})
 
             return friends

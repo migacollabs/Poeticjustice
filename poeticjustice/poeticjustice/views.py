@@ -130,6 +130,7 @@ def _active_user(user, session):
         group_id=grp_ids[0]
         )
     uxg.save(session=session)
+
     return user
 
 
@@ -350,10 +351,14 @@ def login_post(request):
         message = ''
         login = ''
         password = ''
+
         if 'form.submitted' in request.params:
             login = request.params['login']
             password = sha512("NOPASSWORD").hexdigest()
             user = get_user(login)
+
+            print '\nlogin email_address', login
+
             with SQLAlchemySessionFactory() as session:
                 if user:
                     if user.password == password:
@@ -367,12 +372,22 @@ def login_post(request):
                             logged_in=authenticated_userid(request)
                             )
                 else:
-                    user_obj = User(email_address=login, 
-                        user_name=request.params['user_name'] if 'user_name' in request.params else None)
-                    user_obj = _active_user(user_obj, session)
-                    user = get_user(login, force_refresh=True)
+                    user_obj = session.query(~User).filter((~User).email_address==login).first()
+
+                    if user_obj is None:
+                        user_obj = User(email_address=login, 
+                            user_name=request.params['user_name'] if 'user_name' in request.params else None)
+                        # save this user
+                        user_obj = _active_user(user_obj, session)
+
+                    print '\nuser email_address', user_obj.email_address
+
+                    user = get_user(login)
+                   
                     headers = remember(request, login)
                     request.response.headerlist.extend(headers)
+
+                    print '\nlogin successful'
                     return dict(
                         status='Ok',
                         user=User(entity=user_obj).to_dict(),

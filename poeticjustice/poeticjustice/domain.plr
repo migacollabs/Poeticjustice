@@ -197,6 +197,7 @@ PYAELLAC:
     Relations:
         user_id: Column(BigInteger, ForeignKey('users.id'), primary_key=True)
         friend_id: Column(BigInteger, ForeignKey('users.id'), primary_key=True)
+        approved : Column(Boolean, default=False, nullable=False)
 
 
 (VerseCategoryTypeLookup):
@@ -291,6 +292,30 @@ AFTER_CREATE_SQL:
             ('user', 'Role allowed to view data', 'User');
 
 
+        INSERT INTO users
+            (
+                email_address, country_code, password, user_score, num_of_verses, num_of_lines, is_active, is_invited
+            )
+        VALUES
+            ('larry@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, False),
+            ('larry@gerijopa.com', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True);
+
+
+        INSERT INTO user_x_user_type_lu
+            (user_id, user_type_id)
+        VALUES
+            (11111, 2),
+            (11112, 2);
+
+        INSERT INTO user_x_users
+            (user_id, friend_id, approved)
+        VALUES
+            (11111, 11112, true);
+
+        INSERT INTO user_x_groups
+            (user_id, group_id)
+        VALUES
+            (11111, 1);
 
         INSERT INTO verse_category_topics 
             (
