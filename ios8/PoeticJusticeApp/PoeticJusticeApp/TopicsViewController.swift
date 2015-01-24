@@ -29,7 +29,15 @@ class TopicsViewController: UIViewController {
     
 
     @IBAction func handleTopicButton(sender: AnyObject) {
+        
+        var tid = (sender as UIButton).tag
+        println(tid)
+        println(self.topics)
+        
+        var topic = self.topics[tid] as Topic
+        
         let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
+        vc.topic = topic
         navigationController?.pushViewController(vc, animated: false)
         println("loading WriteLineViewController")
         // don't remove the nav bar so the user can go back
@@ -125,9 +133,20 @@ class TopicsViewController: UIViewController {
             
             if self.topic_order.count > 0{
                 self.topic_order = self.shuffle(self.topic_order)
-                var tid = self.topic_order[0]
-                var topic = self.topics[tid] as Topic
-                self.topicButton.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
+            
+                
+                for idx in 1...16{
+                    
+                    var tid = self.topic_order[idx-1]
+                    var topic = self.topics[tid] as Topic
+                    
+                    
+                    var btn: UIButton? = self.view.viewWithTag(idx) as? UIButton
+                    if btn != nil{
+                        btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
+                    }
+                }
+                
             }
         }
     }
@@ -152,3 +171,23 @@ class TopicsViewController: UIViewController {
     */
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -10,15 +10,37 @@ import UIKit
 
 class WriteLineViewController: UIViewController {
     
+    @IBOutlet weak var topicLabel: UILabel!
+    @IBOutlet weak var topicButton: UIButton!
+    
     // TODO: is there a way to reset this?
     var score : Int = 1;
     var line : String = "";
     var verseId : Int = 0;
+    
+    var topic: Topic?{
+        didSet{
+            self.configureView()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.configureView()
+    }
+    
+    func configureView(){
+        if let label = self.topicLabel {
+            if let t = self.topic{
+                label.text? = t.name as String
+            }
+        }
+        
+        if let t_btn = self.topicButton{
+            if let t = self.topic{
+                t_btn.setImage(UIImage(named: t.main_icon_name as String), forState: .Normal)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

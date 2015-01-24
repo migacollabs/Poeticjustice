@@ -8,6 +8,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
                 <outlet property="setLine" destination="5Qn-Ca-z5G" id="6c9-il-i8g"/>
+                <outlet property="topicButton" destination="kTl-ux-cd3" id="vLW-Gs-PoM"/>
+                <outlet property="topicLabel" destination="oap-lG-cFG" id="0dd-zT-tO9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
