@@ -141,11 +141,11 @@ def get_user_friends(request):
         if user and user.is_active:
             with SQLAlchemySessionFactory() as session:
                 user = User(entity=session.merge(user))
-
+                U, UxU = ~User, ~UserXUser
                 friends = []
-                for u, uxu in session.query(User, UserXUser).\
-                    filter(User.user_id==UserXUser.user_id).\
-                    filter(User.user_id==auth_usrid):
+                for u, uxu in session.query(U, UxU).\
+                    filter(U.user_id==UxU.user_id).\
+                    filter(U.user_id==auth_usrid):
                     friends.add({'friend_id':uxu.friend_id, 'approved':uxu.approved,
                         'email_address':u.email_address, 'user_name':u.user_name})
 
