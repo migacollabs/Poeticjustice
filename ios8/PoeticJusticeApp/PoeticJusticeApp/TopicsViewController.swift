@@ -50,6 +50,8 @@ class TopicsViewController: UIViewController {
                 
                 var user = NetOpers.sharedInstance.user
                 
+                var open_topics: NSArray = (NetOpers.sharedInstance.game_state!.open_topics! as NSArray)
+                
                 if data != nil {
                     
                     var data_str = NSString(data:data!, encoding:NSUTF8StringEncoding)
@@ -61,8 +63,8 @@ class TopicsViewController: UIViewController {
                             if let len = jsonResult["length"] as? Int{
                                 if let results = jsonResult["results"] as? NSArray{
                                     for topic in results{
-                                        println(topic)
                                         
+                                        // add topics to topic_order if open or player can start the topic
                                         var t = Topic(rec:topic as NSDictionary)
                                         if t.min_points_req? as Int == 0 || user?.user_score? as Int >= t.min_points_req? as Int{
                                             var tid = t.id! as Int
@@ -70,9 +72,16 @@ class TopicsViewController: UIViewController {
                                             self.topic_order.append(tid)
                                             
                                         }else{
-                                            println("skipping Topic")
+                                            for i in open_topics{
+                                                if i as Int == t.id! as Int{
+                                                    var tid = t.id! as Int
+                                                    self.topics[tid] = t
+                                                    self.topic_order.append(tid)
+                                                    break
+                                                }
+                                            }
                                         }
-
+                                        
                                         
                                     }
                                 }
@@ -84,11 +93,9 @@ class TopicsViewController: UIViewController {
 
                 }
                 
-                if self.topic_order.count > 0{
-                    self.topic_order = self.shuffle(self.topic_order)
-                }
-                
-                println(self.topic_order)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.present_topics()
+                })
                 
             }else{
                 
@@ -125,27 +132,9 @@ class TopicsViewController: UIViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
         if motion == .MotionShake {
-            
-            if self.topic_order.count > 0{
-                self.topic_order = self.shuffle(self.topic_order)
-            
-                
-                for idx in 1...16{
-                    
-                    var tid = self.topic_order[idx-1]
-                    var topic = self.topics[tid] as Topic
-                    
-                    
-                    var btn: UIButton? = self.view.viewWithTag(idx) as? UIButton
-                    if btn != nil{
-                        btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
-                    }
-                }
-                
-            }
+            self.present_topics()
         }
     }
     
@@ -156,6 +145,23 @@ class TopicsViewController: UIViewController {
             swap(&list[i], &list[j])
         }
         return list
+    }
+    
+    func present_topics(){
+        if self.topic_order.count > 0{
+            self.topic_order = self.shuffle(self.topic_order)
+            for idx in 1...16{
+                
+                var tid = self.topic_order[idx-1]
+                var topic = self.topics[tid] as Topic
+                
+                
+                var btn: UIButton? = self.view.viewWithTag(idx) as? UIButton
+                if btn != nil{
+                    btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
+                }
+            }
+        }
     }
     
     /*

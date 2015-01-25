@@ -298,15 +298,16 @@ def get_friends(user):
 
 
 @view_config(
-    name='random',
-    request_method='POST',
-    context='poeticjustice:contexts.Topics',
-    renderer='json')
-def get_random_topics(request):
-    print 'get_random_topics called', request
+    name='game-state',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='json',
+    permission='edit')
+def get_user_game_state(request):
+    print 'get_user_game_state called', request
     try:
         args = list(request.subpath)
-        kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
+        kwds = _process_subpath(request.subpath)
         ac = get_app_config()
         dconfig = get_dinj_config(ac)
         auth_usrid = authenticated_userid(request)
@@ -322,12 +323,20 @@ def get_random_topics(request):
             with SQLAlchemySessionFactory() as session:
                 user = User(entity=session.merge(user))
 
-                print kwds['xids']
+                U, V = ~User, ~Verse
+                rp = (session.query(U, V)
+                        .filter(U.id==user.id)
+                        .filter(V.owner_id==U.id)
+                        .filter(V.complete==False)
+                        ).all()
 
-                exclude_topic_ids = sets()
-
+                tids = set()
+                for row in rp: 
+                    u, v = row
+                    tids.add(v.verse_category_topic_id)
 
             return dict(
+                open_topics=list(tids),
                 logged_in=auth_usrid,
                 user=user.to_dict()
             )

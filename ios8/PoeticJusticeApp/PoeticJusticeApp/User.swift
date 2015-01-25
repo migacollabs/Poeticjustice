@@ -24,15 +24,6 @@ class User{
         }
     }
     
-    var key: AnyObject? {
-        get {
-            if let x = self.user_data["key"] as? String{
-                return x
-            }
-            return nil
-        }
-    }
-    
     var user_name: AnyObject? {
         get {
             if let x = self.user_data["user_name"] as? String{

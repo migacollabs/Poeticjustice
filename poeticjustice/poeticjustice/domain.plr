@@ -260,6 +260,8 @@ PYAELLAC:
         title: Column(String, nullable=True)
         user_ids: Column(ARRAY(Integer), nullable=True)
         max_participarts: Column(Integer, nullable=False, default=2)
+        max_lines: Column(Integer, nullable=False, default=8)
+        complete: Column(Boolean, nullable=False, default=False)
     Relations:
         verse_category_topic_id: Column(Integer, ForeignKey('verse_category_topics.id'))
         owner_id: Column(Integer, ForeignKey('users.id'), nullable=False)
@@ -370,7 +372,7 @@ AFTER_CREATE_SQL:
             ('Breakfast', 0, 1, 'Egg.png', 6),
             ('Fast Food', 0, 1, 'Fries.png', 6),
             ('Sushi', 0, 1, 'Sushi.png', 6),
-            ('Sweets', 0, 1, 'Ice-Lorry.png', 6),
+            ('Sweets', 0, 1, 'Ice-Lolly.png', 6),
             ('Dinner', 0, 1, 'Steak.png', 6),
             ('Noodles', 0, 1, 'Noodles.png', 6),
             ('Fruit', 0, 1, 'Apple.png', 6),
