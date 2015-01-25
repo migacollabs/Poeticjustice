@@ -149,7 +149,7 @@ def get_user_friends(request):
                     friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
                         'email_address':u.email_address, 'user_name':u.user_name})
 
-            return friends
+            return {"results":friends}
 
         raise HTTPUnauthorized
 

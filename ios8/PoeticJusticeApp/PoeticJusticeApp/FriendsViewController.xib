@@ -18,19 +18,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2UK-cK-bAC">
-                    <rect key="frame" x="8" y="203" width="584" height="300"/>
+                    <rect key="frame" x="8" y="124" width="584" height="379"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Manage Friends" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5R8-Y6-YYJ">
-                    <rect key="frame" x="238" y="93" width="124" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SsI-U8-WpU">
+                    <rect key="frame" x="406" y="511" width="186" height="30"/>
+                    <state key="normal" title="- Remove Selected Friends">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhg-fl-nZ1">
-                    <rect key="frame" x="503" y="154" width="89" height="30"/>
+                    <rect key="frame" x="503" y="80" width="89" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="89" id="6nE-xi-abo"/>
+                        <constraint firstAttribute="width" constant="89" id="1iK-5E-ohB"/>
                     </constraints>
                     <state key="normal" title="+ Add Friend">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -40,35 +40,24 @@
                     </connections>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Vy-jk-KTF">
-                    <rect key="frame" x="8" y="154" width="477" height="30"/>
+                    <rect key="frame" x="8" y="80" width="477" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SsI-U8-WpU">
-                    <rect key="frame" x="406" y="511" width="186" height="30"/>
-                    <state key="normal" title="- Remove Selected Friends">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oSK-TH-HGr">
-                    <rect key="frame" x="42" y="550" width="320" height="50"/>
-                </adBannerView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="2Vy-jk-KTF" firstAttribute="top" secondItem="bhg-fl-nZ1" secondAttribute="top" id="0IM-Tw-ias"/>
-                <constraint firstItem="SsI-U8-WpU" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="2t3-oQ-ATZ"/>
-                <constraint firstItem="2UK-cK-bAC" firstAttribute="top" secondItem="2Vy-jk-KTF" secondAttribute="bottom" constant="19" id="8UP-Vn-8Oi"/>
-                <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="2Vy-jk-KTF" secondAttribute="leading" id="9WU-G8-RJw"/>
-                <constraint firstItem="2Vy-jk-KTF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="EtV-Vf-TWv"/>
-                <constraint firstItem="bhg-fl-nZ1" firstAttribute="leading" secondItem="2Vy-jk-KTF" secondAttribute="trailing" constant="18" id="R27-vb-swe"/>
-                <constraint firstItem="bhg-fl-nZ1" firstAttribute="trailing" secondItem="2UK-cK-bAC" secondAttribute="trailing" id="Sj7-ef-LDa"/>
-                <constraint firstItem="2Vy-jk-KTF" firstAttribute="top" secondItem="5R8-Y6-YYJ" secondAttribute="bottom" constant="40" id="Wok-NJ-I5P"/>
-                <constraint firstAttribute="bottom" secondItem="SsI-U8-WpU" secondAttribute="bottom" constant="59" id="bgU-t9-pD5"/>
-                <constraint firstItem="5R8-Y6-YYJ" firstAttribute="centerX" secondItem="2UK-cK-bAC" secondAttribute="centerX" id="bpQ-RB-qhO"/>
-                <constraint firstItem="SsI-U8-WpU" firstAttribute="top" secondItem="2UK-cK-bAC" secondAttribute="bottom" constant="8" symbolic="YES" id="efM-tB-agn"/>
-                <constraint firstItem="5R8-Y6-YYJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="93" id="jdN-0Z-iHe"/>
-                <constraint firstItem="2UK-cK-bAC" firstAttribute="trailing" secondItem="SsI-U8-WpU" secondAttribute="trailing" id="mJ7-XH-s9Z"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="2Vy-jk-KTF" secondAttribute="leading" id="7bP-hO-qM3"/>
+                <constraint firstItem="SsI-U8-WpU" firstAttribute="trailing" secondItem="2UK-cK-bAC" secondAttribute="trailing" id="7io-uf-pCw"/>
+                <constraint firstItem="bhg-fl-nZ1" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="RND-7I-gxt"/>
+                <constraint firstItem="bhg-fl-nZ1" firstAttribute="top" secondItem="2Vy-jk-KTF" secondAttribute="top" id="VDd-x9-zoK"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="VXV-XU-Fa1"/>
+                <constraint firstItem="bhg-fl-nZ1" firstAttribute="leading" secondItem="2Vy-jk-KTF" secondAttribute="trailing" constant="18" id="gmO-jZ-crQ"/>
+                <constraint firstAttribute="bottom" secondItem="SsI-U8-WpU" secondAttribute="bottom" constant="59" id="j1W-cY-nce"/>
+                <constraint firstItem="2Vy-jk-KTF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="k6Z-Vy-ALj"/>
+                <constraint firstItem="SsI-U8-WpU" firstAttribute="top" secondItem="2UK-cK-bAC" secondAttribute="bottom" constant="8" symbolic="YES" id="vVR-4B-Xf4"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="top" secondItem="2Vy-jk-KTF" secondAttribute="bottom" constant="14" id="wQl-jn-K7U"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="trailing" secondItem="bhg-fl-nZ1" secondAttribute="trailing" id="yA9-KC-Lnl"/>
             </constraints>
             <point key="canvasLocation" x="426" y="661"/>
         </view>

@@ -77,12 +77,42 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.myTableView.dataSource = self
     }
     
+    func show_alert(title:String, message:String, controller_title:String){
+        // TODO: this shows a warning "Presenting view controllers on detached view controllers is discouraged"
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Friends"
+    }
+    
+    var lastTabbed : NSDate?
+    
     override func viewWillAppear(animated : Bool) {
+        println(NetOpers.sharedInstance.userId)
         if (NetOpers.sharedInstance.userId>0) {
-            var uId : String = String(NetOpers.sharedInstance.userId!)
-            println("hitting url " + "/m/search/UserXUser/user_id=" + uId)
-            NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/m/search/UserXUser/user_id=" + uId, loadFriends)
+            var refresh : Bool = false
+            if (lastTabbed==nil) {
+                refresh = true
+            } else {
+                var elapsedTime = NSDate().timeIntervalSinceDate(lastTabbed!)
+                refresh = (elapsedTime>NSTimeInterval(10.0))
+            }
+            
+            if (refresh) {
+                var uId : String = String(NetOpers.sharedInstance.userId!)
+                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/userfriends?user_id=" + uId, loadFriends)
+                lastTabbed = NSDate()
+            }
+            
         }
+//        else {
+//            show_alert("Not logged in", message: "Please login to continue", controller_title:"Ok")
+//            tabBarController?.selectedIndex = 0
+//        }
     }
     
     func loadFriends(data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -93,18 +123,27 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     data!, options: NSJSONReadingOptions.MutableContainers,
                     error: nil) as NSDictionary
                 
-                if let len = jsonResult["length"] as? Int{
-                    if let results = jsonResult["results"] as? NSArray{
-                        for friend in results {
-                            
-                            var f = Friend(rec:friend as NSDictionary)
-                            self.friends.append(f)
-                            
-                        }
+                if let results = jsonResult["results"] as? NSArray{
+                    
+                    self.friends.removeAll()
+                    
+                    for friend in results {
+                        
+                        var f = Friend(rec:friend as NSDictionary)
+                        self.friends.append(f)
+                        
                     }
+                    
+                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                        dispatch_async(dispatch_get_main_queue(),{
+                            self.myTableView.reloadData()
+                        })
+                    })
                 }
+            
             }
         }
+        
         if (error != nil) {
             println(error)
         }

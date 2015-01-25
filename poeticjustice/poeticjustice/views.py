@@ -363,7 +363,9 @@ def login_post(request):
                         headers = remember(request, login)
                         request.response.headerlist.extend(headers)
                         U = ~User
-                        user_obj = session.query(U).filter(U.email_address==login).first()
+                        # TODO: .first() didn't work here for some reason
+                        for user_obj in session.query(U).filter(U.email_address==login):
+                            pass
                         return dict(
                             status='Ok',
                             user=User(entity=user_obj).to_dict(),

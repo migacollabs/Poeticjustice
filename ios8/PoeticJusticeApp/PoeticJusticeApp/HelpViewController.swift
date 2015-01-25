@@ -14,6 +14,8 @@ class HelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Help // FAQ"
+        
         // Do any additional setup after loading the view.
     }
     

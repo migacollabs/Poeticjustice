@@ -163,10 +163,10 @@ class NetOpers {
                                     
                                     if let x = results["key"] as? String{
                                         self.userKey = x
-                                        
-                                        if let y = results["id"] as? Int{
-                                            self.userId = y
-                                        }
+                                    }
+                                    
+                                    if let y = results["id"] as? Int{
+                                        self.userId = y
                                     }
                                 }
                         }
