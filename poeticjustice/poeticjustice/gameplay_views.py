@@ -29,6 +29,7 @@ from pyaella.server.api import LutValues
 
 from poeticjustice import default_hashkey
 from poeticjustice.models import *
+from poeticjustice.views import _save_user
 
 
 log = logging.getLogger(__name__)
@@ -118,15 +119,13 @@ def update_user_score(request):
 
 
 @view_config(
-    name='userfriends',
-    request_method='GET',
+    name='addfriend',
+    request_method='POST',
     context='poeticjustice:contexts.Users',
     renderer='json')
-def get_user_friends(request):
-    print 'get_user_friends called', request
+def add_user_friend(request):
+    print 'add_user_friend called', request
     try:
-        args = list(request.subpath)
-        kwds = _process_subpath(args)
         auth_usrid = authenticated_userid(request)
 
         user, user_type_names, user_type_lookup = (
@@ -139,10 +138,79 @@ def get_user_friends(request):
         )
 
         if user and user.is_active and user.email_address==auth_usrid:
+
+            friendEmailAddress = request.params['friend_email_address']
+
+            # check if exists
+
+            with SQLAlchemySessionFactory() as session:
+
+                friend = session.query(~User).filter((~User).email_address==friendEmailAddress).first()
+
+                if (friend is None):
+                    friend = User(email_address=friendEmailAddress, 
+                            user_name=request.params['user_name'] if 'user_name' in request.params else None)
+                    friend = _save_user(friend, session)
+
+                uxu = session.query(~UserXUser).filter((~UserXUser).friend_id==friend.id).filter((~UserXUser).user_id==user.id).first()
+
+                if (uxu is None):
+                    uxu = UserXUser(user_id=user.id, friend_id=friend.id, approved=False)
+                    uxu.save(session=session)
+
+                friends = []
+                with SQLAlchemySessionFactory() as session:
+                    user = User(entity=session.merge(user))
+                    U, UxU = ~User, ~UserXUser
+                    for u, uxu in session.query(U, UxU).\
+                        filter(U.id==UxU.friend_id).\
+                        filter(UxU.user_id==user.id):
+                        friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
+                            'email_address':u.email_address, 'user_name':u.user_name})
+
+                return {"results":friends}
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
+    name='userfriends',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def get_user_friends(request):
+    print 'get_user_friends called', request
+    try:
+        auth_usrid = authenticated_userid(request)
+
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+
+        if user and user.is_active and user.email_address==auth_usrid:
+            friends = []
             with SQLAlchemySessionFactory() as session:
                 user = User(entity=session.merge(user))
                 U, UxU = ~User, ~UserXUser
-                friends = []
                 for u, uxu in session.query(U, UxU).\
                     filter(U.id==UxU.friend_id).\
                     filter(UxU.user_id==user.id):

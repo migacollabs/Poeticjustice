@@ -94,8 +94,7 @@ def create_new_user(request):
         except:
             pass
 
-
-def _active_user(user, session):
+def _save_user(user, session):
 
     user.password = sha512("NOPASSWORD").hexdigest()
     user.access_token = \
@@ -378,7 +377,7 @@ def login_post(request):
                         user_obj = User(email_address=login, 
                             user_name=request.params['user_name'] if 'user_name' in request.params else None)
                         # save this user
-                        user_obj = _active_user(user_obj, session)
+                        user_obj = _save_user(user_obj, session)
 
                     user = get_user(login, force_refresh=True)
                    

@@ -164,53 +164,20 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
-    var newFriendUserId : Int!
-    
-    func checkFriend(data: NSData?, response: NSURLResponse?, error: NSError?) {
-        if let httpResponse = response as? NSHTTPURLResponse {
-            if httpResponse.statusCode == 200 {
-                
-                if data != nil {
-                    
-                    var json: JSON? = nil
-                    
-                    if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                        data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as? NSDictionary {
-                            
-                        if let results = jsonResult["results"] as? NSDictionary{
-                                
-                            if let y = results["id"] as? Int{
-                                self.newFriendUserId = y
-                                println(self.newFriendUserId)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-    }
-    
     @IBOutlet var friendEmailAddress: UITextField!
     
     @IBAction func addFriend(sender: AnyObject) {
-        newFriendUserId = -1
         if (!self.friendEmailAddress.text.isEmpty) {
             if (isValidEmail(self.friendEmailAddress.text)) {
                 
-                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/m/search/User/email_address=" + self.friendEmailAddress.text, checkFriend)
+                var params = Dictionary<String,AnyObject>()
+                params["user_id"]=NetOpers.sharedInstance.userId
+                params["friend_email_address"]=self.friendEmailAddress.text
                 
-                if (newFriendUserId>0) {
-                    var params : Dictionary<String, AnyObject> = Dictionary<String, AnyObject>()
-                    params["user_id"]=NetOpers.sharedInstance.userId
-                    params["friend_id"]=self.newFriendUserId
-                    
-                    NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/m/edit/UserXUser/", params: params, updateFriendTable)
-                }
+                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/addfriend", params: params, loadFriends)
                 
             } else {
-                // TODO: popup error
+                show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
             }
         }    }
     
