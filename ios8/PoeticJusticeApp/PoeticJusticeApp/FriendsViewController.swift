@@ -53,7 +53,15 @@ class Friend {
     
     var display_name : AnyObject? {
         if let x = self.friend_data["approved"] as? Bool{
-            return email_address
+            if (x) {
+                return email_address
+            } else {
+                if let e = email_address as? String {
+                    return "* " + e
+                } else {
+                    return user_name
+                }
+            }
         } else {
             return user_name
         }
@@ -75,6 +83,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         self.myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier : "cell")
         self.myTableView.dataSource = self
+        self.myTableView.delegate = self
     }
     
     func show_alert(title:String, message:String, controller_title:String){
@@ -83,6 +92,16 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
         
         self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    @IBAction func removeFriends(sender: AnyObject) {
+        if ((removeFriend) != nil) {
+            var params = Dictionary<String,AnyObject>()
+            params["friend_id"]=removeFriend?.friend_id
+            params["user_id"]=NetOpers.sharedInstance.userId
+            
+            NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/removefriend", params: params, loadFriends)
+        }
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -160,10 +179,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return result
     }
     
-    func updateFriendTable(data: NSData?, response: NSURLResponse?, error: NSError?) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-    }
-    
     @IBOutlet var friendEmailAddress: UITextField!
     
     @IBAction func addFriend(sender: AnyObject) {
@@ -179,7 +194,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             } else {
                 show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
             }
-        }    }
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -200,9 +216,13 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    var removeFriend : Friend?
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //CODE TO BE RUN ON CELL TOUCH
-        println("touched")
+        println("clicked " + String(indexPath.row))
+        if let friend = self.friends[indexPath.row] as Friend? {
+            removeFriend = friend
+        }
     }
     
     func addFriend(userId : Int) {

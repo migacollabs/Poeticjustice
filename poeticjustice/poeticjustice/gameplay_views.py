@@ -117,6 +117,66 @@ def update_user_score(request):
         except:
             pass
 
+@view_config(
+    name='removefriend',
+    request_method='POST',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def remove_user_friend(request):
+    print 'add_user_friend called', request
+    try:
+        auth_usrid = authenticated_userid(request)
+
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+
+        if user and user.is_active and user.email_address==auth_usrid:
+
+            friendId = request.params['friend_id']
+
+            # check if exists
+
+            with SQLAlchemySessionFactory() as session:
+
+                friend = session.query(~UserXUser).filter((~UserXUser).user_id==user.id).filter((~UserXUser).friend_id==friendId).first()
+
+                if (friend is not None):
+                    session.delete(friend)
+                    session.commit()
+
+                friends = []
+                with SQLAlchemySessionFactory() as session:
+                    user = User(entity=session.merge(user))
+                    U, UxU = ~User, ~UserXUser
+                    for u, uxu in session.query(U, UxU).\
+                        filter(U.id==UxU.friend_id).\
+                        filter(UxU.user_id==user.id):
+                        friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
+                            'email_address':u.email_address, 'user_name':u.user_name})
+
+                return {"results":friends}
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
 
 @view_config(
     name='addfriend',

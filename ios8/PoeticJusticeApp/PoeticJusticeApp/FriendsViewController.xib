@@ -22,25 +22,28 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SsI-U8-WpU">
-                    <rect key="frame" x="406" y="511" width="186" height="30"/>
-                    <state key="normal" title="- Remove Selected Friends">
+                    <rect key="frame" x="423" y="511" width="169" height="30"/>
+                    <state key="normal" title="Remove Selected Friend">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="removeFriends:" destination="-1" eventType="touchUpInside" id="gl9-PZ-QqN"/>
+                    </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhg-fl-nZ1">
-                    <rect key="frame" x="503" y="80" width="89" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhg-fl-nZ1">
+                    <rect key="frame" x="516" y="80" width="76" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="89" id="1iK-5E-ohB"/>
                     </constraints>
-                    <state key="normal" title="+ Add Friend">
+                    <state key="normal" title="Add Friend">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="addFriend:" destination="-1" eventType="touchUpInside" id="Br1-lk-oQa"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Vy-jk-KTF">
-                    <rect key="frame" x="8" y="80" width="477" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Vy-jk-KTF">
+                    <rect key="frame" x="8" y="80" width="490" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -49,6 +52,7 @@
             <constraints>
                 <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="2Vy-jk-KTF" secondAttribute="leading" id="7bP-hO-qM3"/>
                 <constraint firstItem="SsI-U8-WpU" firstAttribute="trailing" secondItem="2UK-cK-bAC" secondAttribute="trailing" id="7io-uf-pCw"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="top" secondItem="2Vy-jk-KTF" secondAttribute="bottom" constant="14" id="EIn-Ys-nMr"/>
                 <constraint firstItem="bhg-fl-nZ1" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="RND-7I-gxt"/>
                 <constraint firstItem="bhg-fl-nZ1" firstAttribute="top" secondItem="2Vy-jk-KTF" secondAttribute="top" id="VDd-x9-zoK"/>
                 <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="VXV-XU-Fa1"/>
