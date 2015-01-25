@@ -27,8 +27,8 @@ class NetOpers {
     var loginHandler: LoginViewController?
     
     var userId: Int? = nil
-    var userKey: String? = nil
     var user: User? = nil
+    var game_state: GameState? = nil
     
     init(){
         self.session = NSURLSession.sharedSession()
@@ -206,6 +206,22 @@ class NetOpers {
         })
         
         task?.resume()
+    }
+    
+    
+    func get_player_game_state(on_received_gate_state:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
+        if self.userId != nil && self.appserver_hostname != nil{
+            
+            var url_string:String = self.appserver_hostname! + "/u/game-state"
+            
+            self.get(url_string, on_received_gate_state?)
+            
+            return true
+            
+        }else{
+            // cant show an err here because its not view
+            return false
+        }
     }
     
     func update_main_player_score(increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{

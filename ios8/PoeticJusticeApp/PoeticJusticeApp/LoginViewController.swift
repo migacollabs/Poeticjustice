@@ -71,16 +71,14 @@ class LoginViewController: UIViewController {
                     
                     NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
                         
-                        // we are logged in!
+                        // we are logged in
+                        // this won't be called if we set the on_login as a callback
                         self.show_alert("Login", message: "Successfully logged in", controller_title: "Thanks!")
                         
                     })
                     
-//                    // TODO: open up a clickable topics view
-//                    tabBarController?.selectedIndex = 1
-                    
                 }else{
-                    () // do no user email address msg
+                    self.show_alert("Login", message: "No Email Found", controller_title: "Try again") // do no user email address msg
                 }
             }else{
                 () // do no app server error msg
@@ -90,6 +88,36 @@ class LoginViewController: UIViewController {
     }
     
     func on_login(){
+        println("on_login called")
+        // TODO: open up a clickable topics view
+        NetOpers.sharedInstance.get_player_game_state( { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+            
+            if let httpResponse = response as? NSHTTPURLResponse {
+                if httpResponse.statusCode == 200 {
+                    
+                    if data != nil {
+                        
+                        var json: JSON? = nil
+                        var user_data: NSDictionary?
+                        
+                        if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as? NSDictionary{
+                            
+                            NetOpers.sharedInstance.game_state = GameState(gameData: jsonResult)
+                                
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.on_start()
+                            })
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
+    func on_start(){
+        println("on_start called")
         // TODO: open up a clickable topics view
         tabBarController?.selectedIndex = 1
     }
