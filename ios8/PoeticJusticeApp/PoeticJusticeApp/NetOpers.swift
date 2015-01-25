@@ -161,17 +161,13 @@ class NetOpers {
                                     
                                     user_data = results
                                     
-                                    if let x = results["key"] as? String{
-                                        self.userKey = x
-                                    }
-                                    
                                     if let y = results["id"] as? Int{
                                         self.userId = y
                                     }
                                 }
                         }
                         
-                        if self.userId != nil && self.userKey != nil && user_data != nil{
+                        if self.userId != nil && user_data != nil{
                             
                             self.user = User(userData: user_data!)
                             
