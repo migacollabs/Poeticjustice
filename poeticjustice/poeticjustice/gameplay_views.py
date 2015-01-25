@@ -14,6 +14,10 @@ from mako.template import Template
 #amazon s3 support
 from boto.s3.connection import S3Connection, Location
 from boto.s3.key import Key
+
+# sqlalchemy
+from sqlalchemy import or_
+
 # pyaella imports
 from pyaella import *
 from pyaella import dinj
@@ -144,23 +148,13 @@ def remove_user_friend(request):
 
             with SQLAlchemySessionFactory() as session:
 
-                friend = session.query(~UserXUser).filter((~UserXUser).user_id==user.id).filter((~UserXUser).friend_id==friendId).first()
-
+                friend = session.query(~UserXUser).filter(or_((~UserXUser).friend_id==friendId, (~UserXUser).user_id==friendId)).first()
+                
                 if (friend is not None):
                     session.delete(friend)
                     session.commit()
 
-                friends = []
-                with SQLAlchemySessionFactory() as session:
-                    user = User(entity=session.merge(user))
-                    U, UxU = ~User, ~UserXUser
-                    for u, uxu in session.query(U, UxU).\
-                        filter(U.id==UxU.friend_id).\
-                        filter(UxU.user_id==user.id):
-                        friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
-                            'email_address':u.email_address, 'user_name':u.user_name})
-
-                return {"results":friends}
+                return get_friends(user)
 
         raise HTTPUnauthorized
 
@@ -212,23 +206,17 @@ def add_user_friend(request):
                             user_name=request.params['user_name'] if 'user_name' in request.params else None)
                     friend = _save_user(friend, session)
 
-                uxu = session.query(~UserXUser).filter((~UserXUser).friend_id==friend.id).filter((~UserXUser).user_id==user.id).first()
+                uxu = session.query(~UserXUser).filter(or_((~UserXUser).friend_id==friend.id, (~UserXUser).user_id==friend.id)).first()
 
-                if (uxu is None):
+                if (uxu is None):    
                     uxu = UserXUser(user_id=user.id, friend_id=friend.id, approved=False)
                     uxu.save(session=session)
+                else:
+                    # relationship already exists so approve it
+                    uxu = UserXUser(user_id=user.id, friend_id=friend.id, approved=True, entity=session.merge(uxu))
+                    uxu.save(session=session)
 
-                friends = []
-                with SQLAlchemySessionFactory() as session:
-                    user = User(entity=session.merge(user))
-                    U, UxU = ~User, ~UserXUser
-                    for u, uxu in session.query(U, UxU).\
-                        filter(U.id==UxU.friend_id).\
-                        filter(UxU.user_id==user.id):
-                        friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
-                            'email_address':u.email_address, 'user_name':u.user_name})
-
-                return {"results":friends}
+                return get_friends(user)
 
         raise HTTPUnauthorized
 
@@ -267,17 +255,7 @@ def get_user_friends(request):
         )
 
         if user and user.is_active and user.email_address==auth_usrid:
-            friends = []
-            with SQLAlchemySessionFactory() as session:
-                user = User(entity=session.merge(user))
-                U, UxU = ~User, ~UserXUser
-                for u, uxu in session.query(U, UxU).\
-                    filter(U.id==UxU.friend_id).\
-                    filter(UxU.user_id==user.id):
-                    friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
-                        'email_address':u.email_address, 'user_name':u.user_name})
-
-            return {"results":friends}
+            return get_friends(user)
 
         raise HTTPUnauthorized
 
@@ -294,6 +272,29 @@ def get_user_friends(request):
             session.close()
         except:
             pass
+
+def get_friends(user):
+    friends = []
+    # my friends that i explicitly invited
+    with SQLAlchemySessionFactory() as session:
+        user = User(entity=session.merge(user))
+        U, UxU = ~User, ~UserXUser
+        for u, uxu in session.query(U, UxU).\
+            filter(U.id==UxU.friend_id).\
+            filter(UxU.user_id==user.id):
+            friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
+                'email_address':u.email_address, 'user_name':u.user_name, 'src':'me'})
+
+    # others who have invited me
+    with SQLAlchemySessionFactory() as session:
+        U, UxU = ~User, ~UserXUser
+        for u, uxu in session.query(U, UxU).\
+            filter(UxU.friend_id==user.id).\
+            filter(UxU.user_id==U.id):
+            friends.append({'friend_id':uxu.user_id, 'approved':uxu.approved,
+                'email_address':u.email_address, 'user_name':u.user_name, 'src':'them'})
+
+    return {"results":friends}
 
 
 @view_config(

@@ -15,6 +15,15 @@ class Friend {
         self.friend_data = rec
     }
     
+    var src: AnyObject? {
+        get {
+            if let x = self.friend_data["src"] as? String{
+                return x
+            }
+            return nil
+        }
+    }
+    
     var friend_id: AnyObject? {
         get {
             if let x = self.friend_data["friend_id"] as? Int{
@@ -52,19 +61,43 @@ class Friend {
     }
     
     var display_name : AnyObject? {
-        if let x = self.friend_data["approved"] as? Bool{
-            if (x) {
-                return email_address
-            } else {
-                if let e = email_address as? String {
-                    return "* " + e
-                } else {
-                    return user_name
+        /*
+        if src is 'me' then show whether my
+        friend is approved or not.
+        
+        if src is 'them' then show whether i've
+        approved them or not.
+        */
+        
+        if let s = self.friend_data["src"] as? String {
+            if ((s)=="me") {
+                if let x = self.friend_data["approved"] as? Bool{
+                    if (x) {
+                        return email_address
+                    } else {
+                        if let e = email_address as? String {
+                            return "* " + e
+                        } else {
+                            return user_name
+                        }
+                    }
+                }
+            } else if ((s)=="them") {
+                if let x = self.friend_data["approved"] as? Bool{
+                    if (x) {
+                        return email_address
+                    } else {
+                        if let e = email_address as? String {
+                            return "? " + e
+                        } else {
+                            return user_name
+                        }
+                    }
                 }
             }
-        } else {
-            return user_name
         }
+        
+        return email_address
     }
 }
 
@@ -156,6 +189,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                         dispatch_async(dispatch_get_main_queue(),{
                             self.myTableView.reloadData()
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
                     })
                 }
@@ -163,13 +197,15 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
         
+        if let un = NetOpers.sharedInstance.user?.user_name as? String {
+            self.userLabel.text = un
+            // TODO: add the user_count
+        }
+        
         if (error != nil) {
             println(error)
         }
-//        println(response)
-//        println(data);
-//        println(error);
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        
     }
     
     func isValidEmail(testStr:String) -> Bool {
@@ -206,6 +242,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return friends.count
     }
     
+    @IBOutlet var userLabel: UILabel!
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
         if let f = self.friends[indexPath.row] as Friend? {
@@ -214,6 +252,10 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
         return cell
+    }
+    
+    @IBAction func refreshView(sender: AnyObject) {
+        viewWillAppear(true)
     }
     
     var removeFriend : Friend?

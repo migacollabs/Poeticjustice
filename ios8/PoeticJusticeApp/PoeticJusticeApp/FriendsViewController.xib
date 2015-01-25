@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="friendEmailAddress" destination="2Vy-jk-KTF" id="e3j-hU-yFl"/>
                 <outlet property="myTableView" destination="2UK-cK-bAC" id="dqv-vq-4ZL"/>
+                <outlet property="userLabel" destination="MZe-uU-3uS" id="xKi-np-OwZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -30,10 +31,25 @@
                         <action selector="removeFriends:" destination="-1" eventType="touchUpInside" id="gl9-PZ-QqN"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhg-fl-nZ1">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhb-NX-VzZ">
+                    <rect key="frame" x="8" y="511" width="53" height="30"/>
+                    <state key="normal" title="Refresh">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="refreshView:" destination="-1" eventType="touchUpInside" id="bJJ-Td-YpA"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MZe-uU-3uS">
+                    <rect key="frame" x="8" y="51" width="584" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bhg-fl-nZ1">
                     <rect key="frame" x="516" y="80" width="76" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="89" id="1iK-5E-ohB"/>
+                        <constraint firstAttribute="width" constant="76" id="Slb-4h-4IP"/>
                     </constraints>
                     <state key="normal" title="Add Friend">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,7 +58,7 @@
                         <action selector="addFriend:" destination="-1" eventType="touchUpInside" id="Br1-lk-oQa"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Vy-jk-KTF">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Vy-jk-KTF">
                     <rect key="frame" x="8" y="80" width="490" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
@@ -50,18 +66,19 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="2Vy-jk-KTF" secondAttribute="leading" id="7bP-hO-qM3"/>
-                <constraint firstItem="SsI-U8-WpU" firstAttribute="trailing" secondItem="2UK-cK-bAC" secondAttribute="trailing" id="7io-uf-pCw"/>
-                <constraint firstItem="2UK-cK-bAC" firstAttribute="top" secondItem="2Vy-jk-KTF" secondAttribute="bottom" constant="14" id="EIn-Ys-nMr"/>
-                <constraint firstItem="bhg-fl-nZ1" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="RND-7I-gxt"/>
-                <constraint firstItem="bhg-fl-nZ1" firstAttribute="top" secondItem="2Vy-jk-KTF" secondAttribute="top" id="VDd-x9-zoK"/>
-                <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="VXV-XU-Fa1"/>
-                <constraint firstItem="bhg-fl-nZ1" firstAttribute="leading" secondItem="2Vy-jk-KTF" secondAttribute="trailing" constant="18" id="gmO-jZ-crQ"/>
-                <constraint firstAttribute="bottom" secondItem="SsI-U8-WpU" secondAttribute="bottom" constant="59" id="j1W-cY-nce"/>
-                <constraint firstItem="2Vy-jk-KTF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="k6Z-Vy-ALj"/>
-                <constraint firstItem="SsI-U8-WpU" firstAttribute="top" secondItem="2UK-cK-bAC" secondAttribute="bottom" constant="8" symbolic="YES" id="vVR-4B-Xf4"/>
-                <constraint firstItem="2UK-cK-bAC" firstAttribute="top" secondItem="2Vy-jk-KTF" secondAttribute="bottom" constant="14" id="wQl-jn-K7U"/>
-                <constraint firstItem="2UK-cK-bAC" firstAttribute="trailing" secondItem="bhg-fl-nZ1" secondAttribute="trailing" id="yA9-KC-Lnl"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="bhb-NX-VzZ" secondAttribute="leading" id="33f-pe-ekL"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="C4o-sQ-lMf"/>
+                <constraint firstItem="bhb-NX-VzZ" firstAttribute="baseline" secondItem="SsI-U8-WpU" secondAttribute="baseline" id="Cfw-33-zk1"/>
+                <constraint firstAttribute="bottom" secondItem="bhb-NX-VzZ" secondAttribute="bottom" constant="59" id="CvV-aY-Ch4"/>
+                <constraint firstItem="2Vy-jk-KTF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="MU0-XC-fRP"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="leading" secondItem="2Vy-jk-KTF" secondAttribute="leading" id="QDp-8j-eDt"/>
+                <constraint firstItem="bhg-fl-nZ1" firstAttribute="leading" secondItem="2Vy-jk-KTF" secondAttribute="trailing" constant="18" id="RE7-Ng-y7K"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="trailing" secondItem="bhg-fl-nZ1" secondAttribute="trailing" id="ZU8-By-DwF"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="top" secondItem="2Vy-jk-KTF" secondAttribute="bottom" constant="14" id="cyw-OA-EzE"/>
+                <constraint firstItem="SsI-U8-WpU" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="hYB-Sg-7lZ"/>
+                <constraint firstItem="2Vy-jk-KTF" firstAttribute="top" secondItem="bhg-fl-nZ1" secondAttribute="top" id="m7c-uX-6cC"/>
+                <constraint firstItem="2UK-cK-bAC" firstAttribute="trailing" secondItem="SsI-U8-WpU" secondAttribute="trailing" id="obA-5U-o7I"/>
+                <constraint firstItem="bhb-NX-VzZ" firstAttribute="top" secondItem="2UK-cK-bAC" secondAttribute="bottom" constant="8" symbolic="YES" id="sYN-EN-CQ9"/>
             </constraints>
             <point key="canvasLocation" x="426" y="661"/>
         </view>
