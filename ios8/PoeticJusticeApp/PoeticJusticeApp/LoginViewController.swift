@@ -86,15 +86,13 @@ class LoginViewController: UIViewController {
                     
                     println("Connectintg as \(login_em)")
                     
-                    if let tbc = self.tabBarController {
-                        NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
+                    NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
                             
-                            // we are logged in
-                            // this won't be called if we set the on_login as a callback
-                            self.show_alert("Login", message: "Successfully logged in", controller_title: "Thanks!")
+                        // we are logged in
+                        // this won't be called if we set the on_login as a callback
+                        self.show_alert("Login", message: "Successfully logged in", controller_title: "Thanks!")
                             
-                        })
-                    }
+                    })
                     
                 }else{
                     self.show_alert("Login", message: "No Email Found", controller_title: "Try again") // do no user email address msg
@@ -114,33 +112,48 @@ class LoginViewController: UIViewController {
             if let httpResponse = response as? NSHTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     
+                    println("checking game state")
+                    
                     if data != nil {
                         
-                        var json: JSON? = nil
-                        var user_data: NSDictionary?
+                        println(data)
+                        
+                        var e : NSError?
                         
                         if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as? NSDictionary{
+                        error: &e) as? NSDictionary{
+                            
+                            println(jsonResult)
                             
                             NetOpers.sharedInstance.game_state = GameState(gameData: jsonResult)
                                 
                             dispatch_async(dispatch_get_main_queue(), {
                                 self.on_start()
                             })
+                        } else {
+                            println("Unable to parse game-state data")
+                            println(e)
                         }
+                        
                     }
+                    
                 }
             }
+
         })
+        
+        self.tabBarController?.tabBar.hidden = false
+        self.updateUserLabel()
+        
+        println("on_login finished")
     }
     
     func on_start(){
         println("on_start called")
         // TODO: open up a clickable topics view
         tabBarController?.selectedIndex = 1
-        updateUserLabel()
-        self.tabBarController?.tabBar.hidden = false
+        // self.tabBarController?.tabBar.hidden = false
     }
     
     func show_alert(title:String, message:String, controller_title:String){

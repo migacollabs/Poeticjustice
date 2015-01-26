@@ -367,8 +367,7 @@ def login_post(request):
             with SQLAlchemySessionFactory() as session:
                 if user:
                     if user.email_address == login:
-                        headers = remember(request, login)
-                        request.response.headerlist.extend(headers)
+
                         U = ~User
                         # TODO: .first() didn't work here for some reason
                         for user_obj in session.query(U).filter(U.email_address==login):
@@ -388,6 +387,9 @@ def login_post(request):
                         user.device_tokens = dts
 
                         user.save(session=session)
+
+                        headers = remember(request, login)
+                        request.response.headerlist.extend(headers)
 
                         return dict(
                             status='Ok',
@@ -417,8 +419,6 @@ def login_post(request):
                    
                     headers = remember(request, login)
                     request.response.headerlist.extend(headers)
-
-                    time.sleep(1)
 
                     return dict(
                         status='Ok',

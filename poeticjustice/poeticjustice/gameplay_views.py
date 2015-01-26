@@ -301,8 +301,7 @@ def get_friends(user):
     name='game-state',
     request_method='GET',
     context='poeticjustice:contexts.Users',
-    renderer='json',
-    permission='edit')
+    renderer='json')
 def get_user_game_state(request):
     print 'get_user_game_state called', request
     try:

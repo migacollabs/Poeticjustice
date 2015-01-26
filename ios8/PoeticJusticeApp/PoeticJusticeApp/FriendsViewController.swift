@@ -187,6 +187,10 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         let httpResponse = response as NSHTTPURLResponse
         if httpResponse.statusCode == 200 {
             if data != nil {
+                
+                println("friend")
+                println(data)
+                
                 let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                     data!, options: NSJSONReadingOptions.MutableContainers,
                     error: nil) as NSDictionary

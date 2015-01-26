@@ -211,6 +211,7 @@ class NetOpers {
     
     
     func get_player_game_state(on_received_gate_state:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
+        println(self.userId)
         if self.userId != nil && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/u/game-state"
