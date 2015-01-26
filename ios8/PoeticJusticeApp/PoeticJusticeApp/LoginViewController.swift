@@ -143,17 +143,16 @@ class LoginViewController: UIViewController {
 
         })
         
-        self.tabBarController?.tabBar.hidden = false
-        self.updateUserLabel()
-        
         println("on_login finished")
     }
     
     func on_start(){
         println("on_start called")
-        // TODO: open up a clickable topics view
+        
+        // this should probably be the indicator the app is good to go
         tabBarController?.selectedIndex = 1
-        // self.tabBarController?.tabBar.hidden = false
+        self.tabBarController?.tabBar.hidden = false
+        self.updateUserLabel()
     }
     
     func show_alert(title:String, message:String, controller_title:String){
