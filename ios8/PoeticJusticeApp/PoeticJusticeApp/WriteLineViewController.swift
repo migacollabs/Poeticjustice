@@ -24,9 +24,19 @@ class WriteLineViewController: UIViewController {
         }
     }
 
+    @IBOutlet var userLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Add a Line"
+        
         self.configureView()
+        updateUserLabel()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        updateUserLabel()
     }
     
     func configureView(){
@@ -46,6 +56,16 @@ class WriteLineViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func updateUserLabel() {
+        if let un = NetOpers.sharedInstance.user?.user_name as? String {
+            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
+                self.userLabel.text = un + " // " + String(us) + " points"
+            }
+        } else {
+            self.userLabel.text = "You are not signed in"
+        }
     }
     
     @IBAction func decrementScore(sender: AnyObject) {

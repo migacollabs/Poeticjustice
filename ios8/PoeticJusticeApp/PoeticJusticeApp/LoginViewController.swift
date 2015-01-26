@@ -20,6 +20,8 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         NetOpers.sharedInstance.loginHandler = self
+        
+        updateUserLabel()
     }
     
     override func didReceiveMemoryWarning() {
@@ -28,7 +30,21 @@ class LoginViewController: UIViewController {
     }
     
     
+    @IBOutlet var userLabel: UILabel!
+    
+    func updateUserLabel() {
+        if let un = NetOpers.sharedInstance.user?.user_name as? String {
+            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
+                self.userLabel.text = "You are signed in as: " + un + " // " + String(us) + " points"
+            }
+        } else {
+            self.userLabel.text = "You are not signed in"
+        }
+    }
+    
     @IBAction func on_go(sender: AnyObject) {
+        
+        self.tabBarController?.tabBar.hidden = true
         
         println("attempting login...")
         
@@ -70,13 +86,15 @@ class LoginViewController: UIViewController {
                     
                     println("Connectintg as \(login_em)")
                     
-                    NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
-                        
-                        // we are logged in
-                        // this won't be called if we set the on_login as a callback
-                        self.show_alert("Login", message: "Successfully logged in", controller_title: "Thanks!")
-                        
-                    })
+                    if let tbc = self.tabBarController {
+                        NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
+                            
+                            // we are logged in
+                            // this won't be called if we set the on_login as a callback
+                            self.show_alert("Login", message: "Successfully logged in", controller_title: "Thanks!")
+                            
+                        })
+                    }
                     
                 }else{
                     self.show_alert("Login", message: "No Email Found", controller_title: "Try again") // do no user email address msg
@@ -121,6 +139,8 @@ class LoginViewController: UIViewController {
         println("on_start called")
         // TODO: open up a clickable topics view
         tabBarController?.selectedIndex = 1
+        updateUserLabel()
+        self.tabBarController?.tabBar.hidden = false
     }
     
     func show_alert(title:String, message:String, controller_title:String){

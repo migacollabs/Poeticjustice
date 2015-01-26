@@ -171,16 +171,17 @@ class NetOpers {
                             
                             self.user = User(userData: user_data!)
                             
-                            sleep(1)
+                            println(self.user?.user_name)
+                            println(self.user?.user_score)
                             
-                            let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                            dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
-                                dispatch_async(dispatch_get_main_queue(), {
+                            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                                dispatch_async(dispatch_get_main_queue(),{
                                     if self.loginHandler != nil{
                                         self.loginHandler!.on_login()
                                     }else{
                                         on_login()
                                     }
+                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                 })
                             })
                             
@@ -201,7 +202,7 @@ class NetOpers {
                     // swift :(
                 }
             }
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
             
         })
         
