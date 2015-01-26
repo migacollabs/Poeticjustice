@@ -134,7 +134,9 @@ class NetOpers {
         
     }
     
-    func login(params : Dictionary<String, AnyObject>, url: String, on_login:()->(Void) ) {
+    func login(params : Dictionary<String, AnyObject>, url: String, tabBarController : UITabBarController, on_login:()->(Void) ) {
+        
+        tabBarController.tabBar.hidden = true
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -171,16 +173,18 @@ class NetOpers {
                             
                             self.user = User(userData: user_data!)
                             
-                            sleep(1)
+                            println(self.user?.user_name)
+                            println(self.user?.user_score)
                             
-                            let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-                            dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
-                                dispatch_async(dispatch_get_main_queue(), {
+                            dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                                dispatch_async(dispatch_get_main_queue(),{
                                     if self.loginHandler != nil{
                                         self.loginHandler!.on_login()
                                     }else{
                                         on_login()
                                     }
+                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                    tabBarController.tabBar.hidden = false
                                 })
                             })
                             
@@ -201,7 +205,7 @@ class NetOpers {
                     // swift :(
                 }
             }
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
             
         })
         

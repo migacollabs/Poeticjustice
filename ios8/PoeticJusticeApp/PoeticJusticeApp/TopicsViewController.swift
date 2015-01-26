@@ -17,11 +17,32 @@ class TopicsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Topics"
+        
         self.get_topics()
+        
+        updateUserLabel()
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        updateUserLabel()
+    }
+    
+    @IBOutlet var userLabel: UILabel!
 
+    func updateUserLabel() {
+        if let un = NetOpers.sharedInstance.user?.user_name as? String {
+            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
+                self.userLabel.text = un + " // " + String(us) + " points"
+            }
+        } else {
+            self.userLabel.text = "You are not signed in"
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

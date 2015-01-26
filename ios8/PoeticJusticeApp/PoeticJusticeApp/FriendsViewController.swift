@@ -117,6 +117,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier : "cell")
         self.myTableView.dataSource = self
         self.myTableView.delegate = self
+        
+        updateUserLabel()
     }
     
     func show_alert(title:String, message:String, controller_title:String){
@@ -146,7 +148,9 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewWillAppear(animated : Bool) {
         println(NetOpers.sharedInstance.userId)
         if (NetOpers.sharedInstance.userId>0) {
+            
             var refresh : Bool = false
+            
             if (lastTabbed==nil) {
                 refresh = true
             } else {
@@ -160,11 +164,23 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 lastTabbed = NSDate()
             }
             
+            updateUserLabel()
+            
         }
 //        else {
 //            show_alert("Not logged in", message: "Please login to continue", controller_title:"Ok")
 //            tabBarController?.selectedIndex = 0
 //        }
+    }
+    
+    func updateUserLabel() {
+        if let un = NetOpers.sharedInstance.user?.user_name as? String {
+            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
+                self.userLabel.text = un + " // " + String(us) + " points"
+            }
+        } else {
+            self.userLabel.text = "You are not signed in"
+        }
     }
     
     func loadFriends(data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -195,11 +211,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
             
             }
-        }
-        
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            self.userLabel.text = un
-            // TODO: add the user_count
         }
         
         if (error != nil) {

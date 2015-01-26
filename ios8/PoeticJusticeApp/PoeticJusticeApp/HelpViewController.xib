@@ -14,178 +14,177 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How to Play" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ev5-6N-OwT">
-                    <rect key="frame" x="39" y="80" width="373" height="21"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="106" width="110" height="21"/>
-                    </variation>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What should I write?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m8-bd-KJH">
-                    <rect key="frame" x="39" y="138" width="490" height="21"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="164" width="166" height="21"/>
-                    </variation>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Earn Points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5yS-pG-0x9">
-                    <rect key="frame" x="39" y="481" width="490" height="21"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="520" width="94" height="21"/>
-                    </variation>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Choose a topic and write a line.  That’s it!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miD-2U-7cP">
-                    <rect key="frame" x="39" y="109" width="490" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="J64-vP-e8d"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="135" width="317" height="21"/>
-                    </variation>
-                </label>
-                <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ifg-04-g4t">
-                    <rect key="frame" x="39" y="167" width="490" height="119"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <string key="text">Each player writes a single “line” about the chosen topic.  A “line” is a short phrasing of words, sometimes with a rhythmic intent (such as a line in poetry or a rap verse).  For example, say the following out loud, emphasizing the numbers:</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="193" width="317" height="119"/>
-                    </variation>
-                </textView>
-                <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="With the basic rhythm down, here’s an example of four lines where four individual players each wrote a single line:" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AWw-gy-RNj">
-                    <rect key="frame" x="39" y="314" width="490" height="69"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="359" width="317" height="69"/>
-                    </variation>
-                </textView>
-                <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kbq-CW-LeG">
-                    <rect key="frame" x="48" y="374" width="481" height="83"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <string key="text">“I’m the first, this is my line” /
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RKy-5m-Flp">
+                    <rect key="frame" x="8" y="58" width="584" height="848"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="“One and Two and Three and Four and”" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ReD-pU-O9O">
+                            <rect key="frame" x="8" y="190" width="260" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="58" y="320" width="260" height="21"/>
+                            </variation>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRe-70-Vgc">
+                            <rect key="frame" x="277" y="182" width="40" height="38"/>
+                            <state key="normal" image="Speaker.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <attributedString key="userComments">
+                                <fragment content="Listen to an example">
+                                    <attributes>
+                                        <font key="NSFont" metaFont="smallSystem"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="326" y="312" width="40" height="38"/>
+                            </variation>
+                            <connections>
+                                <action selector="handleButtonPress:" destination="-1" eventType="touchUpInside" id="mFX-He-FKf"/>
+                            </connections>
+                        </button>
+                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="With the basic rhythm down, here’s an example of four lines where four individual players each wrote a single line:" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AWw-gy-RNj">
+                            <rect key="frame" x="8" y="228" width="568" height="69"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="359" width="317" height="69"/>
+                            </variation>
+                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Earn Points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5yS-pG-0x9">
+                            <rect key="frame" x="8" y="305" width="568" height="21"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="520" width="94" height="21"/>
+                            </variation>
+                        </label>
+                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="Gain points by sharing your knowledge and being creative.  And remember to have fun!" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7YU-wI-u6A">
+                            <rect key="frame" x="8" y="334" width="568" height="53"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="549" width="317" height="69"/>
+                            </variation>
+                        </textView>
+                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="Simply add your friends' email addresses on the Friends tab.  If they've already added you as a friend you'll see it there." selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zme-zw-2uL">
+                            <rect key="frame" x="8" y="515" width="568" height="53"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="549" width="317" height="69"/>
+                            </variation>
+                        </textView>
+                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="The game is as secure as your phone is.  Plus there really isn't a need for a password just yet, as it's a fun and open game." selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wuu-wS-CVB">
+                            <rect key="frame" x="8" y="605" width="568" height="53"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="549" width="317" height="69"/>
+                            </variation>
+                        </textView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How do I play with friends?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3W6-Da-L3o">
+                            <rect key="frame" x="8" y="486" width="568" height="21"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="520" width="94" height="21"/>
+                            </variation>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Why isn't there a password?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hGb-E2-ViT">
+                            <rect key="frame" x="8" y="576" width="568" height="21"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="520" width="94" height="21"/>
+                            </variation>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What can my username be?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RtK-ck-hY6">
+                            <rect key="frame" x="8" y="666" width="568" height="21"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="520" width="94" height="21"/>
+                            </variation>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How to Play" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ev5-6N-OwT">
+                            <rect key="frame" x="8" y="8" width="568" height="21"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="106" width="110" height="21"/>
+                            </variation>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="  Choose a topic and write a line.  That’s it!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miD-2U-7cP">
+                            <rect key="frame" x="8" y="37" width="568" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="135" width="317" height="21"/>
+                            </variation>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What should I write?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m8-bd-KJH">
+                            <rect key="frame" x="8" y="66" width="568" height="21"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="164" width="166" height="21"/>
+                            </variation>
+                        </label>
+                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ifg-04-g4t">
+                            <rect key="frame" x="8" y="95" width="568" height="87"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="87" id="vGS-hO-apx"/>
+                            </constraints>
+                            <string key="text">Each player writes a single “line” about the chosen topic.  A “line” is a short phrasing of words, sometimes with a rhythmic intent (such as a line in poetry or a rap verse).  For example, say the following out loud, emphasizing the numbers:</string>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="vGS-hO-apx"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="193" width="317" height="119"/>
+                            </variation>
+                        </textView>
+                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwH-FZ-aHH">
+                            <rect key="frame" x="8" y="695" width="568" height="133"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <mutableString key="text">Anything you want!  The only rule is it has to contain at least one character.  We suggest being creative here, perhaps trying to entice other players to join you.  Please note that your username can be changed at any time.  We do not store a history of username's either.  Once it's gone, it's gone.  However if you want to get it back, just change it back on the Home screen.</mutableString>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="49" y="549" width="317" height="69"/>
+                            </variation>
+                        </textView>
+                        <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kbq-CW-LeG">
+                            <rect key="frame" x="8" y="395" width="568" height="83"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <string key="text">“I’m the first, this is my line” /
 “Since I’m up next, my line will rhyme” /
 “I’m the third, so start a-new” /
 “This is fun, so impromptu!” /</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="58" y="429" width="277" height="83"/>
-                    </variation>
-                </textView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="“One and Two and Three and Four and”" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ReD-pU-O9O">
-                    <rect key="frame" x="59" y="279" width="260" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="6Jq-XB-VHp"/>
-                        <constraint firstAttribute="width" constant="260" id="hkm-Dy-IxJ"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="58" y="320" width="260" height="21"/>
-                    </variation>
-                    <variation key="widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="64" y="249" width="260" height="21"/>
-                    </variation>
-                </label>
-                <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="Gain points by sharing your knowledge and being creative.  And remember to have fun!" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7YU-wI-u6A">
-                    <rect key="frame" x="39" y="510" width="490" height="69"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="69" id="Ift-Rs-X9r"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="549" width="317" height="69"/>
-                    </variation>
-                </textView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRe-70-Vgc">
-                    <rect key="frame" x="342" y="271" width="40" height="38"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="38" id="Gsy-ZT-q8v"/>
-                        <constraint firstAttribute="width" constant="40" id="kay-Hj-O62"/>
-                    </constraints>
-                    <state key="normal" image="Speaker.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <attributedString key="userComments">
-                        <fragment content="Listen to an example">
-                            <attributes>
-                                <font key="NSFont" metaFont="smallSystem"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                            </attributes>
-                        </fragment>
-                    </attributedString>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="326" y="312" width="40" height="38"/>
-                    </variation>
-                    <variation key="widthClass=compact" misplaced="YES">
-                        <rect key="frame" x="343" y="241" width="40" height="38"/>
-                    </variation>
-                    <connections>
-                        <action selector="handleButtonPress:" destination="-1" eventType="touchUpInside" id="mFX-He-FKf"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kN8-Il-Djp">
-                    <rect key="frame" x="420" y="76" width="109" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="109" id="crg-4j-V5D"/>
-                    </constraints>
-                    <state key="normal" title="Test">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="testButton:" destination="-1" eventType="touchUpInside" id="nHx-ue-Agx"/>
-                    </connections>
-                </button>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            <variation key="heightClass=regular" fixedFrame="YES">
+                                <rect key="frame" x="58" y="429" width="277" height="83"/>
+                            </variation>
+                        </textView>
+                    </subviews>
+                </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="33j-2y-M3d"/>
-                <constraint firstItem="Kbq-CW-LeG" firstAttribute="top" secondItem="oRe-70-Vgc" secondAttribute="bottom" constant="65" id="4F3-kC-t4x"/>
-                <constraint firstItem="1m8-bd-KJH" firstAttribute="top" secondItem="miD-2U-7cP" secondAttribute="bottom" constant="8" symbolic="YES" id="5G6-r6-kHO"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="leading" secondItem="AWw-gy-RNj" secondAttribute="leading" id="5pR-iv-vqK"/>
-                <constraint firstItem="miD-2U-7cP" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="8" symbolic="YES" id="Agt-sZ-dFd"/>
-                <constraint firstItem="miD-2U-7cP" firstAttribute="top" secondItem="kN8-Il-Djp" secondAttribute="bottom" constant="3" id="BBp-3i-DNg"/>
-                <constraint firstAttribute="trailing" secondItem="kN8-Il-Djp" secondAttribute="trailing" constant="71" id="GFG-AD-Gzm"/>
-                <constraint firstItem="AWw-gy-RNj" firstAttribute="top" secondItem="oRe-70-Vgc" secondAttribute="bottom" constant="5" id="HBU-Th-HuB"/>
-                <constraint firstItem="AWw-gy-RNj" firstAttribute="top" secondItem="Ifg-04-g4t" secondAttribute="bottom" constant="28" id="LLG-mR-Fcy"/>
-                <constraint firstItem="Kbq-CW-LeG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="48" id="Pru-JZ-GIA"/>
-                <constraint firstItem="7YU-wI-u6A" firstAttribute="leading" secondItem="5yS-pG-0x9" secondAttribute="leading" id="RgX-wc-vnO"/>
-                <constraint firstItem="oRe-70-Vgc" firstAttribute="leading" secondItem="ReD-pU-O9O" secondAttribute="trailing" constant="23" id="Yc2-Wv-2lc"/>
-                <constraint firstItem="AWw-gy-RNj" firstAttribute="top" secondItem="ReD-pU-O9O" secondAttribute="bottom" constant="14" id="ZOz-Ch-eu0"/>
-                <constraint firstItem="kN8-Il-Djp" firstAttribute="trailing" secondItem="miD-2U-7cP" secondAttribute="trailing" id="Znc-zm-7tc"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="trailing" secondItem="Kbq-CW-LeG" secondAttribute="trailing" id="aWA-xf-45C"/>
-                <constraint firstAttribute="bottom" secondItem="7YU-wI-u6A" secondAttribute="bottom" constant="21" id="ak5-ko-H7D"/>
-                <constraint firstItem="AWw-gy-RNj" firstAttribute="trailing" secondItem="Ifg-04-g4t" secondAttribute="trailing" id="auD-CN-izm"/>
-                <constraint firstItem="1m8-bd-KJH" firstAttribute="trailing" secondItem="Ifg-04-g4t" secondAttribute="trailing" id="bDk-Aa-wkW"/>
-                <constraint firstItem="kN8-Il-Djp" firstAttribute="leading" secondItem="ev5-6N-OwT" secondAttribute="trailing" constant="8" symbolic="YES" id="bkn-gk-aik"/>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="39" id="c5A-Kg-2Ls"/>
-                <constraint firstItem="AWw-gy-RNj" firstAttribute="leading" secondItem="Ifg-04-g4t" secondAttribute="leading" id="cqg-Qa-HnT"/>
-                <constraint firstItem="miD-2U-7cP" firstAttribute="trailing" secondItem="1m8-bd-KJH" secondAttribute="trailing" id="jH2-nV-6mR"/>
-                <constraint firstItem="Ifg-04-g4t" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="kHe-4s-JlE"/>
-                <constraint firstItem="7YU-wI-u6A" firstAttribute="top" secondItem="5yS-pG-0x9" secondAttribute="bottom" constant="8" symbolic="YES" id="lfG-27-iMQ"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="top" secondItem="AWw-gy-RNj" secondAttribute="bottom" constant="98" id="lgU-qf-Yvt"/>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="leading" secondItem="miD-2U-7cP" secondAttribute="leading" id="n3n-C5-RPv"/>
-                <constraint firstItem="ReD-pU-O9O" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="59" id="nI6-Ej-BjC"/>
-                <constraint firstItem="7YU-wI-u6A" firstAttribute="trailing" secondItem="5yS-pG-0x9" secondAttribute="trailing" id="oEw-Od-N0O"/>
-                <constraint firstItem="AWw-gy-RNj" firstAttribute="trailing" secondItem="Kbq-CW-LeG" secondAttribute="trailing" id="r7G-Z8-5hF"/>
-                <constraint firstItem="miD-2U-7cP" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="sEr-6o-UJl"/>
-                <constraint firstItem="Ifg-04-g4t" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="bottom" constant="8" symbolic="YES" id="sqt-aX-4wM"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="top" secondItem="Kbq-CW-LeG" secondAttribute="bottom" constant="24" id="wBf-yt-wQY"/>
-            </constraints>
-            <point key="canvasLocation" x="135" y="157"/>
+            <point key="canvasLocation" x="155" y="143"/>
         </view>
     </objects>
     <resources>

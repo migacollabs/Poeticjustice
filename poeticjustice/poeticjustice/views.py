@@ -349,22 +349,28 @@ def login_post(request):
         came_from = request.params.get('came_from', referrer)
         message = ''
         login = ''
-        password = ''
+        # password = ''
 
         if 'form.submitted' in request.params:
             login = request.params['login']
-            password = sha512("NOPASSWORD").hexdigest()
+            # password = sha512("NOPASSWORD").hexdigest()
             user = get_user(login)
 
             with SQLAlchemySessionFactory() as session:
                 if user:
-                    if user.password == password:
+                    if user.email_address == login:
                         headers = remember(request, login)
                         request.response.headerlist.extend(headers)
                         U = ~User
                         # TODO: .first() didn't work here for some reason
                         for user_obj in session.query(U).filter(U.email_address==login):
                             pass
+
+                        # update to the latest user
+                        user = User(entity=user_obj)
+                        user.user_name = request.params['user_name']
+                        user.save(session=session)
+
                         return dict(
                             status='Ok',
                             user=User(entity=user_obj).to_dict(),

@@ -2,11 +2,13 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
                 <outlet property="email_address" destination="qRP-Qs-sqY" id="tDd-Bp-bn5"/>
+                <outlet property="userLabel" destination="OrP-Tz-qIv" id="wg3-wN-oKU"/>
                 <outlet property="user_name" destination="xBS-xc-17G" id="Rt1-Pw-9Bt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -48,16 +50,28 @@
                         <action selector="on_go:" destination="-1" eventType="touchUpInside" id="f1v-Yb-QiC"/>
                     </connections>
                 </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are currently logged in as: fakeusername // 199 points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OrP-Tz-qIv">
+                    <rect key="frame" x="8" y="372" width="584" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="FEH-Oc-VCq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="qRP-Qs-sqY" firstAttribute="leading" secondItem="xBS-xc-17G" secondAttribute="leading" id="0GW-0a-9he"/>
+                <constraint firstItem="OrP-Tz-qIv" firstAttribute="top" secondItem="DeK-pn-1LR" secondAttribute="bottom" constant="8" symbolic="YES" id="Bau-QS-DSe"/>
                 <constraint firstItem="EEy-C4-ZGJ" firstAttribute="leading" secondItem="xBS-xc-17G" secondAttribute="leading" id="CF9-RE-dXV"/>
                 <constraint firstItem="qRP-Qs-sqY" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="J7f-g1-8TJ"/>
                 <constraint firstItem="qRP-Qs-sqY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="188" id="Nqn-GD-xjt"/>
                 <constraint firstItem="DeK-pn-1LR" firstAttribute="top" secondItem="EEy-C4-ZGJ" secondAttribute="bottom" constant="8" symbolic="YES" id="UaV-qB-Hbd"/>
                 <constraint firstItem="xBS-xc-17G" firstAttribute="centerX" secondItem="DeK-pn-1LR" secondAttribute="centerX" id="buh-ed-4sP"/>
                 <constraint firstItem="xBS-xc-17G" firstAttribute="top" secondItem="qRP-Qs-sqY" secondAttribute="bottom" constant="13" id="g0w-jo-Nj9"/>
+                <constraint firstItem="OrP-Tz-qIv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="goE-JW-SYw"/>
+                <constraint firstItem="OrP-Tz-qIv" firstAttribute="centerX" secondItem="DeK-pn-1LR" secondAttribute="centerX" id="uKX-CH-gJK"/>
                 <constraint firstItem="qRP-Qs-sqY" firstAttribute="trailing" secondItem="xBS-xc-17G" secondAttribute="trailing" id="vKk-l2-1Si"/>
                 <constraint firstItem="EEy-C4-ZGJ" firstAttribute="top" secondItem="xBS-xc-17G" secondAttribute="bottom" constant="12" id="vvY-uO-LQA"/>
             </constraints>

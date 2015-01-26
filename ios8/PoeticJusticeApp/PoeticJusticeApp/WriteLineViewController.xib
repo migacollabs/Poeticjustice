@@ -10,6 +10,7 @@
                 <outlet property="setLine" destination="5Qn-Ca-z5G" id="6c9-il-i8g"/>
                 <outlet property="topicButton" destination="kTl-ux-cd3" id="vLW-Gs-PoM"/>
                 <outlet property="topicLabel" destination="oap-lG-cFG" id="0dd-zT-tO9"/>
+                <outlet property="userLabel" destination="4pz-eP-0uX" id="DZg-xc-h09"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
