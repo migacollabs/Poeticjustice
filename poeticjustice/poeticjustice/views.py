@@ -164,8 +164,16 @@ def create_new_user_post(request):
                 sha512(
                     str(user.id) + str(user.initial_entry_date) + default_hashkey
                 ).hexdigest()
-            user.device_token = "NODEVICETOKEN"
             user.is_active = True
+
+            # can't append to list in model
+            # directely. have to append and set
+            # at the attr
+            dt = kwds['device_token']
+            dts = user.device_tokens
+            if not dts: dts = []
+            if dt not in dts: dts.append(dt)
+            user.device_tokens = dts
 
         site_addr = get_site_addr()
 
@@ -369,6 +377,16 @@ def login_post(request):
                         # update to the latest user
                         user = User(entity=user_obj)
                         user.user_name = request.params['user_name']
+
+                        # can't append to list in model
+                        # directely. have to append and set
+                        # at the attr
+                        dt = request.params['device_token']
+                        dts = user.device_tokens
+                        if not dts: dts = []
+                        if dt not in dts: dts.append(dt)
+                        user.device_tokens = dts
+
                         user.save(session=session)
 
                         return dict(
@@ -382,6 +400,16 @@ def login_post(request):
                     if user_obj is None:
                         user_obj = User(email_address=login, 
                             user_name=request.params['user_name'] if 'user_name' in request.params else None)
+
+                        # can't append to list in model
+                        # directely. have to append and set
+                        # at the attr
+                        dt = request.params['device_token']
+                        dts = user_obj.device_tokens
+                        if not dts: dts = []
+                        if dt not in dts: dts.append(dt)
+                        user_obj.device_tokens = dts
+
                         # save this user
                         user_obj = _save_user(user_obj, session)
 

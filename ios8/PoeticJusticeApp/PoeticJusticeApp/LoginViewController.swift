@@ -71,7 +71,7 @@ class LoginViewController: UIViewController {
                 var params = Dictionary<String,AnyObject>()
                 params["form.submitted"] = true
                 params["country_code"] = "USA"
-                params["device_id"] = UIDevice.currentDevice().identifierForVendor.UUIDString
+                params["device_token"] = UIDevice.currentDevice().identifierForVendor.UUIDString
                 
                 if let em = self.email_address.text{
                     params["login"] = em
