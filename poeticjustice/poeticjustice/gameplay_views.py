@@ -358,6 +358,67 @@ def get_user_game_state(request):
             pass
 
 
+@view_config(
+    name='start',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='json',
+    permission='edit')
+def start_topic(request):
+    print 'start_topic called', request
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(request.subpath)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                user = User(entity=session.merge(user))
+
+                U, V = ~User, ~Verse
+                rp = (session.query(U, V)
+                        .filter(U.id==user.id)
+                        .filter(V.owner_id==U.id)
+                        .filter(V.complete==False)
+                        ).all()
+
+                tids = set()
+                for row in rp: 
+                    u, v = row
+                    tids.add(v.verse_category_topic_id)
+
+            return dict(
+                open_topics=list(tids),
+                logged_in=auth_usrid,
+                user=user.to_dict()
+            )
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
 
 
 
