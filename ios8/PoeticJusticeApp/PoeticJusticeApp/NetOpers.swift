@@ -134,9 +134,7 @@ class NetOpers {
         
     }
     
-    func login(params : Dictionary<String, AnyObject>, url: String, tabBarController : UITabBarController, on_login:()->(Void) ) {
-        
-        tabBarController.tabBar.hidden = true
+    func login(params : Dictionary<String, AnyObject>, url: String, on_login:()->(Void) ) {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
@@ -184,7 +182,6 @@ class NetOpers {
                                         on_login()
                                     }
                                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                                    tabBarController.tabBar.hidden = false
                                 })
                             })
                             

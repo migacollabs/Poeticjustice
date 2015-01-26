@@ -44,6 +44,8 @@ class LoginViewController: UIViewController {
     
     @IBAction func on_go(sender: AnyObject) {
         
+        self.tabBarController?.tabBar.hidden = true
+        
         println("attempting login...")
         
         var myDict: NSDictionary?
@@ -84,7 +86,7 @@ class LoginViewController: UIViewController {
                     println("Connectintg as \(login_em)")
                     
                     if let tbc = self.tabBarController {
-                        NetOpers.sharedInstance.login(params, url: login_url, tabBarController : tbc, {() -> (Void) in
+                        NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
                             
                             // we are logged in
                             // this won't be called if we set the on_login as a callback
@@ -137,6 +139,7 @@ class LoginViewController: UIViewController {
         // TODO: open up a clickable topics view
         tabBarController?.selectedIndex = 1
         updateUserLabel()
+        self.tabBarController?.tabBar.hidden = false
     }
     
     func show_alert(title:String, message:String, controller_title:String){
