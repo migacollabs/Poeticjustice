@@ -105,6 +105,10 @@ class TopicsViewController: UIViewController {
                 var user = NetOpers.sharedInstance.user
                 
                 var open_topics: NSArray = (NetOpers.sharedInstance.game_state!.open_topics! as NSArray)
+                var open_topics_set = Set<Int>()
+                for ot in open_topics{
+                    open_topics_set.add(ot as Int)
+                }
                 
                 if data != nil {
                     
@@ -116,9 +120,8 @@ class TopicsViewController: UIViewController {
                             
                             if let len = jsonResult["length"] as? Int{
                                 if let results = jsonResult["results"] as? NSArray{
+                                    
                                     for topic in results{
-                                        
-                                        // add topics to topic_order if open or player can start the topic
                                         var t = Topic(rec:topic as NSDictionary)
                                         if t.min_points_req? as Int == 0 || user?.user_score? as Int >= t.min_points_req? as Int{
                                             var tid = t.id! as Int
@@ -126,18 +129,32 @@ class TopicsViewController: UIViewController {
                                             self.topic_order.append(tid)
                                             
                                         }else{
-                                            for i in open_topics{
+                                           // for i in open_topics{
 //                                                if i as Int == t.id! as Int{
 //                                                    var tid = t.id! as Int
 //                                                    self.topics[tid] = t
 //                                                    self.topic_order.append(tid)
 //                                                    break
 //                                                }
-                                            }
+                                            // }
                                         }
-                                        
-                                        
+//                                        var tid = t.id! as Int
+//                                        self.topics[tid] = t
                                     }
+//                                    
+//                                    for tid in open_topics_set{
+//                                        self.topic_order.append(tid)
+//                                    }
+//                                    
+//                                    for (tid, topic) in self.topics{
+//                                        if !open_topics_set.contains(tid as Int){
+//                                            var t = topic as Topic
+//                                            if t.min_points_req? as Int == 0 || user?.user_score? as Int >= t.min_points_req? as Int{
+//                                                self.topic_order.append(tid)
+//                                            }
+//                                        }
+//                                    }
+//                                    
                                 }
                             }
                             
@@ -229,23 +246,4 @@ class TopicsViewController: UIViewController {
     */
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

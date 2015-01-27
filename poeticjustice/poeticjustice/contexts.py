@@ -8,7 +8,9 @@ from pyaella.server.api import WebRoot
 
 __all__ = [
     'AppRoot',
-    'Users'
+    'Users',
+    'UserUpdates',
+    'Topics'
 ]
 
 class AppRoot(WebRoot):

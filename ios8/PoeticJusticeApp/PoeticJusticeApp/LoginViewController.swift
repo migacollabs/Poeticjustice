@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         NetOpers.sharedInstance.loginHandler = self
+        NetOpers.sharedInstance.alertHandler = self
         
         updateUserLabel()
     }
@@ -72,6 +73,7 @@ class LoginViewController: UIViewController {
                 params["form.submitted"] = true
                 params["country_code"] = "USA"
                 params["device_token"] = UIDevice.currentDevice().identifierForVendor.UUIDString
+                params["device_type"] = UIDevice.currentDevice().modelName
                 
                 if let em = self.email_address.text{
                     params["login"] = em

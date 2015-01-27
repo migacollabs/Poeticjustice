@@ -25,6 +25,7 @@ class NetOpers {
     
     var appserver_hostname: String?
     var loginHandler: LoginViewController?
+    var alertHandler: LoginViewController?
     
     var userId: Int? = nil
     var user: User? = nil
@@ -152,44 +153,48 @@ class NetOpers {
                         
                         var json: JSON? = nil
                         var user_data: NSDictionary?
+                        var requires_verification: Bool = true
                         
                         if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                            data, options: NSJSONReadingOptions.MutableContainers,
-                            error: nil) as? NSDictionary{
+                        data, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as? NSDictionary{
                                 
-                                if let results = jsonResult["user"] as? NSDictionary{
-                                    
-                                    user_data = results
-                                    
-                                    if let y = results["id"] as? Int{
-                                        self.userId = y
-                                    }
+                            if let results = jsonResult["user"] as? NSDictionary{
+                                
+                                user_data = results
+                                
+                                if let y = results["id"] as? Int{
+                                    self.userId = y
                                 }
+                            }
+                            
+                            if let rq_v = jsonResult["verification_req"] as? Bool{
+                                requires_verification = rq_v
+                            }
                         }
                         
                         if self.userId != nil && user_data != nil{
                             
                             self.user = User(userData: user_data!)
                             
-                            println(self.user?.user_name)
-                            println(self.user?.user_score)
-                            
                             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                                 dispatch_async(dispatch_get_main_queue(),{
-                                    if self.loginHandler != nil{
-                                        self.loginHandler!.on_login()
+                                    
+                                    if requires_verification{
+                                        if self.alertHandler != nil{
+                                            self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok!")
+                                        }
                                     }else{
-                                        on_login()
+                                        if self.loginHandler != nil{
+                                            self.loginHandler!.on_login()
+                                        }else{
+                                            on_login()
+                                        }
                                     }
+                                    
                                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                 })
                             })
-                            
-                        }
-                        
-                        if (json != nil){
-                            
-                            () // do more with the json object
                             
                         }
                         
