@@ -72,6 +72,7 @@ class LoginViewController: UIViewController {
                 params["form.submitted"] = true
                 params["country_code"] = "USA"
                 params["device_token"] = UIDevice.currentDevice().identifierForVendor.UUIDString
+                params["device_type"] = UIDevice.currentDevice().modelName
                 
                 if let em = self.email_address.text{
                     params["login"] = em

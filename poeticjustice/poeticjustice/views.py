@@ -27,6 +27,7 @@ from pyaella.metacode import tmpl as pyaella_templates
 from pyaella.server.processes import Emailer
 from pyaella.server.api import LutValues
 
+import poeticjustice
 from poeticjustice import default_hashkey
 from poeticjustice.models import *
 
@@ -39,6 +40,10 @@ frmttr = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s
 fh.setFormatter(frmttr)
 log.addHandler(fh)
 log.info('Started')
+
+
+ASSETS_DIR = os.path.dirname(os.path.abspath(poeticjustice.assets.__file__))
+print 'ASSETS_DIR', ASSETS_DIR
 
 
 HOST, PORT = None, None
@@ -377,14 +382,21 @@ def login_post(request):
                         user = User(entity=user_obj)
                         user.user_name = request.params['user_name']
 
-                        # can't append to list in model
-                        # directely. have to append and set
-                        # at the attr
-                        dt = request.params['device_token']
-                        dts = user.device_tokens
-                        if not dts: dts = []
-                        if dt not in dts: dts.append(dt)
-                        user.device_tokens = dts
+
+                        device_token = request.params['device_token']
+                        device_type = request.params['device_type']
+
+                        print device_token
+                        print device_type
+
+                        device_rec_json = json.dumps(user.device_rec) if user.device_rec else None
+
+                        print 'DEVICE RECORD'
+                        
+                        # dts = user.device_tokens
+                        # if not dts: dts = []
+                        # if dt not in dts: dts.append(dt)
+                        # user.device_tokens = dts
 
                         user.save(session=session)
 
@@ -403,6 +415,8 @@ def login_post(request):
                         user_obj = User(email_address=login, 
                             user_name=request.params['user_name'] if 'user_name' in request.params else None)
 
+                        user_obj.save(session=session)
+
                         # can't append to list in model
                         # directely. have to append and set
                         # at the attr
@@ -412,8 +426,37 @@ def login_post(request):
                         if dt not in dts: dts.append(dt)
                         user_obj.device_tokens = dts
 
+
+
+                        user_obj.access_token = \
+                            sha512(
+                                str(user_obj.id) + str(user_obj.initial_entry_date) + default_hashkey
+                            ).hexdigest()
+
+
+                        message_body = "Please verify your email address!"
+
+                        # email the new user
+                        smtp_psswd = os.environ['POETIC_JUSTICE_SMTP_PASSWORD']
+                        smtp_user = os.environ['POETIC_JUSTICE_SMTP_USER']
+                        smtp_server = os.environ['POETIC_JUSTICE_SMTP_SERVER']
+
+                        emailer = Emailer(
+                            smtp_user, 
+                            smtp_psswd, 
+                            smtp_server)
+
+                        emailer.send_html_email({
+                            'to': user_obj.email_address,
+                            'from': smtp_user,
+                            'subject': 'Poetic Justice - Verify your email!',
+                            'message_body': message_body},
+                            attached_logo=os.path.join(ASSETS_DIR, "mividio_house_bug.png"))
+
+
                         # save this user
                         user_obj = _save_user(user_obj, session)
+
 
                     user = get_user(login, force_refresh=True)
                    
