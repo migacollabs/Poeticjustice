@@ -54,6 +54,7 @@
 
                 <input type="hidden" name="country_code" value="USA" />
                 <input type="hidden" name="form.submitted" value="true" />
+                <input type="hidden" name="device_token" value="BROWSER_DEVICE_TOKEN" />
 
                 <a href="#" id="login-btn" class="button small success radius expand">Login!</a>
 

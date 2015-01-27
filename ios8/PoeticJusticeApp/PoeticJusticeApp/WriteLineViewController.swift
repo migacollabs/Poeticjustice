@@ -7,6 +7,25 @@
 //
 
 import UIKit
+import Foundation
+
+class Verse {
+    let verse_data: NSDictionary
+    
+    init(rec:NSDictionary){
+        self.verse_data = rec
+    }
+    
+    var id: AnyObject? {
+        get {
+            if let x = self.verse_data["id"] as? Int{
+                return x
+            }
+            return nil
+        }
+    }
+    
+}
 
 class WriteLineViewController: UIViewController {
     
@@ -33,6 +52,10 @@ class WriteLineViewController: UIViewController {
         
         self.configureView()
         updateUserLabel()
+    }
+    
+    func refreshVerse() {
+    
     }
     
     override func viewDidAppear(animated: Bool) {
