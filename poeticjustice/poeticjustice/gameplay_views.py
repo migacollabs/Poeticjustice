@@ -16,7 +16,7 @@ from boto.s3.connection import S3Connection, Location
 from boto.s3.key import Key
 
 # sqlalchemy
-from sqlalchemy import or_
+from sqlalchemy import or_, desc
 
 # pyaella imports
 from pyaella import *
@@ -296,6 +296,121 @@ def get_friends(user):
 
     return {"results":friends}
 
+
+def get_verse(verseId, userId):
+    lines = list()
+    last_user_id = None
+    next_user_id = None
+    with SQLAlchemySessionFactory() as session:
+        V, LxV = ~Verse, ~LineXVerse
+        for l in session.query(LxV).filter(LxV.verse_id==verseId).order_by(LxV.id):
+            lines.append(l.line_text)
+            last_user_id = l.user_id
+
+        if (last_user_id):
+            # get the next user that is allowed
+            verse = session.query(V).filter(V.id==verseId).first()
+            found = False
+            for u in verse.user_ids:
+                if found:
+                    next_user_id = u
+                    break
+                if last_user_id==u:
+                    found = True
+        else:
+            next_user_id = userId
+
+    return {"lines":lines, "next_user_id":next_user_id}
+
+@view_config(
+    name='saveline',
+    request_method='POST',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def save_verse_line(request):
+    try:
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+
+        if user and user.is_active and user.email_address==auth_usrid:
+
+            # mandatory fields every time
+            topicId = request.params['topic_id']
+            line = request.params["line"]
+            
+            # optional after first line
+            maxParticipants = 5
+
+            # optional when adding first line
+            scoreIncrement, verseId = None, None
+
+            if 'score_increment' in request.params:
+                scoreIncrement = request.params['score_increment']
+            
+            if 'verse_id' in request.params:
+                verseId = request.params['verse_id']
+
+            if 'max_participants' in request.params:
+                maxParticipants = request.params['max_participants']
+
+            with SQLAlchemySessionFactory() as session:
+
+                verse = None
+
+                if (verseId is None):
+                    # a new verse has been started
+                    verse = Verse(user_ids=[user.id], max_participants=maxParticipants, max_lines=maxParticipants*4,
+                        owner_id=user.id, verse_category_topic=topicId)
+                    verse.save(session=session)
+                    verseId = verse.id
+                else:
+                    # adding to a verse
+                    verse = session.query(~Verse).filter((~Verse).id==verseId).first()
+
+                if (scoreIncrement):
+                    # if it's not the first line, update the previous line score for the line
+                    # and user
+                    lxv = session.query(~LineXVerse).filter((~LineXVerse).verse_id==verse.id).\
+                        order_by(desc((~LineXVerse).id)).first()
+
+                    if lxv:
+                        lxv.line_score = lxv.line_score + int(scoreIncrement)
+                        lxv = LineXVerse(entity=session.merge(lxv))
+                        lxv.save(session=session)
+
+                        lastUser = session.query(~User).filter((~User).id==lxv.user_id).first()
+                        lastUser.user_score = lastUser.user_score + int(scoreIncrement)
+                        lastUser = User(entity=session.merge(lastUser))
+                        lastUser.save(session=session)
+
+                # finally, save this users line
+                linexverse = LineXVerse(user_id=user.id, verse_id=verse.id, line_text=line, line_score=0)
+                linexverse.save(session=session)
+
+                return get_verse(verse.id, user.id)
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
 
 @view_config(
     name='game-state',

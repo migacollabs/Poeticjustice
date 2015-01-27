@@ -257,6 +257,10 @@ PYAELLAC:
 
 (Verse):
     Fields:
+        id: Column(BigInteger, 
+                    Sequence('verse_id_seq', start=1),  
+                    server_default=text("nextval('verse_id_seq')"), 
+                    primary_key=True)
         title: Column(String, nullable=True)
         user_ids: Column(ARRAY(Integer), nullable=True)
         max_participarts: Column(Integer, nullable=False, default=2)
@@ -271,12 +275,16 @@ PYAELLAC:
 
 (LineXVerse):
     Fields:
+        id: Column(BigInteger, 
+                    Sequence('line_id_seq', start=1),  
+                    server_default=text("nextval('line_id_seq')"), 
+                    primary_key=True)
         line_text: Column(String)
         line_score: Column(Integer)
         added: Column(Boolean, default=False, nullable=False)
     Relations:
         user_id: Column(BigInteger, ForeignKey('users.id'))
-        verse_id: Column(BigInteger, ForeignKey('users.id'))
+        verse_id: Column(BigInteger, ForeignKey('verses.id'))
 
 
 AFTER_CREATE_SQL:
@@ -317,7 +325,8 @@ AFTER_CREATE_SQL:
         INSERT INTO user_x_groups
             (user_id, group_id)
         VALUES
-            (11111, 1);
+            (11111, 1),
+            (11112, 1);
 
         INSERT INTO verse_category_topics 
             (
