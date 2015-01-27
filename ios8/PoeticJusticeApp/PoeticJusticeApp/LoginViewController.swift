@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         NetOpers.sharedInstance.loginHandler = self
+        NetOpers.sharedInstance.alertHandler = self
         
         updateUserLabel()
     }

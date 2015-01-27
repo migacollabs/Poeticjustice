@@ -43,7 +43,6 @@ log.info('Started')
 
 
 ASSETS_DIR = os.path.dirname(os.path.abspath(poeticjustice.assets.__file__))
-print 'ASSETS_DIR', ASSETS_DIR
 
 
 HOST, PORT = None, None
@@ -363,6 +362,11 @@ def login_post(request):
         message = ''
         login = ''
         # password = ''
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+
+        device_token = request.params['device_token'] if 'device_token' in request.params else None
+        device_type = request.params['device_type'] if 'device_type' in request.params else None
 
         if 'form.submitted' in request.params:
             login = request.params['login']
@@ -380,18 +384,10 @@ def login_post(request):
 
                         # update to the latest user
                         user = User(entity=user_obj)
+
                         user.user_name = request.params['user_name']
 
-
-                        device_token = request.params['device_token']
-                        device_type = request.params['device_type']
-
-                        print device_token
-                        print device_type
-
                         device_rec_json = json.dumps(user.device_rec) if user.device_rec else None
-
-                        print 'DEVICE RECORD'
                         
                         # dts = user.device_tokens
                         # if not dts: dts = []
@@ -405,36 +401,52 @@ def login_post(request):
 
                         return dict(
                             status='Ok',
+                            verification_req=False,
                             user=User(entity=user_obj).to_dict(),
                             logged_in=authenticated_userid(request)
                             )
+
                 else:
                     user_obj = session.query(~User).filter((~User).email_address==login).first()
 
                     if user_obj is None:
-                        user_obj = User(email_address=login, 
-                            user_name=request.params['user_name'] if 'user_name' in request.params else None)
+                        user_obj = User(
+                            email_address=login,
+                            password=sha512("NOPASSWORD").hexdigest(),
+                            user_name=request.params['user_name'] if 'user_name' in request.params else None,
+                            country_code=request.params['country_code'] if 'country_code' in request.params else "USA")
 
                         user_obj.save(session=session)
 
-                        # can't append to list in model
-                        # directely. have to append and set
-                        # at the attr
-                        dt = request.params['device_token']
-                        dts = user_obj.device_tokens
-                        if not dts: dts = []
-                        if dt not in dts: dts.append(dt)
-                        user_obj.device_tokens = dts
+                        device_rec_json = json.dumps(user_obj.device_rec) if user_obj.device_rec else None
 
-
+                        print device_rec_json
 
                         user_obj.access_token = \
                             sha512(
                                 str(user_obj.id) + str(user_obj.initial_entry_date) + default_hashkey
                             ).hexdigest()
 
+                        auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
 
-                        message_body = "Please verify your email address!"
+                        user_obj.auth_hash = auth_hash
+
+
+                        # send email
+                        email_tmpl = os.path.join(
+                            dconfig.Web.TemplateDir, 'email.verification.mako')
+
+                        site_addr = get_site_addr()
+
+                        tmpl_vars = {
+                            'site_id': 'mividio',
+                            'site_hostname': site_addr,
+                            'site_display_name': 'Mividio',
+                            'auth_hash': auth_hash
+                        }
+                        tmpl_vars.update(user_obj.to_dict(ignore_fields=['id', 'key']))
+
+                        message_body = Template(filename=email_tmpl).render(**tmpl_vars)
 
                         # email the new user
                         smtp_psswd = os.environ['POETIC_JUSTICE_SMTP_PASSWORD']
@@ -444,17 +456,16 @@ def login_post(request):
                         emailer = Emailer(
                             smtp_user, 
                             smtp_psswd, 
-                            smtp_server)
-
-                        emailer.send_html_email({
+                            smtp_server) \
+                        .send_html_email({
                             'to': user_obj.email_address,
                             'from': smtp_user,
                             'subject': 'Poetic Justice - Verify your email!',
                             'message_body': message_body},
-                            attached_logo=os.path.join(ASSETS_DIR, "mividio_house_bug.png"))
+                            attached_logo=os.path.join(ASSETS_DIR, "Conversation.png"))
 
 
-                        # save this user
+                        # save new user
                         user_obj = _save_user(user_obj, session)
 
 
@@ -465,6 +476,7 @@ def login_post(request):
 
                     return dict(
                         status='Ok',
+                        verification_req=True,
                         user=User(entity=user_obj).to_dict(),
                         logged_in=user_obj.email_address
                         )
@@ -481,6 +493,54 @@ def login_post(request):
     except:
         log.exception(traceback.format_exc())
         raise HTTPBadRequest(explanation='Bad Request')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
+    name='verify',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='user.verified.mako')
+def verify_new_user(request):
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(args)
+        with SQLAlchemySessionFactory() as session:
+            U = ~User
+            user = session.query(U).filter((U).auth_hash == kwds['hash']).first()
+            if user:
+                h = sha512(user.email_address + default_hashkey).hexdigest()
+                if h == kwds['hash']:
+
+                    user.access_token = sha512(
+                        str(user.id) + str(user.initial_entry_date) + default_hashkey).hexdigest()
+
+                    session.add(user)
+                    session.commit()
+                    user = User(entity=user)
+                    
+                else:
+                    raise HTTPForbidden()
+            else:
+                raise HTTPUnauthorized()
+
+            return {
+                'verified': True,
+                'email_address': user.email_address,
+                'logged_in': authenticated_userid(request),
+                'user': user
+            }
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except:
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters')
     finally:
         try:
             session.close()
