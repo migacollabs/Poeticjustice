@@ -8,9 +8,21 @@
 
 import UIKit
 
+@IBDesignable
+class TopicButton : UIButton {
+    @IBInspectable var index: Int = 0
+}
+
+@IBDesignable
+class TopicLabel : UILabel {
+    @IBInspectable var index: Int = 0
+}
+
 class TopicsViewController: UIViewController {
 
-    @IBOutlet weak var topicButton: UIButton!
+    @IBOutlet weak var topicButton: TopicButton!
+    
+    @IBOutlet var topicScrollView: UIScrollView!
     
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
@@ -18,7 +30,13 @@ class TopicsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Topics"
+        for view in self.topicScrollView.subviews as [UIView] {
+            if let lbl = view as? TopicLabel {
+                lbl.text = ""
+            }
+        }
+        
+        title = "Choose a Topic"
         
         self.get_topics()
         
@@ -51,7 +69,22 @@ class TopicsViewController: UIViewController {
 
     @IBAction func handleTopicButton(sender: AnyObject) {
         
-        var tag = (sender as UIButton).tag
+        var tb = (sender as TopicButton)
+
+        println(tb.index)
+        
+        for view in self.topicScrollView.subviews as [UIView] {
+            if let lbl = view as? TopicLabel {
+                if (lbl.index==tb.index) {
+                    if let un = NetOpers.sharedInstance.user?.user_name as? String {
+                        lbl.text = un
+                    }
+                    break
+                }
+            }
+        }
+        
+        var tag = (sender as TopicButton).tag
         var tid = self.topic_order[tag-1]
         var topic = self.topics[tid] as Topic
         let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
@@ -94,12 +127,12 @@ class TopicsViewController: UIViewController {
                                             
                                         }else{
                                             for i in open_topics{
-                                                if i as Int == t.id! as Int{
-                                                    var tid = t.id! as Int
-                                                    self.topics[tid] = t
-                                                    self.topic_order.append(tid)
-                                                    break
-                                                }
+//                                                if i as Int == t.id! as Int{
+//                                                    var tid = t.id! as Int
+//                                                    self.topics[tid] = t
+//                                                    self.topic_order.append(tid)
+//                                                    break
+//                                                }
                                             }
                                         }
                                         
@@ -177,7 +210,7 @@ class TopicsViewController: UIViewController {
                 var topic = self.topics[tid] as Topic
                 
                 
-                var btn: UIButton? = self.view.viewWithTag(idx) as? UIButton
+                var btn: TopicButton? = self.view.viewWithTag(idx) as? TopicButton
                 if btn != nil{
                     btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
                 }

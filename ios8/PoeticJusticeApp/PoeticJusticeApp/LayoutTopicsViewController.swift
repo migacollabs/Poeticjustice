@@ -17,11 +17,8 @@ class LayoutTopicsViewController: UIViewController {
 
         // doing this means we can exclude this layout view controller once initialized
         // this way, if a tab is pressed it'll always go back to this view
-        // let vc = TopicsViewController(nibName: "TopicsViewController", bundle: nil)
-        // self.navigationController!.setViewControllers([vc], animated : false)
-        
-        let vc = TopicsGameViewController(nibName: "TopicsGameViewController", bundle: nil)
-        self.navigationController!.setViewControllers([vc], animated : false)
+         let vc = TopicsViewController(nibName: "TopicsViewController", bundle: nil)
+         self.navigationController!.setViewControllers([vc], animated : false)
         
         println("loading TopicsViewController")
     }
