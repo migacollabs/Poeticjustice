@@ -225,8 +225,8 @@ class WriteLineViewController: UIViewController {
                                 }
                             } else {
                                 
-                                if let oid = self.verse?.owner_id as Int {
-                                    if (oid!=NetOpers.sharedInstance.userId) {
+                                if let oid = self.verse?.owner_id as? Int {
+                                    if (oid==NetOpers.sharedInstance.userId) {
                                         self.numPlayersControl.hidden = true
                                         self.friendsOnlySwitch.hidden = true
                                     }

@@ -334,6 +334,8 @@
 		46EED8A51A780F21007CAC14 /* DeviceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EED8A41A780F20007CAC14 /* DeviceUtils.swift */; };
 		9756136A1A78135A0024EACB /* iAdTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 975613691A78135A0024EACB /* iAdTestView.xib */; };
 		9756136C1A7938CF0024EACB /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9756136B1A7938CF0024EACB /* iAd.framework */; };
+		9756136F1A7973590024EACB /* NewVerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9756136D1A7973590024EACB /* NewVerseViewController.swift */; };
+		975613701A7973590024EACB /* NewVerseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9756136E1A7973590024EACB /* NewVerseViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -678,6 +680,8 @@
 		46EED8A41A780F20007CAC14 /* DeviceUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceUtils.swift; sourceTree = "<group>"; };
 		975613691A78135A0024EACB /* iAdTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iAdTestView.xib; sourceTree = "<group>"; };
 		9756136B1A7938CF0024EACB /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		9756136D1A7973590024EACB /* NewVerseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVerseViewController.swift; sourceTree = "<group>"; };
+		9756136E1A7973590024EACB /* NewVerseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewVerseViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -749,6 +753,8 @@
 				46E3DD141A703F87006D059A /* LayoutHelpViewController.swift */,
 				46E3DF721A707BC5006D059A /* LayoutLoginViewController.swift */,
 				46E3DCE61A703C86006D059A /* Main.storyboard */,
+				9756136D1A7973590024EACB /* NewVerseViewController.swift */,
+				9756136E1A7973590024EACB /* NewVerseViewController.xib */,
 				46E3DCE91A703C86006D059A /* Images.xcassets */,
 				46E3DCEB1A703C86006D059A /* LaunchScreen.xib */,
 				46E3DCDE1A703C85006D059A /* Supporting Files */,
@@ -1450,6 +1456,7 @@
 				46E3DEF11A7045B7006D059A /* Paperclip.png in Resources */,
 				46E3DEAC1A7045B7006D059A /* Fries.png in Resources */,
 				46E3DE8C1A7045B7006D059A /* Crop.png in Resources */,
+				975613701A7973590024EACB /* NewVerseViewController.xib in Resources */,
 				46E3DE731A7045B7006D059A /* Cassette.png in Resources */,
 				46E3DF431A7045B7006D059A /* Ticket.png in Resources */,
 				46E3DEFC1A7045B7006D059A /* Pitch.png in Resources */,
@@ -1505,6 +1512,7 @@
 				46E0B3491A759A80001DE2F8 /* GameState.swift in Sources */,
 				46E3DD101A703F25006D059A /* WriteLineViewController.swift in Sources */,
 				46E3DD151A703F87006D059A /* LayoutHelpViewController.swift in Sources */,
+				9756136F1A7973590024EACB /* NewVerseViewController.swift in Sources */,
 				46E0B34B1A75D053001DE2F8 /* Set.swift in Sources */,
 				46EED8A51A780F21007CAC14 /* DeviceUtils.swift in Sources */,
 				46E3DD181A704005006D059A /* TopicsViewController.swift in Sources */,
