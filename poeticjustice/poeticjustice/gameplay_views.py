@@ -301,34 +301,91 @@ def get_verse(verseId, userId):
     lines = list()
     last_user_id = None
     next_user_id = None
-    with SQLAlchemySessionFactory() as session:
-        V, LxV = ~Verse, ~LineXVerse
-        for l in session.query(LxV).filter(LxV.verse_id==verseId).order_by(LxV.id):
-            lines.append(l.line_text)
-            last_user_id = l.user_id
+    if verseId:
+        with SQLAlchemySessionFactory() as session:
+            V, LxV = ~Verse, ~LineXVerse
+            for l in session.query(LxV).filter(LxV.verse_id==verseId).order_by(LxV.id):
+                lines.append(l.line_text)
+                last_user_id = l.user_id
 
-        if (last_user_id):
-            # get the next user that is allowed
-            verse = session.query(V).filter(V.id==verseId).first()
-            found = False
-            for u in verse.user_ids:
-                if found:
-                    next_user_id = u
-                    break
-                if last_user_id==u:
-                    found = True
-        else:
-            next_user_id = userId
+            if (last_user_id):
+                # get the next user that is allowed
+                verse = session.query(V).filter(V.id==verseId).first()
+                found = False
+                for u in verse.user_ids:
+                    if found:
+                        next_user_id = u
+                        break
+                    if last_user_id==u:
+                        found = True
+            else:
+                next_user_id = userId
 
-    return {"lines":lines, "next_user_id":next_user_id}
+    print 'returning verse results', lines
+
+    return {"results":{"lines":lines, "next_user_id":next_user_id, "verse_id":verseId}}
 
 @view_config(
-    name='saveline',
+    name='active-verses',
+    request_method='POST',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def get_user_active_verses(request):
+    try:
+        print 'saving new line for verse'
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+
+        if user and user.is_active and user.email_address==auth_usrid:
+
+            topicId = request.params['topic_id']
+            
+            with SQLAlchemySessionFactory() as session:
+                V, LxV = ~Verse, ~LineXVerse
+
+                # see if the user is associated to a verse for this topic
+                verse = session.query(V, LxV).filter(V.id==LxV.verse_id).\
+                    filter(LxV.user_id==user.id).\
+                    filter(V.verse_category_topic_id==topicId).\
+                    filter(V.complete==False).first()
+
+                if verse:
+                    return get_verse(verse[0].id, user.id)
+                else:
+                    return get_verse(None, user.id)
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
+    name='save-line',
     request_method='POST',
     context='poeticjustice:contexts.Users',
     renderer='json')
 def save_verse_line(request):
     try:
+        print 'saving new line for verse'
         auth_usrid = authenticated_userid(request)
         user, user_type_names, user_type_lookup = (
             get_current_rbac_user(auth_usrid,
@@ -367,7 +424,7 @@ def save_verse_line(request):
                 if (verseId is None):
                     # a new verse has been started
                     verse = Verse(user_ids=[user.id], max_participants=maxParticipants, max_lines=maxParticipants*4,
-                        owner_id=user.id, verse_category_topic=topicId)
+                        owner_id=user.id, verse_category_topic_id=topicId)
                     verse.save(session=session)
                     verseId = verse.id
                 else:
