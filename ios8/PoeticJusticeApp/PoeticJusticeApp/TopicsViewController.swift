@@ -32,6 +32,7 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         super.viewDidLoad()
         
         self.adBanner.delegate = self
+        self.adBanner.hidden = true
         
         for view in self.topicScrollView.subviews as [UIView] {
             if let lbl = view as? TopicLabel {
@@ -247,6 +248,7 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
        println("bannerViewDidLoadAd called")
+        self.adBanner.hidden = false
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
