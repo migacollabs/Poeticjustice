@@ -36,7 +36,7 @@ class TopicsViewController: UIViewController {
             }
         }
         
-        title = "Choose a Topic"
+        title = "Topics"
         
         self.get_topics()
         
@@ -105,10 +105,10 @@ class TopicsViewController: UIViewController {
                 var user = NetOpers.sharedInstance.user
                 
                 var open_topics: NSArray = (NetOpers.sharedInstance.game_state!.open_topics! as NSArray)
-                var open_topics_set = Set<Int>()
-                for ot in open_topics{
-                    open_topics_set.add(ot as Int)
-                }
+//                var open_topics_set = Set<Int>()
+//                for ot in open_topics{
+//                    open_topics_set.add(ot as Int)
+//                }
                 
                 if data != nil {
                     

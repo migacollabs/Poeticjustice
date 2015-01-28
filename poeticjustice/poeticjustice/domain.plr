@@ -268,7 +268,7 @@ PYAELLAC:
         max_lines: Column(Integer, nullable=False, default=8)
         complete: Column(Boolean, nullable=False, default=False)
     Relations:
-        verse_category_topic_id: Column(Integer, ForeignKey('verse_category_topics.id'))
+        verse_category_topic_id: Column(Integer, ForeignKey('verse_category_topics.id'), nullable=False)
         owner_id: Column(Integer, ForeignKey('users.id'), nullable=False)
         current_user_id: Column(BigInteger, ForeignKey('users.id'), nullable=True)
         next_user_id: Column(BigInteger, ForeignKey('users.id'), nullable=True)
@@ -284,8 +284,8 @@ PYAELLAC:
         line_score: Column(Integer)
         added: Column(Boolean, default=False, nullable=False)
     Relations:
-        user_id: Column(BigInteger, ForeignKey('users.id'))
-        verse_id: Column(BigInteger, ForeignKey('verses.id'))
+        user_id: Column(BigInteger, ForeignKey('users.id'), nullable=False)
+        verse_id: Column(BigInteger, ForeignKey('verses.id'), nullable=False)
 
 
 AFTER_CREATE_SQL:
