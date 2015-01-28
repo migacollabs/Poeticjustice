@@ -63,7 +63,7 @@ h {
                         <td width="300">
                             <h4 class="subheader">
                             You can validate this email address and have your account verified by clicking <a 
-                                href="https://${site_hostname}/u//verify/hash=${auth_hash}">VERIFY</a>
+                                href="http://${site_hostname}/u//verify/hash=${auth_hash}">VERIFY</a>
 
                                 <br>
                                 <br>
