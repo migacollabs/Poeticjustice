@@ -200,12 +200,21 @@ class NetOpers {
                         
                     }
                     
+                }else if httpResponse.statusCode == 403{
+                    
+                    println("Forbidden")
+                    dispatch_async(dispatch_get_main_queue(),{
+                        if self.alertHandler != nil{
+                            self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok!")
+                        }
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    })
+                    
                 }else{
-                    print("Error signing in")
-                    // do something, figure out how to do async error handling
-                    // without exceptions, because there are no exceptions in
-                    // swift :(
+                    println("Error signing in")
                 }
+                
             }
             
             

@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import json
 import datetime
 import traceback
 import logging
@@ -101,11 +102,6 @@ def create_new_user(request):
 def _save_user(user, session):
 
     user.password = sha512("NOPASSWORD").hexdigest()
-    user.access_token = \
-        sha512(
-            str(user.id) + str(user.initial_entry_date) + default_hashkey
-        ).hexdigest()
-    user.device_token = "NODEVICETOKEN"
     user.country_code = 'USA'
     user.is_active = True
 
@@ -170,15 +166,6 @@ def create_new_user_post(request):
                 ).hexdigest()
             user.is_active = True
 
-            # can't append to list in model
-            # directely. have to append and set
-            # at the attr
-            dt = kwds['device_token']
-            dts = user.device_tokens
-            if not dts: dts = []
-            if dt not in dts: dts.append(dt)
-            user.device_tokens = dts
-
         site_addr = get_site_addr()
 
         user.save(session=session)
@@ -229,6 +216,43 @@ def create_new_user_post(request):
             pass
 
 
+def _send_notification(user_obj, auth_hash, email_tmpl_file, logo_name=None):
+
+    ac = get_app_config()
+    dconfig = get_dinj_config(ac)
+
+    # send email
+    email_tmpl = os.path.join(dconfig.Web.TemplateDir, email_tmpl_file)
+
+    site_addr = get_site_addr()
+
+    tmpl_vars = {
+        'site_id': 'mividio',
+        'site_hostname': site_addr,
+        'site_display_name': 'Mividio',
+        'auth_hash': auth_hash
+    }
+    tmpl_vars.update(user_obj.to_dict(ignore_fields=['id', 'key']))
+
+    message_body = Template(filename=email_tmpl).render(**tmpl_vars)
+
+    # email the new user
+    smtp_psswd = os.environ['POETIC_JUSTICE_SMTP_PASSWORD']
+    smtp_user = os.environ['POETIC_JUSTICE_SMTP_USER']
+    smtp_server = os.environ['POETIC_JUSTICE_SMTP_SERVER']
+
+    emailer = Emailer(
+        smtp_user, 
+        smtp_psswd, 
+        smtp_server) \
+    .send_html_email({
+        'to': user_obj.email_address,
+        'from': smtp_user,
+        'subject': 'Poetic Justice - Verify your email!',
+        'message_body': message_body},
+        attached_logo=os.path.join(ASSETS_DIR, logo_name) if logo_name else None)
+
+
 @view_config(
     name='invite',
     request_method='POST',
@@ -269,7 +293,7 @@ def invite_new_user_post(request):
                 sha512(
                     str(invite_user.id) + str(invite_user.initial_entry_date) + default_hashkey
                 ).hexdigest()
-            # invite_user.device_token = "NODEVICETOKEN"
+
             invite_user.is_active = True
             
 
@@ -368,6 +392,9 @@ def login_post(request):
         device_token = request.params['device_token'] if 'device_token' in request.params else None
         device_type = request.params['device_type'] if 'device_type' in request.params else None
 
+        if not device_token and device_type != "DEVICETYPEBROWSER":
+            raise HTTPForbidden
+
         if 'form.submitted' in request.params:
             login = request.params['login']
             # password = sha512("NOPASSWORD").hexdigest()
@@ -385,14 +412,37 @@ def login_post(request):
                         # update to the latest user
                         user = User(entity=user_obj)
 
+                        if user.access_token == None:
+                            return dict(
+                                status='Ok',
+                                verification_req=True,
+                                user=user.to_dict(),
+                                logged_in=None
+                                )
+
                         user.user_name = request.params['user_name']
 
-                        device_rec_json = json.dumps(user.device_rec) if user.device_rec else None
-                        
-                        # dts = user.device_tokens
-                        # if not dts: dts = []
-                        # if dt not in dts: dts.append(dt)
-                        # user.device_tokens = dts
+                        device_rec = json.loads(user.device_rec) if user.device_rec else {}
+
+                        if device_token and (len(device_rec) > 0 and device_token not in device_rec):
+
+                            # send email if more than one device ?
+
+                            device_rec[device_token] = True
+
+                            # new device
+                            auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
+                            user.auth_hash = auth_hash
+                            _send_notification(user, auth_hash, 
+                                "email.verification.mako", 
+                                logo_name="Conversation.png")
+
+                            user.device_rec = json.dumps(device_rec)
+
+                        elif device_token not in device_rec:
+                            device_rec[device_token] = True
+                            user.device_rec = json.dumps(device_rec)
+
 
                         user.save(session=session)
 
@@ -421,11 +471,6 @@ def login_post(request):
                         device_rec_json = json.dumps(user_obj.device_rec) if user_obj.device_rec else None
 
                         print device_rec_json
-
-                        user_obj.access_token = \
-                            sha512(
-                                str(user_obj.id) + str(user_obj.initial_entry_date) + default_hashkey
-                            ).hexdigest()
 
                         auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
 
@@ -522,6 +567,8 @@ def verify_new_user(request):
                     session.add(user)
                     session.commit()
                     user = User(entity=user)
+
+                    print 'VERIFIED NEW USER'
                     
                 else:
                     raise HTTPForbidden()
