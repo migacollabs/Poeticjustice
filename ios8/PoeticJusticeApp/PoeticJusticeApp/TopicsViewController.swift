@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iAd
 
 @IBDesignable
 class TopicButton : UIButton {
@@ -18,17 +19,19 @@ class TopicLabel : UILabel {
     @IBInspectable var index: Int = 0
 }
 
-class TopicsViewController: UIViewController {
+class TopicsViewController: UIViewController, ADBannerViewDelegate {
 
     @IBOutlet weak var topicButton: TopicButton!
-    
     @IBOutlet var topicScrollView: UIScrollView!
+    @IBOutlet weak var adBanner: ADBannerView!
     
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.adBanner.delegate = self
         
         for view in self.topicScrollView.subviews as [UIView] {
             if let lbl = view as? TopicLabel {
@@ -233,6 +236,30 @@ class TopicsViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    
+    // MARK: - Ad Banner
+    
+    func bannerViewWillLoadAd(banner: ADBannerView!) {
+        println("bannerViewWillLoadAd called")
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+       println("bannerViewDidLoadAd called")
+    }
+    
+    func bannerViewActionDidFinish(banner: ADBannerView!) {
+        println("bannerViewACtionDidFinish called")
+    }
+    
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
+        println("bannerViewActionShouldBegin called")
+        return true
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        println("bannerView called")
     }
     
     /*

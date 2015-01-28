@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TopicsViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
+                <outlet property="adBanner" destination="gAD-4A-oad" id="dNU-5n-j75"/>
                 <outlet property="topicButton" destination="Slf-VG-r1V" id="aIr-NS-zQf"/>
                 <outlet property="topicScrollView" destination="sOo-jU-jWS" id="dG8-Nb-95P"/>
                 <outlet property="userLabel" destination="I41-lg-i7W" id="Zax-lo-LlI"/>
@@ -481,8 +482,8 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </label>
-                        <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZL-Q8-PA4">
-                            <rect key="frame" x="268" y="17" width="320" height="50"/>
+                        <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="gAD-4A-oad">
+                            <rect key="frame" x="157" y="434" width="320" height="50"/>
                         </adBannerView>
                     </subviews>
                     <constraints>
@@ -515,6 +516,7 @@
                         <constraint firstAttribute="trailing" secondItem="7iP-W7-oia" secondAttribute="trailing" constant="32" id="Kcx-Rc-1RU"/>
                         <constraint firstItem="tWN-49-hh0" firstAttribute="top" secondItem="pDX-z0-7x9" secondAttribute="bottom" constant="21" id="LhF-EU-1ul"/>
                         <constraint firstItem="XfI-IW-ofR" firstAttribute="leading" secondItem="tWN-49-hh0" secondAttribute="trailing" constant="8" symbolic="YES" id="Lyh-th-Uyw"/>
+                        <constraint firstAttribute="centerX" secondItem="gAD-4A-oad" secondAttribute="centerX" constant="0.5" id="NUG-qE-qOl"/>
                         <constraint firstItem="XfI-IW-ofR" firstAttribute="leading" secondItem="ZLO-yw-tYk" secondAttribute="leading" id="OEn-Tv-vPY"/>
                         <constraint firstAttribute="trailing" secondItem="QuU-ib-tPn" secondAttribute="trailing" constant="85" id="Ooz-rI-shk"/>
                         <constraint firstItem="RYp-Pf-3MT" firstAttribute="leading" secondItem="sOo-jU-jWS" secondAttribute="leading" constant="50" id="P81-7P-RIH"/>
@@ -545,6 +547,7 @@
                         <constraint firstItem="9Rx-BL-3WU" firstAttribute="leading" secondItem="EBN-rc-Hqr" secondAttribute="trailing" constant="80" id="bYL-QP-fYA"/>
                         <constraint firstItem="NrZ-h1-Bp9" firstAttribute="leading" secondItem="XfI-IW-ofR" secondAttribute="trailing" constant="47" id="c4k-g7-QUQ"/>
                         <constraint firstItem="tWN-49-hh0" firstAttribute="leading" secondItem="sOo-jU-jWS" secondAttribute="leading" constant="4" id="d86-q6-L73"/>
+                        <constraint firstAttribute="bottom" secondItem="gAD-4A-oad" secondAttribute="bottom" constant="155" id="eT3-ku-NDZ"/>
                         <constraint firstItem="QuU-ib-tPn" firstAttribute="leading" secondItem="Svf-Fu-Cge" secondAttribute="trailing" constant="8" symbolic="YES" id="gXk-23-QRR"/>
                         <constraint firstItem="pDX-z0-7x9" firstAttribute="leading" secondItem="ecu-T4-Led" secondAttribute="leading" id="gec-qJ-9g6"/>
                         <constraint firstItem="gzk-M8-siO" firstAttribute="top" secondItem="ecu-T4-Led" secondAttribute="bottom" constant="8" symbolic="YES" id="gse-fd-KFT"/>
