@@ -90,12 +90,18 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         var tag = (sender as TopicButton).tag
         var tid = self.topic_order[tag-1]
         var topic = self.topics[tid] as Topic
+        
+        
+        // TODO: if already participating
+        
         let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
         vc.topic = topic
         navigationController?.pushViewController(vc, animated: false)
         
         println("loading WriteLineViewController")
-        // don't remove the nav bar so the user can go back
+        
+        // TODO: otherwise load up the verse creation screen
+        
     }
     
     func on_loaded_topics_completion(data:NSData?, response:NSURLResponse?, error:NSError?){
@@ -106,12 +112,6 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
             if httpResponse.statusCode == 200 {
                 
                 var user = NetOpers.sharedInstance.user
-                
-                var open_topics: NSArray = (NetOpers.sharedInstance.game_state!.open_topics! as NSArray)
-//                var open_topics_set = Set<Int>()
-//                for ot in open_topics{
-//                    open_topics_set.add(ot as Int)
-//                }
                 
                 if data != nil {
                     
@@ -126,38 +126,10 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
                                     
                                     for topic in results{
                                         var t = Topic(rec:topic as NSDictionary)
-                                        if t.min_points_req? as Int == 0 || user?.user_score? as Int >= t.min_points_req? as Int{
-                                            var tid = t.id! as Int
-                                            self.topics[tid] = t
-                                            self.topic_order.append(tid)
-                                            
-                                        }else{
-                                           // for i in open_topics{
-//                                                if i as Int == t.id! as Int{
-//                                                    var tid = t.id! as Int
-//                                                    self.topics[tid] = t
-//                                                    self.topic_order.append(tid)
-//                                                    break
-//                                                }
-                                            // }
-                                        }
-//                                        var tid = t.id! as Int
-//                                        self.topics[tid] = t
+                                        var tid = t.id! as Int
+                                        self.topics[tid] = t
+                                        self.topic_order.append(tid)
                                     }
-//                                    
-//                                    for tid in open_topics_set{
-//                                        self.topic_order.append(tid)
-//                                    }
-//                                    
-//                                    for (tid, topic) in self.topics{
-//                                        if !open_topics_set.contains(tid as Int){
-//                                            var t = topic as Topic
-//                                            if t.min_points_req? as Int == 0 || user?.user_score? as Int >= t.min_points_req? as Int{
-//                                                self.topic_order.append(tid)
-//                                            }
-//                                        }
-//                                    }
-//                                    
                                 }
                             }
                             
@@ -223,12 +195,11 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     
     func present_topics(){
         if self.topic_order.count > 0{
-            self.topic_order = self.shuffle(self.topic_order)
+            // self.topic_order = self.shuffle(self.topic_order)
             for idx in 1...16{
                 
                 var tid = self.topic_order[idx-1]
                 var topic = self.topics[tid] as Topic
-                
                 
                 var btn: TopicButton? = self.view.viewWithTag(idx) as? TopicButton
                 if btn != nil{

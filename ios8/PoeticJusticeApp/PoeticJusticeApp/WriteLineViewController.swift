@@ -34,6 +34,15 @@ class Verse {
         }
     }
     
+    var owner_id : AnyObject? {
+        get {
+            if let x = self.verse_data["owner_id"] as? Int{
+                return x
+            }
+            return nil
+        }
+    }
+    
     var lines : [AnyObject]? {
         get {
             if let x = self.verse_data["lines"] as? [String] {
@@ -201,15 +210,30 @@ class WriteLineViewController: UIViewController {
                                 for l : String in lines {
                                     self.verseView.text = self.verseView.text + "\n" + l
                                 }
+                            } else {
+                                self.scoreView.hidden = false
+                                self.sendButton.hidden = false
                             }
                             
-                            // if it's my turn, let me do it to it
                             if let nextid = self.verse?.next_user_id as? Int {
+                                // if it's my turn, let me do it to it
                                 if (nextid==NetOpers.sharedInstance.userId) {
                                     self.scoreView.hidden = false
                                     self.sendButton.hidden = false
                                     self.numPlayersControl.hidden = false
+                                    self.friendsOnlySwitch.hidden = false
                                 }
+                            } else {
+                                
+                                if let oid = self.verse?.owner_id as Int {
+                                    if (oid!=NetOpers.sharedInstance.userId) {
+                                        self.numPlayersControl.hidden = true
+                                        self.friendsOnlySwitch.hidden = true
+                                    }
+                                }
+                                
+                                self.sendButton.hidden = true
+                                self.scoreView.hidden = true
                             }
                             
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -247,6 +271,7 @@ class WriteLineViewController: UIViewController {
         } else {
             // new verse
             params["max_participants"]=maxNumPlayers
+            params["friends_only"]=isFriendsOnly
         }
         
         println("hitting saveline url")
@@ -258,8 +283,18 @@ class WriteLineViewController: UIViewController {
         self.scoreView.hidden = true
         self.sendButton.hidden = true
         self.numPlayersControl.hidden = true
+        self.friendsOnlySwitch.hidden = true
         
     }
+    
+    var isFriendsOnly : Bool = false
+    
+    @IBOutlet var friendsOnlySwitch: UISwitch!
+    
+    @IBAction func friendsOnly(sender: AnyObject) {
+        isFriendsOnly = !isFriendsOnly
+    }
+    
     /*
     // MARK: - Navigation
 

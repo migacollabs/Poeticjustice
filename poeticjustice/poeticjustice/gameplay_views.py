@@ -301,6 +301,7 @@ def get_verse(verseId, userId):
     lines = list()
     last_user_id = None
     next_user_id = None
+    owner_id = None
     if verseId:
         with SQLAlchemySessionFactory() as session:
             V, LxV = ~Verse, ~LineXVerse
@@ -311,6 +312,7 @@ def get_verse(verseId, userId):
             if (last_user_id):
                 # get the next user that is allowed
                 verse = session.query(V).filter(V.id==verseId).first()
+                owner_id = verse.owner_id
                 found = False
                 for u in verse.user_ids:
                     if found:
@@ -323,7 +325,7 @@ def get_verse(verseId, userId):
 
     print 'returning verse results', lines
 
-    return {"results":{"lines":lines, "next_user_id":next_user_id, "verse_id":verseId}}
+    return {"results":{"lines":lines, "next_user_id":next_user_id, "verse_id":verseId, "owner_id":owner_id}}
 
 @view_config(
     name='active-verses',
@@ -406,7 +408,7 @@ def save_verse_line(request):
             maxParticipants = 5
 
             # optional when adding first line
-            scoreIncrement, verseId = None, None
+            scoreIncrement, verseId, friendsOnly = None, None, False
 
             if 'score_increment' in request.params:
                 scoreIncrement = request.params['score_increment']
@@ -417,6 +419,9 @@ def save_verse_line(request):
             if 'max_participants' in request.params:
                 maxParticipants = request.params['max_participants']
 
+            if 'friends_only' in request.params:
+                friendsOnly = request.params['friends_only']
+
             with SQLAlchemySessionFactory() as session:
 
                 verse = None
@@ -424,7 +429,7 @@ def save_verse_line(request):
                 if (verseId is None):
                     # a new verse has been started
                     verse = Verse(user_ids=[user.id], max_participants=maxParticipants, max_lines=maxParticipants*4,
-                        owner_id=user.id, verse_category_topic_id=topicId)
+                        owner_id=user.id, verse_category_topic_id=topicId, friends_only=friendsOnly)
                     verse.save(session=session)
                     verseId = verse.id
                 else:

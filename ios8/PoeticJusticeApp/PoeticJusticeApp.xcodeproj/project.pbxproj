@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		46E0B3491A759A80001DE2F8 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0B3481A759A80001DE2F8 /* GameState.swift */; };
 		46E0B34B1A75D053001DE2F8 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0B34A1A75D053001DE2F8 /* Set.swift */; };
-		46E0B34E1A76CE95001DE2F8 /* TopicsGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E0B34C1A76CE95001DE2F8 /* TopicsGameViewController.swift */; };
-		46E0B34F1A76CE95001DE2F8 /* TopicsGameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46E0B34D1A76CE95001DE2F8 /* TopicsGameViewController.xib */; };
 		46E0B3511A77F20A001DE2F8 /* Init.png in Resources */ = {isa = PBXBuildFile; fileRef = 46E0B3501A77F208001DE2F8 /* Init.png */; };
 		46E3DCE11A703C86006D059A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3DCE01A703C86006D059A /* AppDelegate.swift */; };
 		46E3DCE31A703C86006D059A /* LayoutTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3DCE21A703C86006D059A /* LayoutTopicsViewController.swift */; };
@@ -351,8 +349,6 @@
 /* Begin PBXFileReference section */
 		46E0B3481A759A80001DE2F8 /* GameState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		46E0B34A1A75D053001DE2F8 /* Set.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
-		46E0B34C1A76CE95001DE2F8 /* TopicsGameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsGameViewController.swift; sourceTree = "<group>"; };
-		46E0B34D1A76CE95001DE2F8 /* TopicsGameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicsGameViewController.xib; sourceTree = "<group>"; };
 		46E0B3501A77F208001DE2F8 /* Init.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Init.png; sourceTree = "<group>"; };
 		46E3DCDB1A703C85006D059A /* PoeticJusticeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PoeticJusticeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46E3DCDF1A703C86006D059A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -734,8 +730,6 @@
 				46EED8A41A780F20007CAC14 /* DeviceUtils.swift */,
 				46E3DF7A1A72C56E006D059A /* Topic.swift */,
 				46E3DD171A704005006D059A /* TopicsViewController.xib */,
-				46E0B34C1A76CE95001DE2F8 /* TopicsGameViewController.swift */,
-				46E0B34D1A76CE95001DE2F8 /* TopicsGameViewController.xib */,
 				46E3DD0E1A703F25006D059A /* WriteLineViewController.swift */,
 				46E0B34A1A75D053001DE2F8 /* Set.swift */,
 				46E3DD0F1A703F25006D059A /* WriteLineViewController.xib */,
@@ -1355,7 +1349,6 @@
 				46E3DF531A7045B7006D059A /* Unhappy.png in Resources */,
 				46E3DF0A1A7045B7006D059A /* Rainbow.png in Resources */,
 				46E3DF6F1A7045B7006D059A /* Zoom-out.png in Resources */,
-				46E0B34F1A76CE95001DE2F8 /* TopicsGameViewController.xib in Resources */,
 				46E3DD281A7045A7006D059A /* Typing.wav in Resources */,
 				46E3DE8A1A7045B7006D059A /* Cooker.png in Resources */,
 				46E3DE9E1A7045B7006D059A /* Egg.png in Resources */,
@@ -1508,7 +1501,6 @@
 				46E3DF7B1A72C56E006D059A /* Topic.swift in Sources */,
 				46E3DF731A707BC5006D059A /* LayoutLoginViewController.swift in Sources */,
 				46E3DD071A703E71006D059A /* NetOpers.swift in Sources */,
-				46E0B34E1A76CE95001DE2F8 /* TopicsGameViewController.swift in Sources */,
 				46E3DD081A703E71006D059A /* NetUtils.swift in Sources */,
 				46E0B3491A759A80001DE2F8 /* GameState.swift in Sources */,
 				46E3DD101A703F25006D059A /* WriteLineViewController.swift in Sources */,
