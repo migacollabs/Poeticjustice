@@ -481,6 +481,9 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </label>
+                        <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZL-Q8-PA4">
+                            <rect key="frame" x="268" y="17" width="320" height="50"/>
+                        </adBannerView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="2RR-u0-Fd1" firstAttribute="baseline" secondItem="f35-2x-T62" secondAttribute="baseline" id="0ld-ma-9om"/>

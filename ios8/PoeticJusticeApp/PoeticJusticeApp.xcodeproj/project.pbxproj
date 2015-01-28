@@ -334,6 +334,8 @@
 		46E3DF791A70811A006D059A /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E3DF781A708119006D059A /* Config.plist */; };
 		46E3DF7B1A72C56E006D059A /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3DF7A1A72C56E006D059A /* Topic.swift */; };
 		46EED8A51A780F21007CAC14 /* DeviceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EED8A41A780F20007CAC14 /* DeviceUtils.swift */; };
+		9756136A1A78135A0024EACB /* iAdTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 975613691A78135A0024EACB /* iAdTestView.xib */; };
+		9756136C1A7938CF0024EACB /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9756136B1A7938CF0024EACB /* iAd.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -678,6 +680,8 @@
 		46E3DF781A708119006D059A /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		46E3DF7A1A72C56E006D059A /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		46EED8A41A780F20007CAC14 /* DeviceUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceUtils.swift; sourceTree = "<group>"; };
+		975613691A78135A0024EACB /* iAdTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iAdTestView.xib; sourceTree = "<group>"; };
+		9756136B1A7938CF0024EACB /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -685,6 +689,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9756136C1A7938CF0024EACB /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,6 +706,7 @@
 		46E3DCD21A703C85006D059A = {
 			isa = PBXGroup;
 			children = (
+				9756136B1A7938CF0024EACB /* iAd.framework */,
 				46E3DCDD1A703C85006D059A /* PoeticJusticeApp */,
 				46E3DCF51A703C86006D059A /* PoeticJusticeAppTests */,
 				46E3DCDC1A703C85006D059A /* Products */,
@@ -719,6 +725,7 @@
 		46E3DCDD1A703C85006D059A /* PoeticJusticeApp */ = {
 			isa = PBXGroup;
 			children = (
+				975613691A78135A0024EACB /* iAdTestView.xib */,
 				46E3DF781A708119006D059A /* Config.plist */,
 				46E3DD291A7045B6006D059A /* topic.icons */,
 				46E3DD1E1A7045A7006D059A /* audio */,
@@ -1140,6 +1147,7 @@
 				TargetAttributes = {
 					46E3DCDA1A703C85006D059A = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 24R74PCT64;
 					};
 					46E3DCF11A703C86006D059A = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -1380,6 +1388,7 @@
 				46E3DE961A7045B7006D059A /* Disk-Drive.png in Resources */,
 				46E3DF481A7045B7006D059A /* Traffic-cone.png in Resources */,
 				46E3DECB1A7045B7006D059A /* Leaf.png in Resources */,
+				9756136A1A78135A0024EACB /* iAdTestView.xib in Resources */,
 				46E3DF4A1A7045B7006D059A /* Trash.png in Resources */,
 				46E3DE751A7045B7006D059A /* Cheese-Burger.png in Resources */,
 				46E3DE711A7045B7006D059A /* Calender.png in Resources */,
@@ -1636,9 +1645,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PoeticJusticeApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1646,9 +1658,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = PoeticJusticeApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
