@@ -161,11 +161,15 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         
         // TODO: if already participating
         
-        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
+//        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
+//        vc.topic = topic
+//        navigationController?.pushViewController(vc, animated: false)
+        
+        let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
         vc.topic = topic
         navigationController?.pushViewController(vc, animated: false)
         
-        println("loading WriteLineViewController")
+        println("loading NewVerseViewController")
         
         // TODO: otherwise load up the verse creation screen
         

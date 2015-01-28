@@ -15,7 +15,7 @@ Web:
         css: poeticjustice/css
         scripts: poeticjustice/scripts
         foundation: poeticjustice/foundation
-    SiteName: mivid.io
+    SiteName: localhost
     Port: 8088
 Resources:
     Database:
