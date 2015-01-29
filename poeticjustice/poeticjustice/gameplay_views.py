@@ -17,6 +17,7 @@ from boto.s3.key import Key
 
 # sqlalchemy
 from sqlalchemy import or_, desc
+from  sqlalchemy.sql.expression import func
 
 # pyaella imports
 from pyaella import *
@@ -327,6 +328,151 @@ def get_verse(verseId, userId):
 
     return {"results":{"lines":lines, "next_user_id":next_user_id, "verse_id":verseId, "owner_id":owner_id}}
 
+
+@view_config(
+    name='active-topics',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def get_active_topics(request):
+    try:
+        
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+
+        if user and user.is_active and user.email_address==auth_usrid:
+            print 'loading active topics for user', user.id
+            with SQLAlchemySessionFactory() as session:
+                topics = []
+
+                V, T, U, UxU= ~Verse, ~VerseCategoryTopic, ~User, ~UserXUser
+
+                # global open verses and topics that are not mine
+                for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
+                    filter(V.complete==False).\
+                    filter(V.owner_id==U.id).\
+                    filter(U.id!=user.id).\
+                    filter(V.friends_only==False).\
+                    filter(V.participant_count<V.max_participants).\
+                    order_by(func.random()).\
+                    limit(5):
+                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'world'})
+
+                # topics that are mine
+                for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
+                    filter(V.complete==False).\
+                    filter(V.owner_id==U.id).\
+                    filter(U.id==user.id).\
+                    order_by(func.random()).\
+                    limit(5):
+                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'mine'})
+
+                # friendship initiated by me
+                for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
+                    filter(V.owner_id==UxU.friend_id).\
+                    filter(UxU.user_id==user.id).\
+                    filter(V.owner_id==U.id).\
+                    filter(UxU.approved==True).\
+                    filter(V.complete==False).\
+                    filter(V.friends_only==True).\
+                    filter(V.participant_count<V.max_participants).\
+                    order_by(func.random()).\
+                    limit(3):
+                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'friend'})
+
+                # friendship initiated by friend
+                for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
+                    filter(V.owner_id==UxU.user_id).\
+                    filter(UxU.friend_id==user.id).\
+                    filter(V.owner_id==U.id).\
+                    filter(UxU.approved==True).\
+                    filter(V.complete==False).\
+                    filter(V.friends_only==True).\
+                    filter(V.participant_count<V.max_participants).\
+                    order_by(func.random()).\
+                    limit(3):
+                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'friend'})
+
+                return {"results":topics}
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
+    name='get-topics',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def get_topics(request):
+    try:
+        print 'saving new line for verse'
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+
+        if user and user.is_active and user.email_address==auth_usrid:
+
+            with SQLAlchemySessionFactory() as session:
+                topics = []
+
+                T = ~VerseCategoryTopic
+
+                # see if the user is associated to a verse for this topic
+                # change the limit later
+                for t in session.query(T).order_by(T.id).limit(16):
+                    topics.append({"id":t.id, "name":t.name, "min_points_req":t.min_points_req, 
+                        "score_modifier":t.score_modifier, "main_icon_name":t.main_icon_name,
+                        "verse_category_type_id":t.verse_category_type_id})
+
+                return {"results":topics}
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
 @view_config(
     name='active-verses',
     request_method='POST',
@@ -428,8 +574,8 @@ def save_verse_line(request):
 
                 if (verseId is None):
                     # a new verse has been started
-                    verse = Verse(user_ids=[user.id], max_participants=maxParticipants, max_lines=maxParticipants*4,
-                        owner_id=user.id, verse_category_topic_id=topicId, friends_only=friendsOnly)
+                    verse = Verse(user_ids=[user.id], participant_count=1, max_participants=maxParticipants, max_lines=maxParticipants*4,
+                        owner_id=user.id, verse_category_topic_id=topicId, friends_only=friendsOnly, complete=False)
                     verse.save(session=session)
                     verseId = verse.id
                 else:

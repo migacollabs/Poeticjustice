@@ -19,6 +19,71 @@ class TopicLabel : UILabel {
     @IBInspectable var index: Int = 0
 }
 
+
+class ActiveTopic {
+    let active_topic_data: NSDictionary
+    
+    /*
+{
+"verse_id": 2,
+"src": "world",
+"email_address": "larry+world@miga.me",
+"user_name": null,
+"topic_id": 2
+}
+    */
+
+    init(rec:NSDictionary){
+        self.active_topic_data = rec
+    }
+    
+    var id: AnyObject? {
+        get {
+            if let x = self.active_topic_data["topic_id"] as? Int{
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var src : AnyObject? {
+        get {
+            if let x = self.active_topic_data["src"] as? String {
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var verse_id : AnyObject? {
+        get {
+            if let x = self.active_topic_data["verse_id"] as? Int{
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var email_address : AnyObject? {
+        get {
+            if let x = self.active_topic_data["email_address"] as? String {
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var user_name : AnyObject? {
+        get {
+            if let x = self.active_topic_data["user_name"] as? String {
+                return x
+            }
+            return nil
+        }
+    }
+    
+}
+
 class TopicsViewController: UIViewController, ADBannerViewDelegate {
 
     @IBOutlet weak var topicButton: TopicButton!
@@ -27,6 +92,7 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
+    var active_topics:[ActiveTopic] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,18 +192,16 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: nil) as? NSDictionary{
                             
-                            if let len = jsonResult["length"] as? Int{
-                                if let results = jsonResult["results"] as? NSArray{
-                                    
-                                    for topic in results{
-                                        var t = Topic(rec:topic as NSDictionary)
-                                        var tid = t.id! as Int
-                                        self.topics[tid] = t
-                                        self.topic_order.append(tid)
-                                    }
+                            if let results = jsonResult["results"] as? NSArray{
+                                
+                                for topic in results{
+                                    var t = Topic(rec:topic as NSDictionary)
+                                    var tid = t.id! as Int
+                                    self.topics[tid] = t
+                                    self.topic_order.append(tid)
                                 }
                             }
-                            
+                           
                     }else{
                         self.dispatch_alert("Error", message: "No Topics", controller_title: "Ok")
                     }
@@ -158,6 +222,92 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     
     func get_topics(){
         NetOpers.sharedInstance._load_topics(on_loaded_topics_completion)
+
+        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", update_active_topics)
+    }
+    
+    func update_active_topics(data:NSData?, response:NSURLResponse?, error:NSError?){
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                
+                if data != nil {
+                    
+                    var data_str = NSString(data:data!, encoding:NSUTF8StringEncoding)
+                    
+                    if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as? NSDictionary{
+                            
+                            if let results = jsonResult["results"] as? NSArray{
+                                    
+                                for topic in results{
+                                    var t = ActiveTopic(rec:topic as NSDictionary)
+                                    self.active_topics.append(t)
+                                    
+                                }
+                            }
+                        
+                            
+                    }else{
+                        self.dispatch_alert("Error", message: "No Active Topics Found", controller_title: "Ok")
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.update_topic_labels()
+                    })
+                    
+                }
+                
+            }else{
+                
+                self.dispatch_alert("Error", message: "Cannot load Topics", controller_title: "Ok")
+                
+            }
+        }
+
+    }
+    
+    func get_topic_label(index : Int) -> TopicLabel? {
+        for view in self.topicScrollView.subviews as [UIView] {
+            if let lbl = view as? TopicLabel {
+                if (lbl.index==index) {
+                    return lbl
+                }
+            }
+        }
+        return nil
+    }
+    
+    func update_topic_labels() {
+     
+        for at in self.active_topics {
+            
+            println("***** topic id for email")
+            println(at.email_address)
+            println(at.id)
+            
+            var index = find(self.topic_order, at.id as Int)! + 1
+            
+            println(index)
+            
+            if let tl = get_topic_label(index) {
+                println(tl)
+                if let s = at.src as? String {
+                    println(at.src)
+                    if s=="mine" {
+                        tl.text = at.email_address as? String
+                    } else if s=="world" {
+                        tl.text = "w: " + (at.email_address as? String)!
+                    } else if s=="friend" {
+                        tl.text = "f: " + (at.email_address as? String)!
+                    }
+                }
+            }
+            
+        }
+        
     }
     
     func dispatch_alert(title:String, message:String, controller_title:String){

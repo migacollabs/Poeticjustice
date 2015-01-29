@@ -263,8 +263,9 @@ PYAELLAC:
                     server_default=text("nextval('verse_id_seq')"), 
                     primary_key=True)
         title: Column(String, nullable=True)
-        user_ids: Column(ARRAY(Integer), nullable=True)
-        max_participarts: Column(Integer, nullable=False, default=2)
+        user_ids: Column(ARRAY(Integer), nullable=False)
+        max_participants: Column(Integer, nullable=False, default=2)
+        participant_count: Column(Integer, nullable=False, default=2)
         max_lines: Column(Integer, nullable=False, default=8)
         friends_only: Column(Boolean, nullable=False, default=False)
         complete: Column(Boolean, nullable=False, default=False)
@@ -306,18 +307,20 @@ AFTER_CREATE_SQL:
 
         INSERT INTO users
             (
-                email_address, country_code, password, user_score, num_of_verses, num_of_lines, is_active, is_invited
+                email_address, country_code, password, user_score, num_of_verses, num_of_lines, is_active, is_invited, access_token
             )
         VALUES
-            ('larry@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, False),
-            ('larry@gerijopa.com', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True);
+            ('larry@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, False,'1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210727'),
+            ('larry@gerijopa.com', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210728'),
+            ('larry+world@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729');
 
 
         INSERT INTO user_x_user_type_lu
             (user_id, user_type_id)
         VALUES
             (11111, 2),
-            (11112, 2);
+            (11112, 2),
+            (11113, 2);
 
         INSERT INTO user_x_users
             (user_id, friend_id, approved)
@@ -328,7 +331,8 @@ AFTER_CREATE_SQL:
             (user_id, group_id)
         VALUES
             (11111, 1),
-            (11112, 1);
+            (11112, 1),
+            (11113, 1);
 
         INSERT INTO verse_category_topics 
             (
@@ -409,7 +413,13 @@ AFTER_CREATE_SQL:
             ('Boating', 0, 1, 'Anchor.png', 9);
 
 
-
+         INSERT INTO verses
+            (
+                user_ids, participant_count, max_participants, max_lines, owner_id, verse_category_topic_id, friends_only, complete
+            )
+        VALUES
+            (ARRAY[11111], 1, 2, 8, 11111, 1, True, False),
+            (ARRAY[11113], 1, 2, 8, 11113, 2, False, False);
 
 
 
