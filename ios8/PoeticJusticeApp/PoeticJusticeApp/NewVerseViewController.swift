@@ -68,7 +68,7 @@ class NewVerseViewController: UIViewController {
         
         var params = Dictionary<String,AnyObject>()
         params["title"] = self.verseTitle.text
-        params["max_particifants"] = self.maxNumPlayers
+        params["max_participants"] = self.maxNumPlayers
         params["friends_only"] = self.friendsOnly.on
         params["owner_id"] = NetOpers.sharedInstance.userId!
         params["user_ids"] = String(NetOpers.sharedInstance.userId!) + ";"
@@ -77,6 +77,9 @@ class NewVerseViewController: UIViewController {
         NetOpers.sharedInstance.post(
             NetOpers.sharedInstance.appserver_hostname! + "/m/edit/Verse",
             params: params, {(data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                
+                // if the server is down, it will die here
+                // how to catch/fix without exceptions?
                 
                 let httpResponse = response as NSHTTPURLResponse
                 if httpResponse.statusCode == 200 {

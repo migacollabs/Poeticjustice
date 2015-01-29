@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import iAd
 
 class Verse {
     let verse_data: NSDictionary
@@ -58,6 +59,7 @@ class WriteLineViewController: UIViewController {
     
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var topicButton: UIButton!
+    @IBOutlet weak var adBanner: ADBannerView!
     
     var maxNumPlayers : Int = 2
     
@@ -84,6 +86,7 @@ class WriteLineViewController: UIViewController {
     var score : Int = 1;
     var line : String = "";
     var verseId : Int = 0;
+    var should_begin_banner = false
     
     var topic: Topic?{
         didSet{
@@ -103,6 +106,9 @@ class WriteLineViewController: UIViewController {
         
         self.configureView()
         updateUserLabel()
+        
+        var timer = NSTimer.scheduledTimerWithTimeInterval(
+            31, target: self, selector: Selector("allow_banner"), userInfo: nil, repeats: false)
         
     }
     
@@ -278,5 +284,36 @@ class WriteLineViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - Ad Banner
+    
+    func bannerViewWillLoadAd(banner: ADBannerView!) {
+        println("bannerViewWillLoadAd called")
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+        println("bannerViewDidLoadAd called")
+        self.adBanner.hidden = false
+    }
+    
+    func bannerViewActionDidFinish(banner: ADBannerView!) {
+        println("bannerViewACtionDidFinish called")
+    }
+    
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
+        println("bannerViewActionShouldBegin called \(self.should_begin_banner)")
+        return self.should_begin_banner
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        println("bannerView didFailToReceiveAdWithError called")
+    }
+    
+    func allow_banner(){
+        self.should_begin_banner = true
+    }
+    func hide_adbanner(){
+        self.adBanner.hidden = true
+    }
 
 }

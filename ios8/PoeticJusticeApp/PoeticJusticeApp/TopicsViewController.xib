@@ -43,10 +43,10 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHT-OH-XQw">
-                    <rect key="frame" x="8" y="115" width="584" height="397"/>
+                    <rect key="frame" x="8" y="115" width="584" height="379"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOo-jU-jWS">
-                            <rect key="frame" x="0.0" y="0.0" width="635" height="511"/>
+                            <rect key="frame" x="0.0" y="0.0" width="635" height="493"/>
                             <subviews>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Slf-VG-r1V" customClass="TopicButton" customModule="PoeticJusticeApp">
                                     <rect key="frame" x="34" y="17" width="48" height="48"/>
@@ -583,7 +583,7 @@
                     </constraints>
                 </view>
                 <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="gAD-4A-oad">
-                    <rect key="frame" x="140" y="520" width="320" height="50"/>
+                    <rect key="frame" x="140" y="502" width="320" height="50"/>
                 </adBannerView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -596,7 +596,7 @@
                 <constraint firstItem="gAD-4A-oad" firstAttribute="centerX" secondItem="tHT-OH-XQw" secondAttribute="centerX" id="UFy-0a-3Uu"/>
                 <constraint firstItem="tHT-OH-XQw" firstAttribute="top" secondItem="I41-lg-i7W" secondAttribute="bottom" constant="8" symbolic="YES" id="VZo-6Q-zrq"/>
                 <constraint firstItem="I41-lg-i7W" firstAttribute="firstBaseline" secondItem="iyu-6W-pgh" secondAttribute="firstBaseline" id="aLr-L9-5ed"/>
-                <constraint firstAttribute="bottom" secondItem="gAD-4A-oad" secondAttribute="bottom" constant="30" id="fiA-Al-Dgb"/>
+                <constraint firstAttribute="bottom" secondItem="gAD-4A-oad" secondAttribute="bottom" constant="48" id="fiA-Al-Dgb"/>
                 <constraint firstItem="gAD-4A-oad" firstAttribute="top" secondItem="tHT-OH-XQw" secondAttribute="bottom" constant="8" symbolic="YES" id="owR-J3-KO4"/>
                 <constraint firstItem="tHT-OH-XQw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="qkj-F7-7MN"/>
                 <constraint firstItem="iyu-6W-pgh" firstAttribute="leading" secondItem="tHT-OH-XQw" secondAttribute="leading" id="sEc-kG-sgP"/>
