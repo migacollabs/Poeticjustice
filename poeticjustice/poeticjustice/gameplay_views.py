@@ -336,7 +336,7 @@ def get_verse(verseId, userId):
     renderer='json')
 def get_active_topics(request):
     try:
-        print 'loading active topics'
+        
         auth_usrid = authenticated_userid(request)
         user, user_type_names, user_type_lookup = (
             get_current_rbac_user(auth_usrid,
@@ -348,22 +348,33 @@ def get_active_topics(request):
         )
 
         if user and user.is_active and user.email_address==auth_usrid:
-
+            print 'loading active topics for user', user.id
             with SQLAlchemySessionFactory() as session:
                 topics = []
 
                 V, T, U, UxU= ~Verse, ~VerseCategoryTopic, ~User, ~UserXUser
 
-                # global open verses and topics
+                # global open verses and topics that are not mine
                 for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
                     filter(V.complete==False).\
                     filter(V.owner_id==U.id).\
+                    filter(U.id!=user.id).\
                     filter(V.friends_only==False).\
                     filter(V.participant_count<V.max_participants).\
                     order_by(func.random()).\
                     limit(5):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'world'})
+
+                # topics that are mine
+                for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
+                    filter(V.complete==False).\
+                    filter(V.owner_id==U.id).\
+                    filter(U.id==user.id).\
+                    order_by(func.random()).\
+                    limit(5):
+                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'mine'})
 
                 # friendship initiated by me
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
@@ -411,6 +422,56 @@ def get_active_topics(request):
         except:
             pass
 
+
+@view_config(
+    name='get-topics',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def get_topics(request):
+    try:
+        print 'saving new line for verse'
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+
+        if user and user.is_active and user.email_address==auth_usrid:
+
+            with SQLAlchemySessionFactory() as session:
+                topics = []
+
+                T = ~VerseCategoryTopic
+
+                # see if the user is associated to a verse for this topic
+                # change the limit later
+                for t in session.query(T).order_by(T.id).limit(16):
+                    topics.append({"id":t.id, "name":t.name, "min_points_req":t.min_points_req, 
+                        "score_modifier":t.score_modifier, "main_icon_name":t.main_icon_name,
+                        "verse_category_type_id":t.verse_category_type_id})
+
+                return {"results":topics}
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
 
 @view_config(
     name='active-verses',

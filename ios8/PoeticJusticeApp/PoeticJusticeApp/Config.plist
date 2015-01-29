@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>appserver_hostname</key>
-	<string>http://mivid.io:8888</string>
+	<string>http://0.0.0.0:8888</string>
 </dict>
 </plist>

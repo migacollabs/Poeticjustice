@@ -48,7 +48,7 @@ class ActiveTopic {
     
     var src : AnyObject? {
         get {
-            if let x = self.active_topic_data["src"] as? Int{
+            if let x = self.active_topic_data["src"] as? String {
                 return x
             }
             return nil
@@ -192,18 +192,16 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: nil) as? NSDictionary{
                             
-                            if let len = jsonResult["length"] as? Int{
-                                if let results = jsonResult["results"] as? NSArray{
-                                    
-                                    for topic in results{
-                                        var t = Topic(rec:topic as NSDictionary)
-                                        var tid = t.id! as Int
-                                        self.topics[tid] = t
-                                        self.topic_order.append(tid)
-                                    }
+                            if let results = jsonResult["results"] as? NSArray{
+                                
+                                for topic in results{
+                                    var t = Topic(rec:topic as NSDictionary)
+                                    var tid = t.id! as Int
+                                    self.topics[tid] = t
+                                    self.topic_order.append(tid)
                                 }
                             }
-                            
+                           
                     }else{
                         self.dispatch_alert("Error", message: "No Topics", controller_title: "Ok")
                     }
@@ -256,7 +254,9 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
                         self.dispatch_alert("Error", message: "No Active Topics Found", controller_title: "Ok")
                     }
                     
-                    update_topic_labels()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.update_topic_labels()
+                    })
                     
                 }
                 
@@ -269,27 +269,45 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
 
     }
     
-    func update_topic_labels() {
+    func get_topic_label(index : Int) -> TopicLabel? {
         for view in self.topicScrollView.subviews as [UIView] {
             if let lbl = view as? TopicLabel {
-                for at in self.active_topics {
-                    
-                    println("topic id for email")
-                    println(at.email_address)
-                    println(at.id)
-                    
-                    var index = find(self.topic_order, at.id as Int)
-                    
-                    println("found at index " + String(index!))
-                    
-                    if lbl.index==index {
-                        lbl.text = at.email_address as? String
-                        break
-                    }
-                    
+                if (lbl.index==index) {
+                    return lbl
                 }
             }
         }
+        return nil
+    }
+    
+    func update_topic_labels() {
+     
+        for at in self.active_topics {
+            
+            println("***** topic id for email")
+            println(at.email_address)
+            println(at.id)
+            
+            var index = find(self.topic_order, at.id as Int)! + 1
+            
+            println(index)
+            
+            if let tl = get_topic_label(index) {
+                println(tl)
+                if let s = at.src as? String {
+                    println(at.src)
+                    if s=="mine" {
+                        tl.text = at.email_address as? String
+                    } else if s=="world" {
+                        tl.text = "w: " + (at.email_address as? String)!
+                    } else if s=="friend" {
+                        tl.text = "f: " + (at.email_address as? String)!
+                    }
+                }
+            }
+            
+        }
+        
     }
     
     func dispatch_alert(title:String, message:String, controller_title:String){

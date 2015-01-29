@@ -219,7 +219,7 @@ class WriteLineViewController: UIViewController {
                                     self.scoreView.hidden = false
                                     self.sendButton.hidden = false
                                 }
-                            } else {
+                            }
                             
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
