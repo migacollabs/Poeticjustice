@@ -119,7 +119,6 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         title = "Topics"
         
         self.get_topics()
-        get_active_topics()
 
         // Do any additional setup after loading the view.
     }
@@ -174,7 +173,8 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
 
     @IBAction func handleTopicButton(sender: AnyObject) {
         
-        var tag = (sender as TopicButton).tag
+        var topicButton = (sender as TopicButton)
+        var tag = topicButton.tag
         var tid = self.topic_order[tag-1]
         var topic = self.topics[tid] as Topic
         
@@ -184,7 +184,7 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         // user is not already set in the Verse.user_ids array
         
         // TODO: handle an old open active topic - if the user is already
-        // in the Verse.user_ids array for the active topic, then go right into the WriteLineViewController
+        // in the Verse.user_ids or is next_user_id array for the active topic, then go right into the WriteLineViewController
         
         // TODO: handle active topic when it's the players turn - if it's the player's turn, 
         // meaning ActiveTopic.next_user_id==User.id then go right into the WriteLineViewController
@@ -196,12 +196,34 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         self.should_begin_banner = false
         self.adBanner.hidden = true
         
-        let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
-        vc.topic = topic
-        navigationController?.pushViewController(vc, animated: false)
+        var verseId : Int?
         
-        println("loading NewVerseViewController")
+        for tb in self.active_topics {
+            if let tbid = tb.id as? Int {
+                if (tbid==tid) {
+                    if let nuid = tb.next_user_id as? Int {
+                        if (nuid==NetOpers.sharedInstance.userId) {
+                            verseId = tb.verse_id as? Int
+                        }
+                    }
+                }
+            }
+        }
         
+        if let vid = verseId {
+            let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+            vc.verseId = vid
+            vc.topic = topic
+            navigationController?.pushViewController(vc, animated: false)
+            
+            println("loading WriteLineViewController")
+        } else {
+            let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
+            vc.topic = topic
+            navigationController?.pushViewController(vc, animated: false)
+            
+            println("loading NewVerseViewController")
+        }
     }
     
     func on_loaded_topics_completion(data:NSData?, response:NSURLResponse?, error:NSError?){

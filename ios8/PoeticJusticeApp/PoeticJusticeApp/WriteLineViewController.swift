@@ -139,13 +139,14 @@ class WriteLineViewController: UIViewController {
             if (refresh) {
                 
                 var params = Dictionary<String,AnyObject>()
-                params["topic_id"]=topic?.id
+                
+                params["verse_id"]=verseId
                 params["user_id"]=NetOpers.sharedInstance.userId
                 
-                println("hitting active-verses url")
+                println("hitting active-verse url")
                 println(params)
                 
-                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verses", params: params, loadVerse)
+                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, loadVerse)
                 
                 lastTabbed = NSDate()
             }
@@ -215,14 +216,12 @@ class WriteLineViewController: UIViewController {
                                     self.verseView.text = self.verseView.text + "\n" + l
                                 }
                             } else {
-                                self.scoreView.hidden = false
                                 self.sendButton.hidden = false
                             }
                             
                             if let nextid = self.verse?.next_user_id as? Int {
                                 // if it's my turn, let me do it to it
                                 if (nextid==NetOpers.sharedInstance.userId) {
-                                    self.scoreView.hidden = false
                                     self.sendButton.hidden = false
                                 }
                             }
@@ -254,15 +253,8 @@ class WriteLineViewController: UIViewController {
         var params = Dictionary<String,AnyObject>()
         params["topic_id"]=topic?.id
         params["line"]=setLine.text
-        
-        if let v = verse {
-            // existing verse
-            params["verse_id"]=v.id
-            params["score_increment"]=score
-        } else {
-            // new verse
-            params["max_participants"]=maxNumPlayers
-        }
+        params["verse_id"]=verseId
+        params["score_increment"]=score
         
         println("hitting saveline url")
         println(params)
@@ -270,7 +262,6 @@ class WriteLineViewController: UIViewController {
         NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
         
         self.setLine.text = ""
-        self.scoreView.hidden = true
         self.sendButton.hidden = true
         
     }

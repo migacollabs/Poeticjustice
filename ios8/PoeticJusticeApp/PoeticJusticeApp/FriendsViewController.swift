@@ -118,7 +118,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.myTableView.dataSource = self
         self.myTableView.delegate = self
         
-        updateUserLabel()
     }
     
     func show_alert(title:String, message:String, controller_title:String){
@@ -146,7 +145,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var lastTabbed : NSDate?
     
     override func viewWillAppear(animated : Bool) {
-        println(NetOpers.sharedInstance.userId)
+        
         if (NetOpers.sharedInstance.userId>0) {
             
             var refresh : Bool = false

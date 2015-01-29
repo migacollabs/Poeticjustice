@@ -474,7 +474,7 @@ def get_topics(request):
             pass
 
 @view_config(
-    name='active-verses',
+    name='active-verse',
     request_method='POST',
     context='poeticjustice:contexts.Users',
     renderer='json')
@@ -493,21 +493,9 @@ def get_user_active_verses(request):
 
         if user and user.is_active and user.email_address==auth_usrid:
 
-            topicId = request.params['topic_id']
+            verseId = request.params['verse_id']
             
-            with SQLAlchemySessionFactory() as session:
-                V, LxV = ~Verse, ~LineXVerse
-
-                # see if the user is associated to a verse for this topic
-                verse = session.query(V, LxV).filter(V.id==LxV.verse_id).\
-                    filter(LxV.user_id==user.id).\
-                    filter(V.verse_category_topic_id==topicId).\
-                    filter(V.complete==False).first()
-
-                if verse:
-                    return get_verse(verse[0].id, user.id)
-                else:
-                    return get_verse(None, user.id)
+            return get_verse(verseId, user.id)
 
         raise HTTPUnauthorized
 
@@ -547,56 +535,28 @@ def save_verse_line(request):
         if user and user.is_active and user.email_address==auth_usrid:
 
             # mandatory fields every time
-            topicId = request.params['topic_id']
             line = request.params["line"]
-            
-            # optional after first line
-            maxParticipants = 5
-
-            # optional when adding first line
-            scoreIncrement, verseId, friendsOnly = None, None, False
-
-            if 'score_increment' in request.params:
-                scoreIncrement = request.params['score_increment']
-            
-            if 'verse_id' in request.params:
-                verseId = request.params['verse_id']
-
-            if 'max_participants' in request.params:
-                maxParticipants = request.params['max_participants']
-
-            if 'friends_only' in request.params:
-                friendsOnly = request.params['friends_only']
+            verseId = request.params["verse_id"]
+            scoreIncrement = request.params["score_increment"]
 
             with SQLAlchemySessionFactory() as session:
 
-                verse = None
+                verse = session.query(~Verse).filter((~Verse).id==verseId).first()
 
-                if (verseId is None):
-                    # a new verse has been started
-                    verse = Verse(user_ids=[user.id], participant_count=1, max_participants=maxParticipants, max_lines=maxParticipants*4,
-                        owner_id=user.id, verse_category_topic_id=topicId, friends_only=friendsOnly, complete=False)
-                    verse.save(session=session)
-                    verseId = verse.id
-                else:
-                    # adding to a verse
-                    verse = session.query(~Verse).filter((~Verse).id==verseId).first()
+                # if it's not the first line, update the previous line score for the line
+                # and user
+                lxv = session.query(~LineXVerse).filter((~LineXVerse).verse_id==verse.id).\
+                    order_by(desc((~LineXVerse).id)).first()
 
-                if (scoreIncrement):
-                    # if it's not the first line, update the previous line score for the line
-                    # and user
-                    lxv = session.query(~LineXVerse).filter((~LineXVerse).verse_id==verse.id).\
-                        order_by(desc((~LineXVerse).id)).first()
+                if lxv:
+                    lxv.line_score = lxv.line_score + int(scoreIncrement)
+                    lxv = LineXVerse(entity=session.merge(lxv))
+                    lxv.save(session=session)
 
-                    if lxv:
-                        lxv.line_score = lxv.line_score + int(scoreIncrement)
-                        lxv = LineXVerse(entity=session.merge(lxv))
-                        lxv.save(session=session)
-
-                        lastUser = session.query(~User).filter((~User).id==lxv.user_id).first()
-                        lastUser.user_score = lastUser.user_score + int(scoreIncrement)
-                        lastUser = User(entity=session.merge(lastUser))
-                        lastUser.save(session=session)
+                    lastUser = session.query(~User).filter((~User).id==lxv.user_id).first()
+                    lastUser.user_score = lastUser.user_score + int(scoreIncrement)
+                    lastUser = User(entity=session.merge(lastUser))
+                    lastUser.save(session=session)
 
                 # finally, save this users line
                 linexverse = LineXVerse(user_id=user.id, verse_id=verse.id, line_text=line, line_score=0)

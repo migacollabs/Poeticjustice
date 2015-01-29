@@ -71,6 +71,7 @@ class NewVerseViewController: UIViewController {
         params["max_participants"] = self.maxNumPlayers
         params["friends_only"] = self.friendsOnly.on
         params["owner_id"] = NetOpers.sharedInstance.userId!
+        params["next_user_id"] = NetOpers.sharedInstance.userId!
         params["user_ids"] = String(NetOpers.sharedInstance.userId!) + ";"
         params["verse_category_topic_id"] = self.topic?.id
         
@@ -114,7 +115,10 @@ class NewVerseViewController: UIViewController {
     }
     
     func start_accepted(verseId:Int){
-        println(verseId)
+        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+        vc.verseId = verseId
+        vc.topic = topic
+        navigationController?.pushViewController(vc, animated: false)
     }
 
     /*
