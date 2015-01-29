@@ -93,6 +93,7 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
     var active_topics:[ActiveTopic] = []
+    var should_begin_banner = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,6 +165,10 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
 //        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
 //        vc.topic = topic
 //        navigationController?.pushViewController(vc, animated: false)
+        
+        // stop the ads on this view
+        self.should_begin_banner = false
+        self.adBanner.hidden = true
         
         let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
         vc.topic = topic
@@ -372,8 +377,12 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
-       println("bannerViewDidLoadAd called")
+        println("bannerViewDidLoadAd called")
         self.adBanner.hidden = false
+//        self.tabBarController?.tabBar.hidden = true
+//        var timer = NSTimer.scheduledTimerWithTimeInterval(
+//            5, target: self, selector: Selector("hide_adbanner"), userInfo: nil, repeats: false)
+
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
@@ -381,12 +390,16 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
-        println("bannerViewActionShouldBegin called")
-        return true
+        println("bannerViewActionShouldBegin called \(self.should_begin_banner)")
+        return self.should_begin_banner
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        println("bannerView called")
+        println("bannerView didFailToReceiveAdWithError called")
+    }
+    
+    func hide_adbanner(){
+        self.adBanner.hidden = true
     }
     
     /*

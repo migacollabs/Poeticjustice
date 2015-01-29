@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
+                <outlet property="adBanner" destination="8Wo-tx-baU" id="r5y-6F-xuZ"/>
                 <outlet property="scoreView" destination="X8f-Rn-QwX" id="zc7-6W-tqg"/>
                 <outlet property="sendButton" destination="sOv-vj-Wiz" id="5Gt-Bw-QHD"/>
                 <outlet property="setLine" destination="5Qn-Ca-z5G" id="6c9-il-i8g"/>
@@ -170,6 +171,9 @@ Or maybe in a train, or better yet a plane //
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Wo-tx-baU">
+                    <rect key="frame" x="140" y="502" width="320" height="50"/>
+                </adBannerView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -185,12 +189,14 @@ Or maybe in a train, or better yet a plane //
                 <constraint firstItem="X8f-Rn-QwX" firstAttribute="trailing" secondItem="5Qn-Ca-z5G" secondAttribute="trailing" id="QDj-mJ-web"/>
                 <constraint firstItem="5Qn-Ca-z5G" firstAttribute="trailing" secondItem="sOv-vj-Wiz" secondAttribute="trailing" id="QRY-zz-sQC"/>
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="4pz-eP-0uX" secondAttribute="trailing" id="SHb-PQ-JH4"/>
+                <constraint firstAttribute="bottom" secondItem="8Wo-tx-baU" secondAttribute="bottom" constant="48" id="dxS-pX-rVi"/>
                 <constraint firstItem="5Qn-Ca-z5G" firstAttribute="top" secondItem="X8f-Rn-QwX" secondAttribute="bottom" constant="30" id="eL9-mr-l1p"/>
                 <constraint firstItem="5Qn-Ca-z5G" firstAttribute="top" secondItem="w6t-mw-f2l" secondAttribute="bottom" constant="8" symbolic="YES" id="gIQ-D5-uQh"/>
                 <constraint firstItem="X8f-Rn-QwX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="431" id="ijh-pI-hSb"/>
                 <constraint firstItem="X8f-Rn-QwX" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="imo-l4-vPn"/>
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="leading" secondItem="w6t-mw-f2l" secondAttribute="leading" id="kBU-ds-QrV"/>
                 <constraint firstItem="5Qn-Ca-z5G" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="npc-FQ-MU8"/>
+                <constraint firstAttribute="centerX" secondItem="8Wo-tx-baU" secondAttribute="centerX" id="qhU-t5-9Et"/>
                 <constraint firstItem="kTl-ux-cd3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="83" id="qhf-KN-Jho"/>
                 <constraint firstItem="Ai1-Kp-PL4" firstAttribute="top" secondItem="5Qn-Ca-z5G" secondAttribute="bottom" constant="8" symbolic="YES" id="wVc-a4-1TL"/>
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="4pz-eP-0uX" secondAttribute="bottom" constant="15" id="z4e-T7-5rx"/>
