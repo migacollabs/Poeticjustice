@@ -15,6 +15,10 @@ class NewVerseViewController: UIViewController {
     @IBOutlet weak var friendsOnly: UISwitch!
     @IBOutlet weak var topicButton: UIButton!
     
+    // TODO: if the verse it set, update the view
+    // to show the parameters for that verse
+    var verseId : Int?
+    
     var maxNumPlayers : Int = 2
     
     var topic: Topic?{

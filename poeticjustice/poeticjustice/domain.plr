@@ -163,7 +163,7 @@ PYAELLAC:
                 CheckConstraint('id<111111111111'), 
                 server_default=text("nextval('users_id_seq')"), 
                 primary_key=True)
-        user_name: Column(String(50))
+        user_name: Column(String(50), nullable=False)
         email_address: Column(String(255), nullable=False, unique=True)
         twitter_name: Column(String(255))
         facebook_name: Column(String(255))
@@ -307,12 +307,12 @@ AFTER_CREATE_SQL:
 
         INSERT INTO users
             (
-                email_address, country_code, password, user_score, num_of_verses, num_of_lines, is_active, is_invited, access_token
+                email_address, country_code, password, user_score, num_of_verses, num_of_lines, is_active, is_invited, access_token, user_name
             )
         VALUES
-            ('larry@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, False,'1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210727'),
-            ('larry@gerijopa.com', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210728'),
-            ('larry+world@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729');
+            ('larry@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, False,'1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210727', 'migalj'),
+            ('larry@gerijopa.com', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210728', 'awaylj'),
+            ('larry+world@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 'worldlj');
 
 
         INSERT INTO user_x_user_type_lu

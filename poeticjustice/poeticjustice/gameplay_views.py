@@ -364,7 +364,7 @@ def get_active_topics(request):
                     order_by(func.random()).\
                     limit(5):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'world'})
+                        "user_name":r[2].user_name, "src":'world', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
                 # topics that are mine
                 for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
@@ -374,7 +374,7 @@ def get_active_topics(request):
                     order_by(func.random()).\
                     limit(5):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'mine'})
+                        "user_name":r[2].user_name, "src":'mine', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
                 # friendship initiated by me
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
@@ -388,7 +388,7 @@ def get_active_topics(request):
                     order_by(func.random()).\
                     limit(3):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'friend'})
+                        "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
                 # friendship initiated by friend
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
@@ -402,7 +402,7 @@ def get_active_topics(request):
                     order_by(func.random()).\
                     limit(3):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'friend'})
+                        "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
                 return {"results":topics}
 
@@ -422,7 +422,7 @@ def get_active_topics(request):
         except:
             pass
 
-
+# TODO: memoize this
 @view_config(
     name='get-topics',
     request_method='GET',

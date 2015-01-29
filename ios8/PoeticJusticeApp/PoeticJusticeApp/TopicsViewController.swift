@@ -24,13 +24,8 @@ class ActiveTopic {
     let active_topic_data: NSDictionary
     
     /*
-{
-"verse_id": 2,
-"src": "world",
-"email_address": "larry+world@miga.me",
-"user_name": null,
-"topic_id": 2
-}
+    represents a topic that is currently active to the user, meaning
+    it's a friends topic, a world topic, or their own topic
     */
 
     init(rec:NSDictionary){
@@ -58,6 +53,24 @@ class ActiveTopic {
     var verse_id : AnyObject? {
         get {
             if let x = self.active_topic_data["verse_id"] as? Int{
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var next_user_id : AnyObject? {
+        get {
+            if let x = self.active_topic_data["next_user_id"] as? Int{
+                return x
+            }
+            return nil
+        }
+    }
+    
+    var verse_user_ids : [AnyObject]? {
+        get {
+            if let x = self.active_topic_data["user_ids"] as? [Int] {
                 return x
             }
             return nil
@@ -100,23 +113,44 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         self.adBanner.delegate = self
         self.adBanner.hidden = true
         
-        for view in self.topicScrollView.subviews as [UIView] {
-            if let lbl = view as? TopicLabel {
-                lbl.text = ""
-            }
-        }
+        reset_topic_labels()
         
         title = "Topics"
         
         self.get_topics()
-        
-        updateUserLabel()
+        get_active_topics()
 
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
+        // click on the tab, so refresh
+        get_active_topics()
         updateUserLabel()
+    }
+    
+    var lastTabbed : NSDate?
+    
+    @IBAction func refreshActiveTopics(sender: AnyObject) {
+        if (NetOpers.sharedInstance.userId>0) {
+            
+            var refresh : Bool = false
+            
+            if (lastTabbed==nil) {
+                refresh = true
+            } else {
+                var elapsedTime = NSDate().timeIntervalSinceDate(lastTabbed!)
+                refresh = (elapsedTime>NSTimeInterval(10.0))
+            }
+            
+            if (refresh) {
+                get_active_topics()
+                lastTabbed = NSDate()
+            }
+            
+            updateUserLabel()
+            
+        }
     }
     
     @IBOutlet var userLabel: UILabel!
@@ -139,39 +173,27 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
 
     @IBAction func handleTopicButton(sender: AnyObject) {
         
-        var tb = (sender as TopicButton)
-
-        println(tb.index)
-        
-        for view in self.topicScrollView.subviews as [UIView] {
-            if let lbl = view as? TopicLabel {
-                if (lbl.index==tb.index) {
-                    if let un = NetOpers.sharedInstance.user?.user_name as? String {
-                        lbl.text = un
-                    }
-                    break
-                }
-            }
-        }
-        
         var tag = (sender as TopicButton).tag
         var tid = self.topic_order[tag-1]
         var topic = self.topics[tid] as Topic
         
+        // TODO: handle a new open active topic - if there is an ActiveTopic with a verse_id
+        // associated with the TopicButton that was pressed, then load the Verse setup 
+        // page showing player count, friends, and a list of usernames - this is if the
+        // user is not already set in the Verse.user_ids array
         
-        // TODO: if already participating
+        // TODO: handle an old open active topic - if the user is already
+        // in the Verse.user_ids array for the active topic, then go right into the WriteLineViewController
         
-//        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle: nil)
-//        vc.topic = topic
-//        navigationController?.pushViewController(vc, animated: false)
+        // TODO: handle active topic when it's the players turn - if it's the player's turn, 
+        // meaning ActiveTopic.next_user_id==User.id then go right into the WriteLineViewController
         
+        // handle a new topic - an open topic, so start a new Verse
         let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
         vc.topic = topic
         navigationController?.pushViewController(vc, animated: false)
         
         println("loading NewVerseViewController")
-        
-        // TODO: otherwise load up the verse creation screen
         
     }
     
@@ -222,7 +244,12 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     
     func get_topics(){
         NetOpers.sharedInstance._load_topics(on_loaded_topics_completion)
-
+    }
+    
+    func get_active_topics() {
+        // TODO: don't let this be spammed
+        reset_topic_labels()
+        
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", update_active_topics)
     }
     
@@ -280,26 +307,35 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         return nil
     }
     
+    func reset_topic_labels() {
+        for view in self.topicScrollView.subviews as [UIView] {
+            if let lbl = view as? TopicLabel {
+                lbl.text = ""
+            }
+        }
+    }
+    
     func update_topic_labels() {
      
         for at in self.active_topics {
             
-            println("***** topic id for email")
-            println(at.email_address)
-            println(at.id)
+//            println("***** topic id for email")
+//            println(at.email_address)
+//            println(at.id)
             
             var index = find(self.topic_order, at.id as Int)! + 1
             
-            println(index)
+//            println(index)
             
             if let tl = get_topic_label(index) {
-                println(tl)
+//                println(tl)
                 if let s = at.src as? String {
-                    println(at.src)
+//                    println(at.src)
+                    // TODO: determine if user_name or email_address is shown
                     if s=="mine" {
-                        tl.text = at.email_address as? String
+                        tl.text = at.user_name as? String
                     } else if s=="world" {
-                        tl.text = "w: " + (at.email_address as? String)!
+                        tl.text = "w: " + (at.user_name as? String)!
                     } else if s=="friend" {
                         tl.text = "f: " + (at.email_address as? String)!
                     }
