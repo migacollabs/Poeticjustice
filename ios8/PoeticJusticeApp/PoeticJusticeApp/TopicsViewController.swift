@@ -201,11 +201,23 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         for tb in self.active_topics {
             if let tbid = tb.id as? Int {
                 if (tbid==tid) {
+                    
+                    println(tb.src)
+                    
                     if let nuid = tb.next_user_id as? Int {
-                        if (nuid==NetOpers.sharedInstance.userId) {
+                        
+                        if ( nuid==NetOpers.sharedInstance.userId! || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.userId! as Int) ){
+                            println("Verse!")
                             verseId = tb.verse_id as? Int
+                            break
+                        }else{
+                            println("World Topic")
+                            if tb.src! as String == "world"{
+                                println("its a world topic")
+                            }
                         }
                     }
+                    
                 }
             }
         }
