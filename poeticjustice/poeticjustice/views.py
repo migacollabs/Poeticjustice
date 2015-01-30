@@ -413,6 +413,16 @@ def login_post(request):
                         user = User(entity=user_obj)
 
                         if user.access_token == None:
+                            print 'NO ACCESS TOKEN', user.to_dict()
+                            if not user.is_invited:
+                                user.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
+                                _send_notification(user, user.auth_hash, 
+                                    "email.verification.mako", 
+                                    logo_name="Conversation.png")
+
+                                user.is_invited = True
+                                user.save(session=session)
+                                
                             return dict(
                                 status='Ok',
                                 verification_req=True,
@@ -434,7 +444,7 @@ def login_post(request):
                             auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
                             user.auth_hash = auth_hash
                             _send_notification(user, auth_hash, 
-                                "email.verification.mako", 
+                                "email.new.device.mako", 
                                 logo_name="Conversation.png")
 
                             user.device_rec = json.dumps(device_rec)
