@@ -204,7 +204,7 @@ def add_user_friend(request):
 
                 if (friend is None):
                     friend = User(email_address=friendEmailAddress, 
-                            user_name=request.params['user_name'] if 'user_name' in request.params else None)
+                            user_name=request.params['user_name'] if 'user_name' in request.params else "NewFriendOf"+user.user_name)
                     friend = _save_user(friend, session)
 
                 uxu = session.query(~UserXUser).filter(or_((~UserXUser).friend_id==friend.id, (~UserXUser).user_id==friend.id)).first()
@@ -371,8 +371,8 @@ def get_active_topics(request):
                     filter(V.complete==False).\
                     filter(V.owner_id==U.id).\
                     filter(U.id==user.id).\
-                    order_by(func.random()).\
-                    limit(5):
+                    order_by(func.random()):\
+                    # limit(5):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'mine', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
