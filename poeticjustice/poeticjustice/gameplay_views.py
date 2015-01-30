@@ -128,7 +128,7 @@ def update_user_score(request):
     context='poeticjustice:contexts.Users',
     renderer='json')
 def remove_user_friend(request):
-    print 'add_user_friend called', request
+    print 'remove_user_friend called', request
     try:
         auth_usrid = authenticated_userid(request)
 
@@ -204,18 +204,28 @@ def add_user_friend(request):
 
                 if (friend is None):
                     friend = User(email_address=friendEmailAddress, 
-                            user_name=request.params['user_name'] if 'user_name' in request.params else "NewFriendOf"+user.user_name)
+                            user_name=request.params['user_name'] if 'user_name' in request.params else 'N/A')
                     friend = _save_user(friend, session)
 
-                uxu = session.query(~UserXUser).filter(or_((~UserXUser).friend_id==friend.id, (~UserXUser).user_id==friend.id)).first()
+                UxU = ~UserXUser
+                uxu = session.query(UxU).filter(UxU.friend_id==friend.id).\
+                    filter(UxU.user_id==user.id).first()
 
-                if (uxu is None):    
+                if (uxu is None):
+                    uxu = session.query(UxU).filter(UxU.user_id==friend.id).\
+                    filter(UxU.friend_id==user.id).first()
+
+                if (uxu is None):
+                    # creating a new friendship
+                    print 'attempting new friendship'
                     uxu = UserXUser(user_id=user.id, friend_id=friend.id, approved=False)
                     uxu.save(session=session)
                 else:
                     # relationship already exists so approve it
-                    uxu = UserXUser(user_id=user.id, friend_id=friend.id, approved=True, entity=session.merge(uxu))
-                    uxu.save(session=session)
+                    print 'approving friendship ', uxu.id
+                    uxu.approved = True
+                    session.add(uxu)
+                    session.commit()
 
                 return get_friends(user)
 
@@ -237,7 +247,7 @@ def add_user_friend(request):
 
 
 @view_config(
-    name='userfriends',
+    name='user-friends',
     request_method='GET',
     context='poeticjustice:contexts.Users',
     renderer='json')
@@ -282,6 +292,7 @@ def get_friends(user):
         U, UxU = ~User, ~UserXUser
         for u, uxu in session.query(U, UxU).\
             filter(U.id==UxU.friend_id).\
+            filter(U.id!=user.id).\
             filter(UxU.user_id==user.id):
             friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
                 'email_address':u.email_address, 'user_name':u.user_name, 'src':'me'})
@@ -291,6 +302,7 @@ def get_friends(user):
         U, UxU = ~User, ~UserXUser
         for u, uxu in session.query(U, UxU).\
             filter(UxU.friend_id==user.id).\
+            filter(U.id!=user.id).\
             filter(UxU.user_id==U.id):
             friends.append({'friend_id':uxu.user_id, 'approved':uxu.approved,
                 'email_address':u.email_address, 'user_name':u.user_name, 'src':'them'})
