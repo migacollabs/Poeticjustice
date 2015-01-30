@@ -527,6 +527,45 @@ def get_user_active_verses(request):
 
 
 @view_config(
+    name='verse',
+    request_method='POST',
+    context='poeticjustice:contexts.Verses',
+    renderer='json')
+def verse(request):
+    try:
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active and user.email_address==auth_usrid:
+
+            verseId = request.params['id']
+            
+            return get_verse(id, user.id)
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
     name='save-line',
     request_method='POST',
     context='poeticjustice:contexts.Users',
@@ -711,6 +750,74 @@ def start_topic(request):
             session.close()
         except:
             pass
+
+
+@view_config(
+    name='users',
+    request_method='GET',
+    context='poeticjustice:contexts.Verses',
+    renderer='json',
+    permission='edit')
+def get_verse_users(request):
+    print 'get_verse_users called', request
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(request.subpath)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                user = User(entity=session.merge(user))
+
+                U, V = ~User, ~Verse
+                v = Verse.load(int(kwds['id']), session=session)
+                print v.user_ids
+                if v:
+                    rp = (session.query(U)
+                            .filter(U.id.in_(v.user_ids))
+                            ).all()
+
+                    verse_users = [
+                        User(entity=row).to_dict(
+                            ignore_fields=[
+                                'auth_hash', 'access_token', 'password',
+                                'device_rec', 'user_prefs', 'user_types'
+                            ]
+                        ) for row in rp
+                    ]
+
+            return dict(
+                verse_users=verse_users,
+                logged_in=auth_usrid,
+                user=user.to_dict()
+            )
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
 
 
 

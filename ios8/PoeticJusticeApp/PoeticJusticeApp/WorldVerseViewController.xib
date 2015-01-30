@@ -6,8 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WorldVerseViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
-                <outlet property="players" destination="vMa-NM-G52" id="ha7-R5-XSZ"/>
-                <outlet property="playersTable" destination="vMa-NM-G52" id="f0f-4w-MEF"/>
+                <outlet property="playerTable" destination="CpR-k2-onq" id="zGh-ME-kXe"/>
+                <outlet property="verseTitle" destination="IO3-i6-GWv" id="mmp-ix-R38"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,12 +16,59 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vMa-NM-G52">
-                    <rect key="frame" x="0.0" y="162" width="600" height="310"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="CpR-k2-onq">
+                    <rect key="frame" x="0.0" y="158" width="600" height="284"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IO3-i6-GWv">
+                    <rect key="frame" x="50" y="101" width="33" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyA-jk-ccd">
+                    <rect key="frame" x="8" y="95" width="34" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="34" id="Unh-9V-M5Z"/>
+                        <constraint firstAttribute="width" constant="34" id="rSi-0i-WEX"/>
+                    </constraints>
+                    <state key="normal" image="Acoustic-Guitar.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTI-ob-VOF">
+                    <rect key="frame" x="277" y="467" width="30" height="30"/>
+                    <state key="normal" title="Join">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onJoin:" destination="-1" eventType="touchUpInside" id="HXX-zI-1Zv"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZt-Bz-lq7">
+                    <rect key="frame" x="258" y="514" width="68" height="30"/>
+                    <state key="normal" title="Start New">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onStart:" destination="-1" eventType="touchUpInside" id="tWt-7D-stk"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="iTI-ob-VOF" secondAttribute="centerY" constant="-182" id="0Cc-ij-qVG"/>
+                <constraint firstItem="dyA-jk-ccd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="95" id="82p-Sy-Qdo"/>
+                <constraint firstItem="IO3-i6-GWv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="101" id="FUb-DD-Up0"/>
+                <constraint firstItem="dyA-jk-ccd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="JnM-cr-Kpb"/>
+                <constraint firstAttribute="centerX" secondItem="iTI-ob-VOF" secondAttribute="centerX" constant="8" id="Zfu-Ql-AYi"/>
+                <constraint firstAttribute="centerX" secondItem="bZt-Bz-lq7" secondAttribute="centerX" constant="8" id="aEz-ZG-uw7"/>
+                <constraint firstItem="bZt-Bz-lq7" firstAttribute="top" secondItem="iTI-ob-VOF" secondAttribute="bottom" constant="17" id="dt5-TG-UR9"/>
+                <constraint firstItem="IO3-i6-GWv" firstAttribute="leading" secondItem="dyA-jk-ccd" secondAttribute="trailing" constant="8" id="iz4-ne-qYl"/>
+            </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="Acoustic-Guitar.png" width="48" height="48"/>
+    </resources>
 </document>

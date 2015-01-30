@@ -40,6 +40,7 @@ class AppRoot(WebRoot):
         WebRoot.__parent__ = self
         self.__setitem__('u', Users(request))
         self.__setitem__('t', Topics(request))
+        self.__setitem__('v', Verses(request))
 
 
 class Users(dict):
@@ -59,6 +60,13 @@ class UserUpdates(dict):
 
 class Topics(dict):
     __name__ = 'Topics'
+    __parent__ = AppRoot
+    def __init__(self, request):
+        self.request = request
+
+
+class Verses(dict):
+    __name__ = 'Verses'
     __parent__ = AppRoot
     def __init__(self, request):
         self.request = request

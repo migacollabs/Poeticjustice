@@ -354,6 +354,8 @@
 		9756136C1A7938CF0024EACB /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9756136B1A7938CF0024EACB /* iAd.framework */; };
 		9756136F1A7973590024EACB /* NewVerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9756136D1A7973590024EACB /* NewVerseViewController.swift */; };
 		975613701A7973590024EACB /* NewVerseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9756136E1A7973590024EACB /* NewVerseViewController.xib */; };
+		97C710471A7BE99D0081F734 /* WorldVerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C710451A7BE99D0081F734 /* WorldVerseViewController.swift */; };
+		97C710481A7BE99D0081F734 /* WorldVerseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C710461A7BE99D0081F734 /* WorldVerseViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -718,6 +720,8 @@
 		9756136B1A7938CF0024EACB /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		9756136D1A7973590024EACB /* NewVerseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVerseViewController.swift; sourceTree = "<group>"; };
 		9756136E1A7973590024EACB /* NewVerseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewVerseViewController.xib; sourceTree = "<group>"; };
+		97C710451A7BE99D0081F734 /* WorldVerseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldVerseViewController.swift; sourceTree = "<group>"; };
+		97C710461A7BE99D0081F734 /* WorldVerseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorldVerseViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -793,12 +797,12 @@
 				46E3DD1E1A7045A7006D059A /* audio */,
 				46E3DD1A1A70403C006D059A /* User.swift */,
 				46E3DD161A704005006D059A /* TopicsViewController.swift */,
+				46E3DD171A704005006D059A /* TopicsViewController.xib */,
 				46EED8A41A780F20007CAC14 /* DeviceUtils.swift */,
 				46E3DF7A1A72C56E006D059A /* Topic.swift */,
-				46E3DD171A704005006D059A /* TopicsViewController.xib */,
 				46E3DD0E1A703F25006D059A /* WriteLineViewController.swift */,
-				46E0B34A1A75D053001DE2F8 /* Set.swift */,
 				46E3DD0F1A703F25006D059A /* WriteLineViewController.xib */,
+				46E0B34A1A75D053001DE2F8 /* Set.swift */,
 				46E3DCE41A703C86006D059A /* FriendsViewController.swift */,
 				46E0B3481A759A80001DE2F8 /* GameState.swift */,
 				46E3DD0C1A703F01006D059A /* FriendsViewController.xib */,
@@ -820,6 +824,8 @@
 				46E3DCE91A703C86006D059A /* Images.xcassets */,
 				46E3DCEB1A703C86006D059A /* LaunchScreen.xib */,
 				46E3DCDE1A703C85006D059A /* Supporting Files */,
+				97C710451A7BE99D0081F734 /* WorldVerseViewController.swift */,
+				97C710461A7BE99D0081F734 /* WorldVerseViewController.xib */,
 			);
 			path = PoeticJusticeApp;
 			sourceTree = "<group>";
@@ -1377,6 +1383,7 @@
 				46E3DEA41A7045B7006D059A /* Flame.png in Resources */,
 				46E3DE531A7045B7006D059A /* American-Football.png in Resources */,
 				46E3DEC01A7045B7006D059A /* ID-Card.png in Resources */,
+				97C710481A7BE99D0081F734 /* WorldVerseViewController.xib in Resources */,
 				46DEE1BC1A7AE9C800016841 /* comment_24.png in Resources */,
 				46E3DE971A7045B7006D059A /* Display.png in Resources */,
 				46E3DE771A7045B7006D059A /* Chefs-Hat.png in Resources */,
@@ -1593,6 +1600,7 @@
 				46E3DD101A703F25006D059A /* WriteLineViewController.swift in Sources */,
 				46E3DD151A703F87006D059A /* LayoutHelpViewController.swift in Sources */,
 				9756136F1A7973590024EACB /* NewVerseViewController.swift in Sources */,
+				97C710471A7BE99D0081F734 /* WorldVerseViewController.swift in Sources */,
 				46E0B34B1A75D053001DE2F8 /* Set.swift in Sources */,
 				46EED8A51A780F21007CAC14 /* DeviceUtils.swift in Sources */,
 				46E3DD181A704005006D059A /* TopicsViewController.swift in Sources */,

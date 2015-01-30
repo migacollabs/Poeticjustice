@@ -197,6 +197,8 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         self.adBanner.hidden = true
         
         var verseId : Int?
+        var isWorld = false
+        var activeTopic: ActiveTopic? = nil
         
         for tb in self.active_topics {
             if let tbid = tb.id as? Int {
@@ -207,15 +209,19 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
                     if let nuid = tb.next_user_id as? Int {
                         
                         if ( nuid==NetOpers.sharedInstance.userId! || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.userId! as Int) ){
-                            println("Verse!")
                             verseId = tb.verse_id as? Int
+                            activeTopic = tb
                             break
                         }else{
                             println("World Topic")
                             if tb.src! as String == "world"{
-                                println("its a world topic")
+                                verseId = tb.verse_id as? Int
+                                isWorld = true
+                                activeTopic = tb
+                                break
                             }
                         }
+                        
                     }
                     
                 }
@@ -223,12 +229,21 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         }
         
         if let vid = verseId {
-            let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
-            vc.verseId = vid
-            vc.topic = topic
-            navigationController?.pushViewController(vc, animated: false)
             
-            println("loading WriteLineViewController")
+            println(vid)
+            
+            if isWorld{
+                let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
+                vc.activeTopic = activeTopic
+                navigationController?.pushViewController(vc, animated: false)
+                
+            }else{
+                let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+                vc.verseId = vid
+                vc.topic = topic
+                navigationController?.pushViewController(vc, animated: false)
+            }
+
         } else {
             let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
             vc.topic = topic
