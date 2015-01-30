@@ -128,13 +128,17 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    func delete_friend(friend : Friend?) {
+        var params = Dictionary<String,AnyObject>()
+        params["friend_id"]=friend?.friend_id
+        params["user_id"]=NetOpers.sharedInstance.userId
+        
+        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/removefriend", params: params, loadFriends)
+    }
+    
     @IBAction func removeFriends(sender: AnyObject) {
         if ((removeFriend) != nil) {
-            var params = Dictionary<String,AnyObject>()
-            params["friend_id"]=removeFriend?.friend_id
-            params["user_id"]=NetOpers.sharedInstance.userId
-            
-            NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/removefriend", params: params, loadFriends)
+            delete_friend(removeFriend!)
         }
     }
     
@@ -208,6 +212,13 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                         dispatch_async(dispatch_get_main_queue(),{
                             self.myTableView.reloadData()
+                            
+                            // TODO: maybe make the badge value friend request counts and update
+                            // the name of the badge to the total count.  for example the
+                            // the name could '7 Friends' with a badge of '2' to show
+                            // the user has 7 friends and 2 friend requests
+                            self.navigationController?.tabBarItem.badgeValue = String(self.friends.count)
+                            
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
                     })
@@ -229,18 +240,20 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return result
     }
     
+    func add_friend(frEmailAddress : String?) {
+        var params = Dictionary<String,AnyObject>()
+        params["user_id"]=NetOpers.sharedInstance.userId
+        params["friend_email_address"]=frEmailAddress
+        
+        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/addfriend", params: params, loadFriends)
+    }
+    
     @IBOutlet var friendEmailAddress: UITextField!
     
     @IBAction func addFriend(sender: AnyObject) {
         if (!self.friendEmailAddress.text.isEmpty) {
             if (isValidEmail(self.friendEmailAddress.text)) {
-                
-                var params = Dictionary<String,AnyObject>()
-                params["user_id"]=NetOpers.sharedInstance.userId
-                params["friend_email_address"]=self.friendEmailAddress.text
-                
-                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/addfriend", params: params, loadFriends)
-                
+                add_friend(self.friendEmailAddress.text)
             } else {
                 show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
             }
@@ -283,28 +296,34 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let a = f.approved as? Bool {
                 if a==false {
                     
-                    let name = f.display_name as? String
-                    
-                    let friendController = UIAlertController(title: "Friend Request", message: "Is " + name! + " your friend?", preferredStyle: UIAlertControllerStyle.ActionSheet)
-                    
-                    let noAction = UIAlertAction(title: "No", style: .Default, handler: {
-                        (alert: UIAlertAction!) -> Void in
-                        println("Not a friend!")
-                    })
-                    let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
-                        (alert: UIAlertAction!) -> Void in
-                        println("Is a friend!")
-                    })
-                    let notSureAction = UIAlertAction(title: "Not Sure", style: .Default, handler: {
-                        (alert: UIAlertAction!) -> Void in
-                        println("Might be a friend!")
-                    })
-                    
-                    friendController.addAction(noAction)
-                    friendController.addAction(yesAction)
-                    friendController.addAction(notSureAction)
-                    
-                    self.presentViewController(friendController, animated: true, completion: nil)
+                    if let s = f.src as? String {
+                        if s=="them" {
+                            let name = f.email_address as? String
+                            
+                            let friendController = UIAlertController(title: "Confirm Friend", message: "Is " + name! + " your friend?", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                            
+                            let noAction = UIAlertAction(title: "No", style: .Default, handler: {
+                                (alert: UIAlertAction!) -> Void in
+                                // delete friend
+                                self.delete_friend(f)
+                            })
+                            let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
+                                (alert: UIAlertAction!) -> Void in
+                                println("Is a friend!")
+                                self.add_friend(f.email_address as? String)
+                            })
+                            let notSureAction = UIAlertAction(title: "Not Sure", style: .Default, handler: {
+                                (alert: UIAlertAction!) -> Void in
+                                // do nothing
+                            })
+                            
+                            friendController.addAction(noAction)
+                            friendController.addAction(yesAction)
+                            friendController.addAction(notSureAction)
+                            
+                            self.presentViewController(friendController, animated: true, completion: nil)
+                        }
+                    }
                 }
             }
         }

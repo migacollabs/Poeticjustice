@@ -207,15 +207,25 @@ def add_user_friend(request):
                             user_name=request.params['user_name'] if 'user_name' in request.params else 'N/A')
                     friend = _save_user(friend, session)
 
-                uxu = session.query(~UserXUser).filter(or_((~UserXUser).friend_id==friend.id, (~UserXUser).user_id==friend.id)).first()
+                UxU = ~UserXUser
+                uxu = session.query(UxU).filter(UxU.friend_id==friend.id).\
+                    filter(UxU.user_id==user.id).first()
 
-                if (uxu is None):    
+                if (uxu is None):
+                    uxu = session.query(UxU).filter(UxU.user_id==friend.id).\
+                    filter(UxU.friend_id==user.id).first()
+
+                if (uxu is None):
+                    # creating a new friendship
+                    print 'attempting new friendship'
                     uxu = UserXUser(user_id=user.id, friend_id=friend.id, approved=False)
                     uxu.save(session=session)
                 else:
                     # relationship already exists so approve it
-                    uxu = UserXUser(user_id=user.id, friend_id=friend.id, approved=True, entity=session.merge(uxu))
-                    uxu.save(session=session)
+                    print 'approving friendship ', uxu.id
+                    uxu.approved = True
+                    session.add(uxu)
+                    session.commit()
 
                 return get_friends(user)
 
@@ -373,8 +383,8 @@ def get_active_topics(request):
                     filter(V.complete==False).\
                     filter(V.owner_id==U.id).\
                     filter(U.id==user.id).\
-                    order_by(func.random()).\
-                    limit(5):
+                    order_by(func.random()):\
+                    # limit(5):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'mine', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
