@@ -160,7 +160,7 @@
         <scene sceneID="wi8-tA-F8D">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="brX-lC-5T5" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Topics" image="90s-controller.png" badgeValue="Topics" id="PXL-XY-EGs"/>
+                    <tabBarItem key="tabBarItem" title="Topics" image="comment_24.png" id="PXL-XY-EGs"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="22h-D3-f8R">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -179,7 +179,7 @@
         <scene sceneID="sDM-tW-n1o">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AeA-99-QN9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Help" image="90s-controller.png" badgeValue="Help" selectedImage="90s-controller.png" id="sp7-Wv-Yb3"/>
+                    <tabBarItem key="tabBarItem" title="Help" image="help_24.png" id="sp7-Wv-Yb3"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="V1h-E8-M70">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -198,7 +198,7 @@
         <scene sceneID="YdZ-wN-EVs">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tH8-qL-sQC" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Friends" image="Zoom-in.png" badgeValue="Friends" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Friends" image="man_24.png" id="cPa-gy-q4n"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="39J-Cg-6o6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -217,7 +217,7 @@
         <scene sceneID="9g7-dP-Scr">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RCe-76-3ug" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="House.png" badgeValue="Home" id="msV-XV-yGO"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="home_24.png" id="msV-XV-yGO"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="byo-EW-MXw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -234,8 +234,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="90s-controller.png" width="48" height="48"/>
-        <image name="House.png" width="48" height="48"/>
-        <image name="Zoom-in.png" width="48" height="48"/>
+        <image name="comment_24.png" width="24" height="24"/>
+        <image name="help_24.png" width="24" height="24"/>
+        <image name="home_24.png" width="24" height="24"/>
+        <image name="man_24.png" width="24" height="24"/>
     </resources>
 </document>

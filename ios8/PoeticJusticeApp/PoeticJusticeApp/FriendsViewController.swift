@@ -159,7 +159,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             if (refresh) {
                 var uId : String = String(NetOpers.sharedInstance.userId!)
-                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/userfriends?user_id=" + uId, loadFriends)
+                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends?user_id=" + uId, loadFriends)
                 lastTabbed = NSDate()
             }
             
@@ -268,24 +268,50 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
-    @IBAction func refreshView(sender: AnyObject) {
-        viewWillAppear(true)
-    }
-    
     var removeFriend : Friend?
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         println("clicked " + String(indexPath.row))
         if let friend = self.friends[indexPath.row] as Friend? {
             removeFriend = friend
         }
+        
+        var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
+        
+        if let f = self.friends[indexPath.row] as Friend? {
+            if let a = f.approved as? Bool {
+                if a==false {
+                    
+                    let name = f.display_name as? String
+                    
+                    let friendController = UIAlertController(title: "Friend Request", message: "Is " + name! + " your friend?", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                    
+                    let noAction = UIAlertAction(title: "No", style: .Default, handler: {
+                        (alert: UIAlertAction!) -> Void in
+                        println("Not a friend!")
+                    })
+                    let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
+                        (alert: UIAlertAction!) -> Void in
+                        println("Is a friend!")
+                    })
+                    let notSureAction = UIAlertAction(title: "Not Sure", style: .Default, handler: {
+                        (alert: UIAlertAction!) -> Void in
+                        println("Might be a friend!")
+                    })
+                    
+                    friendController.addAction(noAction)
+                    friendController.addAction(yesAction)
+                    friendController.addAction(notSureAction)
+                    
+                    self.presentViewController(friendController, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
-    func addFriend(userId : Int) {
-        
+    @IBAction func refreshView(sender: AnyObject) {
+        viewWillAppear(true)
     }
     
-    func findRandomFriends(count : Int) {
-        
-    }
 }
