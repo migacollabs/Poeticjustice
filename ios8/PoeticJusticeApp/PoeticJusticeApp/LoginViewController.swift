@@ -47,6 +47,7 @@ class LoginViewController: UIViewController {
     @IBAction func on_go(sender: AnyObject) {
         
         self.tabBarController?.tabBar.hidden = true
+        self.userLabel.text = "Signing in..."
         
         println("attempting login...")
         

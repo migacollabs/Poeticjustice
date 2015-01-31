@@ -66,7 +66,6 @@
                 </label>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ui-Zu-2Ta">
                     <rect key="frame" x="8" y="95" width="584" height="55"/>
-                    <color key="backgroundColor" white="0.97039473684210542" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="lCj-VY-eGV"/>
                     </constraints>
@@ -76,7 +75,6 @@
                 </textView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDk-h1-niB">
                     <rect key="frame" x="8" y="187" width="584" height="55"/>
-                    <color key="backgroundColor" white="0.97039473679999999" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="w6F-jl-L4e"/>
                     </constraints>
@@ -84,9 +82,8 @@
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Prestige!" translatesAutoresizingMaskIntoConstraints="NO" id="JqM-tR-riC">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="You'll get to unlock more topics.  But more importantly you'll earn prestige!" translatesAutoresizingMaskIntoConstraints="NO" id="JqM-tR-riC">
                     <rect key="frame" x="8" y="279" width="584" height="35"/>
-                    <color key="backgroundColor" white="0.97039473679999999" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="dkD-jD-HUQ"/>
                     </constraints>
@@ -95,7 +92,6 @@
                 </textView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMg-HH-9cn">
                     <rect key="frame" x="8" y="351" width="584" height="55"/>
-                    <color key="backgroundColor" white="0.97039473679999999" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="OEY-3O-Wbg"/>
                     </constraints>
@@ -105,7 +101,6 @@
                 </textView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9S-c2-eao">
                     <rect key="frame" x="8" y="443" width="584" height="55"/>
-                    <color key="backgroundColor" white="0.97039473679999999" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="26F-LE-FEt"/>
                     </constraints>

@@ -19,56 +19,44 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test your wit and knowledge against others in a game of verse!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsB-Xe-fce">
                     <rect key="frame" x="20" y="161" width="441" height="53"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="53" id="kYH-yR-ZZX"/>
+                        <constraint firstAttribute="height" constant="53" id="cJb-f9-o2Q"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BmG-6e-l4H">
-                    <rect key="frame" x="132" y="271" width="48" height="48"/>
+                    <rect key="frame" x="160" y="262" width="48" height="48"/>
                     <state key="normal" image="90s-controller.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J5V-l7-H6g">
-                    <rect key="frame" x="188" y="271" width="48" height="48"/>
+                    <rect key="frame" x="216" y="262" width="48" height="48"/>
                     <state key="normal" image="Baseball-Helmet.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2Y-72-prf">
-                    <rect key="frame" x="300" y="271" width="48" height="48"/>
-                    <state key="normal" image="Brush.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wCy-Mj-TDs">
-                    <rect key="frame" x="244" y="271" width="48" height="48"/>
-                    <state key="normal" image="Cupcake.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIH-WL-kV2">
-                    <rect key="frame" x="132" y="327" width="48" height="48"/>
+                    <rect key="frame" x="160" y="318" width="48" height="48"/>
                     <state key="normal" image="Earth.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zD-cw-gm8">
-                    <rect key="frame" x="188" y="327" width="48" height="48"/>
+                    <rect key="frame" x="216" y="318" width="48" height="48"/>
                     <state key="normal" image="Dice.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Awy-ug-aHZ">
-                    <rect key="frame" x="244" y="327" width="48" height="48"/>
+                    <rect key="frame" x="272" y="318" width="48" height="48"/>
                     <state key="normal" image="Acoustic-Guitar.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjN-8A-n8y">
-                    <rect key="frame" x="300" y="327" width="48" height="48"/>
+                    <rect key="frame" x="272" y="260" width="48" height="48"/>
                     <state key="normal" image="Happy-Face.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -79,34 +67,55 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYp-7A-JYZ">
+                    <rect key="frame" x="328" y="260" width="50" height="104"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="3os-xx-mjr"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGf-b7-onA">
+                    <rect key="frame" x="102" y="262" width="50" height="104"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="Ait-W8-Fw6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="BmG-6e-l4H" firstAttribute="top" secondItem="nsB-Xe-fce" secondAttribute="bottom" constant="57" id="0xi-Dv-4OO"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="AIH-WL-kV2" secondAttribute="bottom" constant="64" id="63n-E7-bQj"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="6Zv-I9-c15"/>
-                <constraint firstItem="BmG-6e-l4H" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="132" id="7Vo-PF-lgs"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="trailing" secondItem="nsB-Xe-fce" secondAttribute="trailing" id="E0d-8b-ZOS"/>
-                <constraint firstItem="3zD-cw-gm8" firstAttribute="top" secondItem="Awy-ug-aHZ" secondAttribute="top" id="ETG-Vr-peK"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="EeU-rt-FQE"/>
-                <constraint firstItem="bjN-8A-n8y" firstAttribute="top" secondItem="Awy-ug-aHZ" secondAttribute="top" id="HiF-Bo-hg0"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="nsB-Xe-fce" secondAttribute="leading" id="I52-Vs-8Vn"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Mpz-zs-sH5"/>
-                <constraint firstItem="wCy-Mj-TDs" firstAttribute="leading" secondItem="J5V-l7-H6g" secondAttribute="trailing" constant="8" symbolic="YES" id="OLZ-r7-y32"/>
-                <constraint firstItem="P2Y-72-prf" firstAttribute="leading" secondItem="bjN-8A-n8y" secondAttribute="leading" id="Of3-Ti-NvO"/>
-                <constraint firstItem="AIH-WL-kV2" firstAttribute="top" secondItem="3zD-cw-gm8" secondAttribute="top" id="Qfj-pI-OBU"/>
-                <constraint firstItem="J5V-l7-H6g" firstAttribute="top" secondItem="BmG-6e-l4H" secondAttribute="top" id="dL6-S1-lOc"/>
-                <constraint firstItem="P2Y-72-prf" firstAttribute="leading" secondItem="wCy-Mj-TDs" secondAttribute="trailing" constant="8" symbolic="YES" id="dai-dM-9lX"/>
-                <constraint firstItem="BmG-6e-l4H" firstAttribute="leading" secondItem="AIH-WL-kV2" secondAttribute="leading" id="e9k-MB-GZ1"/>
-                <constraint firstItem="AIH-WL-kV2" firstAttribute="top" secondItem="BmG-6e-l4H" secondAttribute="bottom" constant="8" symbolic="YES" id="eCo-Sz-ZaS"/>
-                <constraint firstItem="J5V-l7-H6g" firstAttribute="leading" secondItem="BmG-6e-l4H" secondAttribute="trailing" constant="8" symbolic="YES" id="fBK-NN-iIE"/>
-                <constraint firstItem="wCy-Mj-TDs" firstAttribute="top" secondItem="J5V-l7-H6g" secondAttribute="top" id="gEs-pU-xyg"/>
-                <constraint firstItem="Awy-ug-aHZ" firstAttribute="leading" secondItem="wCy-Mj-TDs" secondAttribute="leading" id="n24-tx-Ksf"/>
-                <constraint firstItem="nsB-Xe-fce" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="8" symbolic="YES" id="rTt-A0-a1f"/>
-                <constraint firstItem="nsB-Xe-fce" firstAttribute="trailing" secondItem="8ie-xW-0ye" secondAttribute="trailing" id="sPy-m9-yE9"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="nsB-Xe-fce" secondAttribute="leading" id="tMJ-zS-0bj"/>
-                <constraint firstItem="P2Y-72-prf" firstAttribute="top" secondItem="wCy-Mj-TDs" secondAttribute="top" id="tnb-Ct-b2l"/>
-                <constraint firstItem="3zD-cw-gm8" firstAttribute="leading" secondItem="J5V-l7-H6g" secondAttribute="leading" id="yaG-om-jo9"/>
+                <constraint firstItem="BmG-6e-l4H" firstAttribute="top" secondItem="TGf-b7-onA" secondAttribute="top" id="0f2-VO-BVe"/>
+                <constraint firstItem="Awy-ug-aHZ" firstAttribute="top" secondItem="bjN-8A-n8y" secondAttribute="bottom" constant="10" id="42J-t6-7hO"/>
+                <constraint firstItem="J5V-l7-H6g" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7cM-qh-o4A"/>
+                <constraint firstItem="Awy-ug-aHZ" firstAttribute="leading" secondItem="3zD-cw-gm8" secondAttribute="trailing" constant="8" symbolic="YES" id="B1F-T0-dFd"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="8" symbolic="YES" id="DRP-Pi-PHH"/>
+                <constraint firstItem="AIH-WL-kV2" firstAttribute="leading" secondItem="BmG-6e-l4H" secondAttribute="leading" id="DcG-CN-zj4"/>
+                <constraint firstItem="BmG-6e-l4H" firstAttribute="top" secondItem="J5V-l7-H6g" secondAttribute="top" id="HpZ-dM-CBL"/>
+                <constraint firstItem="uYp-7A-JYZ" firstAttribute="leading" secondItem="bjN-8A-n8y" secondAttribute="trailing" constant="8" symbolic="YES" id="IOn-uj-aLn"/>
+                <constraint firstItem="bjN-8A-n8y" firstAttribute="top" secondItem="nsB-Xe-fce" secondAttribute="bottom" constant="46" id="KP4-1v-c8q"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="leading" secondItem="8ie-xW-0ye" secondAttribute="leading" id="RDX-BL-Wkx"/>
+                <constraint firstItem="J5V-l7-H6g" firstAttribute="leading" secondItem="3zD-cw-gm8" secondAttribute="leading" id="Vzm-7r-QVg"/>
+                <constraint firstItem="bjN-8A-n8y" firstAttribute="top" secondItem="uYp-7A-JYZ" secondAttribute="top" id="Y1w-6b-IqB"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="leading" secondItem="kId-c2-rCX" secondAttribute="leading" id="aWq-IW-Vfv"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" id="cfd-Tl-rNd"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="e1B-aN-2tQ"/>
+                <constraint firstItem="AIH-WL-kV2" firstAttribute="bottom" secondItem="TGf-b7-onA" secondAttribute="bottom" id="h40-te-DOz"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="uYp-7A-JYZ" secondAttribute="bottom" constant="75" id="kvE-FG-N7r"/>
+                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="mdP-iZ-dMB"/>
+                <constraint firstItem="AIH-WL-kV2" firstAttribute="top" secondItem="BmG-6e-l4H" secondAttribute="bottom" constant="8" symbolic="YES" id="nVC-s7-GRg"/>
+                <constraint firstItem="3zD-cw-gm8" firstAttribute="top" secondItem="Awy-ug-aHZ" secondAttribute="top" id="oR4-IW-Or7"/>
+                <constraint firstItem="J5V-l7-H6g" firstAttribute="leading" secondItem="BmG-6e-l4H" secondAttribute="trailing" constant="8" symbolic="YES" id="pL3-xb-Wqh"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="TGf-b7-onA" secondAttribute="bottom" constant="73" id="qKZ-qK-c4v"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="trailing" secondItem="8ie-xW-0ye" secondAttribute="trailing" id="qvQ-o4-QOD"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="3zD-cw-gm8" secondAttribute="centerX" id="sny-fN-TIz"/>
+                <constraint firstItem="AIH-WL-kV2" firstAttribute="top" secondItem="3zD-cw-gm8" secondAttribute="top" id="vkC-gM-MtI"/>
+                <constraint firstItem="bjN-8A-n8y" firstAttribute="leading" secondItem="Awy-ug-aHZ" secondAttribute="leading" id="w4r-2W-gIx"/>
+                <constraint firstItem="BmG-6e-l4H" firstAttribute="leading" secondItem="TGf-b7-onA" secondAttribute="trailing" constant="8" symbolic="YES" id="xTc-Lg-Pce"/>
+                <constraint firstItem="bjN-8A-n8y" firstAttribute="leading" secondItem="J5V-l7-H6g" secondAttribute="trailing" constant="8" symbolic="YES" id="zeG-Dm-a0y"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -117,8 +126,6 @@
         <image name="90s-controller.png" width="48" height="48"/>
         <image name="Acoustic-Guitar.png" width="48" height="48"/>
         <image name="Baseball-Helmet.png" width="48" height="48"/>
-        <image name="Brush.png" width="48" height="48"/>
-        <image name="Cupcake.png" width="48" height="48"/>
         <image name="Dice.png" width="48" height="48"/>
         <image name="Earth.png" width="48" height="48"/>
         <image name="Happy-Face.png" width="48" height="48"/>
