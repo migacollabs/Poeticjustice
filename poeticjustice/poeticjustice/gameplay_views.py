@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import copy
 import datetime
 import traceback
 import logging
@@ -780,7 +781,7 @@ def get_verse_users(request):
 
                 U, V = ~User, ~Verse
                 v = Verse.load(int(kwds['id']), session=session)
-                print v.user_ids
+
                 if v:
                     rp = (session.query(U)
                             .filter(U.id.in_(v.user_ids))
@@ -807,6 +808,87 @@ def get_verse_users(request):
     except HTTPFound: raise
     except HTTPUnauthorized: raise
     except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
+    name='join',
+    request_method='POST',
+    context='poeticjustice:contexts.Verses',
+    renderer='json',
+    permission='edit')
+def join_verse(request):
+    print 'join_verse called', request
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(request.subpath)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                user = User(entity=session.merge(user))
+
+                U, V = ~User, ~Verse
+                v = Verse.load(int(kwds['id']), session=session)
+                
+                if not v.friends_only:
+                    if user.id not in v.user_ids:
+                        raise HTTPUnauthorized
+
+                if v.participant_count >= v.max_participants:
+                    raise HTTPConflict
+
+                is_next = False
+
+                user_ids = copy.deepcopy(v.user_ids)
+                user_ids.append(user.id)
+                v.participant_count += 1
+                setattr(v, 'user_ids', user_ids)
+                v.save(session)
+
+                if v.next_user_id == user_ids[0]:
+                    # if the next player is the first player
+                    # let the new player go first
+                    v.next_user_id == user.id
+                    is_next = True
+
+                v.max_lines = len(user_ids) * 4
+
+                v.save(session)
+
+            res = dict(
+                is_next=is_next,
+                verse=v.to_dict(),
+                logged_in=auth_usrid,
+                user=user.to_dict()
+            )
+            print res
+            return res
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except HTTPUnauthorized: raise
     except:
         print traceback.format_exc()
         log.exception(traceback.format_exc())

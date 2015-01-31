@@ -44,7 +44,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
             self.user_ids = at.verse_user_ids as? [Int]
             if self.user_ids != nil{
                 NetOpers.sharedInstance.get(
-                    NetOpers.sharedInstance.appserver_hostname! + "/v/users/id=\(at.verse_id)", load_players)
+                    NetOpers.sharedInstance.appserver_hostname! + "/v/users/id=\(at.verse_id!)", load_players)
             }
             
         }
@@ -52,6 +52,47 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     
 
     @IBAction func onJoin(sender: AnyObject) {
+        if let at = self.activeTopic{
+            if let vid = at.verse_id as? Int{
+                var params = [String:AnyObject]()
+                params["user_id"] = NetOpers.sharedInstance.user?.id!
+                params["id"] = vid
+                NetOpers.sharedInstance.post(
+                    NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=\(vid)",
+                    params: params,
+                    onJoinedCompletionHandeler)
+            }
+        }
+    }
+    
+    // MARK - Gameplay
+    
+    func onJoinedCompletionHandeler(data:NSData?, response:NSURLResponse?, error:NSError?){
+        println("onJoinedCompletionHandeler called")
+        let httpResponse = response as NSHTTPURLResponse
+        if httpResponse.statusCode == 200{
+            
+            if data != nil{
+                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                    data!, options: NSJSONReadingOptions.MutableContainers,
+                    error: nil) as NSDictionary
+                
+                println(jsonResult)
+                
+            }
+        }else{
+            switch httpResponse.statusCode{
+            case 401:
+                // 401 Unauthorized, verse not is not open to world
+                dispatch_alert("Unauthorized", message:"Verse is no longer open to the World", controller_title:"Ok", goBackToTopics:true)
+            case 409:
+                // 409 Conflict err, verse no longer available
+                dispatch_alert("Unauthorized", message:"Verse is not open to the World", controller_title:"Ok", goBackToTopics:true)
+            default:
+                println("Unhandled Err Code \(httpResponse.statusCode)")
+                break;
+            }
+        }
     }
     
 
@@ -70,8 +111,6 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                     data!, options: NSJSONReadingOptions.MutableContainers,
                     error: nil) as NSDictionary
                 
-                println(jsonResult)
-                
                 if let players = jsonResult["verse_users"] as? NSArray{
                     
                     self.players.removeAll()
@@ -81,21 +120,22 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                         self.players.append(u)
                     }
                     
-                    println(self.players)
-                    
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                         dispatch_async(dispatch_get_main_queue(),{
                             
-//                            self.playerTable.reloadData()
+                            self.playerTable.reloadData()
                             
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
                     })
                     
                 }
                 
             }
+        }else{
+            println(httpResponse.statusCode)
         }
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
     }
     
@@ -104,19 +144,65 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView : UITableView, numberOfRowsInSection section : Int) -> Int {
-        if let users = self.user_ids{
-            return users.count
-        }
-        return 0
+        return self.players.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : UITableViewCell = self.playerTable.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
+        if self.players.count > 0{
+            if let u = self.players[indexPath.row] as User?{
+                if let un = u.user_name as? String{
+                    cell.textLabel?.text = un
+                }
+            }
+        }
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         println(indexPath)
+    }
+    
+    
+    func dispatch_alert(title:String, message:String, controller_title:String, goBackToTopics:Bool){
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                let alertController = UIAlertController(
+                    title: title,
+                    message: message,
+                    preferredStyle: UIAlertControllerStyle.ActionSheet)
+                
+                if goBackToTopics{
+                    alertController.addAction(
+                        UIAlertAction(title: controller_title,
+                            style: UIAlertActionStyle.Default, handler: {
+                                (alert: UIAlertAction!) -> Void in
+                                
+                                self.presentTopicsView()
+                                
+                        }))
+                    
+                }else{
+                   alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default, handler: nil))
+                }
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            })
+        })
+    }
+    
+    func presentTopicsView(){
+        println("presentTopicsView called")
+        let tvc = TopicsViewController(nibName: "TopicsViewController", bundle:nil)
+        
+        // TODO:
+        // this doesn't seem to work.. it presents the topics view
+        // but the topics view doent't work as expected
+        self.presentViewController(tvc, animated: true, completion: nil)
     }
     
     /*
