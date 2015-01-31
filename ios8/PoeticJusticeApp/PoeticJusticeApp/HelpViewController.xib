@@ -18,22 +18,18 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gameplay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ev5-6N-OwT">
                     <rect key="frame" x="8" y="72" width="106" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="106" id="icD-xw-Kxi"/>
+                        <constraint firstAttribute="width" constant="106" id="Duc-QJ-5rm"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=regular" fixedFrame="YES">
                         <rect key="frame" x="49" y="106" width="110" height="21"/>
                     </variation>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="8" y="56" width="106" height="21"/>
-                    </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Choose a topic and write a line.  That’s it!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miD-2U-7cP">
-                    <rect key="frame" x="0.0" y="101" width="592" height="21"/>
-                    <color key="backgroundColor" white="0.9697265625" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="8" y="101" width="579" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="Z8f-VG-w9a"/>
+                        <constraint firstAttribute="height" constant="21" id="bwe-UT-JRi"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -41,28 +37,22 @@
                     <variation key="heightClass=regular" fixedFrame="YES">
                         <rect key="frame" x="49" y="135" width="317" height="21"/>
                     </variation>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="0.0" y="85" width="392" height="21"/>
-                    </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verses and Lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m8-bd-KJH">
                     <rect key="frame" x="8" y="130" width="147" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="147" id="O9K-Iq-psh"/>
+                        <constraint firstAttribute="width" constant="147" id="AEE-ec-Dhd"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=regular" fixedFrame="YES">
                         <rect key="frame" x="49" y="164" width="166" height="21"/>
                     </variation>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="8" y="114" width="147" height="21"/>
-                    </variation>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRe-70-Vgc">
                     <rect key="frame" x="168" y="130" width="31" height="27"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="31" id="5x4-ke-NNX"/>
+                        <constraint firstAttribute="width" constant="31" id="faT-bP-dtx"/>
                     </constraints>
                     <state key="normal" image="sound_24.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -89,46 +79,35 @@
                     <variation key="heightClass=regular" fixedFrame="YES">
                         <rect key="frame" x="49" y="520" width="94" height="21"/>
                     </variation>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="8" y="360" width="106" height="21"/>
-                    </variation>
                 </label>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMh-fO-YVa">
-                    <rect key="frame" x="0.0" y="159" width="600" height="224"/>
-                    <color key="backgroundColor" white="0.97039473684210542" alpha="1" colorSpace="calibratedWhite"/>
-                    <mutableString key="text">A “line” is a short phrasing of words, sometimes with a rhythmic intent (such as a line in poetry or a rap verse).  For example, say the following out loud while emphasizing the numbers: "One and Two and Three and Four and".    With the basic rhythm down, here’s an example of four lines where four individual players each wrote a single line:  “I’m the first, this is my line” /
+                    <rect key="frame" x="8" y="159" width="584" height="224"/>
+                    <string key="text">A “line” is a short phrasing of words, sometimes with a rhythmic intent (such as a line in poetry or a rap verse).  For example, say the following out loud while emphasizing the numbers: "One and Two and Three and Four and".    With the basic rhythm down, here’s an example of four lines where four individual players each wrote a single line:  “I’m the first, this is my line” /
 “Since I’m up next, my line will rhyme” /
 “I’m the third, so start a-new” /
-“This is fun, so impromptu!” /</mutableString>
+“This is fun, so impromptu!” /</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="0.0" y="143" width="400" height="209"/>
-                    </variation>
                 </textView>
                 <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="Gain points by sharing your knowledge and being creative.  And remember to have fun!" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7YU-wI-u6A">
-                    <rect key="frame" x="0.0" y="425" width="600" height="53"/>
-                    <color key="backgroundColor" white="0.96999999999999997" alpha="1" colorSpace="calibratedWhite"/>
+                    <rect key="frame" x="8" y="425" width="584" height="53"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="53" id="D8m-Mq-HEf"/>
+                        <constraint firstAttribute="height" constant="53" id="eUJ-9D-3GD"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     <variation key="heightClass=regular" fixedFrame="YES">
                         <rect key="frame" x="49" y="549" width="317" height="69"/>
                     </variation>
-                    <variation key="widthClass=compact" fixedFrame="YES">
-                        <rect key="frame" x="8" y="389" width="384" height="53"/>
-                    </variation>
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jVP-Cm-NKG">
                     <rect key="frame" x="8" y="486" width="79" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="79" id="9eM-n6-ehQ"/>
-                        <constraint firstAttribute="height" constant="24" id="jXU-wU-Lav"/>
+                        <constraint firstAttribute="width" constant="79" id="ON1-H6-LwS"/>
+                        <constraint firstAttribute="height" constant="24" id="YdT-rP-kf2"/>
                     </constraints>
                     <state key="normal" title=" FAQ" image="info_24.png">
-                        <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                        <color key="titleColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -138,28 +117,28 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="leading" secondItem="jVP-Cm-NKG" secondAttribute="leading" id="2ga-Jl-iIG"/>
-                <constraint firstItem="miD-2U-7cP" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="8" symbolic="YES" id="2sn-AK-t2q"/>
-                <constraint firstItem="7YU-wI-u6A" firstAttribute="top" secondItem="5yS-pG-0x9" secondAttribute="bottom" constant="13" id="6ls-hl-2WN"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="trailing" secondItem="ev5-6N-OwT" secondAttribute="trailing" id="8dB-HS-ZzB"/>
-                <constraint firstAttribute="trailing" secondItem="7YU-wI-u6A" secondAttribute="trailing" id="AMJ-pv-FJQ"/>
-                <constraint firstItem="oRe-70-Vgc" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="trailing" constant="13" id="DAv-0T-PqJ"/>
-                <constraint firstItem="miD-2U-7cP" firstAttribute="leading" secondItem="yMh-fO-YVa" secondAttribute="leading" id="JOm-By-l8r"/>
-                <constraint firstItem="yMh-fO-YVa" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="bottom" constant="8" symbolic="YES" id="Lam-nu-Lt3"/>
-                <constraint firstItem="oRe-70-Vgc" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="top" id="NJy-ao-Ek5"/>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="PP1-Av-Vrc"/>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="PT5-ef-duP"/>
-                <constraint firstItem="yMh-fO-YVa" firstAttribute="trailing" secondItem="7YU-wI-u6A" secondAttribute="trailing" id="QJf-Fb-TSq"/>
-                <constraint firstItem="yMh-fO-YVa" firstAttribute="top" secondItem="oRe-70-Vgc" secondAttribute="bottom" constant="2" id="RpY-ug-m71"/>
-                <constraint firstItem="miD-2U-7cP" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="Uf6-17-xFq"/>
-                <constraint firstAttribute="bottom" secondItem="jVP-Cm-NKG" secondAttribute="bottom" constant="90" id="W3d-Qb-C7F"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="top" secondItem="yMh-fO-YVa" secondAttribute="bottom" constant="8" symbolic="YES" id="at2-Wh-860"/>
-                <constraint firstItem="jVP-Cm-NKG" firstAttribute="top" secondItem="7YU-wI-u6A" secondAttribute="bottom" constant="8" symbolic="YES" id="cpM-M9-dQ3"/>
-                <constraint firstItem="yMh-fO-YVa" firstAttribute="leading" secondItem="7YU-wI-u6A" secondAttribute="leading" id="csh-tQ-CPC"/>
-                <constraint firstItem="1m8-bd-KJH" firstAttribute="top" secondItem="miD-2U-7cP" secondAttribute="bottom" constant="8" symbolic="YES" id="d2z-yz-1gd"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="jO4-I3-J1K"/>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="r8O-FR-4xa"/>
-                <constraint firstItem="yMh-fO-YVa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sJD-ob-4CU"/>
+                <constraint firstItem="ev5-6N-OwT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="0gE-Du-d3e"/>
+                <constraint firstItem="1m8-bd-KJH" firstAttribute="top" secondItem="miD-2U-7cP" secondAttribute="bottom" constant="8" symbolic="YES" id="4K7-pC-53w"/>
+                <constraint firstItem="yMh-fO-YVa" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="bottom" constant="8" symbolic="YES" id="8S1-L3-yTV"/>
+                <constraint firstItem="jVP-Cm-NKG" firstAttribute="leading" secondItem="7YU-wI-u6A" secondAttribute="leading" id="Fe2-qA-l8i"/>
+                <constraint firstItem="5yS-pG-0x9" firstAttribute="trailing" secondItem="ev5-6N-OwT" secondAttribute="trailing" id="HKn-Qe-aDm"/>
+                <constraint firstItem="5yS-pG-0x9" firstAttribute="top" secondItem="yMh-fO-YVa" secondAttribute="bottom" constant="8" symbolic="YES" id="JKH-l3-LFd"/>
+                <constraint firstItem="7YU-wI-u6A" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="L97-Mt-dJb"/>
+                <constraint firstItem="ev5-6N-OwT" firstAttribute="leading" secondItem="miD-2U-7cP" secondAttribute="leading" id="NCR-bz-01d"/>
+                <constraint firstItem="1m8-bd-KJH" firstAttribute="leading" secondItem="yMh-fO-YVa" secondAttribute="leading" id="bWe-pv-QHJ"/>
+                <constraint firstItem="yMh-fO-YVa" firstAttribute="leading" secondItem="5yS-pG-0x9" secondAttribute="leading" id="drk-X0-ISi"/>
+                <constraint firstItem="1m8-bd-KJH" firstAttribute="leading" secondItem="miD-2U-7cP" secondAttribute="leading" id="eB7-wM-vSG"/>
+                <constraint firstAttribute="bottom" secondItem="jVP-Cm-NKG" secondAttribute="bottom" constant="90" id="eVa-cM-JtK"/>
+                <constraint firstItem="yMh-fO-YVa" firstAttribute="top" secondItem="oRe-70-Vgc" secondAttribute="bottom" constant="2" id="h2k-cO-GTi"/>
+                <constraint firstItem="jVP-Cm-NKG" firstAttribute="top" secondItem="7YU-wI-u6A" secondAttribute="bottom" constant="8" symbolic="YES" id="h74-YH-NuE"/>
+                <constraint firstItem="oRe-70-Vgc" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="trailing" constant="13" id="omF-EG-CB6"/>
+                <constraint firstItem="yMh-fO-YVa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="r1V-tR-Kz7"/>
+                <constraint firstItem="7YU-wI-u6A" firstAttribute="top" secondItem="5yS-pG-0x9" secondAttribute="bottom" constant="13" id="ruc-Ck-IXF"/>
+                <constraint firstItem="1m8-bd-KJH" firstAttribute="top" secondItem="oRe-70-Vgc" secondAttribute="top" id="sE2-dh-a5g"/>
+                <constraint firstItem="miD-2U-7cP" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="8" symbolic="YES" id="seN-O1-8pe"/>
+                <constraint firstItem="yMh-fO-YVa" firstAttribute="trailing" secondItem="7YU-wI-u6A" secondAttribute="trailing" id="uR1-BP-ZA0"/>
+                <constraint firstItem="7YU-wI-u6A" firstAttribute="leading" secondItem="5yS-pG-0x9" secondAttribute="leading" id="yB6-Qo-LoS"/>
+                <constraint firstAttribute="trailing" secondItem="miD-2U-7cP" secondAttribute="trailing" constant="13" id="ybw-2w-dqe"/>
             </constraints>
             <point key="canvasLocation" x="83" y="-87"/>
         </view>

@@ -41,6 +41,9 @@
 		4649A3911A7C50FE00D7214B /* FAQViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4649A38F1A7C50FE00D7214B /* FAQViewController.xib */; };
 		4649A3931A7C603F00D7214B /* SoundFX2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4649A3921A7C603F00D7214B /* SoundFX2.wav */; };
 		4649A3951A7C6D9B00D7214B /* SoundFX1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4649A3941A7C6D9B00D7214B /* SoundFX1.wav */; };
+		46CE127E1A7D45D400B77C74 /* arrow_24.png in Resources */ = {isa = PBXBuildFile; fileRef = 46CE127B1A7D45D400B77C74 /* arrow_24.png */; };
+		46CE127F1A7D45D400B77C74 /* arrow_48.png in Resources */ = {isa = PBXBuildFile; fileRef = 46CE127C1A7D45D400B77C74 /* arrow_48.png */; };
+		46CE12801A7D45D400B77C74 /* arrow_64.png in Resources */ = {isa = PBXBuildFile; fileRef = 46CE127D1A7D45D400B77C74 /* arrow_64.png */; };
 		46DEE1BC1A7AE9C800016841 /* comment_24.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DEE1AA1A7AE9C800016841 /* comment_24.png */; };
 		46DEE1BD1A7AE9C800016841 /* comment_48.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DEE1AB1A7AE9C800016841 /* comment_48.png */; };
 		46DEE1BE1A7AE9C800016841 /* comment_64.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DEE1AC1A7AE9C800016841 /* comment_64.png */; };
@@ -437,6 +440,9 @@
 		4649A38F1A7C50FE00D7214B /* FAQViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FAQViewController.xib; sourceTree = "<group>"; };
 		4649A3921A7C603F00D7214B /* SoundFX2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SoundFX2.wav; sourceTree = "<group>"; };
 		4649A3941A7C6D9B00D7214B /* SoundFX1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SoundFX1.wav; sourceTree = "<group>"; };
+		46CE127B1A7D45D400B77C74 /* arrow_24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_24.png; sourceTree = "<group>"; };
+		46CE127C1A7D45D400B77C74 /* arrow_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_48.png; sourceTree = "<group>"; };
+		46CE127D1A7D45D400B77C74 /* arrow_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_64.png; sourceTree = "<group>"; };
 		46DEE1AA1A7AE9C800016841 /* comment_24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_24.png; sourceTree = "<group>"; };
 		46DEE1AB1A7AE9C800016841 /* comment_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_48.png; sourceTree = "<group>"; };
 		46DEE1AC1A7AE9C800016841 /* comment_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_64.png; sourceTree = "<group>"; };
@@ -814,6 +820,9 @@
 		46DEE1A91A7AE9C800016841 /* app.icons */ = {
 			isa = PBXGroup;
 			children = (
+				46CE127B1A7D45D400B77C74 /* arrow_24.png */,
+				46CE127C1A7D45D400B77C74 /* arrow_48.png */,
+				46CE127D1A7D45D400B77C74 /* arrow_64.png */,
 				4649A3881A7C501700D7214B /* info_24.png */,
 				4649A3891A7C501700D7214B /* info_48.png */,
 				4649A38A1A7C501700D7214B /* info_64.png */,
@@ -1374,6 +1383,7 @@
 				46E3DEFD1A7045B7006D059A /* Pizza.png in Resources */,
 				46E3DF2E1A7045B7006D059A /* Spoon.png in Resources */,
 				46DEE1C51A7AE9C800016841 /* home_24.png in Resources */,
+				46CE127F1A7D45D400B77C74 /* arrow_48.png in Resources */,
 				46E3DED31A7045B7006D059A /* Magnet.png in Resources */,
 				46E3DF2C1A7045B7006D059A /* Spectacles.png in Resources */,
 				46E3DF5B1A7045B7006D059A /* Vintage-Cartridge.png in Resources */,
@@ -1441,6 +1451,7 @@
 				46E3DE9D1A7045B7006D059A /* Earth.png in Resources */,
 				46E3DEAA1A7045B7006D059A /* Football-Goal.png in Resources */,
 				4649A3751A7C4CB300D7214B /* reload_64.png in Resources */,
+				46CE127E1A7D45D400B77C74 /* arrow_24.png in Resources */,
 				46E3DED01A7045B7006D059A /* Lock.png in Resources */,
 				46E3DE4F1A7045B7006D059A /* Address-Book.png in Resources */,
 				46E3DF641A7045B7006D059A /* Warning-Sign.png in Resources */,
@@ -1699,6 +1710,7 @@
 				46E3DE891A7045B7006D059A /* Conversation.png in Resources */,
 				46E3DF491A7045B7006D059A /* Traffic-Lights.png in Resources */,
 				46E3DE831A7045B7006D059A /* Cloud-Tick.png in Resources */,
+				46CE12801A7D45D400B77C74 /* arrow_64.png in Resources */,
 				46E3DF661A7045B7006D059A /* Weight.png in Resources */,
 				46E3DEBC1A7045B7006D059A /* Hourglass.png in Resources */,
 				46E3DEF41A7045B7006D059A /* Photo.png in Resources */,

@@ -66,51 +66,46 @@
                 </label>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ui-Zu-2Ta">
                     <rect key="frame" x="8" y="95" width="584" height="55"/>
-                    <color key="backgroundColor" white="0.97039473684210542" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="lCj-VY-eGV"/>
                     </constraints>
                     <string key="text">On the Friends tab enter your friends email address and press "Add Friend".  Your friend will automatically receive an invite to play, which they can accept or reject.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qDk-h1-niB">
                     <rect key="frame" x="8" y="187" width="584" height="55"/>
-                    <color key="backgroundColor" white="0.97039473679999999" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="w6F-jl-L4e"/>
                     </constraints>
                     <string key="text">Absolutely!  There are no restrictions on your username other than it needs to be at least one character long.  It can be changed at any time.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Prestige!" translatesAutoresizingMaskIntoConstraints="NO" id="JqM-tR-riC">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="You'll get to unlock more topics.  But more importantly you'll earn prestige!" translatesAutoresizingMaskIntoConstraints="NO" id="JqM-tR-riC">
                     <rect key="frame" x="8" y="279" width="584" height="35"/>
-                    <color key="backgroundColor" white="0.97039473679999999" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="dkD-jD-HUQ"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMg-HH-9cn">
                     <rect key="frame" x="8" y="351" width="584" height="55"/>
-                    <color key="backgroundColor" white="0.97039473679999999" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="OEY-3O-Wbg"/>
                     </constraints>
                     <string key="text">The app is as secure as your device is.  Plus there really isn't anything in the app that could truly be considered as "sensitive information".  It's about ease of use and fun.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9S-c2-eao">
                     <rect key="frame" x="8" y="443" width="584" height="55"/>
-                    <color key="backgroundColor" white="0.97039473679999999" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="26F-LE-FEt"/>
                     </constraints>
                     <string key="text">On the Topics tab, click on one of the topic images to either start a verse or join a verse in progress.  Once a verse is started, it's up to you to contribute when it's your turn.</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
             </subviews>
