@@ -9,6 +9,7 @@
 
 import UIKit
 import Foundation
+import AVFoundation
 
 class LoginViewController: UIViewController {
     
@@ -148,8 +149,29 @@ class LoginViewController: UIViewController {
         println("on_login finished")
     }
     
+    var audioPlayer : AVAudioPlayer?
+    
+    func playButtonSound(){
+        var error:NSError?
+        
+        if let path = NSBundle.mainBundle().pathForResource("SoundFX1", ofType: "wav") {
+            audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path), fileTypeHint: "wav", error: &error)
+            
+            if let sound = audioPlayer {
+                
+                sound.prepareToPlay()
+                
+                sound.play()
+                println("play sound")
+            }
+        }
+        println(error)
+    }
+    
     func on_start(){
         println("on_start called")
+        
+        playButtonSound()
         
         // this should probably be the indicator the app is good to go
         tabBarController?.selectedIndex = 1

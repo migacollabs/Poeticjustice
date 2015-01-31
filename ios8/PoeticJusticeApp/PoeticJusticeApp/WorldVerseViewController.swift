@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -50,8 +51,29 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    var audioPlayer : AVAudioPlayer?
+    
+    func playButtonSound(){
+        var error:NSError?
+        
+        // TODO: needs to subtle if anything
+        if let path = NSBundle.mainBundle().pathForResource("SoundFX1", ofType: "wav") {
+            audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path), fileTypeHint: "wav", error: &error)
+            
+            if let sound = audioPlayer {
+                
+                sound.prepareToPlay()
+                
+                sound.play()
+                println("play sound")
+            }
+        }
+        println(error)
+    }
+    
 
     @IBAction func onJoin(sender: AnyObject) {
+        // playButtonSound()
         if let at = self.activeTopic{
             if let vid = at.verse_id as? Int{
                 var params = [String:AnyObject]()
@@ -93,10 +115,12 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 break;
             }
         }
+>>>>>>> 38c95326aa7881503556cc1e6c025fdabb1c66cd
     }
     
 
     @IBAction func onStart(sender: AnyObject) {
+        // playButtonSound()
     }
     
     // MARK - TableView

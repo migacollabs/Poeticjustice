@@ -8,6 +8,7 @@
 
 import UIKit
 import iAd
+import AVFoundation
 
 @IBDesignable
 class TopicButton : UIButton {
@@ -170,8 +171,29 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    var audioPlayer : AVAudioPlayer?
+    
+    func playButtonSound(){
+        var error:NSError?
+        
+        if let path = NSBundle.mainBundle().pathForResource("Button Press", ofType: "wav") {
+            audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path), fileTypeHint: "wav", error: &error)
+            
+            if let sound = audioPlayer {
+                
+                sound.prepareToPlay()
+                
+                sound.play()
+                println("play sound")
+            }
+        }
+        println(error)
+    }
+    
 
     @IBAction func handleTopicButton(sender: AnyObject) {
+        
+        playButtonSound()
         
         var topicButton = (sender as TopicButton)
         var tag = topicButton.tag
