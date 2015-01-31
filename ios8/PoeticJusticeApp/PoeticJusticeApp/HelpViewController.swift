@@ -17,7 +17,14 @@ class HelpViewController: UIViewController {
         title = "Help // FAQ"
         
         // Do any additional setup after loading the view.
+        
     }
+    
+    @IBAction func handleFAQButton(sender: AnyObject) {
+        let vc = FAQViewController(nibName: "FAQViewController", bundle:nil)
+        navigationController?.pushViewController(vc, animated: false)
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
