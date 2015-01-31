@@ -389,6 +389,17 @@ def get_active_topics(request):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'mine', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
+                if user.open_verse_ids:
+                    # topics that i've joined
+                    for r in session.query(V, T, U).\
+                        filter(V.verse_category_topic_id==T.id).\
+                        filter(U.id==user.id).\
+                        filter(V.complete==False).\
+                        filter(V.id.in_(user.open_verse_ids)):
+                        # limit(5):
+                        topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                            "user_name":r[2].user_name, "src":'joined', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
+
                 # friendship initiated by me
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
                     filter(V.owner_id==UxU.friend_id).\
@@ -857,7 +868,16 @@ def join_verse(request):
 
                 is_next = False
 
+                open_verse_ids = copy.deepcopy(user.open_verse_ids)
+                if not open_verse_ids:
+                    open_verse_ids = []
+                open_verse_ids.append(v.id)
+                setattr(user, 'open_verse_ids', open_verse_ids)
+                user.save(session)
+
                 user_ids = copy.deepcopy(v.user_ids)
+                if not user_ids:
+                    user_ids = []
                 user_ids.append(user.id)
                 v.participant_count += 1
                 setattr(v, 'user_ids', user_ids)
@@ -872,6 +892,8 @@ def join_verse(request):
                 v.max_lines = len(user_ids) * 4
 
                 v.save(session)
+
+
 
             res = dict(
                 is_next=is_next,

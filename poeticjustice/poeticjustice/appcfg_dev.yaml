@@ -29,7 +29,7 @@ Resources:
         PoolSize: 20
         MaxOverflow: 10
         ConvertUnicode: True
-        Echo: False
+        Echo: True
     Contexts: poeticjustice.contexts
     Models: poeticjustice.models
     Schema: poeticjustice/domain.plr

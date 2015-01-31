@@ -230,6 +230,8 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
                     
                     if let nuid = tb.next_user_id as? Int {
                         
+                        println("tb.verse_user_ids \(tb.verse_user_ids)")
+                        
                         if ( nuid==NetOpers.sharedInstance.userId! || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.userId! as Int) ){
                             verseId = tb.verse_id as? Int
                             activeTopic = tb
@@ -397,26 +399,26 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
      
         for at in self.active_topics {
             
-//            println("***** topic id for email")
-//            println(at.email_address)
-//            println(at.id)
             
             var index = find(self.topic_order, at.id as Int)! + 1
             
-//            println(index)
-            
             if let tl = get_topic_label(index) {
-//                println(tl)
                 if let s = at.src as? String {
-//                    println(at.src)
+                    
                     // TODO: determine if user_name or email_address is shown
-                    if s=="mine" {
+                    
+                    switch s{
+                    case "mine", "joined":
                         tl.text = at.user_name as? String
-                    } else if s=="world" {
+                    case "world":
                         tl.text = "w: " + (at.user_name as? String)!
-                    } else if s=="friend" {
+                    case "":
                         tl.text = "f: " + (at.email_address as? String)!
+                    default:
+                        break
+                        
                     }
+                    
                 }
             }
             
