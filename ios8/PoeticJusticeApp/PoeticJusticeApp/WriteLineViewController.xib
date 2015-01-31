@@ -2,13 +2,14 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
                 <outlet property="adBanner" destination="8Wo-tx-baU" id="r5y-6F-xuZ"/>
                 <outlet property="sendButton" destination="sOv-vj-Wiz" id="5Gt-Bw-QHD"/>
-                <outlet property="setLine" destination="5Qn-Ca-z5G" id="6c9-il-i8g"/>
+                <outlet property="setLine" destination="eDz-lW-Y85" id="g2m-Of-QIG"/>
                 <outlet property="topicButton" destination="kTl-ux-cd3" id="vLW-Gs-PoM"/>
                 <outlet property="userLabel" destination="4pz-eP-0uX" id="DZg-xc-h09"/>
                 <outlet property="verseView" destination="nht-Ol-Vn8" id="dDz-t2-glN"/>
@@ -20,20 +21,11 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTl-ux-cd3">
-                    <rect key="frame" x="21" y="74" width="34" height="34"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="34" id="0kJ-8f-Gsv"/>
-                    </constraints>
-                    <state key="normal" image="Acoustic-Guitar.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="breaker19mayday // 199 points" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pz-eP-0uX">
-                    <rect key="frame" x="372" y="80" width="207" height="21"/>
+                    <rect key="frame" x="364" y="80" width="228" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="OYC-wK-V7u"/>
-                        <constraint firstAttribute="width" constant="207" id="PyQ-WT-6Hr"/>
+                        <constraint firstAttribute="width" constant="228" id="ejR-V6-oKj"/>
+                        <constraint firstAttribute="height" constant="21" id="nuN-rl-MhQ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -45,31 +37,28 @@
                         <rect key="frame" x="140" y="702" width="320" height="50"/>
                     </variation>
                 </adBannerView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're up next!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6t-mw-f2l">
-                    <rect key="frame" x="21" y="363" width="109" height="21"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ai1-Kp-PL4">
+                    <rect key="frame" x="21" y="446" width="101" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="109" id="TII-do-yqv"/>
-                        <constraint firstAttribute="height" constant="21" id="V0t-BD-IGk"/>
+                        <constraint firstAttribute="width" constant="101" id="VCh-2a-xOr"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ai1-Kp-PL4">
-                    <rect key="frame" x="21" y="446" width="53" height="30"/>
-                    <state key="normal" title="Refresh">
+                    <state key="normal" title=" Refresh" image="reload_24.png">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="refreshVerseView:" destination="-1" eventType="touchUpInside" id="JRe-uL-rkS"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOv-vj-Wiz">
-                    <rect key="frame" x="507" y="446" width="72" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOv-vj-Wiz">
+                    <rect key="frame" x="493" y="446" width="81" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="72" id="GCX-p4-UFZ"/>
+                        <constraint firstAttribute="width" constant="81" id="ofT-c1-KWZ"/>
                     </constraints>
-                    <state key="normal" title="Send">
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title=" Send" image="arrow_24.png">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="heightClass=regular" fixedFrame="YES">
@@ -82,8 +71,8 @@
                         <action selector="sendLine:" destination="-1" eventType="touchUpInside" id="kfq-jd-APW"/>
                     </connections>
                 </button>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nht-Ol-Vn8">
-                    <rect key="frame" x="21" y="123" width="558" height="185"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nht-Ol-Vn8">
+                    <rect key="frame" x="8" y="123" width="584" height="185"/>
                     <color key="backgroundColor" white="0.97039473684210542" alpha="1" colorSpace="calibratedWhite"/>
                     <string key="text">I play a guitar so in life I won't go far //
 That might be true unless you play in a car //
@@ -117,33 +106,12 @@ Or maybe in a train, or better yet a plane //
                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
                     </variation>
                 </textView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="I feel shame because this verse in lame" translatesAutoresizingMaskIntoConstraints="NO" id="5Qn-Ca-z5G">
-                    <rect key="frame" x="21" y="392" width="556" height="47"/>
-                    <color key="backgroundColor" white="0.95063219572368429" alpha="1" colorSpace="calibratedWhite"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iP-Nd-z1k">
+                    <rect key="frame" x="350" y="316" width="45" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="47" id="7VW-Om-eLB"/>
+                        <constraint firstAttribute="width" constant="45" id="CdH-uu-0fy"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <variation key="heightClass=regular" ambiguous="YES">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                    </variation>
-                    <variation key="widthClass=regular" ambiguous="YES">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=regular" ambiguous="YES">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                    </variation>
-                </textView>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iP-Nd-z1k">
-                    <rect key="frame" x="117" y="313" width="30" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="30" id="AWp-FQ-veL"/>
-                    </constraints>
-                    <state key="normal" title="+1">
+                    <state key="normal" image="plus_24.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="widthClass=regular" fixedFrame="YES">
@@ -153,12 +121,12 @@ Or maybe in a train, or better yet a plane //
                         <action selector="incrementScore:" destination="-1" eventType="touchUpInside" id="mnN-Gm-rH6"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWL-DL-QRA">
-                    <rect key="frame" x="79" y="313" width="30" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWL-DL-QRA">
+                    <rect key="frame" x="299" y="316" width="42" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="30" id="iEi-Ok-gJ2"/>
+                        <constraint firstAttribute="width" constant="42" id="hAl-8g-VOp"/>
                     </constraints>
-                    <state key="normal" title="-1">
+                    <state key="normal" image="minus_24.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <variation key="widthClass=regular" fixedFrame="YES">
@@ -168,39 +136,75 @@ Or maybe in a train, or better yet a plane //
                         <action selector="decrementScore:" destination="-1" eventType="touchUpInside" id="xAE-Bw-Lte"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFo-3k-EIO">
-                    <rect key="frame" x="21" y="317" width="50" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apply Points:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFo-3k-EIO">
+                    <rect key="frame" x="205" y="316" width="86" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Write your line here!" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eDz-lW-Y85">
+                    <rect key="frame" x="8" y="400" width="584" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're up next!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6t-mw-f2l">
+                    <rect key="frame" x="8" y="371" width="109" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="109" id="74N-jS-K1N"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTl-ux-cd3">
+                    <rect key="frame" x="8" y="74" width="34" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="34" id="J77-CC-wO3"/>
+                    </constraints>
+                    <state key="normal" image="Acoustic-Guitar.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="kTl-ux-cd3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="7qx-X0-fqp"/>
-                <constraint firstItem="4pz-eP-0uX" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="8gU-Ba-xkz"/>
-                <constraint firstItem="8Wo-tx-baU" firstAttribute="top" secondItem="5Qn-Ca-z5G" secondAttribute="bottom" constant="63" id="CWh-wY-a5l"/>
-                <constraint firstItem="nht-Ol-Vn8" firstAttribute="leading" secondItem="w6t-mw-f2l" secondAttribute="leading" id="Hh6-gQ-yhu"/>
-                <constraint firstItem="8Wo-tx-baU" firstAttribute="centerX" secondItem="nht-Ol-Vn8" secondAttribute="centerX" id="Iad-0Q-qc7"/>
-                <constraint firstItem="Ai1-Kp-PL4" firstAttribute="top" secondItem="5Qn-Ca-z5G" secondAttribute="bottom" constant="7" id="Lqu-kk-Ry9"/>
-                <constraint firstItem="nht-Ol-Vn8" firstAttribute="leading" secondItem="kTl-ux-cd3" secondAttribute="leading" id="NIF-wa-bUu"/>
-                <constraint firstItem="Ai1-Kp-PL4" firstAttribute="baseline" secondItem="sOv-vj-Wiz" secondAttribute="baseline" id="OsW-Sd-kR4"/>
-                <constraint firstItem="5Qn-Ca-z5G" firstAttribute="leading" secondItem="w6t-mw-f2l" secondAttribute="leading" id="SUC-CO-h2j"/>
-                <constraint firstItem="5Qn-Ca-z5G" firstAttribute="top" secondItem="w6t-mw-f2l" secondAttribute="bottom" constant="8" symbolic="YES" id="ZF1-tp-grB"/>
-                <constraint firstItem="8Wo-tx-baU" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="buP-pT-cVM"/>
-                <constraint firstAttribute="bottom" secondItem="8Wo-tx-baU" secondAttribute="bottom" constant="48" id="hMz-Lf-9ib"/>
-                <constraint firstItem="kTl-ux-cd3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="21" id="i64-dL-cdG"/>
-                <constraint firstItem="Ai1-Kp-PL4" firstAttribute="leading" secondItem="5Qn-Ca-z5G" secondAttribute="leading" id="kWO-WK-vce"/>
-                <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="4pz-eP-0uX" secondAttribute="bottom" constant="22" id="osL-c0-j95"/>
-                <constraint firstAttribute="trailing" secondItem="5Qn-Ca-z5G" secondAttribute="trailing" constant="23" id="ovH-7h-0cB"/>
-                <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="kTl-ux-cd3" secondAttribute="bottom" constant="15" id="tSc-7E-JNc"/>
-                <constraint firstItem="sOv-vj-Wiz" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="tmB-n7-VbJ"/>
-                <constraint firstItem="4pz-eP-0uX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="xuK-xi-IJC"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="53x-dJ-uqY"/>
+                <constraint firstItem="w6t-mw-f2l" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="5CP-lr-jVJ"/>
+                <constraint firstItem="JFo-3k-EIO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="205" id="7OJ-Mp-qvv"/>
+                <constraint firstItem="4iP-Nd-z1k" firstAttribute="leading" secondItem="kWL-DL-QRA" secondAttribute="trailing" constant="9" id="9Dc-oM-iRh"/>
+                <constraint firstItem="kTl-ux-cd3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="A1U-Je-qCX"/>
+                <constraint firstItem="Ai1-Kp-PL4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="21" id="EEV-7b-0WF"/>
+                <constraint firstItem="w6t-mw-f2l" firstAttribute="leading" secondItem="eDz-lW-Y85" secondAttribute="leading" id="LAe-cp-qJM"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="leading" secondItem="w6t-mw-f2l" secondAttribute="leading" id="MRm-ZT-F5s"/>
+                <constraint firstAttribute="bottom" secondItem="8Wo-tx-baU" secondAttribute="bottom" constant="48" id="SaD-QW-h14"/>
+                <constraint firstItem="4iP-Nd-z1k" firstAttribute="top" secondItem="kWL-DL-QRA" secondAttribute="top" id="T4p-Rt-xMe"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="kTl-ux-cd3" secondAttribute="bottom" constant="15" id="VMg-e6-BfX"/>
+                <constraint firstItem="Ai1-Kp-PL4" firstAttribute="top" secondItem="eDz-lW-Y85" secondAttribute="bottom" constant="16" id="Vij-NQ-LyM"/>
+                <constraint firstItem="Ai1-Kp-PL4" firstAttribute="baseline" secondItem="sOv-vj-Wiz" secondAttribute="baseline" id="YJO-aX-SHe"/>
+                <constraint firstItem="8Wo-tx-baU" firstAttribute="top" secondItem="eDz-lW-Y85" secondAttribute="bottom" constant="72" id="bLq-Wh-I4v"/>
+                <constraint firstItem="w6t-mw-f2l" firstAttribute="top" secondItem="nht-Ol-Vn8" secondAttribute="bottom" constant="63" id="cdk-sR-1OF"/>
+                <constraint firstItem="kWL-DL-QRA" firstAttribute="leading" secondItem="JFo-3k-EIO" secondAttribute="trailing" constant="8" symbolic="YES" id="f2v-Yd-wrG"/>
+                <constraint firstItem="8Wo-tx-baU" firstAttribute="centerX" secondItem="eDz-lW-Y85" secondAttribute="centerX" id="fCE-tL-sQs"/>
+                <constraint firstItem="JFo-3k-EIO" firstAttribute="top" secondItem="nht-Ol-Vn8" secondAttribute="bottom" constant="8" symbolic="YES" id="gbe-S5-hbN"/>
+                <constraint firstItem="eDz-lW-Y85" firstAttribute="top" secondItem="w6t-mw-f2l" secondAttribute="bottom" constant="8" symbolic="YES" id="ifX-G4-Pmd"/>
+                <constraint firstAttribute="trailing" secondItem="sOv-vj-Wiz" secondAttribute="trailing" constant="26" id="kYI-rT-n4w"/>
+                <constraint firstItem="kTl-ux-cd3" firstAttribute="leading" secondItem="nht-Ol-Vn8" secondAttribute="leading" id="l0E-4E-SRc"/>
+                <constraint firstItem="4pz-eP-0uX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="m4z-aw-lIp"/>
+                <constraint firstItem="4pz-eP-0uX" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="ris-CC-JJg"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="eDz-lW-Y85" secondAttribute="trailing" id="tIz-Md-890"/>
+                <constraint firstItem="kWL-DL-QRA" firstAttribute="top" secondItem="JFo-3k-EIO" secondAttribute="top" id="uDK-sX-BYP"/>
+                <constraint firstItem="eDz-lW-Y85" firstAttribute="top" secondItem="kWL-DL-QRA" secondAttribute="bottom" constant="60" id="yzj-BE-3jc"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="4pz-eP-0uX" secondAttribute="bottom" constant="22" id="zeg-WG-AVh"/>
+                <constraint firstItem="eDz-lW-Y85" firstAttribute="top" secondItem="JFo-3k-EIO" secondAttribute="bottom" constant="63" id="zgD-f7-wTY"/>
             </constraints>
             <point key="canvasLocation" x="341" y="248"/>
         </view>
     </objects>
     <resources>
         <image name="Acoustic-Guitar.png" width="48" height="48"/>
+        <image name="arrow_24.png" width="24" height="24"/>
+        <image name="minus_24.png" width="24" height="24"/>
+        <image name="plus_24.png" width="24" height="24"/>
+        <image name="reload_24.png" width="24" height="24"/>
     </resources>
 </document>

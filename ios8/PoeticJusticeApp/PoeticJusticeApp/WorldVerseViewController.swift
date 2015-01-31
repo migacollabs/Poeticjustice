@@ -115,7 +115,6 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 break;
             }
         }
->>>>>>> 38c95326aa7881503556cc1e6c025fdabb1c66cd
     }
     
 

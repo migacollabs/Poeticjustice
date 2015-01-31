@@ -18,19 +18,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DEl-6Z-Nux">
-                    <rect key="frame" x="173" y="82" width="34" height="34"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="34" id="fPA-bj-rs3"/>
-                    </constraints>
+                    <rect key="frame" x="191" y="82" width="48" height="48"/>
                     <state key="normal" image="Acoustic-Guitar.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give it a Title!" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B0b-AV-HFa">
-                    <rect key="frame" x="173" y="154" width="255" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="87b-hi-OAG">
                     <rect key="frame" x="337" y="215" width="91" height="29"/>
                     <segments>
@@ -50,20 +42,24 @@
                     <rect key="frame" x="337" y="251" width="51" height="31"/>
                 </switch>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Players" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DG2-7a-AMu">
-                    <rect key="frame" x="173" y="232" width="143" height="21"/>
+                    <rect key="frame" x="173" y="222" width="143" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends Only" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c00-ns-UcJ">
-                    <rect key="frame" x="219" y="260" width="97" height="21"/>
+                    <rect key="frame" x="219" y="256" width="97" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DR7-QI-ZtV">
-                    <rect key="frame" x="249" y="360" width="38" height="30"/>
-                    <state key="normal" title="Start!">
+                    <rect key="frame" x="264" y="332" width="72" height="72"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="72" id="2lz-S4-5It"/>
+                        <constraint firstAttribute="width" constant="72" id="KSy-TG-6NY"/>
+                    </constraints>
+                    <state key="normal" title="Start!" backgroundImage="Init.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -71,38 +67,41 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start a new Verse" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wh9-oi-seI">
-                    <rect key="frame" x="219" y="95" width="163" height="21"/>
+                    <rect key="frame" x="247" y="95" width="139" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="p9M-3v-my0"/>
+                        <constraint firstAttribute="width" constant="139" id="uf4-Nz-18r"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give it a Title!" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B0b-AV-HFa">
+                    <rect key="frame" x="173" y="154" width="255" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Wh9-oi-seI" firstAttribute="bottom" secondItem="DEl-6Z-Nux" secondAttribute="bottom" id="6Ru-4w-xbb"/>
-                <constraint firstItem="DR7-QI-ZtV" firstAttribute="centerX" secondItem="c00-ns-UcJ" secondAttribute="centerX" id="7bl-eU-wTb"/>
-                <constraint firstItem="DEl-6Z-Nux" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="82" id="9mX-8q-yhY"/>
-                <constraint firstItem="B0b-AV-HFa" firstAttribute="leading" secondItem="DG2-7a-AMu" secondAttribute="leading" id="Ar2-1x-RTG"/>
-                <constraint firstItem="B0b-AV-HFa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="BfY-0H-xbe"/>
-                <constraint firstItem="DG2-7a-AMu" firstAttribute="top" secondItem="B0b-AV-HFa" secondAttribute="bottom" constant="48" id="BgV-0O-VFg"/>
-                <constraint firstItem="B0b-AV-HFa" firstAttribute="centerX" secondItem="Wh9-oi-seI" secondAttribute="centerX" id="Do2-vv-ZSS"/>
-                <constraint firstItem="87b-hi-OAG" firstAttribute="leading" secondItem="K6e-HB-zNq" secondAttribute="leading" id="GrI-da-eG6"/>
-                <constraint firstItem="DR7-QI-ZtV" firstAttribute="top" secondItem="c00-ns-UcJ" secondAttribute="bottom" constant="79" id="JYE-pk-BkI"/>
+                <constraint firstItem="87b-hi-OAG" firstAttribute="top" secondItem="B0b-AV-HFa" secondAttribute="bottom" constant="31" id="3TZ-Zs-Qjt"/>
+                <constraint firstItem="c00-ns-UcJ" firstAttribute="trailing" secondItem="DG2-7a-AMu" secondAttribute="trailing" id="43h-Ps-t3x"/>
+                <constraint firstItem="87b-hi-OAG" firstAttribute="leading" secondItem="DG2-7a-AMu" secondAttribute="trailing" constant="21" id="9db-h6-Mga"/>
+                <constraint firstItem="K6e-HB-zNq" firstAttribute="top" secondItem="87b-hi-OAG" secondAttribute="bottom" constant="8" symbolic="YES" id="COS-N2-1lM"/>
+                <constraint firstItem="B0b-AV-HFa" firstAttribute="leading" secondItem="DG2-7a-AMu" secondAttribute="leading" id="IKT-p4-J22"/>
                 <constraint firstItem="K6e-HB-zNq" firstAttribute="leading" secondItem="87b-hi-OAG" secondAttribute="leading" id="L8X-v2-wxJ"/>
-                <constraint firstItem="K6e-HB-zNq" firstAttribute="top" secondItem="87b-hi-OAG" secondAttribute="bottom" constant="8" symbolic="YES" id="Mo7-jk-IJP"/>
-                <constraint firstItem="87b-hi-OAG" firstAttribute="leading" secondItem="DG2-7a-AMu" secondAttribute="trailing" constant="21" id="NRi-AG-qk1"/>
-                <constraint firstItem="87b-hi-OAG" firstAttribute="top" secondItem="B0b-AV-HFa" secondAttribute="bottom" constant="31" id="R5i-HN-xV8"/>
-                <constraint firstItem="B0b-AV-HFa" firstAttribute="top" secondItem="DEl-6Z-Nux" secondAttribute="bottom" constant="38" id="RUJ-BW-AsV"/>
-                <constraint firstItem="87b-hi-OAG" firstAttribute="trailing" secondItem="B0b-AV-HFa" secondAttribute="trailing" id="Th5-vZ-adj"/>
-                <constraint firstItem="Wh9-oi-seI" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="95" id="Zxv-Ls-99d"/>
-                <constraint firstItem="Wh9-oi-seI" firstAttribute="leading" secondItem="DEl-6Z-Nux" secondAttribute="trailing" constant="12" id="cHo-C2-F42"/>
-                <constraint firstItem="c00-ns-UcJ" firstAttribute="top" secondItem="DG2-7a-AMu" secondAttribute="bottom" constant="7" id="mNb-23-52U"/>
+                <constraint firstItem="c00-ns-UcJ" firstAttribute="centerY" secondItem="K6e-HB-zNq" secondAttribute="centerY" id="MSk-V4-ufX"/>
+                <constraint firstItem="B0b-AV-HFa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RBd-r4-9GE"/>
+                <constraint firstItem="K6e-HB-zNq" firstAttribute="leading" secondItem="87b-hi-OAG" secondAttribute="leading" id="fzU-93-gT3"/>
+                <constraint firstItem="B0b-AV-HFa" firstAttribute="centerX" secondItem="DR7-QI-ZtV" secondAttribute="centerX" id="g5m-IH-nDY"/>
+                <constraint firstItem="DR7-QI-ZtV" firstAttribute="top" secondItem="c00-ns-UcJ" secondAttribute="bottom" constant="55" id="kRQ-WR-dmz"/>
+                <constraint firstItem="B0b-AV-HFa" firstAttribute="trailing" secondItem="87b-hi-OAG" secondAttribute="trailing" id="ltR-e2-hJl"/>
+                <constraint firstItem="DEl-6Z-Nux" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="82" id="oV4-wG-3qc"/>
                 <constraint firstItem="K6e-HB-zNq" firstAttribute="top" secondItem="87b-hi-OAG" secondAttribute="bottom" constant="10" id="rLz-td-CU8"/>
-                <constraint firstItem="DEl-6Z-Nux" firstAttribute="leading" secondItem="B0b-AV-HFa" secondAttribute="leading" id="snm-By-pjx"/>
-                <constraint firstItem="c00-ns-UcJ" firstAttribute="trailing" secondItem="DG2-7a-AMu" secondAttribute="trailing" id="t6d-TZ-45j"/>
+                <constraint firstItem="DG2-7a-AMu" firstAttribute="bottom" secondItem="87b-hi-OAG" secondAttribute="bottom" id="sH9-Uy-Q3j"/>
+                <constraint firstItem="K6e-HB-zNq" firstAttribute="trailing" secondItem="Wh9-oi-seI" secondAttribute="trailing" id="w8X-bP-diK"/>
+                <constraint firstItem="B0b-AV-HFa" firstAttribute="top" secondItem="DEl-6Z-Nux" secondAttribute="bottom" constant="24" id="wBn-fS-rjp"/>
+                <constraint firstItem="B0b-AV-HFa" firstAttribute="top" secondItem="Wh9-oi-seI" secondAttribute="bottom" constant="38" id="y7k-qW-Xjk"/>
+                <constraint firstItem="Wh9-oi-seI" firstAttribute="leading" secondItem="DEl-6Z-Nux" secondAttribute="trailing" constant="8" symbolic="YES" id="zkb-DM-zoj"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
@@ -122,5 +121,6 @@
     </objects>
     <resources>
         <image name="Acoustic-Guitar.png" width="48" height="48"/>
+        <image name="Init.png" width="48" height="48"/>
     </resources>
 </document>

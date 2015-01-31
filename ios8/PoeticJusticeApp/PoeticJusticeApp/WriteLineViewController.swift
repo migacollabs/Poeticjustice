@@ -264,7 +264,8 @@ class WriteLineViewController: UIViewController {
 
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var scoreView: UIView!
-    @IBOutlet var setLine: UITextView!
+    
+    @IBOutlet var setLine: UITextField!
     
     @IBAction func sendLine(sender: AnyObject) {
         println("Clicked send with score " + String(score) + " " +

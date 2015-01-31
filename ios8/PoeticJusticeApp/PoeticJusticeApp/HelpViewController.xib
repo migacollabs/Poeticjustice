@@ -96,10 +96,10 @@
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMh-fO-YVa">
                     <rect key="frame" x="0.0" y="159" width="600" height="224"/>
                     <color key="backgroundColor" white="0.97039473684210542" alpha="1" colorSpace="calibratedWhite"/>
-                    <mutableString key="text">A “line” is a short phrasing of words, sometimes with a rhythmic intent (such as a line in poetry or a rap verse).  For example, say the following out loud while emphasizing the numbers: "One and Two and Three and Four and".    With the basic rhythm down, here’s an example of four lines where four individual players each wrote a single line:  “I’m the first, this is my line” /
+                    <string key="text">A “line” is a short phrasing of words, sometimes with a rhythmic intent (such as a line in poetry or a rap verse).  For example, say the following out loud while emphasizing the numbers: "One and Two and Three and Four and".    With the basic rhythm down, here’s an example of four lines where four individual players each wrote a single line:  “I’m the first, this is my line” /
 “Since I’m up next, my line will rhyme” /
 “I’m the third, so start a-new” /
-“This is fun, so impromptu!” /</mutableString>
+“This is fun, so impromptu!” /</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     <variation key="widthClass=compact" fixedFrame="YES">
@@ -128,7 +128,7 @@
                         <constraint firstAttribute="height" constant="24" id="jXU-wU-Lav"/>
                     </constraints>
                     <state key="normal" title=" FAQ" image="info_24.png">
-                        <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+                        <color key="titleColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
