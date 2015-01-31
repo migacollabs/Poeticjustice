@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class NewVerseViewController: UIViewController {
     
@@ -114,7 +115,29 @@ class NewVerseViewController: UIViewController {
             })
     }
     
+    var audioPlayer : AVAudioPlayer?
+    
+    func playButtonSound(){
+        var error:NSError?
+        
+        // TODO: needs to subtle if anything
+        if let path = NSBundle.mainBundle().pathForResource("SoundFX1", ofType: "wav") {
+            audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path), fileTypeHint: "wav", error: &error)
+            
+            if let sound = audioPlayer {
+                
+                sound.prepareToPlay()
+                
+                sound.play()
+                println("play sound")
+            }
+        }
+        println(error)
+    }
+    
     func start_accepted(verseId:Int){
+        // playButtonSound()
+        
         let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
         vc.verseId = verseId
         vc.topic = topic

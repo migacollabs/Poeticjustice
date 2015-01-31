@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import iAd
+import AVFoundation
 
 class Verse {
     let verse_data: NSDictionary
@@ -241,6 +242,25 @@ class WriteLineViewController: UIViewController {
         }
         
     }
+    
+    var audioPlayer : AVAudioPlayer?
+    
+    func playButtonSound(){
+        var error:NSError?
+        
+        if let path = NSBundle.mainBundle().pathForResource("Typing", ofType: "wav") {
+            audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path), fileTypeHint: "wav", error: &error)
+            
+            if let sound = audioPlayer {
+                
+                sound.prepareToPlay()
+                
+                sound.play()
+                println("play sound")
+            }
+        }
+        println(error)
+    }
 
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var scoreView: UIView!
@@ -249,6 +269,8 @@ class WriteLineViewController: UIViewController {
     @IBAction func sendLine(sender: AnyObject) {
         println("Clicked send with score " + String(score) + " " +
         setLine.text)
+        
+        playButtonSound()
         
         var params = Dictionary<String,AnyObject>()
         params["topic_id"]=topic?.id
