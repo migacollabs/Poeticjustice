@@ -115,7 +115,6 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 break;
             }
         }
->>>>>>> 38c95326aa7881503556cc1e6c025fdabb1c66cd
     }
     
 
@@ -226,7 +225,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         // TODO:
         // this doesn't seem to work.. it presents the topics view
         // but the topics view doent't work as expected
-        self.presentViewController(tvc, animated: true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     /*
