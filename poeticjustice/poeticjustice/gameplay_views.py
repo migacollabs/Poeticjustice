@@ -848,7 +848,7 @@ def join_verse(request):
                 U, V = ~User, ~Verse
                 v = Verse.load(int(kwds['id']), session=session)
                 
-                if not v.friends_only:
+                if v.friends_only:
                     if user.id not in v.user_ids:
                         raise HTTPUnauthorized
 
