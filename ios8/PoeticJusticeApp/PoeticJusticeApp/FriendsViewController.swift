@@ -112,7 +112,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Manage Friends"
+        title = "Friends"
         
         self.myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier : "cell")
         self.myTableView.dataSource = self
