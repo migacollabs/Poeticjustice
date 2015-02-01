@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import iAd
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
 
     var window: UIWindow?
+    var iAdBanner: ADBannerView = ADBannerView()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        self.iAdBanner.delegate = self
+        
         return true
     }
 
@@ -39,6 +44,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    
+    
+    // MARK: - Ad Banner
+    
+    func bannerViewWillLoadAd(banner: ADBannerView!) {
+        println("bannerViewWillLoadAd called")
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+        println("bannerViewDidLoadAd called")
+        //UIView.beginAnimations(nil, context:nil)
+        //UIView.setAnimationDuration(1)
+        //self.iAdBanner?.alpha = 1
+        self.iAdBanner.hidden = false
+        //UIView.commitAnimations()
+        
+    }
+    
+    func bannerViewActionDidFinish(banner: ADBannerView!) {
+        println("bannerViewACtionDidFinish called")
+    }
+    
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
+        return true
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        println("bannerView didFailToReceiveAdWithError called")
+        self.iAdBanner.hidden = true
     }
 
 

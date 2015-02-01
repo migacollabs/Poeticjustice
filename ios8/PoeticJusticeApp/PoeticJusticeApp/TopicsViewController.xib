@@ -8,7 +8,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TopicsViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
-                <outlet property="adBanner" destination="gAD-4A-oad" id="dNU-5n-j75"/>
                 <outlet property="topicButton" destination="Slf-VG-r1V" id="aIr-NS-zQf"/>
                 <outlet property="topicScrollView" destination="sOo-jU-jWS" id="dG8-Nb-95P"/>
                 <outlet property="userLabel" destination="I41-lg-i7W" id="Zax-lo-LlI"/>
@@ -43,10 +42,10 @@
                         <action selector="refreshActiveTopics:" destination="-1" eventType="touchUpInside" id="d8L-hn-RcR"/>
                     </connections>
                 </button>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHT-OH-XQw">
+                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tHT-OH-XQw">
                     <rect key="frame" x="8" y="109" width="584" height="385"/>
                     <subviews>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOo-jU-jWS">
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sOo-jU-jWS">
                             <rect key="frame" x="0.0" y="0.0" width="635" height="499"/>
                             <subviews>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Slf-VG-r1V" customClass="TopicButton" customModule="PoeticJusticeApp">
@@ -583,19 +582,13 @@
                         <constraint firstAttribute="trailing" secondItem="sOo-jU-jWS" secondAttribute="trailing" constant="-51" id="wHJ-Ra-iCj"/>
                     </constraints>
                 </view>
-                <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="gAD-4A-oad">
-                    <rect key="frame" x="140" y="502" width="320" height="50"/>
-                </adBannerView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="tHT-OH-XQw" firstAttribute="centerX" secondItem="gAD-4A-oad" secondAttribute="centerX" id="Ep7-YS-tg7"/>
                 <constraint firstItem="tHT-OH-XQw" firstAttribute="top" secondItem="iyu-6W-pgh" secondAttribute="bottom" constant="6" id="Non-oO-C3I"/>
                 <constraint firstItem="iyu-6W-pgh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="79" id="USa-X1-Wgo"/>
                 <constraint firstItem="iyu-6W-pgh" firstAttribute="leading" secondItem="tHT-OH-XQw" secondAttribute="leading" id="WTf-ep-lST"/>
                 <constraint firstItem="I41-lg-i7W" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="bZG-Hx-VjC"/>
-                <constraint firstItem="gAD-4A-oad" firstAttribute="top" secondItem="tHT-OH-XQw" secondAttribute="bottom" constant="8" symbolic="YES" id="bno-rz-25T"/>
-                <constraint firstAttribute="bottom" secondItem="gAD-4A-oad" secondAttribute="bottom" constant="48" id="eBl-Up-Evl"/>
                 <constraint firstItem="I41-lg-i7W" firstAttribute="trailing" secondItem="tHT-OH-XQw" secondAttribute="trailing" id="eHu-jx-Q4Q"/>
                 <constraint firstItem="tHT-OH-XQw" firstAttribute="top" secondItem="I41-lg-i7W" secondAttribute="bottom" constant="8" symbolic="YES" id="fj6-AX-5Qv"/>
                 <constraint firstItem="tHT-OH-XQw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="g3K-9z-VkP"/>

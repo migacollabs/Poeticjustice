@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
-                <outlet property="adBanner" destination="8Wo-tx-baU" id="r5y-6F-xuZ"/>
                 <outlet property="sendButton" destination="sOv-vj-Wiz" id="5Gt-Bw-QHD"/>
                 <outlet property="setLine" destination="eDz-lW-Y85" id="g2m-Of-QIG"/>
                 <outlet property="topicButton" destination="kTl-ux-cd3" id="vLW-Gs-PoM"/>
@@ -31,13 +30,7 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Wo-tx-baU">
-                    <rect key="frame" x="140" y="502" width="320" height="50"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="140" y="702" width="320" height="50"/>
-                    </variation>
-                </adBannerView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ai1-Kp-PL4">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ai1-Kp-PL4">
                     <rect key="frame" x="8" y="446" width="101" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="101" id="uAr-IG-hXW"/>
@@ -51,7 +44,7 @@
                         <action selector="refreshVerseView:" destination="-1" eventType="touchUpInside" id="JRe-uL-rkS"/>
                     </connections>
                 </button>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nht-Ol-Vn8">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nht-Ol-Vn8">
                     <rect key="frame" x="8" y="123" width="584" height="185"/>
                     <color key="backgroundColor" white="0.97039473684210542" alpha="1" colorSpace="calibratedWhite"/>
                     <string key="text">I play a guitar so in life I won't go far //
@@ -86,12 +79,12 @@ Or maybe in a train, or better yet a plane //
                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
                     </variation>
                 </textView>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Write your line here!" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eDz-lW-Y85">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Write your line here!" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eDz-lW-Y85">
                     <rect key="frame" x="8" y="400" width="584" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You're up next!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6t-mw-f2l">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="You're up next!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w6t-mw-f2l">
                     <rect key="frame" x="8" y="371" width="109" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="109" id="WLj-HO-5wZ"/>
@@ -109,7 +102,7 @@ Or maybe in a train, or better yet a plane //
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iP-Nd-z1k">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iP-Nd-z1k">
                     <rect key="frame" x="153" y="316" width="45" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="45" id="ZWJ-S9-K4N"/>
@@ -124,7 +117,7 @@ Or maybe in a train, or better yet a plane //
                         <action selector="incrementScore:" destination="-1" eventType="touchUpInside" id="mnN-Gm-rH6"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWL-DL-QRA">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWL-DL-QRA">
                     <rect key="frame" x="102" y="316" width="42" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="42" id="03m-Z7-NDd"/>
@@ -139,13 +132,13 @@ Or maybe in a train, or better yet a plane //
                         <action selector="decrementScore:" destination="-1" eventType="touchUpInside" id="xAE-Bw-Lte"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apply Points:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFo-3k-EIO">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Apply Points:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFo-3k-EIO">
                     <rect key="frame" x="8" y="316" width="86" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOv-vj-Wiz">
+                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOv-vj-Wiz">
                     <rect key="frame" x="511" y="446" width="81" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="81" id="XhZ-Cr-RZ2"/>
@@ -171,7 +164,6 @@ Or maybe in a train, or better yet a plane //
                 <constraint firstItem="eDz-lW-Y85" firstAttribute="top" secondItem="4iP-Nd-z1k" secondAttribute="bottom" constant="60" id="0qv-Ig-NJp"/>
                 <constraint firstItem="JFo-3k-EIO" firstAttribute="leading" secondItem="w6t-mw-f2l" secondAttribute="leading" id="1bH-X3-3Bz"/>
                 <constraint firstItem="4pz-eP-0uX" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="1gn-cK-fMG"/>
-                <constraint firstItem="eDz-lW-Y85" firstAttribute="centerX" secondItem="8Wo-tx-baU" secondAttribute="centerX" id="2Fe-pq-Fgh"/>
                 <constraint firstItem="JFo-3k-EIO" firstAttribute="leading" secondItem="nht-Ol-Vn8" secondAttribute="leading" id="2Sl-nf-PK1"/>
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="4pz-eP-0uX" secondAttribute="bottom" constant="22" id="2Sn-ig-uw5"/>
                 <constraint firstItem="w6t-mw-f2l" firstAttribute="top" secondItem="JFo-3k-EIO" secondAttribute="bottom" constant="34" id="6So-or-dDQ"/>
@@ -188,13 +180,11 @@ Or maybe in a train, or better yet a plane //
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="eDz-lW-Y85" secondAttribute="trailing" id="TyJ-an-Wf2"/>
                 <constraint firstItem="kTl-ux-cd3" firstAttribute="leading" secondItem="nht-Ol-Vn8" secondAttribute="leading" id="ZVj-ES-YaC"/>
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="aFn-S5-4bQ"/>
-                <constraint firstAttribute="bottom" secondItem="8Wo-tx-baU" secondAttribute="bottom" constant="48" id="aG1-Hb-goi"/>
                 <constraint firstItem="eDz-lW-Y85" firstAttribute="top" secondItem="w6t-mw-f2l" secondAttribute="bottom" constant="8" symbolic="YES" id="aOE-Jb-cWQ"/>
                 <constraint firstItem="kTl-ux-cd3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="bmr-vq-CgT"/>
                 <constraint firstItem="kWL-DL-QRA" firstAttribute="leading" secondItem="JFo-3k-EIO" secondAttribute="trailing" constant="8" symbolic="YES" id="bp1-Id-aHs"/>
                 <constraint firstItem="kWL-DL-QRA" firstAttribute="top" secondItem="4iP-Nd-z1k" secondAttribute="top" id="drD-3Q-mtB"/>
                 <constraint firstItem="Ai1-Kp-PL4" firstAttribute="top" secondItem="eDz-lW-Y85" secondAttribute="bottom" constant="16" id="iCT-Sw-0GQ"/>
-                <constraint firstItem="8Wo-tx-baU" firstAttribute="top" secondItem="eDz-lW-Y85" secondAttribute="bottom" constant="72" id="nrt-JG-LYe"/>
                 <constraint firstItem="w6t-mw-f2l" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="xeo-7L-Aui"/>
             </constraints>
             <point key="canvasLocation" x="341" y="248"/>

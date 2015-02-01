@@ -98,39 +98,55 @@ class ActiveTopic {
     
 }
 
-class TopicsViewController: UIViewController, ADBannerViewDelegate {
+class TopicsViewController: UIViewController {
 
     @IBOutlet weak var topicButton: TopicButton!
     @IBOutlet var topicScrollView: UIScrollView!
-    @IBOutlet weak var adBanner: ADBannerView!
+    @IBOutlet var userLabel: UILabel!
     
+    
+    var iAdBanner: ADBannerView?
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
     var active_topics:[ActiveTopic] = []
     var should_begin_banner = true
+    var lastTabbed : NSDate?
+    var audioPlayer : AVAudioPlayer?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.adBanner.delegate = self
-        self.adBanner.hidden = true
         
         reset_topic_labels()
         
         title = "Topics"
         
         self.get_topics()
-
+        
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        println("TopicsViewController.viewWillAppear called")
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        //self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            println("adding ad banner subview ")
+            self.view.addSubview(adb)
+        }
+        
         // click on the tab, so refresh
-        get_active_topics()
-        updateUserLabel()
+        self.get_active_topics()
+        self.updateUserLabel()
     }
     
-    var lastTabbed : NSDate?
+    override func viewWillDisappear(animated: Bool){
+//        self.iAdBanner?.delegate = nil
+//        self.iAdBanner?.removeFromSuperview()
+    }
     
     @IBAction func refreshActiveTopics(sender: AnyObject) {
         if (NetOpers.sharedInstance.userId>0) {
@@ -154,24 +170,10 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         }
     }
     
-    @IBOutlet var userLabel: UILabel!
-
-    func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = un + " // " + String(us) + " points"
-            }
-        } else {
-            self.userLabel.text = "You are not signed in"
-        }
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    var audioPlayer : AVAudioPlayer?
     
     func playButtonSound(){
         var error:NSError?
@@ -216,7 +218,6 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
 
         // stop the ads on this view
         self.should_begin_banner = false
-        self.adBanner.hidden = true
         
         var verseId : Int?
         var isWorld = false
@@ -254,8 +255,6 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         
         if let vid = verseId {
             
-            println(vid)
-            
             if isWorld{
                 let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
                 vc.activeTopic = activeTopic
@@ -273,8 +272,28 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
             vc.topic = topic
             navigationController?.pushViewController(vc, animated: false)
             
-            println("loading NewVerseViewController")
         }
+    }
+    
+    
+    // MARK - Update the label to display user_name and score
+    
+    func updateUserLabel() {
+        if let un = NetOpers.sharedInstance.user?.user_name as? String {
+            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
+                self.userLabel.text = un + " // " + String(us) + " points"
+            }
+        } else {
+            self.userLabel.text = "You are not signed in"
+        }
+    }
+    
+    // MARK - Topics
+    
+    
+    func get_topics(){
+        // get all the available topics (has nothing to do with active / world
+        NetOpers.sharedInstance._load_topics(on_loaded_topics_completion)
     }
     
     func on_loaded_topics_completion(data:NSData?, response:NSURLResponse?, error:NSError?){
@@ -322,14 +341,11 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         }
     }
     
-    func get_topics(){
-        NetOpers.sharedInstance._load_topics(on_loaded_topics_completion)
-    }
-    
     func get_active_topics() {
         // TODO: don't let this be spammed
         reset_topic_labels()
-        
+        println("get_active_topics called")
+        self.active_topics = []
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", update_active_topics)
     }
     
@@ -396,9 +412,14 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     }
     
     func update_topic_labels() {
+        
+        println("TopicsViewController.update_topic_labels called")
+        
+        println(self.active_topics)
      
         for at in self.active_topics {
             
+            println(at.verse_id)
             
             var index = find(self.topic_order, at.id as Int)! + 1
             
@@ -418,13 +439,69 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
                         break
                         
                     }
-                    
                 }
             }
-            
         }
-        
     }
+    
+    
+    func present_topics(){
+        if self.topic_order.count > 0{
+            // self.topic_order = self.shuffle(self.topic_order)
+            for idx in 1...16{
+                
+                var tid = self.topic_order[idx-1]
+                var topic = self.topics[tid] as Topic
+                
+                var btn: TopicButton? = self.view.viewWithTag(idx) as? TopicButton
+                if btn != nil{
+                    btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
+                }
+            }
+        }
+    }
+    
+    
+    // MARK: - Ad Banner
+    
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    func hide_adbanner(){
+        self.iAdBanner?.hidden = true
+    }
+    
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+    
+    
+    // MARK: - gesture, shuffling
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+        if motion == .MotionShake {
+            self.present_topics()
+        }
+    }
+    
+    func shuffle<C: MutableCollectionType where C.Index == Int>(var list: C) -> C {
+        let count = countElements(list)
+        for i in 0..<(count - 1) {
+            let j = Int(arc4random_uniform(UInt32(count - i))) + i
+            swap(&list[i], &list[j])
+        }
+        return list
+    }
+    
+    
+    // MARK: - notification, alerts
     
     func dispatch_alert(title:String, message:String, controller_title:String){
         
@@ -448,80 +525,6 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         
         self.presentViewController(alertController, animated: true, completion: nil)
     }
-    
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
-        if motion == .MotionShake {
-            self.present_topics()
-        }
-    }
-    
-    func shuffle<C: MutableCollectionType where C.Index == Int>(var list: C) -> C {
-        let count = countElements(list)
-        for i in 0..<(count - 1) {
-            let j = Int(arc4random_uniform(UInt32(count - i))) + i
-            swap(&list[i], &list[j])
-        }
-        return list
-    }
-    
-    func present_topics(){
-        if self.topic_order.count > 0{
-            // self.topic_order = self.shuffle(self.topic_order)
-            for idx in 1...16{
-                
-                var tid = self.topic_order[idx-1]
-                var topic = self.topics[tid] as Topic
-                
-                var btn: TopicButton? = self.view.viewWithTag(idx) as? TopicButton
-                if btn != nil{
-                    btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
-                }
-            }
-        }
-    }
-    
-    
-    // MARK: - Ad Banner
-    
-    func bannerViewWillLoadAd(banner: ADBannerView!) {
-        println("bannerViewWillLoadAd called")
-    }
-    
-    func bannerViewDidLoadAd(banner: ADBannerView!) {
-        println("bannerViewDidLoadAd called")
-        self.adBanner.hidden = false
-//        self.tabBarController?.tabBar.hidden = true
-//        var timer = NSTimer.scheduledTimerWithTimeInterval(
-//            5, target: self, selector: Selector("hide_adbanner"), userInfo: nil, repeats: false)
-
-    }
-    
-    func bannerViewActionDidFinish(banner: ADBannerView!) {
-        println("bannerViewACtionDidFinish called")
-    }
-    
-    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
-        println("bannerViewActionShouldBegin called \(self.should_begin_banner)")
-        return self.should_begin_banner
-    }
-    
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        println("bannerView didFailToReceiveAdWithError called")
-    }
-    
-    func hide_adbanner(){
-        self.adBanner.hidden = true
-    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 

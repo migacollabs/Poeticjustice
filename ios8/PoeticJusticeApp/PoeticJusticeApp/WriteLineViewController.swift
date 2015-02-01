@@ -56,13 +56,14 @@ class Verse {
     
 }
 
-class WriteLineViewController: UIViewController {
+class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var topicButton: UIButton!
-    @IBOutlet weak var adBanner: ADBannerView!
     
     var maxNumPlayers : Int = 2
+    
+    var iAdBanner: ADBannerView?
     
     @IBAction func setNumberPlayers(sender: AnyObject) {
         let sc = (sender as UISegmentedControl)
@@ -108,9 +109,6 @@ class WriteLineViewController: UIViewController {
         self.configureView()
         updateUserLabel()
         
-        var timer = NSTimer.scheduledTimerWithTimeInterval(
-            31, target: self, selector: Selector("allow_banner"), userInfo: nil, repeats: false)
-        
     }
     
     var lastTabbed : NSDate?
@@ -120,6 +118,18 @@ class WriteLineViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.canDisplayBannerAds = true
+        self.iAdBanner = self.appdelegate().iAdBanner
+        //self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            println("adding ad banner subview ")
+            self.view.addSubview(adb)
+        }else{
+            println("WriteLineViewController iAdBanner is nil")
+        }
         
         if let t = topic {
             title = t.name as? String
@@ -153,8 +163,14 @@ class WriteLineViewController: UIViewController {
             }
         
         }
-        
     }
+    
+    
+    override func viewWillDisappear(animated: Bool){
+//        self.iAdBanner?.delegate = nil
+        self.iAdBanner?.removeFromSuperview()
+    }
+    
     
     func configureView(){
         if let t_btn = self.topicButton{
@@ -163,11 +179,13 @@ class WriteLineViewController: UIViewController {
             }
         }
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     func updateUserLabel() {
         if let un = NetOpers.sharedInstance.user?.user_name as? String {
@@ -301,13 +319,22 @@ class WriteLineViewController: UIViewController {
     
     // MARK: - Ad Banner
     
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
     func bannerViewWillLoadAd(banner: ADBannerView!) {
         println("bannerViewWillLoadAd called")
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         println("bannerViewDidLoadAd called")
-        self.adBanner.hidden = false
+        //UIView.beginAnimations(nil, context:nil)
+        //UIView.setAnimationDuration(1)
+        //self.iAdBanner?.alpha = 1
+        self.iAdBanner?.hidden = false
+        //UIView.commitAnimations()
+        
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
@@ -315,19 +342,16 @@ class WriteLineViewController: UIViewController {
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
-        println("bannerViewActionShouldBegin called \(self.should_begin_banner)")
-        return self.should_begin_banner
+        return true
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         println("bannerView didFailToReceiveAdWithError called")
+        self.iAdBanner?.hidden = true
     }
     
-    func allow_banner(){
-        self.should_begin_banner = true
-    }
     func hide_adbanner(){
-        self.adBanner.hidden = true
+        self.iAdBanner?.hidden = true
     }
 
 }

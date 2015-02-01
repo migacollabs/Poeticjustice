@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iAd
 import AVFoundation
 
 class NewVerseViewController: UIViewController {
@@ -21,6 +22,8 @@ class NewVerseViewController: UIViewController {
     var verseId : Int?
     
     var maxNumPlayers : Int = 2
+    
+    var iAdBanner: ADBannerView?
     
     var topic: Topic?{
         didSet{
@@ -49,6 +52,23 @@ class NewVerseViewController: UIViewController {
         super.viewDidLoad()
         self.configureView()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        //self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            println("adding ad banner subview ")
+            self.view.addSubview(adb)
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool){
+//        self.iAdBanner?.delegate = nil
+//        self.iAdBanner?.removeFromSuperview()
     }
 
     override func didReceiveMemoryWarning() {
@@ -153,5 +173,10 @@ class NewVerseViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
 }

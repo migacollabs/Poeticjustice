@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iAd
 import AVFoundation
 
 class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -16,6 +17,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var user_ids:[Int]?
     var players: [User] = []
+    var iAdBanner: ADBannerView?
     
     var activeTopic:ActiveTopic?{
         didSet(newValue){
@@ -33,6 +35,25 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.configureView()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        println("TopicsViewController.viewWillAppear called")
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        //self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            println("adding ad banner subview ")
+            self.view.addSubview(adb)
+        }
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool){
+//        self.iAdBanner?.delegate = nil
+//        self.iAdBanner?.removeFromSuperview()
     }
     
     override func didReceiveMemoryWarning() {
@@ -101,7 +122,21 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 
                 println(jsonResult)
                 
+                if let new_player = jsonResult["user"] as? NSDictionary{
+                    println("new player \(new_player)")
+                    var u = User(userData:new_player as NSDictionary)
+                    self.players.append(u)
+                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                        dispatch_async(dispatch_get_main_queue(),{
+                            
+                            self.playerTable.reloadData()
+                            let vc = TopicsViewController(nibName: "TopicsViewController", bundle:nil)
+                            
+                        })
+                    })
+                }
             }
+            
         }else{
             switch httpResponse.statusCode{
             case 401:
@@ -237,6 +272,18 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    // MARK: - Ad Banner
+    
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    
+    
+    
+    
     
 //    func loadPlayers(data: NSData?, response: NSURLResponse?, error: NSError?) {
 //        let httpResponse = response as NSHTTPURLResponse

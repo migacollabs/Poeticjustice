@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import iAd
 import AVFoundation
 
 class HelpViewController: UIViewController {
+    
+    var iAdBanner: ADBannerView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +21,22 @@ class HelpViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        //self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            self.view.addSubview(adb)
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool){
+//        self.iAdBanner?.delegate = nil
+//        self.iAdBanner?.removeFromSuperview()
     }
     
     @IBAction func handleFAQButton(sender: AnyObject) {
@@ -64,5 +83,11 @@ class HelpViewController: UIViewController {
     // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - Ad Banner
+    
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
     
 }
