@@ -412,18 +412,6 @@ def get_active_topics(request):
 
                 V, T, U, UxU= ~Verse, ~VerseCategoryTopic, ~User, ~UserXUser
 
-                # global open verses and topics that are not mine
-                for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
-                    filter(V.complete==False).\
-                    filter(V.owner_id==U.id).\
-                    filter(U.id!=user.id).\
-                    filter(V.friends_only==False).\
-                    filter(V.participant_count<V.max_participants).\
-                    order_by(func.random()).\
-                    limit(5):
-                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'world', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
-
                 # topics that are mine
                 for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
                     filter(V.complete==False).\
@@ -472,6 +460,19 @@ def get_active_topics(request):
                     limit(3):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
+                    
+                # put global open verses last, so mine and friends show up first in topics view
+                # global open verses and topics that are not mine
+                for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
+                    filter(V.complete==False).\
+                    filter(V.owner_id==U.id).\
+                    filter(U.id!=user.id).\
+                    filter(V.friends_only==False).\
+                    filter(V.participant_count<V.max_participants).\
+                    order_by(func.random()).\
+                    limit(5):
+                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'world', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
                 return {"results":topics}
 
