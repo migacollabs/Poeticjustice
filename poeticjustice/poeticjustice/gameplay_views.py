@@ -938,7 +938,7 @@ def join_verse(request):
 
                 v.save(session)
 
-
+                user = User.load(user.id, session=session)
 
             res = dict(
                 is_next=is_next,
