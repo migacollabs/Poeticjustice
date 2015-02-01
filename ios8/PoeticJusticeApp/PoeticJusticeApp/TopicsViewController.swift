@@ -103,11 +103,16 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     @IBOutlet weak var topicButton: TopicButton!
     @IBOutlet var topicScrollView: UIScrollView!
     @IBOutlet weak var adBanner: ADBannerView!
+    @IBOutlet var userLabel: UILabel!
+    
     
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
     var active_topics:[ActiveTopic] = []
     var should_begin_banner = true
+    var lastTabbed : NSDate?
+    var audioPlayer : AVAudioPlayer?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,11 +131,10 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     
     override func viewWillAppear(animated: Bool) {
         // click on the tab, so refresh
-        get_active_topics()
-        updateUserLabel()
+        println("TopicsViewController.viewWillAppear called")
+        self.get_active_topics()
+        self.updateUserLabel()
     }
-    
-    var lastTabbed : NSDate?
     
     @IBAction func refreshActiveTopics(sender: AnyObject) {
         if (NetOpers.sharedInstance.userId>0) {
@@ -154,24 +158,10 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         }
     }
     
-    @IBOutlet var userLabel: UILabel!
-
-    func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = un + " // " + String(us) + " points"
-            }
-        } else {
-            self.userLabel.text = "You are not signed in"
-        }
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    var audioPlayer : AVAudioPlayer?
     
     func playButtonSound(){
         var error:NSError?
@@ -254,8 +244,6 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         
         if let vid = verseId {
             
-            println(vid)
-            
             if isWorld{
                 let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
                 vc.activeTopic = activeTopic
@@ -273,8 +261,28 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
             vc.topic = topic
             navigationController?.pushViewController(vc, animated: false)
             
-            println("loading NewVerseViewController")
         }
+    }
+    
+    
+    // MARK - Update the label to display user_name and score
+    
+    func updateUserLabel() {
+        if let un = NetOpers.sharedInstance.user?.user_name as? String {
+            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
+                self.userLabel.text = un + " // " + String(us) + " points"
+            }
+        } else {
+            self.userLabel.text = "You are not signed in"
+        }
+    }
+    
+    // MARK - Topics
+    
+    
+    func get_topics(){
+        // get all the available topics (has nothing to do with active / world
+        NetOpers.sharedInstance._load_topics(on_loaded_topics_completion)
     }
     
     func on_loaded_topics_completion(data:NSData?, response:NSURLResponse?, error:NSError?){
@@ -322,14 +330,11 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         }
     }
     
-    func get_topics(){
-        NetOpers.sharedInstance._load_topics(on_loaded_topics_completion)
-    }
-    
     func get_active_topics() {
         // TODO: don't let this be spammed
         reset_topic_labels()
-        
+        println("get_active_topics called")
+        self.active_topics = []
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", update_active_topics)
     }
     
@@ -396,9 +401,14 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     }
     
     func update_topic_labels() {
+        
+        println("TopicsViewController.update_topic_labels called")
+        
+        println(self.active_topics)
      
         for at in self.active_topics {
             
+            println(at.verse_id)
             
             var index = find(self.topic_order, at.id as Int)! + 1
             
@@ -418,51 +428,11 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
                         break
                         
                     }
-                    
                 }
             }
-            
-        }
-        
-    }
-    
-    func dispatch_alert(title:String, message:String, controller_title:String){
-        
-        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
-                
-                self.presentViewController(alertController, animated: true, completion: nil)
-                
-            })
-        })
-    }
-    
-    func show_alert(title:String, message:String, controller_title:String){
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-    }
-    
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
-        if motion == .MotionShake {
-            self.present_topics()
         }
     }
     
-    func shuffle<C: MutableCollectionType where C.Index == Int>(var list: C) -> C {
-        let count = countElements(list)
-        for i in 0..<(count - 1) {
-            let j = Int(arc4random_uniform(UInt32(count - i))) + i
-            swap(&list[i], &list[j])
-        }
-        return list
-    }
     
     func present_topics(){
         if self.topic_order.count > 0{
@@ -490,9 +460,6 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         println("bannerViewDidLoadAd called")
         self.adBanner.hidden = false
-//        self.tabBarController?.tabBar.hidden = true
-//        var timer = NSTimer.scheduledTimerWithTimeInterval(
-//            5, target: self, selector: Selector("hide_adbanner"), userInfo: nil, repeats: false)
 
     }
     
@@ -522,6 +489,50 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    // MARK: - gesture, shuffling
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+        if motion == .MotionShake {
+            self.present_topics()
+        }
+    }
+    
+    func shuffle<C: MutableCollectionType where C.Index == Int>(var list: C) -> C {
+        let count = countElements(list)
+        for i in 0..<(count - 1) {
+            let j = Int(arc4random_uniform(UInt32(count - i))) + i
+            swap(&list[i], &list[j])
+        }
+        return list
+    }
+    
+    
+    // MARK: - notification, alerts
+    
+    func dispatch_alert(title:String, message:String, controller_title:String){
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            })
+        })
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
 
 }
 

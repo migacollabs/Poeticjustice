@@ -101,7 +101,21 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 
                 println(jsonResult)
                 
+                if let new_player = jsonResult["user"] as? NSDictionary{
+                    println("new player \(new_player)")
+                    var u = User(userData:new_player as NSDictionary)
+                    self.players.append(u)
+                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                        dispatch_async(dispatch_get_main_queue(),{
+                            
+                            self.playerTable.reloadData()
+                            let vc = TopicsViewController(nibName: "TopicsViewController", bundle:nil)
+                            
+                        })
+                    })
+                }
             }
+            
         }else{
             switch httpResponse.statusCode{
             case 401:
