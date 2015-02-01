@@ -47,7 +47,7 @@ class NewVerseViewController: UIViewController {
             break;
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureView()
@@ -161,7 +161,8 @@ class NewVerseViewController: UIViewController {
         let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
         vc.verseId = verseId
         vc.topic = topic
-        navigationController?.pushViewController(vc, animated: false)
+        vc.newVerseViewController = self
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     /*

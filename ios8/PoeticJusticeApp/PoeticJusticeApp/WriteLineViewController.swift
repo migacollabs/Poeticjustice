@@ -95,11 +95,24 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
             self.configureView()
         }
     }
+    
+    // for now, this is just to help clean up nav once this view is reached
+    var newVerseViewController : NewVerseViewController?
+    var worldVerseViewController : WorldVerseViewController?
 
     @IBOutlet var userLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // try to clean up nav once this view is loaded
+        if let nv = newVerseViewController {
+            self.navigationController!.setViewControllers([ self.navigationController!.viewControllers[0], self], animated : false)
+        }
+        
+        if let wv = worldVerseViewController {
+            self.navigationController!.setViewControllers([ self.navigationController!.viewControllers[0], self], animated : false)
+        }
         
         verseView.text = ""
         setLine.text = ""

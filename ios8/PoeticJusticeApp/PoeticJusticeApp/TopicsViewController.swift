@@ -258,19 +258,19 @@ class TopicsViewController: UIViewController {
             if isWorld{
                 let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
                 vc.activeTopic = activeTopic
-                navigationController?.pushViewController(vc, animated: false)
+                navigationController?.pushViewController(vc, animated: true)
                 
             }else{
                 let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
                 vc.verseId = vid
                 vc.topic = topic
-                navigationController?.pushViewController(vc, animated: false)
+                navigationController?.pushViewController(vc, animated: true)
             }
 
         } else {
             let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
             vc.topic = topic
-            navigationController?.pushViewController(vc, animated: false)
+            navigationController?.pushViewController(vc, animated: true)
             
         }
     }
@@ -426,15 +426,19 @@ class TopicsViewController: UIViewController {
             if let tl = get_topic_label(index) {
                 if let s = at.src as? String {
                     
-                    // TODO: determine if user_name or email_address is shown
-                    
                     switch s{
-                    case "mine", "joined":
+                    case "mine":
+                        // i created this verse for friends or world
                         tl.text = at.user_name as? String
+                    case "joined":
+                        // TODO: still need to signify if joined a friends verse or world verse?
+                        tl.text = "j: " + (at.user_name as? String)!
                     case "world":
+                        // open world verse
                         tl.text = "w: " + (at.user_name as? String)!
                     case "":
-                        tl.text = "f: " + (at.email_address as? String)!
+                        // open friend verse
+                        tl.text = "f: " + (at.user_name as? String)!
                     default:
                         break
                         

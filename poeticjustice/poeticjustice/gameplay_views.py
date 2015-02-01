@@ -438,7 +438,7 @@ def get_active_topics(request):
                     # topics that i've joined
                     for r in session.query(V, T, U).\
                         filter(V.verse_category_topic_id==T.id).\
-                        filter(U.id==user.id).\
+                        filter(U.id==V.owner_id).\
                         filter(V.complete==False).\
                         filter(V.id.in_(user.open_verse_ids)):
                         # limit(5):

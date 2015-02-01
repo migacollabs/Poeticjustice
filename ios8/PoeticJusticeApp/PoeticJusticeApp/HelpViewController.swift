@@ -41,7 +41,7 @@ class HelpViewController: UIViewController {
     
     @IBAction func handleFAQButton(sender: AnyObject) {
         let vc = FAQViewController(nibName: "FAQViewController", bundle:nil)
-        navigationController?.pushViewController(vc, animated: false)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     

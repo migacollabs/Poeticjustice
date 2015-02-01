@@ -92,16 +92,18 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         println(error)
     }
     
+    var verseId : Int?
 
     @IBAction func onJoin(sender: AnyObject) {
         // playButtonSound()
         if let at = self.activeTopic{
             if let vid = at.verse_id as? Int{
+                self.verseId = vid
                 var params = [String:AnyObject]()
                 params["user_id"] = NetOpers.sharedInstance.user?.id!
-                params["id"] = vid
+                params["id"] = self.verseId
                 NetOpers.sharedInstance.post(
-                    NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=\(vid)",
+                    NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=" + String(vid),
                     params: params,
                     onJoinedCompletionHandeler)
             }
@@ -130,7 +132,10 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                         dispatch_async(dispatch_get_main_queue(),{
                             
                             self.playerTable.reloadData()
-                            let vc = TopicsViewController(nibName: "TopicsViewController", bundle:nil)
+                            let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+                            vc.verseId = self.verseId!
+                            vc.worldVerseViewController = self
+                            self.navigationController?.pushViewController(vc, animated: true)
                             
                         })
                     })

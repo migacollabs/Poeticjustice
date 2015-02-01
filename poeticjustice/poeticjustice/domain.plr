@@ -423,6 +423,14 @@ AFTER_CREATE_SQL:
             (ARRAY[11113], 1, 2, 8, 11113, 2, False, False, 11113);
 
 
+        INSERT INTO line_x_verses
+        (
+            user_id, verse_id, line_text, line_score, added
+        )
+        VALUES
+        (
+            11113, 2, 'This is the first line for the world to see', 0, false
+        );
 
 
 
