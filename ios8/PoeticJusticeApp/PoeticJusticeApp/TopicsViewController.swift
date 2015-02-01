@@ -102,10 +102,10 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
 
     @IBOutlet weak var topicButton: TopicButton!
     @IBOutlet var topicScrollView: UIScrollView!
-    @IBOutlet weak var adBanner: ADBannerView!
     @IBOutlet var userLabel: UILabel!
     
     
+    var iAdBanner: ADBannerView?
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
     var active_topics:[ActiveTopic] = []
@@ -117,23 +117,37 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.adBanner.delegate = self
-        self.adBanner.hidden = true
-        
         reset_topic_labels()
         
         title = "Topics"
         
         self.get_topics()
+        
+        
 
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
-        // click on the tab, so refresh
+        
         println("TopicsViewController.viewWillAppear called")
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            println("adding ad banner subview ")
+            self.view.addSubview(adb)
+        }
+        
+        // click on the tab, so refresh
         self.get_active_topics()
         self.updateUserLabel()
+    }
+    
+    override func viewWillDisappear(animated: Bool){
+        self.iAdBanner?.delegate = nil
+        self.iAdBanner?.removeFromSuperview()
     }
     
     @IBAction func refreshActiveTopics(sender: AnyObject) {
@@ -206,7 +220,6 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
 
         // stop the ads on this view
         self.should_begin_banner = false
-        self.adBanner.hidden = true
         
         var verseId : Int?
         var isWorld = false
@@ -453,13 +466,21 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     
     // MARK: - Ad Banner
     
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
     func bannerViewWillLoadAd(banner: ADBannerView!) {
         println("bannerViewWillLoadAd called")
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         println("bannerViewDidLoadAd called")
-        self.adBanner.hidden = false
+        //UIView.beginAnimations(nil, context:nil)
+        //UIView.setAnimationDuration(1)
+        //self.iAdBanner?.alpha = 1
+        self.iAdBanner?.hidden = false
+        //UIView.commitAnimations()
 
     }
     
@@ -468,16 +489,16 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
-        println("bannerViewActionShouldBegin called \(self.should_begin_banner)")
-        return self.should_begin_banner
+        return true
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         println("bannerView didFailToReceiveAdWithError called")
+        self.iAdBanner?.hidden = true
     }
     
     func hide_adbanner(){
-        self.adBanner.hidden = true
+        self.iAdBanner?.hidden = true
     }
     
     /*

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import iAd
 
 class Friend {
     let friend_data: NSDictionary
@@ -103,11 +104,13 @@ class Friend {
 
 import UIKit
 
-class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ADBannerViewDelegate {
     
     @IBOutlet var myTableView: UITableView!
     
     var friends : [Friend] = []
+    var lastTabbed : NSDate?
+    var iAdBanner: ADBannerView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,6 +121,44 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.myTableView.dataSource = self
         self.myTableView.delegate = self
         
+    }
+    
+    override func viewWillAppear(animated : Bool) {
+        
+        // set up adbanner
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            self.view.addSubview(adb)
+        }
+        
+        if (NetOpers.sharedInstance.userId>0) {
+            
+            var refresh : Bool = false
+            
+            if (lastTabbed==nil) {
+                refresh = true
+            } else {
+                var elapsedTime = NSDate().timeIntervalSinceDate(lastTabbed!)
+                refresh = (elapsedTime>NSTimeInterval(10.0))
+            }
+            
+            if (refresh) {
+                var uId : String = String(NetOpers.sharedInstance.userId!)
+                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends?user_id=" + uId, loadFriends)
+                lastTabbed = NSDate()
+            }
+            
+            updateUserLabel()
+            
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool){
+        self.iAdBanner?.delegate = nil
+        self.iAdBanner?.removeFromSuperview()
     }
     
     func show_alert(title:String, message:String, controller_title:String){
@@ -144,36 +185,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Friends"
-    }
-    
-    var lastTabbed : NSDate?
-    
-    override func viewWillAppear(animated : Bool) {
-        
-        if (NetOpers.sharedInstance.userId>0) {
-            
-            var refresh : Bool = false
-            
-            if (lastTabbed==nil) {
-                refresh = true
-            } else {
-                var elapsedTime = NSDate().timeIntervalSinceDate(lastTabbed!)
-                refresh = (elapsedTime>NSTimeInterval(10.0))
-            }
-            
-            if (refresh) {
-                var uId : String = String(NetOpers.sharedInstance.userId!)
-                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends?user_id=" + uId, loadFriends)
-                lastTabbed = NSDate()
-            }
-            
-            updateUserLabel()
-            
-        }
-//        else {
-//            show_alert("Not logged in", message: "Please login to continue", controller_title:"Ok")
-//            tabBarController?.selectedIndex = 0
-//        }
     }
     
     func updateUserLabel() {
@@ -331,6 +342,39 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func refreshView(sender: AnyObject) {
         viewWillAppear(true)
+    }
+    
+    // MARK: - Ad Banner
+    
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    func bannerViewWillLoadAd(banner: ADBannerView!) {
+        println("bannerViewWillLoadAd called")
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+        println("bannerViewDidLoadAd called")
+        //UIView.beginAnimations(nil, context:nil)
+        //UIView.setAnimationDuration(1)
+        //self.iAdBanner?.alpha = 1
+        self.iAdBanner?.hidden = false
+        //UIView.commitAnimations()
+        
+    }
+    
+    func bannerViewActionDidFinish(banner: ADBannerView!) {
+        println("bannerViewACtionDidFinish called")
+    }
+    
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
+        return true
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        println("bannerView didFailToReceiveAdWithError called")
+        self.iAdBanner?.hidden = true
     }
     
 }
