@@ -429,6 +429,7 @@ def get_active_topics(request):
                     for r in session.query(V, T, U).\
                         filter(V.verse_category_topic_id==T.id).\
                         filter(U.id==V.owner_id).\
+                        filter(V.id.in_(user.open_verse_ids)).\
                         filter(V.complete==False):
                         # limit(5):
                         if r[1].id not in unique_topics:
