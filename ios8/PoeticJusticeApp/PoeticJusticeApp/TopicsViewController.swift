@@ -258,6 +258,7 @@ class TopicsViewController: UIViewController {
             if isWorld{
                 let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
                 vc.activeTopic = activeTopic
+                vc.topic = topic
                 navigationController?.pushViewController(vc, animated: true)
                 
             }else{

@@ -26,6 +26,8 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         }
     }
     
+    var topic : Topic?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -134,6 +136,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                             self.playerTable.reloadData()
                             let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
                             vc.verseId = self.verseId!
+                            vc.topic = self.topic
                             vc.worldVerseViewController = self
                             self.navigationController?.pushViewController(vc, animated: true)
                             
