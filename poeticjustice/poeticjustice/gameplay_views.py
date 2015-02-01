@@ -246,6 +246,51 @@ def add_user_friend(request):
         except:
             pass
 
+# TODO: split this into two and memoize the public one?
+@view_config(
+    name='leaderboard',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def get_leaderboard(request):
+    print 'get_leaderboard called', request
+    try:
+        user_id = None
+        if 'user_id' in request.params:
+            user_id = request.params['user_id']
+
+        users = []
+        U = ~User
+
+        with SQLAlchemySessionFactory() as session:
+            if user_id:
+                
+                for r in session.query(U).filter(U.is_active==true).order_by(desc(U.user_score)).limit(14):
+                    users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id})
+
+                if user.id not in users:
+                    for r in session.query(U).filter(U.id==user_id):
+                        users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id})
+            else:
+                for r in session.query(U).filter(U.is_active==True).order_by(desc(U.user_score)).limit(15):
+                    users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id})
+
+        return {"results":users}
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
 
 @view_config(
     name='user-friends',

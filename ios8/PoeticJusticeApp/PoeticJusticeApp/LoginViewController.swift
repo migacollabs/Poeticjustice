@@ -44,6 +44,11 @@ class LoginViewController: UIViewController {
         }
     }
     
+    @IBAction func loadLeaderboard(sender: AnyObject) {
+        let vc = LeaderboardViewController(nibName: "LeaderboardViewController", bundle:nil)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     @IBAction func on_go(sender: AnyObject) {
         
         self.tabBarController?.tabBar.hidden = true

@@ -44,6 +44,8 @@
 		46CE127E1A7D45D400B77C74 /* arrow_24.png in Resources */ = {isa = PBXBuildFile; fileRef = 46CE127B1A7D45D400B77C74 /* arrow_24.png */; };
 		46CE127F1A7D45D400B77C74 /* arrow_48.png in Resources */ = {isa = PBXBuildFile; fileRef = 46CE127C1A7D45D400B77C74 /* arrow_48.png */; };
 		46CE12801A7D45D400B77C74 /* arrow_64.png in Resources */ = {isa = PBXBuildFile; fileRef = 46CE127D1A7D45D400B77C74 /* arrow_64.png */; };
+		46CE12831A7DA1E700B77C74 /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CE12811A7DA1E600B77C74 /* LeaderboardViewController.swift */; };
+		46CE12841A7DA1E700B77C74 /* LeaderboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46CE12821A7DA1E700B77C74 /* LeaderboardViewController.xib */; };
 		46DEE1BC1A7AE9C800016841 /* comment_24.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DEE1AA1A7AE9C800016841 /* comment_24.png */; };
 		46DEE1BD1A7AE9C800016841 /* comment_48.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DEE1AB1A7AE9C800016841 /* comment_48.png */; };
 		46DEE1BE1A7AE9C800016841 /* comment_64.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DEE1AC1A7AE9C800016841 /* comment_64.png */; };
@@ -443,6 +445,8 @@
 		46CE127B1A7D45D400B77C74 /* arrow_24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_24.png; sourceTree = "<group>"; };
 		46CE127C1A7D45D400B77C74 /* arrow_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_48.png; sourceTree = "<group>"; };
 		46CE127D1A7D45D400B77C74 /* arrow_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_64.png; sourceTree = "<group>"; };
+		46CE12811A7DA1E600B77C74 /* LeaderboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
+		46CE12821A7DA1E700B77C74 /* LeaderboardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LeaderboardViewController.xib; sourceTree = "<group>"; };
 		46DEE1AA1A7AE9C800016841 /* comment_24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_24.png; sourceTree = "<group>"; };
 		46DEE1AB1A7AE9C800016841 /* comment_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_48.png; sourceTree = "<group>"; };
 		46DEE1AC1A7AE9C800016841 /* comment_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_64.png; sourceTree = "<group>"; };
@@ -935,6 +939,8 @@
 				97C710461A7BE99D0081F734 /* WorldVerseViewController.xib */,
 				4649A38E1A7C50FE00D7214B /* FAQViewController.swift */,
 				4649A38F1A7C50FE00D7214B /* FAQViewController.xib */,
+				46CE12811A7DA1E600B77C74 /* LeaderboardViewController.swift */,
+				46CE12821A7DA1E700B77C74 /* LeaderboardViewController.xib */,
 			);
 			path = PoeticJusticeApp;
 			sourceTree = "<group>";
@@ -1456,6 +1462,7 @@
 				46E3DE4F1A7045B7006D059A /* Address-Book.png in Resources */,
 				46E3DF641A7045B7006D059A /* Warning-Sign.png in Resources */,
 				46E3DD0D1A703F01006D059A /* FriendsViewController.xib in Resources */,
+				46CE12841A7DA1E700B77C74 /* LeaderboardViewController.xib in Resources */,
 				46E3DEE81A7045B7006D059A /* OSX-Window.png in Resources */,
 				46E3DF581A7045B7006D059A /* Video-Camera.png in Resources */,
 				46E3DE931A7045B7006D059A /* Desk.png in Resources */,
@@ -1746,6 +1753,7 @@
 				46E0B3491A759A80001DE2F8 /* GameState.swift in Sources */,
 				46E3DD101A703F25006D059A /* WriteLineViewController.swift in Sources */,
 				46E3DD151A703F87006D059A /* LayoutHelpViewController.swift in Sources */,
+				46CE12831A7DA1E700B77C74 /* LeaderboardViewController.swift in Sources */,
 				9756136F1A7973590024EACB /* NewVerseViewController.swift in Sources */,
 				97C710471A7BE99D0081F734 /* WorldVerseViewController.swift in Sources */,
 				46E0B34B1A75D053001DE2F8 /* Set.swift in Sources */,
