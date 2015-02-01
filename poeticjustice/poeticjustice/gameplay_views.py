@@ -409,6 +409,7 @@ def get_active_topics(request):
             print 'loading active topics for user', user.id
             with SQLAlchemySessionFactory() as session:
                 topics = []
+                unique_topics = []
 
                 V, T, U, UxU= ~Verse, ~VerseCategoryTopic, ~User, ~UserXUser
 
@@ -421,17 +422,18 @@ def get_active_topics(request):
                     # limit(5):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'mine', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
+                    unique_topics.append(r[1].id)
 
                 if user.open_verse_ids:
                     # topics that i've joined
                     for r in session.query(V, T, U).\
                         filter(V.verse_category_topic_id==T.id).\
                         filter(U.id==V.owner_id).\
-                        filter(V.complete==False).\
-                        filter(V.id.in_(user.open_verse_ids)):
+                        filter(V.complete==False):
                         # limit(5):
-                        topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                            "user_name":r[2].user_name, "src":'joined', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
+                        if r[1].id not in unique_topics:
+                            topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                                "user_name":r[2].user_name, "src":'joined', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
                 # friendship initiated by me
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
@@ -447,6 +449,7 @@ def get_active_topics(request):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
+
                 # friendship initiated by friend
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
                     filter(V.owner_id==UxU.user_id).\
@@ -458,9 +461,11 @@ def get_active_topics(request):
                     filter(V.participant_count<V.max_participants).\
                     order_by(func.random()).\
                     limit(3):
-                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
-                    
+                        topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                            "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
+
+                # filter(~V.id.any(V.id.in_(unique_verses))).\ # TODO: NOT IN
+
                 # put global open verses last, so mine and friends show up first in topics view
                 # global open verses and topics that are not mine
                 for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
@@ -470,9 +475,10 @@ def get_active_topics(request):
                     filter(V.friends_only==False).\
                     filter(V.participant_count<V.max_participants).\
                     order_by(func.random()).\
-                    limit(5):
-                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'world', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
+                    limit(10):
+                    if r[1].id not in unique_topics:
+                        topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                            "user_name":r[2].user_name, "src":'world', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
                 return {"results":topics}
 

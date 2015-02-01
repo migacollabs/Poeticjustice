@@ -163,6 +163,9 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
 
     @IBAction func onStart(sender: AnyObject) {
         // playButtonSound()
+        let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
+        vc.topic = self.topic
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     // MARK - TableView
