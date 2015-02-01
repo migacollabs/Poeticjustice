@@ -104,7 +104,7 @@ class Friend {
 
 import UIKit
 
-class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ADBannerViewDelegate {
+class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var myTableView: UITableView!
     
@@ -128,7 +128,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         // set up adbanner
         var screen_height = UIScreen.mainScreen().bounds.height
         self.iAdBanner = self.appdelegate().iAdBanner
-        self.iAdBanner?.delegate = self
+        //self.iAdBanner?.delegate = self
         self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
         if let adb = self.iAdBanner{
             self.view.addSubview(adb)
@@ -158,7 +158,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewWillDisappear(animated: Bool){
 //        self.iAdBanner?.delegate = nil
-        self.iAdBanner?.removeFromSuperview()
+//        self.iAdBanner?.removeFromSuperview()
     }
     
     func show_alert(title:String, message:String, controller_title:String){
@@ -348,33 +348,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func appdelegate () -> AppDelegate{
         return UIApplication.sharedApplication().delegate as AppDelegate
-    }
-    
-    func bannerViewWillLoadAd(banner: ADBannerView!) {
-        println("bannerViewWillLoadAd called")
-    }
-    
-    func bannerViewDidLoadAd(banner: ADBannerView!) {
-        println("bannerViewDidLoadAd called")
-        //UIView.beginAnimations(nil, context:nil)
-        //UIView.setAnimationDuration(1)
-        //self.iAdBanner?.alpha = 1
-        self.iAdBanner?.hidden = false
-        //UIView.commitAnimations()
-        
-    }
-    
-    func bannerViewActionDidFinish(banner: ADBannerView!) {
-        println("bannerViewACtionDidFinish called")
-    }
-    
-    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
-        return true
-    }
-    
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        println("bannerView didFailToReceiveAdWithError called")
-        self.iAdBanner?.hidden = true
     }
     
 }

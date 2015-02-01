@@ -122,7 +122,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         var screen_height = UIScreen.mainScreen().bounds.height
         self.canDisplayBannerAds = true
         self.iAdBanner = self.appdelegate().iAdBanner
-        self.iAdBanner?.delegate = self
+        //self.iAdBanner?.delegate = self
         self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
         if let adb = self.iAdBanner{
             println("adding ad banner subview ")
