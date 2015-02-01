@@ -167,7 +167,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     
     
     override func viewWillDisappear(animated: Bool){
-        self.iAdBanner?.delegate = nil
+//        self.iAdBanner?.delegate = nil
         self.iAdBanner?.removeFromSuperview()
     }
     

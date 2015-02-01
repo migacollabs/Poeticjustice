@@ -157,7 +157,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func viewWillDisappear(animated: Bool){
-        self.iAdBanner?.delegate = nil
+//        self.iAdBanner?.delegate = nil
         self.iAdBanner?.removeFromSuperview()
     }
     

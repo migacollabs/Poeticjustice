@@ -7,15 +7,17 @@
 //
 
 import UIKit
+import iAd
 import AVFoundation
 
-class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ADBannerViewDelegate {
     
     @IBOutlet weak var playerTable: UITableView!
     @IBOutlet weak var verseTitle: UILabel!
     
     var user_ids:[Int]?
     var players: [User] = []
+    var iAdBanner: ADBannerView?
     
     var activeTopic:ActiveTopic?{
         didSet(newValue){
@@ -33,6 +35,25 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.configureView()
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        println("TopicsViewController.viewWillAppear called")
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            println("adding ad banner subview ")
+            self.view.addSubview(adb)
+        }
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool){
+        //        self.iAdBanner?.delegate = nil
+        self.iAdBanner?.removeFromSuperview()
     }
     
     override func didReceiveMemoryWarning() {
@@ -251,6 +272,45 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    // MARK: - Ad Banner
+    
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    func bannerViewWillLoadAd(banner: ADBannerView!) {
+        println("bannerViewWillLoadAd called")
+    }
+    
+    func bannerViewDidLoadAd(banner: ADBannerView!) {
+        println("bannerViewDidLoadAd called")
+        //UIView.beginAnimations(nil, context:nil)
+        //UIView.setAnimationDuration(1)
+        //self.iAdBanner?.alpha = 1
+        self.iAdBanner?.hidden = false
+        //UIView.commitAnimations()
+        
+    }
+    
+    func bannerViewActionDidFinish(banner: ADBannerView!) {
+        println("bannerViewACtionDidFinish called")
+    }
+    
+    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
+        return true
+    }
+    
+    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        println("bannerView didFailToReceiveAdWithError called")
+        self.iAdBanner?.hidden = true
+    }
+    
+    
+    
+    
+    
     
 //    func loadPlayers(data: NSData?, response: NSURLResponse?, error: NSError?) {
 //        let httpResponse = response as NSHTTPURLResponse

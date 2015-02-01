@@ -146,7 +146,7 @@ class TopicsViewController: UIViewController, ADBannerViewDelegate {
     }
     
     override func viewWillDisappear(animated: Bool){
-        self.iAdBanner?.delegate = nil
+//        self.iAdBanner?.delegate = nil
         self.iAdBanner?.removeFromSuperview()
     }
     
