@@ -77,12 +77,29 @@
                         <action selector="loadLeaderboard:" destination="-1" eventType="touchUpInside" id="6ba-DE-MZo"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pMS-mk-VSp">
+                    <rect key="frame" x="260" y="471" width="81" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="9uH-97-cK7"/>
+                        <constraint firstAttribute="width" constant="81" id="BKH-gw-S8f"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="History" image="book_24.png">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="show_version_history" destination="-1" eventType="touchUpInside" id="IWS-ay-r62"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="centerX" secondItem="pMS-mk-VSp" secondAttribute="centerX" constant="-0.5" id="1py-C8-rZa"/>
                 <constraint firstItem="qRP-Qs-sqY" firstAttribute="top" secondItem="Prw-C7-NFc" secondAttribute="bottom" constant="8" symbolic="YES" id="3JT-iY-k61"/>
                 <constraint firstItem="n5F-GW-h1o" firstAttribute="top" secondItem="OrP-Tz-qIv" secondAttribute="bottom" constant="50" id="6FW-Re-bSc"/>
                 <constraint firstAttribute="trailing" secondItem="OrP-Tz-qIv" secondAttribute="trailing" id="9CT-vv-npO"/>
+                <constraint firstItem="pMS-mk-VSp" firstAttribute="top" secondItem="n5F-GW-h1o" secondAttribute="bottom" constant="27" id="Br3-Yw-acj"/>
                 <constraint firstItem="qRP-Qs-sqY" firstAttribute="centerX" secondItem="Prw-C7-NFc" secondAttribute="centerX" id="JwS-qQ-pOb"/>
                 <constraint firstItem="Prw-C7-NFc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="148" id="Rwx-Lx-WYM"/>
                 <constraint firstItem="DeK-pn-1LR" firstAttribute="centerX" secondItem="OrP-Tz-qIv" secondAttribute="centerX" id="SYi-SV-Ng0"/>
@@ -99,6 +116,7 @@
     </objects>
     <resources>
         <image name="Init.png" width="48" height="48"/>
+        <image name="book_24.png" width="24" height="24"/>
         <image name="chart_up_24.png" width="24" height="24"/>
     </resources>
 </document>

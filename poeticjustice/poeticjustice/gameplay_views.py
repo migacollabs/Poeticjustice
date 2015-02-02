@@ -550,6 +550,7 @@ def get_topics(request):
         except:
             pass
 
+
 @view_config(
     name='active-verse',
     request_method='POST',
@@ -592,6 +593,95 @@ def get_user_active_verses(request):
 
 
 @view_config(
+    name='verse-history',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def get_users_verse_history(request):
+    try:
+        print 'get_users_verse_history'
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+
+                U, V = ~User, ~Verse
+                rp = (session.query(V)
+                        .filter(V.owner_id==user.id)
+                        # .filter(V.complete==True)
+                        .order_by(V.last_upd)
+                        ).all()
+                print 'get_users_verse_history rp', rp
+
+                return dict(
+                    status='Ok',
+                    results=[Verse(entity=v).to_dict() for v in rp],
+                    logged_in=auth_usrid
+                    )
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+@view_config(
+    name='verse',
+    request_method='GET',
+    context='poeticjustice:contexts.Verses',
+    renderer='json')
+def verse_using_get_for_testing(request):
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(request.subpath)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active and user.email_address==auth_usrid:
+            
+            return get_verse(kwds['id'], user.id)
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
     name='verse',
     request_method='POST',
     context='poeticjustice:contexts.Verses',
@@ -611,7 +701,7 @@ def verse(request):
 
             verseId = request.params['id']
             
-            return get_verse(id, user.id)
+            return get_verse(verseId, user.id)
 
         raise HTTPUnauthorized
 

@@ -193,6 +193,16 @@ class LoginViewController: UIViewController {
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
+    // MARK - present Version History storyboard
+    
+    @IBAction func show_version_history(){
+        var sb = UIStoryboard(name: "VerseHistoryStoryboard", bundle: nil)
+        var controller = sb.instantiateViewControllerWithIdentifier("VerseHistoryMasterViewController") as UIViewController
+        self.presentViewController(controller, animated: true, completion: nil)
+    }
+    
+
+    
 }
 
 
