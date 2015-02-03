@@ -37,8 +37,12 @@ class LoginViewController: UIViewController {
     func updateUserLabel() {
         if let un = NetOpers.sharedInstance.user?.user_name as? String {
             if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = "You are signed in as: " + un + " // " + String(us) + " points"
+                self.userLabel.text = "You are signed in as " + un + " with " + String(us) + " points"
             }
+            
+            title = un
+            self.navigationController?.navigationBar.topItem?.title = ""
+            
         } else {
             self.userLabel.text = "You are not signed in"
         }
@@ -49,8 +53,16 @@ class LoginViewController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    func isValidEmail(testStr:String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        let range = testStr.rangeOfString(emailRegEx, options:.RegularExpressionSearch)
+        let result = range != nil ? true : false
+        return result
+    }
+    
     @IBAction func on_go(sender: AnyObject) {
         
+        self.goButton.enabled = false
         self.tabBarController?.tabBar.hidden = true
         self.userLabel.text = "Signing in..."
         
@@ -82,13 +94,32 @@ class LoginViewController: UIViewController {
                 params["device_token"] = UIDevice.currentDevice().identifierForVendor.UUIDString
                 params["device_type"] = UIDevice.currentDevice().modelName
                 
+                // verify email address
                 if let em = self.email_address.text{
                     params["login"] = em
                     
+                    if (!isValidEmail(em)) {
+                        self.show_alert("Invalid email address", message: "Please enter a valid email address", controller_title: "Ok")
+                        self.tabBarController?.tabBar.hidden = false
+                        self.userLabel.text = "You are not signed in"
+                        self.goButton.enabled = true
+                        return
+                    }
                 }
                 
+                // verify user name
                 if let un = self.user_name.text{
                     params["user_name"] = un
+                    
+                    var unl = countElements(un)
+                    
+                    if (unl>15 || unl==0) {
+                        self.show_alert("Invalid user name", message: "User name must be between 1 and 15 characters long", controller_title: "Ok")
+                        self.tabBarController?.tabBar.hidden = false
+                        self.userLabel.text = "You are not signed in"
+                        self.goButton.enabled = true
+                        return
+                    }
                 }
                 
                 if let login_em = params["login"] as? String{
@@ -96,11 +127,11 @@ class LoginViewController: UIViewController {
                     println("Connectintg as \(login_em)")
                     
                     NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
-                            
+                        
                         // we are logged in
                         // this won't be called if we set the on_login as a callback
                         self.show_alert("Login", message: "Successfully logged in", controller_title: "Thanks!")
-                            
+                        
                     })
                     
                 }else{
@@ -109,6 +140,7 @@ class LoginViewController: UIViewController {
             }else{
                 () // do no app server error msg
             }
+            
         }
         
     }
@@ -121,19 +153,13 @@ class LoginViewController: UIViewController {
             if let httpResponse = response as? NSHTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     
-                    println("checking game state")
-                    
                     if data != nil {
-                        
-                        println(data)
                         
                         var e : NSError?
                         
                         if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: &e) as? NSDictionary{
-                            
-                            println(jsonResult)
                             
                             NetOpers.sharedInstance.game_state = GameState(gameData: jsonResult)
                                 
@@ -174,8 +200,12 @@ class LoginViewController: UIViewController {
         println(error)
     }
     
+    @IBOutlet var goButton: UIButton!
+    
     func on_start(){
         println("on_start called")
+        
+        self.goButton.enabled = true
         
         playButtonSound()
         

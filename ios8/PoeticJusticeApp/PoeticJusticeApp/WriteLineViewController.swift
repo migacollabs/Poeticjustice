@@ -11,49 +11,11 @@ import Foundation
 import iAd
 import AVFoundation
 
-class Verse {
-    let verse_data: NSDictionary
-    
-    init(rec:NSDictionary){
-        self.verse_data = rec
-    }
-    
-    var id: AnyObject? {
-        get {
-            if let x = self.verse_data["verse_id"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var next_user_id : AnyObject? {
-        get {
-            if let x = self.verse_data["next_user_id"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var owner_id : AnyObject? {
-        get {
-            if let x = self.verse_data["owner_id"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var lines : [AnyObject]? {
-        get {
-            if let x = self.verse_data["lines"] as? [String] {
-                return x
-            }
-            return nil
-        }
-    }
-    
+struct VerseRec {
+    var id : Int = -1
+    var next_user_id : Int = -1
+    var owner_id : Int = -1
+    var lines : [String] = []
 }
 
 class WriteLineViewController: UIViewController, ADBannerViewDelegate {
@@ -203,7 +165,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     func updateUserLabel() {
         if let un = NetOpers.sharedInstance.user?.user_name as? String {
             if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = un + " // " + String(us) + " points"
+                self.userLabel.text = String(us) + " points"
             }
         } else {
             self.userLabel.text = "You are not signed in"
@@ -218,7 +180,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         score = 2;
     }
     
-    var verse : Verse?
+    private var verse : VerseRec = VerseRec()
     
     func loadVerse(data: NSData?, response: NSURLResponse?, error: NSError?) {
         let httpResponse = response as NSHTTPURLResponse
@@ -235,28 +197,39 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
                     
                     println(results)
                     
-                    verse = Verse(rec:results)
+                    /*
+                    var id : Int = -1
+                    var next_user_id : Int = -1
+                    var owner_id : Int = -1
+                    var lines : [String] = []
+                    */
+                    
+                    if let id = results["id"] as? Int {
+                        self.verse.id = id
+                    }
+                    
+                    if let nid = results["next_user_id"] as? Int {
+                        self.verse.next_user_id = nid
+                    }
+                    
+                    if let oid = results["owner_id"] as? Int {
+                        self.verse.owner_id = oid
+                    }
+                    
+                    if let li = results["lines"] as? [String] {
+                        self.verse.lines = li
+                    }
                     
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                         dispatch_async(dispatch_get_main_queue(),{
-                            print(self.verse?.lines)
                             
                             self.verseView.text = ""
                             
-                            if let lines = self.verse?.lines as? [String] {
-                                for l : String in lines {
-                                    self.verseView.text = self.verseView.text + "\n" + l
-                                }
-                            } else {
-                                self.sendButton.hidden = false
+                            for l : String in self.verse.lines {
+                                self.verseView.text = self.verseView.text + "\n" + l
                             }
                             
-                            if let nextid = self.verse?.next_user_id as? Int {
-                                // if it's my turn, let me do it to it
-                                if (nextid==NetOpers.sharedInstance.userId) {
-                                    self.sendButton.hidden = false
-                                }
-                            }
+                            self.verseView.text = self.verseView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                             
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
@@ -316,7 +289,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
         
         self.setLine.text = ""
-        self.sendButton.hidden = true
+        self.sendButton.enabled = false
         
     }
     

@@ -9,97 +9,12 @@
 import Foundation
 import iAd
 
-class Friend {
-    let friend_data: NSDictionary
-    
-    init(rec:NSDictionary){
-        self.friend_data = rec
-    }
-    
-    var src: AnyObject? {
-        get {
-            if let x = self.friend_data["src"] as? String{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var friend_id: AnyObject? {
-        get {
-            if let x = self.friend_data["friend_id"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var email_address: AnyObject? {
-        get {
-            if let x = self.friend_data["email_address"] as? String{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var user_name: AnyObject? {
-        get {
-            if let x = self.friend_data["user_name"] as? String{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var approved: AnyObject? {
-        get {
-            if let x = self.friend_data["approved"] as? Bool{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var display_name : AnyObject? {
-        /*
-        if src is 'me' then show whether my
-        friend is approved or not.
-        
-        if src is 'them' then show whether i've
-        approved them or not.
-        */
-        
-        if let s = self.friend_data["src"] as? String {
-            if ((s)=="me") {
-                if let x = self.friend_data["approved"] as? Bool{
-                    if (x) {
-                        return email_address
-                    } else {
-                        if let e = email_address as? String {
-                            return "* " + e
-                        } else {
-                            return user_name
-                        }
-                    }
-                }
-            } else if ((s)=="them") {
-                if let x = self.friend_data["approved"] as? Bool{
-                    if (x) {
-                        return email_address
-                    } else {
-                        if let e = email_address as? String {
-                            return "? " + e
-                        } else {
-                            return user_name
-                        }
-                    }
-                }
-            }
-        }
-        
-        return email_address
-    }
+struct FriendRec {
+    var src : String = ""
+    var friend_id : Int = -1
+    var email_address : String = ""
+    var user_name : String = ""
+    var approved : Bool = false
 }
 
 import UIKit
@@ -108,7 +23,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet var myTableView: UITableView!
     
-    var friends : [Friend] = []
+    var friends : [FriendRec] = []
     var lastTabbed : NSDate?
     var iAdBanner: ADBannerView?
     
@@ -169,9 +84,9 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.presentViewController(alertController, animated: true, completion: nil)
     }
     
-    func delete_friend(friend : Friend?) {
+    func delete_friend(fr : FriendRec?) {
         var params = Dictionary<String,AnyObject>()
-        params["friend_id"]=friend?.friend_id
+        params["friend_id"]=fr?.friend_id
         params["user_id"]=NetOpers.sharedInstance.userId
         
         NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/removefriend", params: params, loadFriends)
@@ -179,6 +94,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBAction func removeFriends(sender: AnyObject) {
         if ((removeFriend) != nil) {
+            // TODO: confirmation dialog here
             delete_friend(removeFriend!)
         }
     }
@@ -190,7 +106,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func updateUserLabel() {
         if let un = NetOpers.sharedInstance.user?.user_name as? String {
             if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = un + " // " + String(us) + " points"
+                self.userLabel.text = String(us) + " points"
             }
         } else {
             self.userLabel.text = "You are not signed in"
@@ -210,10 +126,39 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                     self.friends.removeAll()
                     
-                    for friend in results {
+                    for f in results {
                         
-                        var f = Friend(rec:friend as NSDictionary)
-                        self.friends.append(f)
+                        /*
+                        var src : String = ""
+                        var friend_id : Int = -1
+                        var email_address : String = ""
+                        var user_name : String = ""
+                        var approved : String = ""
+                        */
+                        
+                        var fr = FriendRec()
+                        
+                        if let src = f["src"] as? String {
+                            fr.src = src
+                        }
+                        
+                        if let fid = f["friend_id"] as? Int {
+                            fr.friend_id = fid
+                        }
+                        
+                        if let ea = f["email_address"] as? String {
+                            fr.email_address = ea
+                        }
+                        
+                        if let un = f["user_name"] as? String {
+                            fr.user_name = un
+                        }
+                        
+                        if let ap = f["approved"] as? Bool {
+                            fr.approved = ap
+                        }
+
+                        self.friends.append(fr)
                         
                     }
                     
@@ -281,57 +226,68 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
-        if let f = self.friends[indexPath.row] as Friend? {
-            if let d = f.display_name as? String {
-                cell.textLabel?.text = d
-            }
+        if let fr = self.friends[indexPath.row] as FriendRec? {
+            cell.textLabel?.text = get_display_name(fr)
         }
         return cell
     }
     
-    var removeFriend : Friend?
-    
+    func get_display_name(fr : FriendRec) -> String {
+        if fr.src=="me" {
+            if fr.approved {
+                return fr.email_address
+            } else {
+                return "* " + fr.email_address
+            }
+        } else if fr.src=="them" {
+            if fr.approved {
+                return fr.email_address
+            } else {
+                return "? " + fr.email_address
+            }
+        }
+        return fr.user_name
+    }
+
+    var removeFriend : FriendRec?
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+
         println("clicked " + String(indexPath.row))
-        if let friend = self.friends[indexPath.row] as Friend? {
+        if let friend = self.friends[indexPath.row] as FriendRec? {
             removeFriend = friend
         }
-        
+
         var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
-        
-        if let f = self.friends[indexPath.row] as Friend? {
-            if let a = f.approved as? Bool {
-                if a==false {
+
+        if let f = self.friends[indexPath.row] as FriendRec? {
+            
+            if !f.approved {
+                if f.src=="them" {
+                    var name : String = f.email_address
                     
-                    if let s = f.src as? String {
-                        if s=="them" {
-                            let name = f.email_address as? String
-                            
-                            let friendController = UIAlertController(title: "Confirm Friend", message: "Is " + name! + " your friend?", preferredStyle: UIAlertControllerStyle.ActionSheet)
-                            
-                            let noAction = UIAlertAction(title: "No", style: .Default, handler: {
-                                (alert: UIAlertAction!) -> Void in
-                                // delete friend
-                                self.delete_friend(f)
-                            })
-                            let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
-                                (alert: UIAlertAction!) -> Void in
-                                println("Is a friend!")
-                                self.add_friend(f.email_address as? String)
-                            })
-                            let notSureAction = UIAlertAction(title: "Not Sure", style: .Default, handler: {
-                                (alert: UIAlertAction!) -> Void in
-                                // do nothing
-                            })
-                            
-                            friendController.addAction(noAction)
-                            friendController.addAction(yesAction)
-                            friendController.addAction(notSureAction)
-                            
-                            self.presentViewController(friendController, animated: true, completion: nil)
-                        }
-                    }
+                    let friendController = UIAlertController(title: "Confirm Friend", message: "Is " + name + " your friend?", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                    
+                    let noAction = UIAlertAction(title: "No", style: .Default, handler: {
+                        (alert: UIAlertAction!) -> Void in
+                        // delete friend
+                        self.delete_friend(f)
+                    })
+                    let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
+                        (alert: UIAlertAction!) -> Void in
+                        println("Is a friend!")
+                        self.add_friend(f.email_address)
+                    })
+                    let notSureAction = UIAlertAction(title: "Not Sure", style: .Default, handler: {
+                        (alert: UIAlertAction!) -> Void in
+                        // do nothing
+                    })
+                    
+                    friendController.addAction(noAction)
+                    friendController.addAction(yesAction)
+                    friendController.addAction(notSureAction)
+                    
+                    self.presentViewController(friendController, animated: true, completion: nil)
                 }
             }
         }

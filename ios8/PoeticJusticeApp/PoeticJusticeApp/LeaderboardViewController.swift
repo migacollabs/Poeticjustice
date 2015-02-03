@@ -8,44 +8,15 @@
 
 import UIKit
 
-class LeaderboardUser {
-    let user_data: NSDictionary
-    
-    init(rec:NSDictionary){
-        self.user_data = rec
-    }
-    
-    var user_name: AnyObject? {
-        get {
-            if let x = self.user_data["user_name"] as? String{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var user_score: AnyObject? {
-        get {
-            if let x = self.user_data["user_score"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var user_id: AnyObject? {
-        get {
-            if let x = self.user_data["user_id"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
+struct LeaderboardUserRec {
+    var user_name : String = ""
+    var user_score : Int = -1
+    var user_id : Int = -1
 }
 
 class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var leaderboard_users : [LeaderboardUser] = []
+    var leaderboard_users : [LeaderboardUserRec] = []
     @IBOutlet var myTableView: UITableView!
     
     override func viewDidLoad() {
@@ -99,8 +70,22 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                     self.leaderboard_users.removeAll()
                     
                     for lu in results {
-                        var user = LeaderboardUser(rec:lu as NSDictionary)
-                        self.leaderboard_users.append(user)
+                        
+                        var lr : LeaderboardUserRec = LeaderboardUserRec()
+                        
+                        if let un = lu["user_name"] as? String {
+                            lr.user_name = un
+                        }
+
+                        if let uid = lu["user_id"] as? Int {
+                            lr.user_id = uid
+                        }
+
+                        if let us = lu["user_score"] as? Int {
+                            lr.user_score = us
+                        }
+                        
+                        self.leaderboard_users.append(lr)
                     }
                     
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
@@ -137,18 +122,16 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
-        if let u = self.leaderboard_users[indexPath.row] as LeaderboardUser? {
-            if let d = u.user_name as? String {
-                cell.textLabel?.text = String(u.user_score! as Int) + " - " + d
-                
-                if let noid = NetOpers.sharedInstance.userId as Int? {
-                    if ((u.user_id as Int)==noid) {
-                        cell.contentView.backgroundColor = UIColor.yellowColor()
-                    }
-                } else {
-                    cell.contentView.backgroundColor = UIColor.whiteColor()
+        if let lur = self.leaderboard_users[indexPath.row] as LeaderboardUserRec? {
+
+            cell.textLabel?.text = String(lur.user_score) + " - " + lur.user_name
+
+            if let noid = NetOpers.sharedInstance.userId as Int? {
+                if (lur.user_id==noid) {
+                    cell.contentView.backgroundColor = UIColor.yellowColor()
                 }
-                
+            } else {
+                cell.contentView.backgroundColor = UIColor.whiteColor()
             }
         }
         return cell
