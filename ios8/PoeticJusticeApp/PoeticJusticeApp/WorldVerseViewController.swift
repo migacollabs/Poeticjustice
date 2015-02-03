@@ -15,6 +15,9 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var playerTable: UITableView!
     @IBOutlet weak var verseTitle: UILabel!
     
+    @IBOutlet var joinButton: UIButton!
+    @IBOutlet var newButton: UIButton!
+    
     var user_ids:[Int] = []
     var players: [User] = []
     var iAdBanner: ADBannerView?
@@ -55,6 +58,8 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
             println("adding ad banner subview ")
             self.view.addSubview(adb)
         }
+        
+        is_busy = false
         
     }
     
@@ -100,19 +105,26 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     var verseId : Int?
+    var is_busy : Bool = false
 
     @IBAction func onJoin(sender: AnyObject) {
-        // playButtonSound()
-        if let at = self.activeTopic{
+        
+        if (!is_busy) {
+            is_busy = true
+         
+            // playButtonSound()
+            if let at = self.activeTopic{
+                
+                self.verseId = at.verse_id
+                var params = [String:AnyObject]()
+                params["user_id"] = NetOpers.sharedInstance.user?.id!
+                params["id"] = self.verseId
+                NetOpers.sharedInstance.post(
+                    NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=" + String(at.verse_id),
+                    params: params,
+                    onJoinedCompletionHandeler)
+            }
             
-            self.verseId = at.verse_id
-            var params = [String:AnyObject]()
-            params["user_id"] = NetOpers.sharedInstance.user?.id!
-            params["id"] = self.verseId
-            NetOpers.sharedInstance.post(
-                NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=" + String(at.verse_id),
-                params: params,
-                onJoinedCompletionHandeler)
         }
     }
     
@@ -144,6 +156,8 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                             vc.worldVerseViewController = self
                             self.navigationController?.pushViewController(vc, animated: true)
                             
+                            self.is_busy = false
+                            
                         })
                     })
                 }
@@ -161,11 +175,14 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 println("Unhandled Err Code \(httpResponse.statusCode)")
                 break;
             }
+            is_busy = false
         }
+        
     }
     
 
     @IBAction func onStart(sender: AnyObject) {
+        
         // playButtonSound()
         let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
         vc.topic = self.topic

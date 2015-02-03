@@ -89,7 +89,11 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     var lastTabbed : NSDate?
     
     @IBAction func refreshVerseView(sender: AnyObject) {
-        viewWillAppear(true)
+        if (!is_busy) {
+            is_busy = true
+            
+            viewWillAppear(true)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -138,6 +142,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
             }
         
         }
+        
+        is_busy = false
     }
     
     
@@ -232,6 +238,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
                             self.verseView.text = self.verseView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                             
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            
+                            self.is_busy = false
                         })
                     })
                 } else {
@@ -271,25 +279,31 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     
     @IBOutlet var setLine: UITextField!
     
+    var is_busy : Bool = false
+    
     @IBAction func sendLine(sender: AnyObject) {
-        println("Clicked send with score " + String(score) + " " +
-        setLine.text)
         
-        playButtonSound()
-        
-        var params = Dictionary<String,AnyObject>()
-        params["topic_id"]=topic?.id
-        params["line"]=setLine.text
-        params["verse_id"]=verseId
-        params["score_increment"]=score
-        
-        println("hitting saveline url")
-        println(params)
-        
-        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
-        
-        self.setLine.text = ""
-        self.sendButton.enabled = false
+        if (!is_busy) {
+            is_busy = true
+            
+            println("Clicked send with score " + String(score) + " " +
+                setLine.text)
+            
+            playButtonSound()
+            
+            var params = Dictionary<String,AnyObject>()
+            params["topic_id"]=topic?.id
+            params["line"]=setLine.text
+            params["verse_id"]=verseId
+            params["score_increment"]=score
+            
+            println("hitting saveline url")
+            println(params)
+            
+            NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
+            
+            self.setLine.text = ""
+        }
         
     }
     

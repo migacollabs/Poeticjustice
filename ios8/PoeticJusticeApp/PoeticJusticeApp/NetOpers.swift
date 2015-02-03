@@ -145,6 +145,8 @@ class NetOpers {
         request.HTTPMethod = "POST"
         request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
         
+        println("sending login request")
+        
         var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             if let httpResponse = response as? NSHTTPURLResponse {
                 if httpResponse.statusCode == 200 {
@@ -184,10 +186,16 @@ class NetOpers {
                                         if self.alertHandler != nil{
                                             self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok!")
                                         }
+                                        
+                                        if self.loginHandler != nil{
+                                            self.loginHandler!.on_email_notification()
+                                        }
+                                        
                                     }else{
                                         if self.loginHandler != nil{
                                             self.loginHandler!.on_login()
                                         }else{
+                                            // TODO: is this possible?
                                             on_login()
                                         }
                                     }
@@ -208,17 +216,25 @@ class NetOpers {
                             self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok!")
                         }
                         
+                        if self.loginHandler != nil{
+                            self.loginHandler!.on_email_notification()
+                        }
+                        
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     })
                     
                 }else{
-                    println("Error signing in")
+                    println("error signing in")
                 }
                 
             }
             
             
         })
+        
+        if self.loginHandler != nil{
+            self.loginHandler!.on_finished_login()
+        }
         
         task?.resume()
     }

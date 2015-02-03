@@ -931,6 +931,7 @@
 				46E3DF751A707CBE006D059A /* LoginViewController.xib */,
 				977328931A7FC32300D40AA0 /* VerseHistoryStoryboard.storyboard */,
 				977328951A7FC86800D40AA0 /* VerseHistoryMasterViewController.swift */,
+				9752BD931A81109F003674D9 /* VerseHistoryDetailViewController.swift */,
 				46E3DD041A703E71006D059A /* NetOpers.swift */,
 				46E3DD051A703E71006D059A /* NetUtils.swift */,
 				46E3DD061A703E71006D059A /* SwiftyJSON.swift */,
@@ -952,7 +953,6 @@
 				46CE12811A7DA1E600B77C74 /* LeaderboardViewController.swift */,
 				46CE12821A7DA1E700B77C74 /* LeaderboardViewController.xib */,
 				9752BD911A80F825003674D9 /* CustomSegues.swift */,
-				9752BD931A81109F003674D9 /* VerseHistoryDetailViewController.swift */,
 			);
 			path = PoeticJusticeApp;
 			sourceTree = "<group>";

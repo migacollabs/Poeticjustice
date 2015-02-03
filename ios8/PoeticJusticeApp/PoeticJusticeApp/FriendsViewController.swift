@@ -27,6 +27,9 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var lastTabbed : NSDate?
     var iAdBanner: ADBannerView?
     
+    @IBOutlet var addButton: UIButton!
+    @IBOutlet var removeButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,10 +69,14 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 lastTabbed = NSDate()
             }
             
-            updateUserLabel()
-            
         }
+        
+        updateUserLabel()
+        
+        is_busy = false
     }
+    
+    var is_busy : Bool = false
     
     override func viewWillDisappear(animated: Bool){
 //        self.iAdBanner?.delegate = nil
@@ -85,17 +92,24 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func delete_friend(fr : FriendRec?) {
+    
         var params = Dictionary<String,AnyObject>()
         params["friend_id"]=fr?.friend_id
         params["user_id"]=NetOpers.sharedInstance.userId
         
         NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/removefriend", params: params, loadFriends)
+    
     }
     
     @IBAction func removeFriends(sender: AnyObject) {
         if ((removeFriend) != nil) {
             // TODO: confirmation dialog here
-            delete_friend(removeFriend!)
+            if (!is_busy) {
+                is_busy = true
+                if (NetOpers.sharedInstance.userId>0) {
+                    delete_friend(removeFriend!)
+                }
+            }
         }
     }
     
@@ -172,6 +186,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                             // the user has 7 friends and 2 friend requests
                             self.navigationController?.tabBarItem.badgeValue = String(self.friends.count)
                             
+                            self.is_busy = false
+                            
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
                     })
@@ -194,21 +210,32 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func add_friend(frEmailAddress : String?) {
+        
         var params = Dictionary<String,AnyObject>()
         params["user_id"]=NetOpers.sharedInstance.userId
         params["friend_email_address"]=frEmailAddress
         
         NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/addfriend", params: params, loadFriends)
+    
     }
     
     @IBOutlet var friendEmailAddress: UITextField!
     
     @IBAction func addFriend(sender: AnyObject) {
         if (!self.friendEmailAddress.text.isEmpty) {
-            if (isValidEmail(self.friendEmailAddress.text)) {
-                add_friend(self.friendEmailAddress.text)
-            } else {
-                show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
+            
+            if (!is_busy) {
+                is_busy = true
+             
+                if (isValidEmail(self.friendEmailAddress.text)) {
+                    if (NetOpers.sharedInstance.userId>0) {
+                        add_friend(self.friendEmailAddress.text)
+                    }
+                } else {
+                    show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
+                    is_busy = false
+                }
+                
             }
         }
     }

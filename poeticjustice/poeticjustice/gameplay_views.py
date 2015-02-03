@@ -438,32 +438,15 @@ def get_active_topics(request):
 
                 # friendship initiated by me
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
-                    filter(V.owner_id==UxU.friend_id).\
-                    filter(UxU.user_id==user.id).\
-                    filter(V.owner_id==U.id).\
+                    filter(or_(V.owner_id==UxU.friend_id, V.owner_id==UxU.user_id)).\
+                    filter(V.owner_id!=user.id).\
                     filter(UxU.approved==True).\
                     filter(V.complete==False).\
                     filter(V.friends_only==True).\
                     filter(V.participant_count<V.max_participants).\
-                    order_by(func.random()).\
                     limit(3):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
-
-
-                # friendship initiated by friend
-                for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
-                    filter(V.owner_id==UxU.user_id).\
-                    filter(UxU.friend_id==user.id).\
-                    filter(V.owner_id==U.id).\
-                    filter(UxU.approved==True).\
-                    filter(V.complete==False).\
-                    filter(V.friends_only==True).\
-                    filter(V.participant_count<V.max_participants).\
-                    order_by(func.random()).\
-                    limit(3):
-                        topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                            "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
 
                 # filter(~V.id.any(V.id.in_(unique_verses))).\ # TODO: NOT IN
 
@@ -507,34 +490,32 @@ def get_active_topics(request):
     renderer='json')
 def get_topics(request):
     try:
-        print 'saving new line for verse'
-        auth_usrid = authenticated_userid(request)
-        user, user_type_names, user_type_lookup = (
-            get_current_rbac_user(auth_usrid,
-                accept_user_type_names=[
-                    'sys',
-                    'player'
-                ]
-            )
-        )
+        print 'retrieving topics'
+        # auth_usrid = authenticated_userid(request)
+        # user, user_type_names, user_type_lookup = (
+        #     get_current_rbac_user(auth_usrid,
+        #         accept_user_type_names=[
+        #             'sys',
+        #             'player'
+        #         ]
+        #     )
+        # )
 
-        if user and user.is_active and user.email_address==auth_usrid:
+        # if user and user.is_active and user.email_address==auth_usrid:
+        topics = []
 
-            with SQLAlchemySessionFactory() as session:
-                topics = []
+        with SQLAlchemySessionFactory() as session:
+            
+            T = ~VerseCategoryTopic
 
-                T = ~VerseCategoryTopic
+            # see if the user is associated to a verse for this topic
+            # change the limit later
+            for t in session.query(T).order_by(T.id).limit(16):
+                topics.append({"id":t.id, "name":t.name, "min_points_req":t.min_points_req, 
+                    "score_modifier":t.score_modifier, "main_icon_name":t.main_icon_name,
+                    "verse_category_type_id":t.verse_category_type_id})
 
-                # see if the user is associated to a verse for this topic
-                # change the limit later
-                for t in session.query(T).order_by(T.id).limit(16):
-                    topics.append({"id":t.id, "name":t.name, "min_points_req":t.min_points_req, 
-                        "score_modifier":t.score_modifier, "main_icon_name":t.main_icon_name,
-                        "verse_category_type_id":t.verse_category_type_id})
-
-                return {"results":topics}
-
-        raise HTTPUnauthorized
+        return {"results":topics}
 
     except HTTPGone: raise
     except HTTPFound: raise
