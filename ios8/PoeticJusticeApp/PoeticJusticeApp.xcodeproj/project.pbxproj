@@ -389,12 +389,16 @@
 		46E3DF791A70811A006D059A /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 46E3DF781A708119006D059A /* Config.plist */; };
 		46E3DF7B1A72C56E006D059A /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E3DF7A1A72C56E006D059A /* Topic.swift */; };
 		46EED8A51A780F21007CAC14 /* DeviceUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EED8A41A780F20007CAC14 /* DeviceUtils.swift */; };
+		9752BD921A80F825003674D9 /* CustomSegues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9752BD911A80F825003674D9 /* CustomSegues.swift */; };
 		9756136A1A78135A0024EACB /* iAdTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 975613691A78135A0024EACB /* iAdTestView.xib */; };
 		9756136C1A7938CF0024EACB /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9756136B1A7938CF0024EACB /* iAd.framework */; };
 		9756136F1A7973590024EACB /* NewVerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9756136D1A7973590024EACB /* NewVerseViewController.swift */; };
 		975613701A7973590024EACB /* NewVerseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9756136E1A7973590024EACB /* NewVerseViewController.xib */; };
+		977328961A7FC86800D40AA0 /* VerseHistoryMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977328951A7FC86800D40AA0 /* VerseHistoryMasterViewController.swift */; };
+		97A988931A811B7E00C6192F /* VerseHistoryStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 977328931A7FC32300D40AA0 /* VerseHistoryStoryboard.storyboard */; };
 		97C710471A7BE99D0081F734 /* WorldVerseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C710451A7BE99D0081F734 /* WorldVerseViewController.swift */; };
 		97C710481A7BE99D0081F734 /* WorldVerseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97C710461A7BE99D0081F734 /* WorldVerseViewController.xib */; };
+		97F57CDF1A811B340055FFA4 /* VerseHistoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9752BD931A81109F003674D9 /* VerseHistoryDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -794,10 +798,14 @@
 		46E3DF781A708119006D059A /* Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		46E3DF7A1A72C56E006D059A /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		46EED8A41A780F20007CAC14 /* DeviceUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceUtils.swift; sourceTree = "<group>"; };
+		9752BD911A80F825003674D9 /* CustomSegues.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegues.swift; sourceTree = "<group>"; };
+		9752BD931A81109F003674D9 /* VerseHistoryDetailViewController.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; fileEncoding = 4; path = VerseHistoryDetailViewController.swift; sourceTree = "<group>"; };
 		975613691A78135A0024EACB /* iAdTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iAdTestView.xib; sourceTree = "<group>"; };
 		9756136B1A7938CF0024EACB /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		9756136D1A7973590024EACB /* NewVerseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewVerseViewController.swift; sourceTree = "<group>"; };
 		9756136E1A7973590024EACB /* NewVerseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewVerseViewController.xib; sourceTree = "<group>"; };
+		977328931A7FC32300D40AA0 /* VerseHistoryStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VerseHistoryStoryboard.storyboard; sourceTree = "<group>"; };
+		977328951A7FC86800D40AA0 /* VerseHistoryMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerseHistoryMasterViewController.swift; sourceTree = "<group>"; };
 		97C710451A7BE99D0081F734 /* WorldVerseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorldVerseViewController.swift; sourceTree = "<group>"; };
 		97C710461A7BE99D0081F734 /* WorldVerseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorldVerseViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -920,6 +928,8 @@
 				46E3DD021A703E10006D059A /* HelpViewController.swift */,
 				46E3DD0A1A703E96006D059A /* HelpViewController.xib */,
 				46E3DF741A707CBE006D059A /* LoginViewController.swift */,
+				977328931A7FC32300D40AA0 /* VerseHistoryStoryboard.storyboard */,
+				977328951A7FC86800D40AA0 /* VerseHistoryMasterViewController.swift */,
 				46E3DF751A707CBE006D059A /* LoginViewController.xib */,
 				46E3DD041A703E71006D059A /* NetOpers.swift */,
 				46E3DD051A703E71006D059A /* NetUtils.swift */,
@@ -941,6 +951,8 @@
 				4649A38F1A7C50FE00D7214B /* FAQViewController.xib */,
 				46CE12811A7DA1E600B77C74 /* LeaderboardViewController.swift */,
 				46CE12821A7DA1E700B77C74 /* LeaderboardViewController.xib */,
+				9752BD911A80F825003674D9 /* CustomSegues.swift */,
+				9752BD931A81109F003674D9 /* VerseHistoryDetailViewController.swift */,
 			);
 			path = PoeticJusticeApp;
 			sourceTree = "<group>";
@@ -1372,6 +1384,7 @@
 				46E3DEE61A7045B7006D059A /* oohh!.png in Resources */,
 				46E3DEBA1A7045B7006D059A /* High-Heel.png in Resources */,
 				46E3DF001A7045B7006D059A /* Point.png in Resources */,
+				97A988931A811B7E00C6192F /* VerseHistoryStoryboard.storyboard in Resources */,
 				46E3DF101A7045B7006D059A /* Rock-On.png in Resources */,
 				46E3DF4E1A7045B7006D059A /* Tv-Set.png in Resources */,
 				46E3DEC21A7045B7006D059A /* Ink-Well.png in Resources */,
@@ -1745,9 +1758,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97F57CDF1A811B340055FFA4 /* VerseHistoryDetailViewController.swift in Sources */,
 				46E3DF761A707CBE006D059A /* LoginViewController.swift in Sources */,
+				977328961A7FC86800D40AA0 /* VerseHistoryMasterViewController.swift in Sources */,
 				46E3DF7B1A72C56E006D059A /* Topic.swift in Sources */,
 				46E3DF731A707BC5006D059A /* LayoutLoginViewController.swift in Sources */,
+				9752BD921A80F825003674D9 /* CustomSegues.swift in Sources */,
 				46E3DD071A703E71006D059A /* NetOpers.swift in Sources */,
 				46E3DD081A703E71006D059A /* NetUtils.swift in Sources */,
 				46E0B3491A759A80001DE2F8 /* GameState.swift in Sources */,
