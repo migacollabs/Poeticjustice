@@ -81,5 +81,4 @@ Start the app
 
 	pserve development.ini
 
-
-
+Note there are some environment variables that need to be set: PYTHONPATH, ASSETS_DIR, POETIC_JUSTICE_SMTP_SERVER, POETIC_JUSTICE_SMTP_USER, POETIC_JUSTICE_SMTP_PASSWORD
