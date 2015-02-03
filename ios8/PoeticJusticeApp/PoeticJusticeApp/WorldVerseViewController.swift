@@ -15,14 +15,19 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var playerTable: UITableView!
     @IBOutlet weak var verseTitle: UILabel!
     
-    var user_ids:[Int]?
+    var user_ids:[Int] = []
     var players: [User] = []
     var iAdBanner: ADBannerView?
     
-    var activeTopic:ActiveTopic?{
+    var activeTopic:ActiveTopicRec? {
         didSet(newValue){
 //            self.configureView()
-            self.user_ids = newValue?.verse_user_ids as? [Int]
+            self.user_ids.removeAll()
+            if let nv = newValue {
+                for id in nv.verse_user_ids {
+                    self.user_ids.append(id)
+                }
+            }
         }
     }
     
@@ -65,10 +70,10 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func configureView(){
         if let at = self.activeTopic{
-            self.user_ids = at.verse_user_ids as? [Int]
-            if self.user_ids != nil{
+            self.user_ids = at.verse_user_ids
+            if self.user_ids.count>0{
                 NetOpers.sharedInstance.get(
-                    NetOpers.sharedInstance.appserver_hostname! + "/v/users/id=\(at.verse_id!)", load_players)
+                    NetOpers.sharedInstance.appserver_hostname! + "/v/users/id=\(at.verse_id)", load_players)
             }
             
         }
@@ -99,16 +104,15 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBAction func onJoin(sender: AnyObject) {
         // playButtonSound()
         if let at = self.activeTopic{
-            if let vid = at.verse_id as? Int{
-                self.verseId = vid
-                var params = [String:AnyObject]()
-                params["user_id"] = NetOpers.sharedInstance.user?.id!
-                params["id"] = self.verseId
-                NetOpers.sharedInstance.post(
-                    NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=" + String(vid),
-                    params: params,
-                    onJoinedCompletionHandeler)
-            }
+            
+            self.verseId = at.verse_id
+            var params = [String:AnyObject]()
+            params["user_id"] = NetOpers.sharedInstance.user?.id!
+            params["id"] = self.verseId
+            NetOpers.sharedInstance.post(
+                NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=" + String(at.verse_id),
+                params: params,
+                onJoinedCompletionHandeler)
         }
     }
     

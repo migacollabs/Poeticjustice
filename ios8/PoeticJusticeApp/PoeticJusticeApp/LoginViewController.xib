@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
                 <outlet property="email_address" destination="qRP-Qs-sqY" id="tDd-Bp-bn5"/>
+                <outlet property="goButton" destination="DeK-pn-1LR" id="jZK-Ba-vq1"/>
                 <outlet property="userLabel" destination="OrP-Tz-qIv" id="wg3-wN-oKU"/>
                 <outlet property="user_name" destination="xBS-xc-17G" id="Rt1-Pw-9Bt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

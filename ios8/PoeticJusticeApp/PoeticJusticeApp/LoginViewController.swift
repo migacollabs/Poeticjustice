@@ -62,6 +62,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func on_go(sender: AnyObject) {
         
+        self.goButton.enabled = false
         self.tabBarController?.tabBar.hidden = true
         self.userLabel.text = "Signing in..."
         
@@ -101,6 +102,7 @@ class LoginViewController: UIViewController {
                         self.show_alert("Invalid email address", message: "Please enter a valid email address", controller_title: "Ok")
                         self.tabBarController?.tabBar.hidden = false
                         self.userLabel.text = "You are not signed in"
+                        self.goButton.enabled = true
                         return
                     }
                 }
@@ -115,6 +117,7 @@ class LoginViewController: UIViewController {
                         self.show_alert("Invalid user name", message: "User name must be between 1 and 15 characters long", controller_title: "Ok")
                         self.tabBarController?.tabBar.hidden = false
                         self.userLabel.text = "You are not signed in"
+                        self.goButton.enabled = true
                         return
                     }
                 }
@@ -197,8 +200,12 @@ class LoginViewController: UIViewController {
         println(error)
     }
     
+    @IBOutlet var goButton: UIButton!
+    
     func on_start(){
         println("on_start called")
+        
+        self.goButton.enabled = true
         
         playButtonSound()
         

@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Miga Collabs. All rights reserved.
 //
 
+import Foundation
 import UIKit
 import iAd
 import AVFoundation
@@ -20,82 +21,14 @@ class TopicLabel : UILabel {
     @IBInspectable var index: Int = 0
 }
 
-
-class ActiveTopic {
-    let active_topic_data: NSDictionary
-    
-    /*
-    represents a topic that is currently active to the user, meaning
-    it's a friends topic, a world topic, or their own topic
-    */
-
-    init(rec:NSDictionary){
-        self.active_topic_data = rec
-    }
-    
-    var id: AnyObject? {
-        get {
-            if let x = self.active_topic_data["topic_id"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var src : AnyObject? {
-        get {
-            if let x = self.active_topic_data["src"] as? String {
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var verse_id : AnyObject? {
-        get {
-            if let x = self.active_topic_data["verse_id"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var next_user_id : AnyObject? {
-        get {
-            if let x = self.active_topic_data["next_user_id"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var verse_user_ids : [AnyObject]? {
-        get {
-            if let x = self.active_topic_data["user_ids"] as? [Int] {
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var email_address : AnyObject? {
-        get {
-            if let x = self.active_topic_data["email_address"] as? String {
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var user_name : AnyObject? {
-        get {
-            if let x = self.active_topic_data["user_name"] as? String {
-                return x
-            }
-            return nil
-        }
-    }
-    
+struct ActiveTopicRec {
+    var id : Int = -1
+    var src : String = ""
+    var verse_id : Int = -1
+    var next_user_id : Int = -1
+    var verse_user_ids : [Int] = []
+    var email_address : String = ""
+    var user_name : String = ""
 }
 
 class TopicsViewController: UIViewController {
@@ -108,7 +41,7 @@ class TopicsViewController: UIViewController {
     var iAdBanner: ADBannerView?
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
-    var active_topics:[ActiveTopic] = []
+    var active_topics:[ActiveTopicRec] = []
     var should_begin_banner = true
     var lastTabbed : NSDate?
     var audioPlayer : AVAudioPlayer?
@@ -221,35 +154,28 @@ class TopicsViewController: UIViewController {
         
         var verseId : Int?
         var isWorld = false
-        var activeTopic: ActiveTopic? = nil
+        var activeTopic: ActiveTopicRec? = nil
         
         for tb in self.active_topics {
-            if let tbid = tb.id as? Int {
-                if (tbid==tid) {
-                    
-                    println(tb.src)
-                    
-                    if let nuid = tb.next_user_id as? Int {
-                        
-                        println("tb.verse_user_ids \(tb.verse_user_ids)")
-                        
-                        if ( nuid==NetOpers.sharedInstance.userId! || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.userId! as Int) ){
-                            verseId = tb.verse_id as? Int
-                            activeTopic = tb
-                            break
-                        }else{
-                            println("World Topic")
-                            if tb.src! as String == "world"{
-                                verseId = tb.verse_id as? Int
-                                isWorld = true
-                                activeTopic = tb
-                                break
-                            }
-                        }
-                        
+        
+            if (tb.id==tid) {
+                
+                println("tb.verse_user_ids \(tb.verse_user_ids)")
+                
+                if ( tb.next_user_id==NetOpers.sharedInstance.userId! || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.userId! as Int) ){
+                    verseId = tb.verse_id
+                    activeTopic = tb
+                    break
+                }else{
+                    println("World Topic")
+                    if tb.src == "world"{
+                        verseId = tb.verse_id
+                        isWorld = true
+                        activeTopic = tb
+                        break
                     }
-                    
                 }
+                
             }
         }
         
@@ -308,13 +234,11 @@ class TopicsViewController: UIViewController {
                 
                 if data != nil {
                     
-                    var data_str = NSString(data:data!, encoding:NSUTF8StringEncoding)
-                    
                     if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: nil) as? NSDictionary{
                             
-                            if let results = jsonResult["results"] as? NSArray{
+                            if let results = jsonResult["results"] as? NSArray {
                                 
                                 for topic in results{
                                     var t = Topic(rec:topic as NSDictionary)
@@ -358,24 +282,49 @@ class TopicsViewController: UIViewController {
                 
                 if data != nil {
                     
-                    var data_str = NSString(data:data!, encoding:NSUTF8StringEncoding)
-                    
-                    if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as? NSDictionary{
-                            
-                            if let results = jsonResult["results"] as? NSArray{
-                                    
-                                for topic in results{
-                                    var t = ActiveTopic(rec:topic as NSDictionary)
-                                    self.active_topics.append(t)
-                                    
-                                }
-                            }
+                        error: nil) as NSDictionary
+                    
+                    self.active_topics.removeAll()
+                    
+                    if let results = jsonResult["results"] as? NSArray{
                         
+                        for r in results {
                             
-                    }else{
-                        self.dispatch_alert("Error", message: "No Active Topics Found", controller_title: "Ok")
+                            var atr = ActiveTopicRec()
+                            
+                            if let id = r["topic_id"] as? Int {
+                                atr.id = id
+                            }
+                            
+                            if let src = r["src"] as? String {
+                                atr.src = src
+                            }
+                            
+                            if let vid = r["verse_id"] as? Int {
+                                atr.verse_id = vid
+                            }
+                            
+                            if let nid = r["next_user_id"] as? Int {
+                                atr.next_user_id = nid
+                            }
+                            
+                            if let vids = r["user_ids"] as? [Int] {
+                                atr.verse_user_ids = vids
+                            }
+                            
+                            if let ea = r["email_address"] as? String {
+                                atr.email_address = ea
+                            }
+                            
+                            if let un = r["user_name"] as? String {
+                                atr.user_name = un
+                            }
+                            
+                            self.active_topics.append(atr)
+                        }
+                        
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), {
@@ -416,34 +365,28 @@ class TopicsViewController: UIViewController {
         
         println("TopicsViewController.update_topic_labels called")
         
-        println(self.active_topics)
-     
         for at in self.active_topics {
-            
-            println(at.verse_id)
             
             var index = find(self.topic_order, at.id as Int)! + 1
             
             if let tl = get_topic_label(index) {
-                if let s = at.src as? String {
+  
+                switch at.src {
+                case "mine":
+                    // i created this verse for friends or world
+                    tl.text = at.user_name
+                case "joined":
+                    // TODO: still need to signify if joined a friends verse or world verse?
+                    tl.text = "j: " + at.user_name
+                case "world":
+                    // open world verse
+                    tl.text = "w: " + at.user_name
+                case "":
+                    // open friend verse
+                    tl.text = "f: " + at.user_name
+                default:
+                    break
                     
-                    switch s{
-                    case "mine":
-                        // i created this verse for friends or world
-                        tl.text = at.user_name as? String
-                    case "joined":
-                        // TODO: still need to signify if joined a friends verse or world verse?
-                        tl.text = "j: " + (at.user_name as? String)!
-                    case "world":
-                        // open world verse
-                        tl.text = "w: " + (at.user_name as? String)!
-                    case "":
-                        // open friend verse
-                        tl.text = "f: " + (at.user_name as? String)!
-                    default:
-                        break
-                        
-                    }
                 }
             }
         }
