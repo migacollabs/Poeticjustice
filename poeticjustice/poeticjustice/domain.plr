@@ -430,8 +430,8 @@ AFTER_CREATE_SQL:
             (ARRAY[11111], 1, 2, 8, 11111, 1, True, False, 11111), -- my verse
             (ARRAY[11114], 1, 3, 12, 11114, 2, False, False, 11114), -- open world verse
             (ARRAY[11112], 1, 4, 16, 11112, 3, True, False, 11112), -- open friend verse
-            (ARRAY[11113, 11111], 1, 5, 20, 11113, 4, True, False, 11111), -- joined friend verse
-            (ARRAY[11115, 11111], 1, 2, 8, 11115, 5, False, False, 11111); -- joined world verse
+            (ARRAY[11113, 11111], 2, 5, 20, 11113, 4, True, False, 11111), -- joined friend verse
+            (ARRAY[11115, 11111], 2, 2, 8, 11115, 5, False, False, 11111); -- joined world verse
 
 
         INSERT INTO line_x_verses
