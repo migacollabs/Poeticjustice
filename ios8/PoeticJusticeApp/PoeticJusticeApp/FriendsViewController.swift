@@ -190,7 +190,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func updateUserLabel() {
         if let un = NetOpers.sharedInstance.user?.user_name as? String {
             if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = un + " // " + String(us) + " points"
+                self.userLabel.text = String(us) + " points"
             }
         } else {
             self.userLabel.text = "You are not signed in"

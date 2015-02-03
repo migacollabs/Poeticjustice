@@ -163,7 +163,7 @@ PYAELLAC:
                 CheckConstraint('id<111111111111'), 
                 server_default=text("nextval('users_id_seq')"), 
                 primary_key=True)
-        user_name: Column(String(50), nullable=False)
+        user_name: Column(String(15), nullable=False)
         email_address: Column(String(255), nullable=False, unique=True)
         twitter_name: Column(String(255))
         facebook_name: Column(String(255))
@@ -420,7 +420,8 @@ AFTER_CREATE_SQL:
             )
         VALUES
             (ARRAY[11111], 1, 2, 8, 11111, 1, True, False, 11111),
-            (ARRAY[11113], 1, 2, 8, 11113, 2, False, False, 11113);
+            (ARRAY[11113], 1, 2, 8, 11113, 2, False, False, 11113),
+            (ARRAY[11112], 1, 2, 8, 11112, 2, False, False, 11112);
 
 
         INSERT INTO line_x_verses
