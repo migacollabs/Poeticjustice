@@ -23,7 +23,7 @@
                         <rect key="frame" x="8" y="115" width="384" height="347"/>
                     </variation>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quQ-fz-ga0">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quQ-fz-ga0">
                     <rect key="frame" x="8" y="83" width="110" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="110" id="aYZ-61-Qjh"/>

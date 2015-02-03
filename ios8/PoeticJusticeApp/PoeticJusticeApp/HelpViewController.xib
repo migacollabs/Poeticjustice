@@ -38,7 +38,7 @@
                         <rect key="frame" x="49" y="135" width="317" height="21"/>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verses and Lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m8-bd-KJH">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Verses and Lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m8-bd-KJH">
                     <rect key="frame" x="8" y="130" width="147" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="147" id="AEE-ec-Dhd"/>
@@ -49,7 +49,7 @@
                         <rect key="frame" x="49" y="164" width="166" height="21"/>
                     </variation>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRe-70-Vgc">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRe-70-Vgc">
                     <rect key="frame" x="168" y="130" width="31" height="27"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="31" id="faT-bP-dtx"/>
@@ -80,7 +80,7 @@
                         <rect key="frame" x="49" y="520" width="94" height="21"/>
                     </variation>
                 </label>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMh-fO-YVa">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMh-fO-YVa">
                     <rect key="frame" x="8" y="159" width="584" height="224"/>
                     <string key="text">A “line” is a short phrasing of words, sometimes with a rhythmic intent (such as a line in poetry or a rap verse).  For example, say the following out loud while emphasizing the numbers: "One and Two and Three and Four and".    With the basic rhythm down, here’s an example of four lines where four individual players each wrote a single line:  “I’m the first, this is my line” /
 “Since I’m up next, my line will rhyme” /

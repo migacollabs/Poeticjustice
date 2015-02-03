@@ -62,7 +62,8 @@ class LoginViewController: UIViewController {
     
     @IBAction func on_go(sender: AnyObject) {
         
-        self.goButton.enabled = false
+        // self.goButton.enabled = false
+        self.goButton.highlighted = true
         self.tabBarController?.tabBar.hidden = true
         self.userLabel.text = "Signing in..."
         
@@ -103,6 +104,7 @@ class LoginViewController: UIViewController {
                         self.tabBarController?.tabBar.hidden = false
                         self.userLabel.text = "You are not signed in"
                         self.goButton.enabled = true
+                        self.goButton.highlighted = false
                         return
                     }
                 }
@@ -118,6 +120,7 @@ class LoginViewController: UIViewController {
                         self.tabBarController?.tabBar.hidden = false
                         self.userLabel.text = "You are not signed in"
                         self.goButton.enabled = true
+                        self.goButton.highlighted = false
                         return
                     }
                 }
@@ -206,6 +209,7 @@ class LoginViewController: UIViewController {
         println("on_start called")
         
         self.goButton.enabled = true
+        self.goButton.highlighted = false
         
         playButtonSound()
         

@@ -311,9 +311,11 @@ AFTER_CREATE_SQL:
                 email_address, country_code, password, user_score, num_of_verses, num_of_lines, is_active, is_invited, access_token, user_name
             )
         VALUES
-            ('larry@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, False,'1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210727', 'migalj'),
-            ('larry@gerijopa.com', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210728', 'awaylj'),
-            ('larry+world@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 'worldlj');
+            ('larry@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, False,'1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210727', 'me'),
+            ('larry+friend1@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210728', 'friend 1 open'),
+            ('larry+friend2@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210728', 'friend 2 joined'),
+            ('larry+world1@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 'world 1 open'),
+            ('larry+world2@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 'world 2 joined');
 
 
         INSERT INTO user_x_user_type_lu
@@ -321,19 +323,25 @@ AFTER_CREATE_SQL:
         VALUES
             (11111, 2),
             (11112, 2),
-            (11113, 2);
+            (11113, 2),
+            (11114, 2),
+            (11115, 2);
 
         INSERT INTO user_x_users
             (user_id, friend_id, approved)
         VALUES
-            (11111, 11112, true);
+            (11111, 11112, true),
+            (11111, 11113, true);
+            -- TODO: need open friend requests
 
         INSERT INTO user_x_groups
             (user_id, group_id)
         VALUES
             (11111, 1),
             (11112, 1),
-            (11113, 1);
+            (11113, 1),
+            (11114, 1),
+            (11115, 1);
 
         INSERT INTO verse_category_topics 
             (
@@ -419,9 +427,11 @@ AFTER_CREATE_SQL:
                 user_ids, participant_count, max_participants, max_lines, owner_id, verse_category_topic_id, friends_only, complete, next_user_id
             )
         VALUES
-            (ARRAY[11111], 1, 2, 8, 11111, 1, True, False, 11111),
-            (ARRAY[11113], 1, 2, 8, 11113, 2, False, False, 11113),
-            (ARRAY[11112], 1, 2, 8, 11112, 2, False, False, 11112);
+            (ARRAY[11111], 1, 2, 8, 11111, 1, True, False, 11111), -- my verse
+            (ARRAY[11114], 1, 3, 12, 11114, 2, False, False, 11114), -- open world verse
+            (ARRAY[11112], 1, 4, 16, 11112, 3, True, False, 11112), -- open friend verse
+            (ARRAY[11113, 11111], 1, 5, 20, 11113, 4, True, False, 11111), -- joined friend verse
+            (ARRAY[11115, 11111], 1, 2, 8, 11115, 5, False, False, 11111); -- joined world verse
 
 
         INSERT INTO line_x_verses
@@ -429,9 +439,8 @@ AFTER_CREATE_SQL:
             user_id, verse_id, line_text, line_score, added
         )
         VALUES
-        (
-            11113, 2, 'This is the first line for the world to see', 0, false
-        );
+            (11113, 4, 'Im the friend owner, now you joined, so write a line', 0, false),
+            (11115, 5, 'Im the world owner, now you joined, so write a line', 0, false);
 
 
 

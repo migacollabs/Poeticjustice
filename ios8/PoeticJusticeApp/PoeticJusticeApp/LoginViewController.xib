@@ -47,9 +47,9 @@
                         <constraint firstAttribute="width" constant="72" id="Q7Z-xk-6hV"/>
                         <constraint firstAttribute="height" constant="72" id="uwV-AS-vXx"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="Go!" backgroundImage="Init.png">
-                        <color key="titleColor" red="0.1249966668636644" green="0.33280790014467843" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
                         <action selector="on_go:" destination="-1" eventType="touchUpInside" id="f1v-Yb-QiC"/>
