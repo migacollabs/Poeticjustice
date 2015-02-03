@@ -42,10 +42,12 @@ class VerseHistoryMasterViewController: UITableViewController {
     // MARK: - Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "placeholder" {
+        if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
-                //let property = PropertyStore.sharedInstance.get(indexPath.row)
-                //(segue.destinationViewController as DetailViewController).detailItem = property
+                println("indexPath \(indexPath)")
+                let vhr = self.verses[indexPath.row]
+                println("vhr \(vhr)")
+                (segue.destinationViewController as VerseHistoryDetailViewController).detailItem = vhr
             }
         }
     }

@@ -75,6 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         println("bannerView didFailToReceiveAdWithError called")
         self.iAdBanner.hidden = true
+        println("bannerView didFailToReceiveAdWithError set banner to hidden")
+
     }
 
 

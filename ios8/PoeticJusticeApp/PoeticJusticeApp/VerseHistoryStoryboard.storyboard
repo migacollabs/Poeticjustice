@@ -34,7 +34,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="pd3-xg-W7Y" kind="show" id="4Sf-Mw-qye"/>
+                                    <segue destination="pd3-xg-W7Y" kind="show" identifier="showDetail" id="4Sf-Mw-qye"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -43,7 +43,15 @@
                             <outlet property="delegate" destination="xIA-nT-EZo" id="moy-Dm-nig"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master View" id="h29-Mc-4GC"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Verse History" id="h29-Mc-4GC">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="UPr-UU-fUX">
+                            <connections>
+                                <segue destination="xIA-nT-EZo" kind="custom" identifier="doneSegue" customClass="MGPushNoAnimationSegue" id="CTL-rn-v5Q"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QHp-Mc-sQH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -52,7 +60,7 @@
         <!--Verse-->
         <scene sceneID="ftA-Nb-LZV">
             <objects>
-                <viewController id="pd3-xg-W7Y" sceneMemberID="viewController">
+                <viewController id="pd3-xg-W7Y" customClass="VerseHistoryDetailViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DKx-Ku-75f"/>
                         <viewControllerLayoutGuide type="bottom" id="NMe-EJ-dfC"/>
@@ -61,16 +69,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="The Verse goes here" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jhq-Gc-zhY">
-                                <rect key="frame" x="54" y="96" width="156" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verse Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jhq-Gc-zhY">
+                                <rect key="frame" x="260" y="95" width="80" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Cu-4G-id1">
+                                <rect key="frame" x="140" y="124" width="320" height="320"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="320" id="ack-ak-8RD"/>
+                                    <constraint firstAttribute="width" constant="320" id="tdI-zr-mJc"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Jhq-Gc-zhY" secondAttribute="centerX" id="An1-f9-jlA"/>
+                            <constraint firstItem="6Cu-4G-id1" firstAttribute="top" secondItem="Jhq-Gc-zhY" secondAttribute="bottom" constant="8" id="Gst-Bf-3hn"/>
+                            <constraint firstItem="6Cu-4G-id1" firstAttribute="top" secondItem="Jhq-Gc-zhY" secondAttribute="bottom" constant="32" id="PAE-4n-jx6"/>
+                            <constraint firstAttribute="centerX" secondItem="6Cu-4G-id1" secondAttribute="centerX" id="XbL-CZ-gOa"/>
+                            <constraint firstAttribute="centerX" secondItem="6Cu-4G-id1" secondAttribute="centerX" id="Xph-sV-nWc"/>
+                            <constraint firstAttribute="centerX" secondItem="Jhq-Gc-zhY" secondAttribute="centerX" id="Zdp-9S-LF9"/>
+                            <constraint firstAttribute="centerX" secondItem="6Cu-4G-id1" secondAttribute="centerX" id="c4q-Ra-v8Q"/>
+                            <constraint firstItem="Jhq-Gc-zhY" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="31" id="kdN-F2-GJ6"/>
+                            <constraint firstAttribute="centerX" secondItem="Jhq-Gc-zhY" secondAttribute="centerX" id="p0M-PQ-pbA"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="PAE-4n-jx6"/>
+                                <exclude reference="XbL-CZ-gOa"/>
+                                <exclude reference="Xph-sV-nWc"/>
+                                <exclude reference="Zdp-9S-LF9"/>
+                                <exclude reference="p0M-PQ-pbA"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Verse" id="dqg-Yh-MXZ"/>
+                    <connections>
+                        <outlet property="verseText" destination="6Cu-4G-id1" id="1SB-va-P9u"/>
+                        <outlet property="verseTitle" destination="Jhq-Gc-zhY" id="hMB-i8-1ck"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dp0-tK-980" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -95,4 +138,7 @@
             <point key="canvasLocation" x="2096" y="529"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="ngA-fR-pAL"/>
+    </inferredMetricsTieBreakers>
 </document>
