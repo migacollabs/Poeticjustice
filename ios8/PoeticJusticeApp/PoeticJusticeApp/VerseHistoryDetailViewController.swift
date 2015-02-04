@@ -34,11 +34,49 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
+        self.load_verse()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func load_verse(){
+        
+        if let verseHistoryRec = self.detailItem{
+        
+            NetOpers.sharedInstance.get(
+                NetOpers.sharedInstance.appserver_hostname! + "/v/verse/id=\(verseHistoryRec.id)", {data, response, error -> Void in
+                    
+                    let httpResponse = response as NSHTTPURLResponse
+                    if httpResponse.statusCode == 200 {
+                        if data != nil {
+                            
+                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                data!, options: NSJSONReadingOptions.MutableContainers,
+                                error: nil) as NSDictionary
+                            
+                            var verse = ""
+                            if let results = jsonResult["results"] as? NSDictionary{
+                                if let lines = results["lines"] as? NSArray{
+                                    for line in lines{
+                                        verse += "\(line)"
+                                    }
+                                }
+                            }
+
+                            dispatch_async(dispatch_get_main_queue(),{
+                                self.verseText.text = verse
+                                
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            })
+                            
+                        }
+                    }
+                    
+            })
+        }
     }
     
     
