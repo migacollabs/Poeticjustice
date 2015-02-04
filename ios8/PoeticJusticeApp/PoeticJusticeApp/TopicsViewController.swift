@@ -29,6 +29,7 @@ struct ActiveTopicRec {
     var verse_user_ids : [Int] = []
     var email_address : String = ""
     var user_name : String = ""
+    var owner_id : Int = -1
 }
 
 class TopicsViewController: UIViewController {
@@ -46,6 +47,8 @@ class TopicsViewController: UIViewController {
     var lastTabbed : NSDate?
     var audioPlayer : AVAudioPlayer?
     
+    var is_busy : Bool = false
+    var has_topics : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +65,11 @@ class TopicsViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         
         println("TopicsViewController.viewWillAppear called")
+        
+        if (!has_topics) {
+            self.get_topics()
+        }
+        
         var screen_height = UIScreen.mainScreen().bounds.height
         self.iAdBanner = self.appdelegate().iAdBanner
         //self.iAdBanner?.delegate = self
@@ -72,8 +80,13 @@ class TopicsViewController: UIViewController {
         }
         
         // click on the tab, so refresh
-        self.get_active_topics()
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
+            self.get_active_topics()
+        }
+        
         self.updateUserLabel()
+        
+        is_busy = false
     }
     
     override func viewWillDisappear(animated: Bool){
@@ -82,7 +95,7 @@ class TopicsViewController: UIViewController {
     }
     
     @IBAction func refreshActiveTopics(sender: AnyObject) {
-        if (NetOpers.sharedInstance.userId>0) {
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
             
             var refresh : Bool = false
             
@@ -94,13 +107,17 @@ class TopicsViewController: UIViewController {
             }
             
             if (refresh) {
-                get_active_topics()
+                if (!is_busy) {
+                    is_busy = true
+                    get_active_topics()
+                }
+                
                 lastTabbed = NSDate()
             }
-            
-            updateUserLabel()
-            
+        
         }
+        
+        updateUserLabel()
     }
     
     override func didReceiveMemoryWarning() {
@@ -125,91 +142,88 @@ class TopicsViewController: UIViewController {
         println(error)
     }
     
-
+    var is_initialized : Bool = false;
+    
     @IBAction func handleTopicButton(sender: AnyObject) {
         
-        playButtonSound()
-        
-        var topicButton = (sender as TopicButton)
-        var tag = topicButton.tag
-        var tid = self.topic_order[tag-1]
-        var topic = self.topics[tid] as Topic
-        
-        // TODO: handle a new open active topic - if there is an ActiveTopic with a verse_id
-        // associated with the TopicButton that was pressed, then load the Verse setup 
-        // page showing player count, friends, and a list of usernames - this is if the
-        // user is not already set in the Verse.user_ids array
-        
-        // TODO: handle an old open active topic - if the user is already
-        // in the Verse.user_ids or is next_user_id array for the active topic, then go right into the WriteLineViewController
-        
-        // TODO: handle active topic when it's the players turn - if it's the player's turn, 
-        // meaning ActiveTopic.next_user_id==User.id then go right into the WriteLineViewController
-        
-
-        // handle a new topic - an open topic, so start a new Verse
-
-        // stop the ads on this view
-        self.should_begin_banner = false
-        
-        var verseId : Int?
-        var isWorld = false
-        var activeTopic: ActiveTopicRec? = nil
-        
-        for tb in self.active_topics {
-        
-            if (tb.id==tid) {
+        if (is_initialized && (NetOpers.sharedInstance.user.is_logged_in())) {
+            
+            if (!is_busy) {
+                is_busy = true
                 
-                println("tb.verse_user_ids \(tb.verse_user_ids)")
+                playButtonSound()
                 
-                if ( tb.next_user_id==NetOpers.sharedInstance.userId! || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.userId! as Int) ){
-                    verseId = tb.verse_id
-                    activeTopic = tb
-                    break
-                }else{
-                    println("World Topic")
-                    if tb.src == "world"{
-                        verseId = tb.verse_id
-                        isWorld = true
-                        activeTopic = tb
-                        break
+                var topicButton = (sender as TopicButton)
+                var tag = topicButton.tag
+                var tid = self.topic_order[tag-1]
+                var topic = self.topics[tid] as Topic
+                
+                // stop the ads on this view
+                self.should_begin_banner = false
+                
+                var verseId : Int?
+                var isOpen = false // could be open friend or world
+                var activeTopic: ActiveTopicRec? = nil
+                
+                for tb in self.active_topics {
+                    
+                    if (tb.id==tid) {
+                        
+                        println("tb.verse_user_ids \(tb.verse_user_ids)")
+                        
+                        if ( tb.next_user_id==NetOpers.sharedInstance.user.id || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.user.id as Int) ){
+                            verseId = tb.verse_id
+                            activeTopic = tb
+                            break
+                        }else{
+                            println("Open Topic")
+                            if tb.src == "world" || tb.src=="friend" {
+                                verseId = tb.verse_id
+                                isOpen = true
+                                activeTopic = tb
+                                break
+                            }
+                        }
+                        
                     }
                 }
                 
+                if let vid = verseId {
+                    
+                    if isOpen{
+                        let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
+                        vc.activeTopic = activeTopic
+                        vc.topic = topic
+                        navigationController?.pushViewController(vc, animated: true)
+                        
+                    }else{
+                        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+                        vc.verseId = vid
+                        vc.topic = topic
+                        navigationController?.pushViewController(vc, animated: true)
+                    }
+                    
+                } else {
+                    let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
+                    vc.topic = topic
+                    navigationController?.pushViewController(vc, animated: true)
+                    
+                }
+                
+                is_busy = false
             }
+            
         }
         
-        if let vid = verseId {
-            
-            if isWorld{
-                let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
-                vc.activeTopic = activeTopic
-                vc.topic = topic
-                navigationController?.pushViewController(vc, animated: true)
-                
-            }else{
-                let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
-                vc.verseId = vid
-                vc.topic = topic
-                navigationController?.pushViewController(vc, animated: true)
-            }
-
-        } else {
-            let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
-            vc.topic = topic
-            navigationController?.pushViewController(vc, animated: true)
-            
-        }
     }
     
     
     // MARK - Update the label to display user_name and score
     
     func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = String(us) + " points"
-            }
+        var user = NetOpers.sharedInstance.user
+        if (user.is_logged_in()) {
+            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
         } else {
             self.userLabel.text = "You are not signed in"
         }
@@ -247,6 +261,10 @@ class TopicsViewController: UIViewController {
                                     self.topic_order.append(tid)
                                 }
                             }
+                            
+                            // needs to happen at least once, even if
+                            // a severe error happens
+                            has_topics = true
                            
                     }else{
                         self.dispatch_alert("Error", message: "No Topics", controller_title: "Ok")
@@ -259,8 +277,8 @@ class TopicsViewController: UIViewController {
                 })
                 
             }else{
-                
-                self.dispatch_alert("Error", message: "Cannot load Topics", controller_title: "Ok")
+                // TODO: handle specific errors
+                self.dispatch_alert("Error: Unable to load Topics", message: "Please make sure to sign in", controller_title: "Ok")
 
             }
         }
@@ -322,6 +340,10 @@ class TopicsViewController: UIViewController {
                                 atr.user_name = un
                             }
                             
+                            if let oid = r["owner_id"] as? Int {
+                                atr.owner_id = oid
+                            }
+                            
                             self.active_topics.append(atr)
                         }
                         
@@ -367,27 +389,31 @@ class TopicsViewController: UIViewController {
         
         for at in self.active_topics {
             
-            var index = find(self.topic_order, at.id as Int)! + 1
-            
-            if let tl = get_topic_label(index) {
-  
-                switch at.src {
-                case "mine":
-                    // i created this verse for friends or world
-                    tl.text = at.user_name
-                case "joined":
-                    // TODO: still need to signify if joined a friends verse or world verse?
-                    tl.text = "j: " + at.user_name
-                case "world":
-                    // open world verse
-                    tl.text = "w: " + at.user_name
-                case "":
-                    // open friend verse
-                    tl.text = "f: " + at.user_name
-                default:
-                    break
+            if let f = find(self.topic_order, at.id) {
+                
+                var index : Int = f + 1
+                
+                if let tl = get_topic_label(index) {
                     
+                    switch at.src {
+                    case "mine":
+                        // i created this verse for friends or world
+                        tl.text = at.user_name
+                    case "joined":
+                        // TODO: still need to signify if joined a friends verse or world verse?
+                        tl.text = "j: " + at.user_name
+                    case "world":
+                        // open world verse
+                        tl.text = "w: " + at.user_name
+                    case "friend":
+                        // open friend verse
+                        tl.text = "f: " + at.user_name
+                    default:
+                        break
+                        
+                    }
                 }
+                
             }
         }
     }
@@ -406,6 +432,9 @@ class TopicsViewController: UIViewController {
                     btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
                 }
             }
+            
+            is_busy = false
+            is_initialized = true
         }
     }
     

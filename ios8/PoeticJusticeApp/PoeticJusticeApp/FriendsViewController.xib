@@ -7,8 +7,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FriendsViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
+                <outlet property="addButton" destination="bhg-fl-nZ1" id="jd8-v8-Z4a"/>
                 <outlet property="friendEmailAddress" destination="2Vy-jk-KTF" id="e3j-hU-yFl"/>
                 <outlet property="myTableView" destination="2UK-cK-bAC" id="dqv-vq-4ZL"/>
+                <outlet property="removeButton" destination="SsI-U8-WpU" id="RWS-ii-Do5"/>
                 <outlet property="userLabel" destination="MZe-uU-3uS" id="xKi-np-OwZ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -18,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SsI-U8-WpU">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SsI-U8-WpU">
                     <rect key="frame" x="370" y="166" width="222" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="222" id="ZmI-v9-UKa"/>

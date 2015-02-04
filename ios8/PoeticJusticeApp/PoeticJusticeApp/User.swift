@@ -9,119 +9,69 @@
 import Foundation
 
 class User{
-    let user_data: NSDictionary
-    
-    init(userData:NSDictionary){
-        self.user_data = userData
-    }
-    
-    var id: AnyObject? {
-        get {
-            if let x = self.user_data["id"] as? Int{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var user_name: AnyObject? {
-        get {
-            if let x = self.user_data["user_name"] as? String{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var email_address: AnyObject? {
-        get {
-            if let x = self.user_data["email_address"] as? String{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var twitter_name: AnyObject? {
-        get {
-            if let x = self.user_data["twitter_name"] as? String{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var facebook_name: AnyObject? {
-        get {
-            if let x = self.user_data["facebook_name"] as? String{
-                return x
-            }
-            return nil
-        }
-    }
-    
-    var is_active: AnyObject? {
-        get {
-            if let x = self.user_data["is_active"] as? Bool{
-                return x
-            }
-            return nil
-        }
-    }
 
-    var is_playing: AnyObject? {
-        get {
-            if let x = self.user_data["is_playing"] as? Bool{
-                return x
-            }
-            return nil
-        }
+    var id: Int = -1
+    var user_name: String = ""
+    var email_address: String = ""
+    var twitter_name: String = ""
+    var facebook_name: String = ""
+    var is_active: Bool = false
+    var is_playing: Bool = false
+    var mobile_number: String = ""
+    var access_token: String = ""
+    var device_token: String = ""
+    var user_prefs: String = ""
+    var user_score : Int = 0
+    var level : Int = 0
+    
+    func is_logged_in() -> Bool {
+        return self.id > 0
     }
     
-    var mobile_number: AnyObject? {
-        get {
-            if let x = self.user_data["mobile_number"] as? String{
-                return x
-            }
-            return nil
-        }
+    init() {
     }
     
-    var access_token: AnyObject? {
-        get {
-            if let x = self.user_data["access_token"] as? String{
-                return x
-            }
-            return nil
+    init(user_data : NSDictionary) {
+        if let i = user_data["id"] as? Int {
+            self.id = i
         }
-    }
-    
-    var device_token: AnyObject? {
-        get {
-            if let x = self.user_data["device_token"] as? String{
-                return x
-            }
-            return nil
+        if let un = user_data["user_name"] as? String {
+            self.user_name = un
         }
-    }
-    
-    var user_prefs: AnyObject? {
-        get {
-            if let x = self.user_data["user_prefs"] as? String{
-                return x
-            }
-            return nil
+        if let ea = user_data["email_address"] as? String {
+            self.email_address = ea
         }
-    }
-    
-    var user_score: AnyObject? {
-        get {
-            if let x = self.user_data["user_score"] as? Int{
-                return x
-            }
-            return nil
+        if let tn = user_data["twitter_name"] as? String {
+            self.twitter_name = tn
         }
+        if let fn = user_data["facebook_name"] as? String {
+            self.facebook_name = fn
+        }
+        if let ia = user_data["is_active"] as? Bool {
+            self.is_active = ia
+        }
+        if let ip = user_data["is_playing"] as? Bool {
+            self.is_playing = ip
+        }
+        if let mn = user_data["mobile_number"] as? String {
+            self.mobile_number = mn
+        }
+        if let at = user_data["access_token"] as? String {
+            self.access_token = at
+        }
+        if let dt = user_data["device_token"] as? String {
+            self.device_token = dt
+        }
+        if let up = user_data["user_prefs"] as? String {
+            self.user_prefs = up
+        }
+        if let us = user_data["user_score"] as? Int {
+            self.user_score = us
+        }
+        if let l = user_data["level"] as? Int {
+            self.level = l
+        }
+        
     }
-
     
 }

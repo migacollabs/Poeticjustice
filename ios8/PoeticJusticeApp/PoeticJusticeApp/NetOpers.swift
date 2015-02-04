@@ -27,8 +27,8 @@ class NetOpers {
     var loginHandler: LoginViewController?
     var alertHandler: LoginViewController?
     
-    var userId: Int? = nil
-    var user: User? = nil
+    var user: User = User()
+    
     var game_state: GameState? = nil
     
     init(){
@@ -145,6 +145,8 @@ class NetOpers {
         request.HTTPMethod = "POST"
         request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
         
+        println("sending login request")
+        
         var task = self.session?.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
             if let httpResponse = response as? NSHTTPURLResponse {
                 if httpResponse.statusCode == 200 {
@@ -163,9 +165,6 @@ class NetOpers {
                                 
                                 user_data = results
                                 
-                                if let y = results["id"] as? Int{
-                                    self.userId = y
-                                }
                             }
                             
                             if let rq_v = jsonResult["verification_req"] as? Bool{
@@ -173,9 +172,9 @@ class NetOpers {
                             }
                         }
                         
-                        if self.userId != nil && user_data != nil{
+                        if user_data != nil{
                             
-                            self.user = User(userData: user_data!)
+                            self.user = User(user_data: user_data!)
                             
                             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                                 dispatch_async(dispatch_get_main_queue(),{
@@ -184,10 +183,16 @@ class NetOpers {
                                         if self.alertHandler != nil{
                                             self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok!")
                                         }
+                                        
+                                        if self.loginHandler != nil{
+                                            self.loginHandler!.on_email_notification()
+                                        }
+                                        
                                     }else{
                                         if self.loginHandler != nil{
                                             self.loginHandler!.on_login()
                                         }else{
+                                            // TODO: is this possible?
                                             on_login()
                                         }
                                     }
@@ -208,11 +213,15 @@ class NetOpers {
                             self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok!")
                         }
                         
+                        if self.loginHandler != nil{
+                            self.loginHandler!.on_email_notification()
+                        }
+                        
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     })
                     
                 }else{
-                    println("Error signing in")
+                    println("error signing in")
                 }
                 
             }
@@ -220,13 +229,17 @@ class NetOpers {
             
         })
         
+        if self.loginHandler != nil{
+            self.loginHandler!.on_finished_login()
+        }
+        
         task?.resume()
     }
     
     
     func get_player_game_state(on_received_gate_state:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
-        println(self.userId)
-        if self.userId != nil && self.appserver_hostname != nil{
+        
+        if self.user.is_logged_in() && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/u/game-state"
             
@@ -241,12 +254,12 @@ class NetOpers {
     }
     
     func update_main_player_score(increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
-        if self.userId != nil && self.appserver_hostname != nil{
+        if self.user.is_logged_in() && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/u/update/score"
             
             var params = Dictionary<String, AnyObject>()
-            params["id"] = self.userId
+            params["id"] = self.user.id
             params["score_increment"] = increment_by
             
             self.post(url_string, params: params, on_score_updated?)
@@ -260,12 +273,12 @@ class NetOpers {
     }
     
     func update_player_score(increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
-        if self.userId != nil && self.appserver_hostname != nil{
+        if self.user.is_logged_in() && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/u/update/player-score"
             
             var params = Dictionary<String, AnyObject>()
-            params["id"] = self.userId
+            params["id"] = self.user.id
             params["score_increment"] = increment_by
             
             self.post(url_string, params: params, on_score_updated?)
@@ -278,7 +291,7 @@ class NetOpers {
     }
     
     func update_verse_score(verse_id:Int, increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
-        if self.userId != nil && self.appserver_hostname != nil{
+        if self.user.is_logged_in() && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/v/update/score"
             

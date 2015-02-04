@@ -26,6 +26,10 @@ class LoginViewController: UIViewController {
         updateUserLabel()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        is_busy = false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -35,14 +39,13 @@ class LoginViewController: UIViewController {
     @IBOutlet var userLabel: UILabel!
     
     func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = "You are signed in as " + un + " with " + String(us) + " points"
-            }
+        
+        var user = NetOpers.sharedInstance.user
+        if (user.is_logged_in()) {
+            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
             
-            title = un
+            title = user.user_name
             self.navigationController?.navigationBar.topItem?.title = ""
-            
         } else {
             self.userLabel.text = "You are not signed in"
         }
@@ -60,89 +63,107 @@ class LoginViewController: UIViewController {
         return result
     }
     
+    var is_busy : Bool = false
+    
+    func on_finished_login() {
+        // TODO: possible error handling or clean up post netopers stuff?
+        println("finished netopers login")
+    }
+    
     @IBAction func on_go(sender: AnyObject) {
         
-        self.goButton.enabled = false
-        self.tabBarController?.tabBar.hidden = true
-        self.userLabel.text = "Signing in..."
-        
-        println("attempting login...")
-        
-        var myDict: NSDictionary?
-        
-        // use a optional let assignment thing to check for the existence of
-        // the Config plist file.
-        if let path = NSBundle.mainBundle().pathForResource("Config", ofType: "plist") {
-            myDict = NSDictionary(contentsOfFile: path)
-        }
-        
-        // i'm pretty sure this sets 'dict' to a pointer to
-        // myDict if myDict isn't nil. This is supposed to work
-        // because myDict is an optional
-        if let dict = myDict {
-            if let ah = dict["appserver_hostname"] as String?{
-                
-                // the println is better than NSLog
-                // the cool \(var) formatting handle almost everything
-                println("Connecting to \(ah)")
-                
-                var login_url = ah + "/login"
-                
-                var params = Dictionary<String,AnyObject>()
-                params["form.submitted"] = true
-                params["country_code"] = "USA"
-                params["device_token"] = UIDevice.currentDevice().identifierForVendor.UUIDString
-                params["device_type"] = UIDevice.currentDevice().modelName
-                
-                // verify email address
-                if let em = self.email_address.text{
-                    params["login"] = em
+        if (!is_busy) {
+            is_busy = true
+            
+            self.userLabel.text = "Signing in..."
+            
+            println("attempting login...")
+            
+            var myDict: NSDictionary?
+            
+            // use a optional let assignment thing to check for the existence of
+            // the Config plist file.
+            if let path = NSBundle.mainBundle().pathForResource("Config", ofType: "plist") {
+                myDict = NSDictionary(contentsOfFile: path)
+            }
+            
+            // i'm pretty sure this sets 'dict' to a pointer to
+            // myDict if myDict isn't nil. This is supposed to work
+            // because myDict is an optional
+            if let dict = myDict {
+                if let ah = dict["appserver_hostname"] as String?{
                     
-                    if (!isValidEmail(em)) {
-                        self.show_alert("Invalid email address", message: "Please enter a valid email address", controller_title: "Ok")
-                        self.tabBarController?.tabBar.hidden = false
-                        self.userLabel.text = "You are not signed in"
-                        self.goButton.enabled = true
-                        return
-                    }
-                }
-                
-                // verify user name
-                if let un = self.user_name.text{
-                    params["user_name"] = un
+                    // the println is better than NSLog
+                    // the cool \(var) formatting handle almost everything
+                    println("Connecting to \(ah)")
                     
-                    var unl = countElements(un)
+                    var login_url = ah + "/login"
                     
-                    if (unl>15 || unl==0) {
-                        self.show_alert("Invalid user name", message: "User name must be between 1 and 15 characters long", controller_title: "Ok")
-                        self.tabBarController?.tabBar.hidden = false
-                        self.userLabel.text = "You are not signed in"
-                        self.goButton.enabled = true
-                        return
-                    }
-                }
-                
-                if let login_em = params["login"] as? String{
+                    var params = Dictionary<String,AnyObject>()
+                    params["form.submitted"] = true
+                    params["country_code"] = "USA"
+                    params["device_token"] = UIDevice.currentDevice().identifierForVendor.UUIDString
+                    params["device_type"] = UIDevice.currentDevice().modelName
                     
-                    println("Connectintg as \(login_em)")
-                    
-                    NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
+                    // verify email address
+                    if let em = self.email_address.text{
+                        params["login"] = em
                         
-                        // we are logged in
-                        // this won't be called if we set the on_login as a callback
-                        self.show_alert("Login", message: "Successfully logged in", controller_title: "Thanks!")
-                        
-                    })
+                        if (!isValidEmail(em)) {
+                            self.show_alert("Invalid email address", message: "Please enter a valid email address", controller_title: "Ok")
+                            
+                            self.userLabel.text = "You are not signed in"
+                            
+                            is_busy = false
+                            
+                            return
+                        }
+                    }
                     
+                    // verify user name
+                    if let un = self.user_name.text{
+                        params["user_name"] = un
+                        
+                        var unl = countElements(un)
+                        
+                        if (unl>15 || unl==0) {
+                            self.show_alert("Invalid user name", message: "User name must be between 1 and 15 characters long", controller_title: "Ok")
+                            
+                            self.userLabel.text = "You are not signed in"
+                            
+                            is_busy = false
+                            
+                            return
+                        }
+                    }
+                    
+                    if let login_em = params["login"] as? String{
+                        
+                        println("Connecting as \(login_em)")
+                        
+                        NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
+                            
+                            // we are logged in
+                            // this won't be called if we set the on_login as a callback
+                            self.show_alert("Login", message: "Successfully logged in", controller_title: "Thanks!")
+                            
+                        })
+                        
+                    }else{
+                        self.show_alert("Login", message: "No Email Found", controller_title: "Try again") // do no user email address msg
+                    }
                 }else{
-                    self.show_alert("Login", message: "No Email Found", controller_title: "Try again") // do no user email address msg
+                    () // do no app server error msg
                 }
-            }else{
-                () // do no app server error msg
+                
             }
             
         }
         
+    }
+    
+    func on_email_notification() {
+        is_busy = false
     }
     
     func on_login(){
@@ -205,14 +226,17 @@ class LoginViewController: UIViewController {
     func on_start(){
         println("on_start called")
         
-        self.goButton.enabled = true
+        //self.goButton.enabled = true
+        //self.goButton.highlighted = false
         
         playButtonSound()
         
         // this should probably be the indicator the app is good to go
         tabBarController?.selectedIndex = 1
-        self.tabBarController?.tabBar.hidden = false
+        
         self.updateUserLabel()
+        
+        is_busy = false
     }
     
     func show_alert(title:String, message:String, controller_title:String){

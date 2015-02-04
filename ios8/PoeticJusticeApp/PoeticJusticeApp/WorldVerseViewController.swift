@@ -15,6 +15,9 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var playerTable: UITableView!
     @IBOutlet weak var verseTitle: UILabel!
     
+    @IBOutlet var joinButton: UIButton!
+    @IBOutlet var newButton: UIButton!
+    
     var user_ids:[Int] = []
     var players: [User] = []
     var iAdBanner: ADBannerView?
@@ -55,6 +58,8 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
             println("adding ad banner subview ")
             self.view.addSubview(adb)
         }
+        
+        is_busy = false
         
     }
     
@@ -100,19 +105,26 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     var verseId : Int?
+    var is_busy : Bool = false
 
     @IBAction func onJoin(sender: AnyObject) {
-        // playButtonSound()
-        if let at = self.activeTopic{
+        
+        if (!is_busy) {
+            is_busy = true
+         
+            // playButtonSound()
+            if let at = self.activeTopic{
+                
+                self.verseId = at.verse_id
+                var params = [String:AnyObject]()
+                params["user_id"] = NetOpers.sharedInstance.user.id
+                params["id"] = self.verseId
+                NetOpers.sharedInstance.post(
+                    NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=" + String(at.verse_id),
+                    params: params,
+                    onJoinedCompletionHandeler)
+            }
             
-            self.verseId = at.verse_id
-            var params = [String:AnyObject]()
-            params["user_id"] = NetOpers.sharedInstance.user?.id!
-            params["id"] = self.verseId
-            NetOpers.sharedInstance.post(
-                NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=" + String(at.verse_id),
-                params: params,
-                onJoinedCompletionHandeler)
         }
     }
     
@@ -132,7 +144,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 
                 if let new_player = jsonResult["user"] as? NSDictionary{
                     println("new player \(new_player)")
-                    var u = User(userData:new_player as NSDictionary)
+                    var u = User(user_data:new_player as NSDictionary)
                     self.players.append(u)
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                         dispatch_async(dispatch_get_main_queue(),{
@@ -143,6 +155,8 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                             vc.topic = self.topic
                             vc.worldVerseViewController = self
                             self.navigationController?.pushViewController(vc, animated: true)
+                            
+                            self.is_busy = false
                             
                         })
                     })
@@ -161,11 +175,14 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 println("Unhandled Err Code \(httpResponse.statusCode)")
                 break;
             }
+            is_busy = false
         }
+        
     }
     
 
     @IBAction func onStart(sender: AnyObject) {
+        
         // playButtonSound()
         let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
         vc.topic = self.topic
@@ -189,7 +206,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                     self.players.removeAll()
                     
                     for player in players{
-                        var u = User(userData:player as NSDictionary)
+                        var u = User(user_data:player as NSDictionary)
                         self.players.append(u)
                     }
                     
@@ -223,10 +240,8 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : UITableViewCell = self.playerTable.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
         if self.players.count > 0{
-            if let u = self.players[indexPath.row] as User?{
-                if let un = u.user_name as? String{
-                    cell.textLabel?.text = un
-                }
+            if let u = self.players[indexPath.row] as User? {
+                cell.textLabel?.text = u.user_name
             }
         }
         return cell

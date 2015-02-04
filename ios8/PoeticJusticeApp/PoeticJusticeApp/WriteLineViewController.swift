@@ -89,7 +89,11 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     var lastTabbed : NSDate?
     
     @IBAction func refreshVerseView(sender: AnyObject) {
-        viewWillAppear(true)
+        if (!is_busy) {
+            is_busy = true
+            
+            viewWillAppear(true)
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -110,7 +114,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
             title = t.name as? String
         }
         
-        if (NetOpers.sharedInstance.userId>0) {
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
             updateUserLabel()
             
             var refresh : Bool = false
@@ -127,7 +131,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
                 var params = Dictionary<String,AnyObject>()
                 
                 params["verse_id"]=verseId
-                params["user_id"]=NetOpers.sharedInstance.userId
+                params["user_id"]=NetOpers.sharedInstance.user.id
                 
                 println("hitting active-verse url")
                 println(params)
@@ -138,6 +142,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
             }
         
         }
+        
+        is_busy = false
     }
     
     
@@ -163,10 +169,9 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     
     
     func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = String(us) + " points"
-            }
+        var user = NetOpers.sharedInstance.user
+        if (user.is_logged_in()) {
+            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
         } else {
             self.userLabel.text = "You are not signed in"
         }
@@ -232,6 +237,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
                             self.verseView.text = self.verseView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
                             
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            
+                            self.is_busy = false
                         })
                     })
                 } else {
@@ -271,25 +278,31 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     
     @IBOutlet var setLine: UITextField!
     
+    var is_busy : Bool = false
+    
     @IBAction func sendLine(sender: AnyObject) {
-        println("Clicked send with score " + String(score) + " " +
-        setLine.text)
         
-        playButtonSound()
-        
-        var params = Dictionary<String,AnyObject>()
-        params["topic_id"]=topic?.id
-        params["line"]=setLine.text
-        params["verse_id"]=verseId
-        params["score_increment"]=score
-        
-        println("hitting saveline url")
-        println(params)
-        
-        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
-        
-        self.setLine.text = ""
-        self.sendButton.enabled = false
+        if (!is_busy) {
+            is_busy = true
+            
+            println("Clicked send with score " + String(score) + " " +
+                setLine.text)
+            
+            playButtonSound()
+            
+            var params = Dictionary<String,AnyObject>()
+            params["topic_id"]=topic?.id
+            params["line"]=setLine.text
+            params["verse_id"]=verseId
+            params["score_increment"]=score
+            
+            println("hitting saveline url")
+            println(params)
+            
+            NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
+            
+            self.setLine.text = ""
+        }
         
     }
     

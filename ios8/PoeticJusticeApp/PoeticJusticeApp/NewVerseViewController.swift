@@ -64,6 +64,8 @@ class NewVerseViewController: UIViewController {
             println("adding ad banner subview ")
             self.view.addSubview(adb)
         }
+        
+        is_busy = false
     }
     
     override func viewWillDisappear(animated: Bool){
@@ -85,54 +87,66 @@ class NewVerseViewController: UIViewController {
     
     }
     
+    var is_busy : Bool = false
+    
+    @IBOutlet var startButton: UIButton!
+    
     @IBAction func onStart(sender: AnyObject) {
         
-        var params = Dictionary<String,AnyObject>()
-        params["title"] = self.verseTitle.text
-        params["max_participants"] = self.maxNumPlayers
-        params["friends_only"] = self.friendsOnly.on
-        params["owner_id"] = NetOpers.sharedInstance.userId!
-        params["next_user_id"] = NetOpers.sharedInstance.userId!
-        params["user_ids"] = String(NetOpers.sharedInstance.userId!) + ";"
-        params["verse_category_topic_id"] = self.topic?.id
-        
-        NetOpers.sharedInstance.post(
-            NetOpers.sharedInstance.appserver_hostname! + "/m/edit/Verse",
-            params: params, {(data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-                
-                // if the server is down, it will die here
-                // how to catch/fix without exceptions?
-                
-                let httpResponse = response as NSHTTPURLResponse
-                if httpResponse.statusCode == 200 {
-                    if data != nil {
-                        
-                        let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                            data!, options: NSJSONReadingOptions.MutableContainers,
-                            error: nil) as NSDictionary
-                        
-                        if let model_name = jsonResult["model"] as? String{
-                            println(model_name)
-                            if model_name == "<class 'poeticjustice.models.Verse'>"{
-                                if let results = jsonResult["results"] as? NSArray{
-                                    var d = results[0] as? NSDictionary
-                                    if d != nil{
-                                        dispatch_async(dispatch_get_main_queue(),{
-                                            self.start_accepted(d!["id"] as Int)
-                                        })
-                                    
+        if (!is_busy) {
+            is_busy = true
+         
+            var params = Dictionary<String,AnyObject>()
+            params["title"] = self.verseTitle.text
+            params["max_participants"] = self.maxNumPlayers
+            params["friends_only"] = self.friendsOnly.on
+            params["owner_id"] = NetOpers.sharedInstance.user.id
+            params["next_user_id"] = NetOpers.sharedInstance.user.id
+            params["user_ids"] = String(NetOpers.sharedInstance.user.id) + ";"
+            params["verse_category_topic_id"] = self.topic?.id
+            
+            NetOpers.sharedInstance.post(
+                NetOpers.sharedInstance.appserver_hostname! + "/m/edit/Verse",
+                params: params, {(data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                    
+                    // if the server is down, it will die here
+                    // how to catch/fix without exceptions?
+                    
+                    let httpResponse = response as NSHTTPURLResponse
+                    if httpResponse.statusCode == 200 {
+                        if data != nil {
+                            
+                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                data!, options: NSJSONReadingOptions.MutableContainers,
+                                error: nil) as NSDictionary
+                            
+                            if let model_name = jsonResult["model"] as? String{
+                                println(model_name)
+                                if model_name == "<class 'poeticjustice.models.Verse'>"{
+                                    if let results = jsonResult["results"] as? NSArray{
+                                        var d = results[0] as? NSDictionary
+                                        if d != nil{
+                                            dispatch_async(dispatch_get_main_queue(),{
+                                                self.start_accepted(d!["id"] as Int)
+                                            })
+                                            
+                                        }
+                                        
                                     }
-
                                 }
                             }
+                            
+                            
                         }
-                        
-
+                    } else {
+                        self.is_busy = false
                     }
-                }
-                
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             })
+            
+        }
+    
     }
     
     var audioPlayer : AVAudioPlayer?
@@ -163,6 +177,8 @@ class NewVerseViewController: UIViewController {
         vc.topic = topic
         vc.newVerseViewController = self
         navigationController?.pushViewController(vc, animated: true)
+        
+        is_busy = false
     }
 
     /*

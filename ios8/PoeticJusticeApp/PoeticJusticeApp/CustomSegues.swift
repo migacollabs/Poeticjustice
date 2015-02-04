@@ -18,6 +18,6 @@ class MGPushNoAnimationSegue: UIStoryboardSegue {
         
         let src = self.sourceViewController as UIViewController
         let dst = sb.instantiateViewControllerWithIdentifier("homeViewController") as UIViewController
-        src.navigationController?.pushViewController(dst, animated:false)
+        src.navigationController?.setViewControllers([dst], animated:true)
     }
 }

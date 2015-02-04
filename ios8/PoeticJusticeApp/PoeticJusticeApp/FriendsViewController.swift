@@ -27,6 +27,9 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var lastTabbed : NSDate?
     var iAdBanner: ADBannerView?
     
+    @IBOutlet var addButton: UIButton!
+    @IBOutlet var removeButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +52,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.view.addSubview(adb)
         }
         
-        if (NetOpers.sharedInstance.userId>0) {
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
             
             var refresh : Bool = false
             
@@ -61,15 +64,19 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
             if (refresh) {
-                var uId : String = String(NetOpers.sharedInstance.userId!)
+                var uId : String = String(NetOpers.sharedInstance.user.id)
                 NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends?user_id=" + uId, loadFriends)
                 lastTabbed = NSDate()
             }
             
-            updateUserLabel()
-            
         }
+        
+        updateUserLabel()
+        
+        is_busy = false
     }
+    
+    var is_busy : Bool = false
     
     override func viewWillDisappear(animated: Bool){
 //        self.iAdBanner?.delegate = nil
@@ -85,17 +92,24 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func delete_friend(fr : FriendRec?) {
+    
         var params = Dictionary<String,AnyObject>()
         params["friend_id"]=fr?.friend_id
-        params["user_id"]=NetOpers.sharedInstance.userId
+        params["user_id"]=NetOpers.sharedInstance.user.id
         
         NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/removefriend", params: params, loadFriends)
+    
     }
     
     @IBAction func removeFriends(sender: AnyObject) {
         if ((removeFriend) != nil) {
             // TODO: confirmation dialog here
-            delete_friend(removeFriend!)
+            if (!is_busy) {
+                is_busy = true
+                if (NetOpers.sharedInstance.user.is_logged_in()) {
+                    delete_friend(removeFriend!)
+                }
+            }
         }
     }
     
@@ -104,13 +118,14 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = String(us) + " points"
-            }
+        
+        var user = NetOpers.sharedInstance.user
+        if (user.is_logged_in()) {
+            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
         } else {
             self.userLabel.text = "You are not signed in"
         }
+        
     }
     
     func loadFriends(data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -172,6 +187,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                             // the user has 7 friends and 2 friend requests
                             self.navigationController?.tabBarItem.badgeValue = String(self.friends.count)
                             
+                            self.is_busy = false
+                            
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         })
                     })
@@ -194,21 +211,32 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func add_friend(frEmailAddress : String?) {
+        
         var params = Dictionary<String,AnyObject>()
-        params["user_id"]=NetOpers.sharedInstance.userId
+        params["user_id"]=NetOpers.sharedInstance.user.id
         params["friend_email_address"]=frEmailAddress
         
         NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/addfriend", params: params, loadFriends)
+    
     }
     
     @IBOutlet var friendEmailAddress: UITextField!
     
     @IBAction func addFriend(sender: AnyObject) {
         if (!self.friendEmailAddress.text.isEmpty) {
-            if (isValidEmail(self.friendEmailAddress.text)) {
-                add_friend(self.friendEmailAddress.text)
-            } else {
-                show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
+            
+            if (!is_busy) {
+                is_busy = true
+             
+                if (isValidEmail(self.friendEmailAddress.text)) {
+                    if (NetOpers.sharedInstance.user.is_logged_in()) {
+                        add_friend(self.friendEmailAddress.text)
+                    }
+                } else {
+                    show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
+                    is_busy = false
+                }
+                
             }
         }
     }

@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewVerseViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
                 <outlet property="friendsOnly" destination="K6e-HB-zNq" id="1qo-0K-bCh"/>
+                <outlet property="startButton" destination="DR7-QI-ZtV" id="hRH-R4-bvm"/>
                 <outlet property="topicButton" destination="DEl-6Z-Nux" id="cYs-cC-SZQ"/>
                 <outlet property="verseTitle" destination="B0b-AV-HFa" id="fxv-uu-OuR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

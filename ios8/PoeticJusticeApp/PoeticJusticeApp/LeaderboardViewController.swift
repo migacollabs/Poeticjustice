@@ -126,10 +126,8 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
 
             cell.textLabel?.text = String(lur.user_score) + " - " + lur.user_name
 
-            if let noid = NetOpers.sharedInstance.userId as Int? {
-                if (lur.user_id==noid) {
-                    cell.contentView.backgroundColor = UIColor.yellowColor()
-                }
+            if (lur.user_id==NetOpers.sharedInstance.user.id) {
+                cell.contentView.backgroundColor = UIColor.yellowColor()
             } else {
                 cell.contentView.backgroundColor = UIColor.whiteColor()
             }
