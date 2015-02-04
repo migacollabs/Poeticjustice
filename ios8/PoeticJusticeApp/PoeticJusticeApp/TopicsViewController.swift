@@ -29,6 +29,7 @@ struct ActiveTopicRec {
     var verse_user_ids : [Int] = []
     var email_address : String = ""
     var user_name : String = ""
+    var owner_id : Int = -1
 }
 
 class TopicsViewController: UIViewController {
@@ -161,7 +162,7 @@ class TopicsViewController: UIViewController {
                 self.should_begin_banner = false
                 
                 var verseId : Int?
-                var isWorld = false
+                var isOpen = false // could be open friend or world
                 var activeTopic: ActiveTopicRec? = nil
                 
                 for tb in self.active_topics {
@@ -175,10 +176,10 @@ class TopicsViewController: UIViewController {
                             activeTopic = tb
                             break
                         }else{
-                            println("World Topic")
-                            if tb.src == "world"{
+                            println("Open Topic")
+                            if tb.src == "world" || tb.src=="friend" {
                                 verseId = tb.verse_id
-                                isWorld = true
+                                isOpen = true
                                 activeTopic = tb
                                 break
                             }
@@ -189,7 +190,7 @@ class TopicsViewController: UIViewController {
                 
                 if let vid = verseId {
                     
-                    if isWorld{
+                    if isOpen{
                         let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
                         vc.activeTopic = activeTopic
                         vc.topic = topic
@@ -339,6 +340,10 @@ class TopicsViewController: UIViewController {
                                 atr.user_name = un
                             }
                             
+                            if let oid = r["owner_id"] as? Int {
+                                atr.owner_id = oid
+                            }
+                            
                             self.active_topics.append(atr)
                         }
                         
@@ -400,7 +405,7 @@ class TopicsViewController: UIViewController {
                     case "world":
                         // open world verse
                         tl.text = "w: " + at.user_name
-                    case "":
+                    case "friend":
                         // open friend verse
                         tl.text = "f: " + at.user_name
                     default:

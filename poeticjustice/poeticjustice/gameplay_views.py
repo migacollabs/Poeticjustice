@@ -17,7 +17,7 @@ from boto.s3.connection import S3Connection, Location
 from boto.s3.key import Key
 
 # sqlalchemy
-from sqlalchemy import or_, desc
+from sqlalchemy import or_, desc, and_
 from  sqlalchemy.sql.expression import func
 
 # pyaella imports
@@ -387,6 +387,13 @@ def get_verse(verseId, userId):
     return {"results":{"lines":lines, "next_user_id":next_user_id, "verse_id":verseId, "owner_id":owner_id}}
 
 
+def get_open_topic_keys(topics):
+    keys = []
+    for k in topics:
+        if topics[k]==None:
+            keys.append(k)
+    return keys
+
 @view_config(
     name='active-topics',
     request_method='GET',
@@ -407,9 +414,13 @@ def get_active_topics(request):
 
         if user and user.is_active and user.email_address==auth_usrid:
             print 'loading active topics for user', user.id
+
             with SQLAlchemySessionFactory() as session:
-                topics = []
-                unique_topics = []
+                topics = {}
+
+                # seed topic data for 16 topics so far
+                for i in range(1, 17):
+                    topics[i]=None
 
                 V, T, U, UxU= ~Verse, ~VerseCategoryTopic, ~User, ~UserXUser
 
@@ -418,38 +429,53 @@ def get_active_topics(request):
                     filter(V.complete==False).\
                     filter(V.owner_id==U.id).\
                     filter(U.id==user.id).\
-                    order_by(func.random()):\
-                    # limit(5):
-                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'mine', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
-                    unique_topics.append(r[1].id)
-
+                    filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))):
+                    topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'mine', "next_user_id":r[0].next_user_id, 
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
+                    
                 if user.open_verse_ids:
                     # topics that i've joined
                     for r in session.query(V, T, U).\
                         filter(V.verse_category_topic_id==T.id).\
                         filter(U.id==V.owner_id).\
                         filter(V.id.in_(user.open_verse_ids)).\
+                        filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))).\
                         filter(V.complete==False):
-                        # limit(5):
-                        if r[1].id not in unique_topics:
-                            topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                                "user_name":r[2].user_name, "src":'joined', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
+                        topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                                "user_name":r[2].user_name, "src":'joined', "next_user_id":r[0].next_user_id, 
+                                "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
 
-                # friendship initiated by me
+                # friendships
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
-                    filter(or_(V.owner_id==UxU.friend_id, V.owner_id==UxU.user_id)).\
                     filter(V.owner_id!=user.id).\
+                    filter(UxU.user_id==user.id).\
+                    filter(UxU.friend_id==V.owner_id).\
                     filter(UxU.approved==True).\
+                    filter(U.id==UxU.friend_id).\
                     filter(V.complete==False).\
                     filter(V.friends_only==True).\
                     filter(V.participant_count<V.max_participants).\
-                    order_by(func.random()).\
+                    filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))).\
                     limit(3):
-                    topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
+                    topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, 
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
 
-                # filter(~V.id.any(V.id.in_(unique_verses))).\ # TODO: NOT IN
+                for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
+                    filter(V.owner_id!=user.id).\
+                    filter(UxU.friend_id==user.id).\
+                    filter(UxU.user_id==V.owner_id).\
+                    filter(UxU.approved==True).\
+                    filter(U.id==UxU.user_id).\
+                    filter(V.complete==False).\
+                    filter(V.friends_only==True).\
+                    filter(V.participant_count<V.max_participants).\
+                    filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))).\
+                    limit(3):
+                    topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, 
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
 
                 # put global open verses last, so mine and friends show up first in topics view
                 # global open verses and topics that are not mine
@@ -459,13 +485,19 @@ def get_active_topics(request):
                     filter(U.id!=user.id).\
                     filter(V.friends_only==False).\
                     filter(V.participant_count<V.max_participants).\
-                    order_by(func.random()).\
-                    limit(10):
-                    if r[1].id not in unique_topics:
-                        topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                            "user_name":r[2].user_name, "src":'world', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})
+                    filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))).\
+                    limit(5):
+                    topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                        "user_name":r[2].user_name, "src":'world', "next_user_id":r[0].next_user_id, 
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
 
-                return {"results":topics}
+                # TODO: optimize this - definitely a better way
+                results = []
+                for k in topics:
+                    if topics[k]!=None:
+                        results.append(topics[k])
+
+                return {"results":results}
 
         raise HTTPUnauthorized
 
