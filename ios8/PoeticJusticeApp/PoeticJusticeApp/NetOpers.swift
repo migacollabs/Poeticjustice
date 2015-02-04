@@ -27,8 +27,8 @@ class NetOpers {
     var loginHandler: LoginViewController?
     var alertHandler: LoginViewController?
     
-    var userId: Int? = nil
-    var user: User? = nil
+    var user: User = User()
+    
     var game_state: GameState? = nil
     
     init(){
@@ -165,9 +165,6 @@ class NetOpers {
                                 
                                 user_data = results
                                 
-                                if let y = results["id"] as? Int{
-                                    self.userId = y
-                                }
                             }
                             
                             if let rq_v = jsonResult["verification_req"] as? Bool{
@@ -175,9 +172,9 @@ class NetOpers {
                             }
                         }
                         
-                        if self.userId != nil && user_data != nil{
+                        if user_data != nil{
                             
-                            self.user = User(userData: user_data!)
+                            self.user = User(user_data: user_data!)
                             
                             dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                                 dispatch_async(dispatch_get_main_queue(),{
@@ -241,8 +238,8 @@ class NetOpers {
     
     
     func get_player_game_state(on_received_gate_state:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
-        println(self.userId)
-        if self.userId != nil && self.appserver_hostname != nil{
+        
+        if self.user.is_logged_in() && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/u/game-state"
             
@@ -257,12 +254,12 @@ class NetOpers {
     }
     
     func update_main_player_score(increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
-        if self.userId != nil && self.appserver_hostname != nil{
+        if self.user.is_logged_in() && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/u/update/score"
             
             var params = Dictionary<String, AnyObject>()
-            params["id"] = self.userId
+            params["id"] = self.user.id
             params["score_increment"] = increment_by
             
             self.post(url_string, params: params, on_score_updated?)
@@ -276,12 +273,12 @@ class NetOpers {
     }
     
     func update_player_score(increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
-        if self.userId != nil && self.appserver_hostname != nil{
+        if self.user.is_logged_in() && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/u/update/player-score"
             
             var params = Dictionary<String, AnyObject>()
-            params["id"] = self.userId
+            params["id"] = self.user.id
             params["score_increment"] = increment_by
             
             self.post(url_string, params: params, on_score_updated?)
@@ -294,7 +291,7 @@ class NetOpers {
     }
     
     func update_verse_score(verse_id:Int, increment_by:Int, on_score_updated:((NSData?, NSURLResponse?, NSError?)->Void)? ) -> Bool{
-        if self.userId != nil && self.appserver_hostname != nil{
+        if self.user.is_logged_in() && self.appserver_hostname != nil{
             
             var url_string:String = self.appserver_hostname! + "/v/update/score"
             

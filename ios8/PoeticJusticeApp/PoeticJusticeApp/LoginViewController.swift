@@ -39,14 +39,13 @@ class LoginViewController: UIViewController {
     @IBOutlet var userLabel: UILabel!
     
     func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = "You are signed in as " + un + " with " + String(us) + " points"
-            }
+        
+        var user = NetOpers.sharedInstance.user
+        if (user.is_logged_in()) {
+            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
             
-            title = un
+            title = user.user_name
             self.navigationController?.navigationBar.topItem?.title = ""
-            
         } else {
             self.userLabel.text = "You are not signed in"
         }

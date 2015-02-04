@@ -114,7 +114,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
             title = t.name as? String
         }
         
-        if (NetOpers.sharedInstance.userId>0) {
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
             updateUserLabel()
             
             var refresh : Bool = false
@@ -131,7 +131,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
                 var params = Dictionary<String,AnyObject>()
                 
                 params["verse_id"]=verseId
-                params["user_id"]=NetOpers.sharedInstance.userId
+                params["user_id"]=NetOpers.sharedInstance.user.id
                 
                 println("hitting active-verse url")
                 println(params)
@@ -169,10 +169,9 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     
     
     func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = String(us) + " points"
-            }
+        var user = NetOpers.sharedInstance.user
+        if (user.is_logged_in()) {
+            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
         } else {
             self.userLabel.text = "You are not signed in"
         }

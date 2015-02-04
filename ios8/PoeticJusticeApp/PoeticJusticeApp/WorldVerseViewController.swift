@@ -117,7 +117,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 
                 self.verseId = at.verse_id
                 var params = [String:AnyObject]()
-                params["user_id"] = NetOpers.sharedInstance.user?.id!
+                params["user_id"] = NetOpers.sharedInstance.user.id
                 params["id"] = self.verseId
                 NetOpers.sharedInstance.post(
                     NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=" + String(at.verse_id),
@@ -144,7 +144,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 
                 if let new_player = jsonResult["user"] as? NSDictionary{
                     println("new player \(new_player)")
-                    var u = User(userData:new_player as NSDictionary)
+                    var u = User(user_data:new_player as NSDictionary)
                     self.players.append(u)
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                         dispatch_async(dispatch_get_main_queue(),{
@@ -206,7 +206,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                     self.players.removeAll()
                     
                     for player in players{
-                        var u = User(userData:player as NSDictionary)
+                        var u = User(user_data:player as NSDictionary)
                         self.players.append(u)
                     }
                     
@@ -240,10 +240,8 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : UITableViewCell = self.playerTable.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
         if self.players.count > 0{
-            if let u = self.players[indexPath.row] as User?{
-                if let un = u.user_name as? String{
-                    cell.textLabel?.text = un
-                }
+            if let u = self.players[indexPath.row] as User? {
+                cell.textLabel?.text = u.user_name
             }
         }
         return cell

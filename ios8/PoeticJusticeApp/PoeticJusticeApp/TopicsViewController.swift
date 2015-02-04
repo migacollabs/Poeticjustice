@@ -79,7 +79,7 @@ class TopicsViewController: UIViewController {
         }
         
         // click on the tab, so refresh
-        if (NetOpers.sharedInstance.userId>0) {
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
             self.get_active_topics()
         }
         
@@ -94,30 +94,29 @@ class TopicsViewController: UIViewController {
     }
     
     @IBAction func refreshActiveTopics(sender: AnyObject) {
-        if (NetOpers.sharedInstance.userId>0) {
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
             
-            if (!is_busy) {
-                is_busy = true
-                
-                var refresh : Bool = false
-                
-                if (lastTabbed==nil) {
-                    refresh = true
-                } else {
-                    var elapsedTime = NSDate().timeIntervalSinceDate(lastTabbed!)
-                    refresh = (elapsedTime>NSTimeInterval(10.0))
-                }
-                
-                if (refresh) {
-                    if (NetOpers.sharedInstance.userId>0) {                    get_active_topics()
-                    }
-                    lastTabbed = NSDate()
-                }
-                
-                updateUserLabel()
-                
+            var refresh : Bool = false
+            
+            if (lastTabbed==nil) {
+                refresh = true
+            } else {
+                var elapsedTime = NSDate().timeIntervalSinceDate(lastTabbed!)
+                refresh = (elapsedTime>NSTimeInterval(10.0))
             }
+            
+            if (refresh) {
+                if (!is_busy) {
+                    is_busy = true
+                    get_active_topics()
+                }
+                
+                lastTabbed = NSDate()
+            }
+        
         }
+        
+        updateUserLabel()
     }
     
     override func didReceiveMemoryWarning() {
@@ -146,7 +145,7 @@ class TopicsViewController: UIViewController {
     
     @IBAction func handleTopicButton(sender: AnyObject) {
         
-        if (is_initialized) {
+        if (is_initialized && (NetOpers.sharedInstance.user.is_logged_in())) {
             
             if (!is_busy) {
                 is_busy = true
@@ -171,7 +170,7 @@ class TopicsViewController: UIViewController {
                         
                         println("tb.verse_user_ids \(tb.verse_user_ids)")
                         
-                        if ( tb.next_user_id==NetOpers.sharedInstance.userId! || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.userId! as Int) ){
+                        if ( tb.next_user_id==NetOpers.sharedInstance.user.id || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.user.id as Int) ){
                             verseId = tb.verse_id
                             activeTopic = tb
                             break
@@ -221,10 +220,9 @@ class TopicsViewController: UIViewController {
     // MARK - Update the label to display user_name and score
     
     func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = String(us) + " points"
-            }
+        var user = NetOpers.sharedInstance.user
+        if (user.is_logged_in()) {
+            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
         } else {
             self.userLabel.text = "You are not signed in"
         }

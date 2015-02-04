@@ -100,9 +100,9 @@ class NewVerseViewController: UIViewController {
             params["title"] = self.verseTitle.text
             params["max_participants"] = self.maxNumPlayers
             params["friends_only"] = self.friendsOnly.on
-            params["owner_id"] = NetOpers.sharedInstance.userId!
-            params["next_user_id"] = NetOpers.sharedInstance.userId!
-            params["user_ids"] = String(NetOpers.sharedInstance.userId!) + ";"
+            params["owner_id"] = NetOpers.sharedInstance.user.id
+            params["next_user_id"] = NetOpers.sharedInstance.user.id
+            params["user_ids"] = String(NetOpers.sharedInstance.user.id) + ";"
             params["verse_category_topic_id"] = self.topic?.id
             
             NetOpers.sharedInstance.post(

@@ -444,6 +444,7 @@ def get_active_topics(request):
                     filter(V.complete==False).\
                     filter(V.friends_only==True).\
                     filter(V.participant_count<V.max_participants).\
+                    order_by(func.random()).\
                     limit(3):
                     topics.append({"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_user_id":r[0].next_user_id, "user_ids":r[0].user_ids})

@@ -52,7 +52,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.view.addSubview(adb)
         }
         
-        if (NetOpers.sharedInstance.userId>0) {
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
             
             var refresh : Bool = false
             
@@ -64,7 +64,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
             if (refresh) {
-                var uId : String = String(NetOpers.sharedInstance.userId!)
+                var uId : String = String(NetOpers.sharedInstance.user.id)
                 NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends?user_id=" + uId, loadFriends)
                 lastTabbed = NSDate()
             }
@@ -95,7 +95,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
         var params = Dictionary<String,AnyObject>()
         params["friend_id"]=fr?.friend_id
-        params["user_id"]=NetOpers.sharedInstance.userId
+        params["user_id"]=NetOpers.sharedInstance.user.id
         
         NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/removefriend", params: params, loadFriends)
     
@@ -106,7 +106,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             // TODO: confirmation dialog here
             if (!is_busy) {
                 is_busy = true
-                if (NetOpers.sharedInstance.userId>0) {
+                if (NetOpers.sharedInstance.user.is_logged_in()) {
                     delete_friend(removeFriend!)
                 }
             }
@@ -118,13 +118,14 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func updateUserLabel() {
-        if let un = NetOpers.sharedInstance.user?.user_name as? String {
-            if let us = NetOpers.sharedInstance.user?.user_score as? Int {
-                self.userLabel.text = String(us) + " points"
-            }
+        
+        var user = NetOpers.sharedInstance.user
+        if (user.is_logged_in()) {
+            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
         } else {
             self.userLabel.text = "You are not signed in"
         }
+        
     }
     
     func loadFriends(data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -212,7 +213,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     func add_friend(frEmailAddress : String?) {
         
         var params = Dictionary<String,AnyObject>()
-        params["user_id"]=NetOpers.sharedInstance.userId
+        params["user_id"]=NetOpers.sharedInstance.user.id
         params["friend_email_address"]=frEmailAddress
         
         NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/addfriend", params: params, loadFriends)
@@ -228,7 +229,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 is_busy = true
              
                 if (isValidEmail(self.friendEmailAddress.text)) {
-                    if (NetOpers.sharedInstance.userId>0) {
+                    if (NetOpers.sharedInstance.user.is_logged_in()) {
                         add_friend(self.friendEmailAddress.text)
                     }
                 } else {
