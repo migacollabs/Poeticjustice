@@ -99,11 +99,18 @@ class NewVerseViewController: UIViewController {
             var params = Dictionary<String,AnyObject>()
             params["title"] = self.verseTitle.text
             params["max_participants"] = self.maxNumPlayers
-            params["friends_only"] = self.friendsOnly.on
+            
+            if self.friendsOnly.on {
+                params["friends_only"] = "true"
+            } else {
+                params["friends_only"] = "false"
+            }
+            
             params["owner_id"] = NetOpers.sharedInstance.user.id
             params["next_index_user_ids"] = 0
             params["max_lines"]=self.maxNumPlayers * 4
             params["next_index_user_ids"]=0
+            params["participant_count"]=1
             
             // need to make sure we allocate all user_ids slots
             var user_ids : String = String(NetOpers.sharedInstance.user.id)

@@ -184,7 +184,7 @@ PYAELLAC:
         num_of_lines: Column(Integer, default=0, nullable=False)
         allow_public_listing: Column(Boolean, default=True)
         open_verse_ids: Column(ARRAY(Integer))
-        level: Column(Integer, default=0, nullable=False)
+        level: Column(Integer, default=1, nullable=False)
     Relations:
         user_types: relationship('UserXUserTypeLookup')
     Rules:
@@ -267,7 +267,7 @@ PYAELLAC:
         title: Column(String, nullable=True)
         user_ids: Column(ARRAY(Integer), nullable=False)
         max_participants: Column(Integer, nullable=False, default=2)
-        participant_count: Column(Integer, nullable=False, default=2)
+        participant_count: Column(Integer, nullable=False, default=1)
         max_lines: Column(Integer, nullable=False, default=8)
         friends_only: Column(Boolean, nullable=False, default=False)
         complete: Column(Boolean, nullable=False, default=False)

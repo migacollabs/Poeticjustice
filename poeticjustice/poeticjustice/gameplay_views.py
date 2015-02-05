@@ -41,7 +41,7 @@ from poeticjustice.views import _save_user
 
 
 log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
+log.setLevel(logging.INFO)
 fh = logging.FileHandler(__name__+'.log')
 fh.setLevel(logging.DEBUG)
 frmttr = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -435,18 +435,18 @@ def get_active_topics(request):
                     filter(V.complete==False).\
                     filter(V.owner_id==U.id).\
                     filter(U.id==user.id).\
-                    filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))):
+                    filter(T.id.in_(get_open_topic_keys(topics))):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'mine', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
-                    
+                
                 if user.open_verse_ids:
                     # topics that i've joined
                     for r in session.query(V, T, U).\
                         filter(V.verse_category_topic_id==T.id).\
                         filter(U.id==V.owner_id).\
                         filter(V.id.in_(user.open_verse_ids)).\
-                        filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))).\
+                        filter(T.id.in_(get_open_topic_keys(topics))).\
                         filter(V.complete==False):
                         topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                                 "user_name":r[2].user_name, "src":'joined', "next_index_user_ids":r[0].next_index_user_ids, 
@@ -454,31 +454,27 @@ def get_active_topics(request):
 
                 # friendships
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
-                    filter(V.owner_id!=user.id).\
                     filter(UxU.user_id==user.id).\
                     filter(UxU.friend_id==V.owner_id).\
+                    filter(U.id==V.owner_id).\
                     filter(UxU.approved==True).\
-                    filter(U.id==UxU.friend_id).\
                     filter(V.complete==False).\
                     filter(V.friends_only==True).\
                     filter(V.participant_count<V.max_participants).\
-                    filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))).\
-                    limit(3):
+                    filter(T.id.in_(get_open_topic_keys(topics))):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
 
                 for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
-                    filter(V.owner_id!=user.id).\
                     filter(UxU.friend_id==user.id).\
                     filter(UxU.user_id==V.owner_id).\
+                    filter(U.id==V.owner_id).\
                     filter(UxU.approved==True).\
-                    filter(U.id==UxU.user_id).\
                     filter(V.complete==False).\
                     filter(V.friends_only==True).\
                     filter(V.participant_count<V.max_participants).\
-                    filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))).\
-                    limit(3):
+                    filter(T.id.in_(get_open_topic_keys(topics))):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
@@ -491,11 +487,12 @@ def get_active_topics(request):
                     filter(U.id!=user.id).\
                     filter(V.friends_only==False).\
                     filter(V.participant_count<V.max_participants).\
-                    filter(V.verse_category_topic_id.in_(get_open_topic_keys(topics))).\
-                    limit(5):
+                    filter(T.id.in_(get_open_topic_keys(topics))):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'world', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
+
+                print 'open topics after world:', get_open_topic_keys(topics)
 
                 # TODO: optimize this - definitely a better way
                 results = []
