@@ -153,8 +153,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                             let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
                             vc.verseId = self.verseId!
                             vc.topic = self.topic
-                            vc.worldVerseViewController = self
-                            self.navigationController?.pushViewController(vc, animated: true)
+                            self.navigationController!.setViewControllers([self.navigationController!.viewControllers[0],vc], animated: true)
                             
                             self.is_busy = false
                             

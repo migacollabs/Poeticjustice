@@ -25,7 +25,7 @@ struct ActiveTopicRec {
     var id : Int = -1
     var src : String = ""
     var verse_id : Int = -1
-    var next_user_id : Int = -1
+    var next_index_user_ids : Int = -1
     var verse_user_ids : [Int] = []
     var email_address : String = ""
     var user_name : String = ""
@@ -171,12 +171,13 @@ class TopicsViewController: UIViewController {
                         
                         println("tb.verse_user_ids \(tb.verse_user_ids)")
                         
-                        if ( tb.next_user_id==NetOpers.sharedInstance.user.id || contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.user.id as Int) ){
+                        // i've either joined or created these verses
+                        if (contains(tb.verse_user_ids as [Int], NetOpers.sharedInstance.user.id as Int) || tb.owner_id==NetOpers.sharedInstance.user.id ){
                             verseId = tb.verse_id
                             activeTopic = tb
                             break
                         }else{
-                            println("Open Topic")
+                            // just some open verses with available user slots available
                             if tb.src == "world" || tb.src=="friend" {
                                 verseId = tb.verse_id
                                 isOpen = true
@@ -187,6 +188,24 @@ class TopicsViewController: UIViewController {
                         
                     }
                 }
+                
+                /**
+                Verse creation scenarios:
+                
+                My verse open to world
+                My verse open to friends
+                Friend verse open to world
+                Friend verse open to friends
+                Stranger verse open to world
+                
+                Display scenarios:
+                
+                My verse
+                Friend verse I've not joined (open to world or friends)
+                Friend verse I've joined (open to world or friends)
+                World verse I've not joined
+                World verse I've joined
+                **/
                 
                 if let vid = verseId {
                     
@@ -324,8 +343,8 @@ class TopicsViewController: UIViewController {
                                 atr.verse_id = vid
                             }
                             
-                            if let nid = r["next_user_id"] as? Int {
-                                atr.next_user_id = nid
+                            if let nid = r["next_index_user_ids"] as? Int {
+                                atr.next_index_user_ids = nid
                             }
                             
                             if let vids = r["user_ids"] as? [Int] {

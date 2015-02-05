@@ -275,7 +275,15 @@ PYAELLAC:
         verse_category_topic_id: Column(Integer, ForeignKey('verse_category_topics.id'), nullable=False)
         owner_id: Column(Integer, ForeignKey('users.id'), nullable=False)
         current_user_id: Column(BigInteger, ForeignKey('users.id'), nullable=True)
-        next_user_id: Column(BigInteger, ForeignKey('users.id'), nullable=False)
+        next_index_user_ids: Column(Integer, default=0, nullable=False)
+    Values:
+        next_index_user_ids: [
+            0,
+            1,
+            2,
+            3,
+            4
+        ]
 
 
 (LineXVerse):
@@ -287,6 +295,7 @@ PYAELLAC:
         line_text: Column(String)
         line_score: Column(Integer)
         added: Column(Boolean, default=False, nullable=False)
+        user_level: Column(Integer, default=1, nullable=False)
     Relations:
         user_id: Column(BigInteger, ForeignKey('users.id'), nullable=False)
         verse_id: Column(BigInteger, ForeignKey('verses.id'), nullable=False)
@@ -425,30 +434,21 @@ AFTER_CREATE_SQL:
 
          INSERT INTO verses
             (
-                user_ids, participant_count, max_participants, max_lines, owner_id, verse_category_topic_id, friends_only, complete, next_user_id
+                user_ids, participant_count, max_participants, max_lines, owner_id, verse_category_topic_id, friends_only, complete, next_index_user_ids
             )
         VALUES
-            (ARRAY[11111], 1, 2, 8, 11111, 1, True, False, 11111), -- my verse
-            (ARRAY[11112], 1, 4, 16, 11112, 3, True, False, 11112), -- open friend verse
-            (ARRAY[11113, 11111], 2, 5, 20, 11113, 4, True, False, 11111), -- joined friend verse
-            (ARRAY[11114], 1, 3, 12, 11114, 2, False, False, 11114), -- open world verse
-            (ARRAY[11115, 11111], 2, 2, 8, 11115, 5, False, False, 11111); -- joined world verse
+            (ARRAY[11111, -1], 1, 2, 8, 11111, 1, True, False, 0), -- my verse
+            (ARRAY[11112, -1, -1, -1], 1, 4, 16, 11112, 3, True, False, 0), -- open friend verse
+            (ARRAY[11113, 11111, -1, -1, -1], 2, 5, 20, 11113, 4, True, False, 1), -- joined friend verse
+            (ARRAY[11114, -1, -1], 1, 3, 12, 11114, 2, False, False, 0), -- open world verse
+            (ARRAY[11115, 11111], 2, 2, 8, 11115, 5, False, False, 1); -- joined world verse
 
 
         INSERT INTO line_x_verses
         (
-            user_id, verse_id, line_text, line_score, added
+            user_id, verse_id, line_text, line_score, added, user_level
         )
         VALUES
-            (11113, 4, 'Im the friend owner, now you joined, so write a line', 0, false),
-            (11115, 5, 'Im the world owner, now you joined, so write a line', 0, false);
-
-
-
-
-
-
-
-
-
+            (11113, 4, 'Im the friend owner, now you joined, so write a line', 0, false, 1),
+            (11115, 5, 'Im the world owner, now you joined, so write a line', 0, false, 1);
 
