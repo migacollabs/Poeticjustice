@@ -737,6 +737,74 @@ def verse(request):
         except:
             pass
 
+@view_config(
+    name='level-progress',
+    request_method='GET',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def get_user_level_up_progress(request):
+    print 'returning user level up progress'
+    try:
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active and user.email_address==auth_usrid:
+            return get_level_up_progress(user)
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+def get_level_up_progress(user):
+    # this function can be used to determine if a user should level
+    # up.  just need to make sure num_completed_verses = total_verses.
+    # also, num_incomplete_verses should be zero
+
+    num_lines = 0 # num of total lines
+    num_complete_verses = 0 # started and completed
+    num_incomplete_verses = 0 # started, but not done
+    
+    # num of completed verses required for the level
+    total_verses = {1:16, 2:24, 3:32, 4:40, 5:48, 6:56, 7:64}[user.level]
+
+    verses = {}
+
+    with SQLAlchemySessionFactory() as session:
+        U, LxV, V = ~User, ~LineXVerse, ~Verse
+        for r in session.query(V, LxV).filter(LxV.verse_id==V.id).\
+            filter(LxV.user_level==user.level).\
+            filter(LxV.user_id==user.id):
+            num_lines += 1
+            verses[r[0].id]=r[0].complete
+
+    for k in verses:
+        if verses[k]==True:
+            num_complete_verses += 1
+        else:
+            num_incomplete_verses += 1
+
+    return {"results":{"num_lines":num_lines, "num_complete_verses":num_complete_verses,
+        "num_incomplete_verses":num_incomplete_verses, "total_verses_required":total_verses,
+        "current_level":user.level}}
+
 
 @view_config(
     name='save-line',
@@ -788,7 +856,7 @@ def save_verse_line(request):
                     lastUser.save(session=session)
 
                 # finally, save this users line
-                linexverse = LineXVerse(user_id=user.id, verse_id=verse.id, line_text=line, line_score=0)
+                linexverse = LineXVerse(user_id=user.id, verse_id=verse.id, line_text=line, line_score=0, user_level=user.level)
                 linexverse.save(session=session)
 
                 verse = Verse(entity=session.merge(verse))

@@ -295,6 +295,7 @@ PYAELLAC:
         line_text: Column(String)
         line_score: Column(Integer)
         added: Column(Boolean, default=False, nullable=False)
+        user_level: Column(Integer, default=1, nullable=False)
     Relations:
         user_id: Column(BigInteger, ForeignKey('users.id'), nullable=False)
         verse_id: Column(BigInteger, ForeignKey('verses.id'), nullable=False)
@@ -445,18 +446,9 @@ AFTER_CREATE_SQL:
 
         INSERT INTO line_x_verses
         (
-            user_id, verse_id, line_text, line_score, added
+            user_id, verse_id, line_text, line_score, added, user_level
         )
         VALUES
-            (11113, 4, 'Im the friend owner, now you joined, so write a line', 0, false),
-            (11115, 5, 'Im the world owner, now you joined, so write a line', 0, false);
-
-
-
-
-
-
-
-
-
+            (11113, 4, 'Im the friend owner, now you joined, so write a line', 0, false, 1),
+            (11115, 5, 'Im the world owner, now you joined, so write a line', 0, false, 1);
 
