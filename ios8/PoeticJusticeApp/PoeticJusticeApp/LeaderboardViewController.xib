@@ -16,32 +16,18 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="CjO-jX-Jr0">
-                    <rect key="frame" x="8" y="115" width="584" height="347"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="CjO-jX-Jr0">
+                    <rect key="frame" x="0.0" y="0.0" width="592" height="600"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="8" y="115" width="384" height="347"/>
                     </variation>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quQ-fz-ga0">
-                    <rect key="frame" x="8" y="83" width="110" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="110" id="aYZ-61-Qjh"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" title=" Refresh" image="reload_24.png">
-                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="refreshView:" destination="-1" eventType="touchUpInside" id="pKL-MW-TwG"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkn-3M-854">
                     <rect key="frame" x="275" y="470" width="50" height="32"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="32" id="G2N-WQ-8UO"/>
-                        <constraint firstAttribute="width" constant="50" id="SCp-WQ-0kI"/>
+                        <constraint firstAttribute="width" constant="50" id="arO-sb-nm3"/>
+                        <constraint firstAttribute="height" constant="32" id="kfl-FT-7Av"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -50,18 +36,13 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="CjO-jX-Jr0" firstAttribute="top" relation="lessThanOrEqual" secondItem="quQ-fz-ga0" secondAttribute="bottom" constant="8" symbolic="YES" id="Igr-Ce-P2S"/>
-                <constraint firstItem="CjO-jX-Jr0" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="L93-s1-NrO"/>
-                <constraint firstItem="zkn-3M-854" firstAttribute="top" relation="greaterThanOrEqual" secondItem="CjO-jX-Jr0" secondAttribute="bottom" constant="8" symbolic="YES" id="LMk-nh-9eB"/>
-                <constraint firstItem="zkn-3M-854" firstAttribute="centerX" secondItem="CjO-jX-Jr0" secondAttribute="centerX" id="XE1-MP-TG6"/>
-                <constraint firstItem="CjO-jX-Jr0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="YvC-eh-EWA"/>
-                <constraint firstItem="quQ-fz-ga0" firstAttribute="leading" secondItem="CjO-jX-Jr0" secondAttribute="leading" id="bU8-lk-gfl"/>
-                <constraint firstItem="quQ-fz-ga0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="83" id="kGW-pD-3M2"/>
-                <constraint firstAttribute="bottom" secondItem="zkn-3M-854" secondAttribute="bottom" constant="98" id="sPq-tj-69S"/>
+                <constraint firstItem="zkn-3M-854" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="PJ0-JA-tZX"/>
+                <constraint firstItem="CjO-jX-Jr0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Y1p-nV-4Pq"/>
+                <constraint firstAttribute="bottom" secondItem="CjO-jX-Jr0" secondAttribute="bottom" id="Y3a-8O-wjR"/>
+                <constraint firstAttribute="bottom" secondItem="zkn-3M-854" secondAttribute="bottom" constant="98" id="iGt-dp-UYF"/>
+                <constraint firstItem="CjO-jX-Jr0" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="lNe-F3-auY"/>
+                <constraint firstItem="CjO-jX-Jr0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pcL-sE-o38"/>
             </constraints>
         </view>
     </objects>
-    <resources>
-        <image name="reload_24.png" width="24" height="24"/>
-    </resources>
 </document>

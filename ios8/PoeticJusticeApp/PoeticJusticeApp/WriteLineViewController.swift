@@ -24,7 +24,7 @@ struct VerseRec {
     }
 }
 
-class WriteLineViewController: UIViewController, ADBannerViewDelegate {
+class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var topicButton: UIButton!
@@ -52,11 +52,12 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     // for now, this is just to help clean up nav once this view is reached
     var newVerseViewController : NewVerseViewController?
     var worldVerseViewController : WorldVerseViewController?
-
-    @IBOutlet var userLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var refreshButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
+        self.navigationItem.rightBarButtonItem = refreshButton
         
         self.sendButton.hidden = true
         
@@ -65,16 +66,20 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         
         title = "Your Line"
         
-        self.sendLineLabel.text = "Your turn is coming up soon"
+        self.setLine.placeholder  = "Your turn is coming up soon!"
+        
+        self.setLine.delegate = self
         
         self.configureView()
-        updateUserLabel()
         
     }
     
-    var lastTabbed : NSDate?
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        self.view.endEditing(true);
+        return false;
+    }
     
-    @IBAction func refreshVerseView(sender: AnyObject) {
+    func refresh() {
         if (!is_busy) {
             is_busy = true
             
@@ -89,6 +94,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
             }
         }
     }
+    
+    var lastTabbed : NSDate?
     
     override func viewWillAppear(animated: Bool) {
         
@@ -108,9 +115,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             
-            updateSendLineLabel()
-            
-            updateUserLabel()
+            updateSendPlaceholder()
             
             var refresh : Bool = false
             
@@ -162,16 +167,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    func updateUserLabel() {
-        var user = NetOpers.sharedInstance.user
-        if (user.is_logged_in()) {
-            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
-        } else {
-            self.userLabel.text = "You are not signed in"
-        }
-    }
-    
     @IBAction func decrementScore(sender: AnyObject) {
         score = 0;
     }
@@ -179,8 +174,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     @IBAction func incrementScore(sender: AnyObject) {
         score = 2;
     }
-    
-    @IBOutlet var sendLineLabel: UILabel!
     
     private var verse : VerseRec = VerseRec()
     
@@ -246,7 +239,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
                                     
                                     self.is_my_turn = self.verse.next_user_id==NetOpers.sharedInstance.user.id
                                     
-                                    self.updateSendLineLabel()
+                                    self.updateSendPlaceholder()
                                 }
                             }
                             
@@ -289,13 +282,13 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         println(error)
     }
     
-    func updateSendLineLabel() {
+    func updateSendPlaceholder() {
         if (is_my_turn) {
             self.sendButton.hidden = false
-            self.sendLineLabel.text = "It's your turn!"
+            self.setLine.placeholder = "It's your turn!"
         } else {
             self.sendButton.hidden = true
-            self.sendLineLabel.text = "Your turn is coming up soon"
+            self.setLine.placeholder  = "Your turn is coming up soon!"
         }
     }
 
@@ -313,7 +306,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
             
             is_my_turn = false
             
-            updateSendLineLabel()
+            updateSendPlaceholder()
             
             println("Clicked send with score " + String(score) + " " +
                 setLine.text)

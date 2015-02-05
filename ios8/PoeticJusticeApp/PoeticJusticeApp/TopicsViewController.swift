@@ -36,8 +36,6 @@ class TopicsViewController: UIViewController {
 
     @IBOutlet weak var topicButton: TopicButton!
     @IBOutlet var topicScrollView: UIScrollView!
-    @IBOutlet var userLabel: UILabel!
-    
     
     var iAdBanner: ADBannerView?
     var topics = Dictionary<Int, AnyObject>()
@@ -52,6 +50,9 @@ class TopicsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var refreshButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
+        self.navigationItem.rightBarButtonItem = refreshButton
         
         reset_topic_labels()
         
@@ -84,8 +85,6 @@ class TopicsViewController: UIViewController {
             self.get_active_topics()
         }
         
-        self.updateUserLabel()
-        
         is_busy = false
     }
     
@@ -94,7 +93,7 @@ class TopicsViewController: UIViewController {
 //        self.iAdBanner?.removeFromSuperview()
     }
     
-    @IBAction func refreshActiveTopics(sender: AnyObject) {
+    func refresh() {
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             
             var refresh : Bool = false
@@ -114,10 +113,9 @@ class TopicsViewController: UIViewController {
                 
                 lastTabbed = NSDate()
             }
-        
+            
         }
         
-        updateUserLabel()
     }
     
     override func didReceiveMemoryWarning() {
@@ -234,18 +232,6 @@ class TopicsViewController: UIViewController {
             
         }
         
-    }
-    
-    
-    // MARK - Update the label to display user_name and score
-    
-    func updateUserLabel() {
-        var user = NetOpers.sharedInstance.user
-        if (user.is_logged_in()) {
-            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
-        } else {
-            self.userLabel.text = "You are not signed in"
-        }
     }
     
     // MARK - Topics

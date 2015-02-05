@@ -755,7 +755,7 @@ def get_user_level_up_progress(request):
             )
         )
         if user and user.is_active and user.email_address==auth_usrid:
-            return get_level_up_progress(user)
+            return get_level_progress(user.id, user.level)
 
         raise HTTPUnauthorized
 
@@ -773,7 +773,7 @@ def get_user_level_up_progress(request):
         except:
             pass
 
-def get_level_up_progress(user):
+def get_level_progress(userId, level):
     # this function can be used to determine if a user should level
     # up.  just need to make sure num_completed_verses = total_verses.
     # also, num_incomplete_verses should be zero
@@ -783,15 +783,15 @@ def get_level_up_progress(user):
     num_incomplete_verses = 0 # started, but not done
     
     # num of completed verses required for the level
-    total_verses = {1:16, 2:24, 3:32, 4:40, 5:48, 6:56, 7:64}[user.level]
+    num_verses_required = {1:16, 2:24, 3:32, 4:40, 5:48, 6:56, 7:64}[level]
 
     verses = {}
 
     with SQLAlchemySessionFactory() as session:
         U, LxV, V = ~User, ~LineXVerse, ~Verse
         for r in session.query(V, LxV).filter(LxV.verse_id==V.id).\
-            filter(LxV.user_level==user.level).\
-            filter(LxV.user_id==user.id):
+            filter(LxV.user_level==level).\
+            filter(LxV.user_id==userId):
             num_lines += 1
             verses[r[0].id]=r[0].complete
 
@@ -802,9 +802,14 @@ def get_level_up_progress(user):
             num_incomplete_verses += 1
 
     return {"results":{"num_lines":num_lines, "num_complete_verses":num_complete_verses,
-        "num_incomplete_verses":num_incomplete_verses, "total_verses_required":total_verses,
+        "num_incomplete_verses":num_incomplete_verses, "num_verses_required":num_verses_required,
         "current_level":user.level}}
 
+
+def do_level_up(user):
+    # return true if the user should level up from their current level
+    level = get_level_progress(user.id, user.level)
+    return level["results"]["num_complete_verses"]==level["results"]["num_verses_required"]
 
 @view_config(
     name='save-line',
@@ -861,6 +866,14 @@ def save_verse_line(request):
 
                 verse = Verse(entity=session.merge(verse))
                 verse.save(session=session)
+
+                if (do_level_up(user)):
+                    print 'user is leveling up'
+                    user = User(entity=session.merge(user))
+                    user.level = user.level + 1
+                    user.save(session=session)
+                else:
+                    print 'user is not leveling up'
 
                 return get_verse(verse.id, user.id)
 

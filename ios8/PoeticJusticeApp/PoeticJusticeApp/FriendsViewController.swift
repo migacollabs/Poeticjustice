@@ -19,7 +19,7 @@ struct FriendRec {
 
 import UIKit
 
-class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     @IBOutlet var myTableView: UITableView!
     
@@ -33,12 +33,21 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var refreshButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
+        self.navigationItem.rightBarButtonItem = refreshButton
+        
         title = "Friends"
         
         self.myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier : "cell")
         self.myTableView.dataSource = self
         self.myTableView.delegate = self
+        self.friendEmailAddress.delegate = self
         
+    }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        self.view.endEditing(true);
+        return false;
     }
     
     override func viewWillAppear(animated : Bool) {
@@ -71,8 +80,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
         }
-        
-        updateUserLabel()
         
         is_busy = false
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -117,17 +124,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Friends"
-    }
-    
-    func updateUserLabel() {
-        
-        var user = NetOpers.sharedInstance.user
-        if (user.is_logged_in()) {
-            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
-        } else {
-            self.userLabel.text = "You are not signed in"
-        }
-        
     }
     
     func loadFriends(data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -256,8 +252,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         return friends.count
     }
     
-    @IBOutlet var userLabel: UILabel!
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
         if let fr = self.friends[indexPath.row] as FriendRec? {
@@ -327,7 +321,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-    @IBAction func refreshView(sender: AnyObject) {
+    func refresh() {
         viewWillAppear(true)
     }
     

@@ -22,6 +22,9 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var refreshButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
+        self.navigationItem.rightBarButtonItem = refreshButton
+        
         title = "Leaderboard"
 
         // Do any additional setup after loading the view.
@@ -52,7 +55,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     
     }
     
-    @IBAction func refreshView(sender: AnyObject) {
+    func refresh() {
         viewWillAppear(true)
     }
     
