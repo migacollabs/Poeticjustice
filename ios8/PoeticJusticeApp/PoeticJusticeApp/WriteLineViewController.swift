@@ -119,6 +119,12 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             
+            if (self.verse.is_loaded()) {
+                if (NetOpers.sharedInstance.user.id==self.verse.owner_id) {
+                    self.cancelButton.hidden = false
+                }
+            }
+            
             updateSendPlaceholder()
             
             var refresh : Bool = false
