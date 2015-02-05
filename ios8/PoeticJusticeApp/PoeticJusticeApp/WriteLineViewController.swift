@@ -31,6 +31,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     var maxNumPlayers : Int = 2
     
+    @IBOutlet var cancelButton: UIButton!
     var iAdBanner: ADBannerView?
     
     @IBOutlet var verseView: UITextView!
@@ -60,6 +61,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         self.navigationItem.rightBarButtonItem = refreshButton
         
         self.sendButton.hidden = true
+        self.cancelButton.hidden = true
         
         verseView.text = ""
         setLine.text = ""
@@ -98,6 +100,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     var lastTabbed : NSDate?
     
     override func viewWillAppear(animated: Bool) {
+        
+        self.cancelButton.hidden = true
         
         var screen_height = UIScreen.mainScreen().bounds.height
         self.canDisplayBannerAds = true
@@ -241,6 +245,11 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                     
                                     self.updateSendPlaceholder()
                                 }
+                                
+                                if self.verse.owner_id==NetOpers.sharedInstance.user.id {
+                                    self.cancelButton.hidden = false
+                                }
+                                
                             }
                             
                             self.updateNavigationTitle()
@@ -375,5 +384,66 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     func hide_adbanner(){
         self.iAdBanner?.hidden = true
     }
-
+    
+    func cancelVerse() {
+        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/v/close/id=\(self.verseId)",
+            completion_handler:{
+                data, response, error -> Void in
+                
+                let httpResponse = response as NSHTTPURLResponse
+                if httpResponse.statusCode == 200 {
+                    if data != nil {
+                        
+                        let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                            data!, options: NSJSONReadingOptions.MutableContainers,
+                            error: nil) as NSDictionary
+                        
+                        println(jsonResult)
+                        
+                        dispatch_async(dispatch_get_main_queue(),{
+                            
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            
+                            self.navigationController?.popViewControllerAnimated(true)
+                        })
+                        
+                    }
+                }else{
+                    println("Error")
+                    println(error)
+                }
+                
+        })
+    }
+    
+    
+    @IBAction func onCancel(sender: AnyObject) {
+        println("onCancel called")
+        
+        let cancelController = UIAlertController(title: "Cancel Verse", message: "Do you want to cancel this verse?", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let noAction = UIAlertAction(title: "No", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            // do nothing
+        })
+        let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.cancelVerse()
+        })
+        
+        cancelController.addAction(noAction)
+        cancelController.addAction(yesAction)
+        
+        self.presentViewController(cancelController, animated: true, completion: nil)
+        
+    }
+    
 }
+
+
+
+
+
+
+
+

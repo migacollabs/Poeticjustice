@@ -14,6 +14,19 @@ struct VerseHistoryRec{
     var title = ""
     var owner_id = -1
     var user_ids:[Int] = []
+    var lines_recs:[VerseLineRec] = []
+    var players = Dictionary<Int,VersePlayerRec>()
+}
+
+struct VerseLineRec{
+    var position = -1
+    var text = ""
+    var player_id = -1
+}
+
+struct VersePlayerRec{
+    var user_id = -1
+    var user_name = ""
 }
 
 class VerseHistoryMasterViewController: UITableViewController {
@@ -88,6 +101,34 @@ class VerseHistoryMasterViewController: UITableViewController {
                         if let x = v["user_ids"] as? [Int]{
                             vh.user_ids = x
                         }
+                        
+                        if let x = v["lines_record"] as? String{
+                            let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                            let linesDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                data!, options: NSJSONReadingOptions.MutableContainers,
+                                error: nil) as NSDictionary
+
+                            for (line_position, line_tuple) in linesDict{
+                                
+                                var p:Int? = (line_position as String).toInt()
+                                if let lp = p{
+                                    var vlr = VerseLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
+                                    vh.lines_recs.append(vlr)
+                                    
+                                }else{
+                                    println("corrupt data")
+                                }
+
+                            }
+                        }
+                        
+//                        if let x = v["players_record"] as? String{
+//                            println(x)
+//                            let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+//                            let playersDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+//                                data!, options: NSJSONReadingOptions.MutableContainers,
+//                                error: nil) as NSDictionary
+//                        }
 
                         self.verses.append(vh)
                         

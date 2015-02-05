@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
+                <outlet property="cancelButton" destination="UG0-Nh-75Q" id="Cdd-PE-nCd"/>
                 <outlet property="sendButton" destination="sOv-vj-Wiz" id="5Gt-Bw-QHD"/>
                 <outlet property="setLine" destination="eDz-lW-Y85" id="g2m-Of-QIG"/>
                 <outlet property="topicButton" destination="kTl-ux-cd3" id="vLW-Gs-PoM"/>
@@ -23,7 +24,7 @@
                     <rect key="frame" x="8" y="123" width="584" height="310"/>
                     <color key="backgroundColor" white="0.97039473684210542" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="310" id="5Fl-sA-txY"/>
+                        <constraint firstAttribute="height" constant="310" id="RNk-S7-GGK"/>
                     </constraints>
                     <string key="text">I play a guitar so in life I won't go far //
 That might be true unless you play in a car //
@@ -65,7 +66,7 @@ Or maybe in a train, or better yet a plane //
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kTl-ux-cd3">
                     <rect key="frame" x="8" y="74" width="34" height="34"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="34" id="hCd-Io-t3J"/>
+                        <constraint firstAttribute="width" constant="34" id="KsL-yN-JiE"/>
                     </constraints>
                     <state key="normal" image="Acoustic-Guitar.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -74,8 +75,8 @@ Or maybe in a train, or better yet a plane //
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sOv-vj-Wiz">
                     <rect key="frame" x="511" y="79" width="81" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="24" id="NCR-Rv-OPt"/>
-                        <constraint firstAttribute="width" constant="81" id="oU4-mO-0OS"/>
+                        <constraint firstAttribute="height" constant="24" id="2Br-Ls-qbt"/>
+                        <constraint firstAttribute="width" constant="81" id="kip-LI-p4C"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title=" Send" image="arrow_24.png">
@@ -95,7 +96,7 @@ Or maybe in a train, or better yet a plane //
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iP-Nd-z1k">
                     <rect key="frame" x="153" y="441" width="45" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="45" id="oaZ-w4-znU"/>
+                        <constraint firstAttribute="width" constant="45" id="2p1-zm-T1Y"/>
                     </constraints>
                     <state key="normal" image="plus_24.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -110,7 +111,7 @@ Or maybe in a train, or better yet a plane //
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWL-DL-QRA">
                     <rect key="frame" x="102" y="441" width="42" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="42" id="O1q-Mh-mR2"/>
+                        <constraint firstAttribute="width" constant="42" id="tc4-4f-iZx"/>
                     </constraints>
                     <state key="normal" image="minus_24.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -124,33 +125,47 @@ Or maybe in a train, or better yet a plane //
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apply Points:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFo-3k-EIO">
                     <rect key="frame" x="8" y="441" width="86" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="h4K-gP-dk3"/>
-                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UG0-Nh-75Q">
+                    <rect key="frame" x="462" y="438" width="130" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="130" id="OcA-A7-itv"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="Cancel" image="delete_24.png">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onCancel:" destination="-1" eventType="touchUpInside" id="H3Q-Yq-2Rp"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="kTl-ux-cd3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="17A-F6-uOB"/>
-                <constraint firstItem="sOv-vj-Wiz" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="2Uv-eN-wtG"/>
-                <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="sOv-vj-Wiz" secondAttribute="bottom" constant="20" id="3sT-f5-Zxn"/>
-                <constraint firstItem="eDz-lW-Y85" firstAttribute="centerY" secondItem="sOv-vj-Wiz" secondAttribute="centerY" id="4c5-qH-gdU"/>
-                <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="8na-7r-8Eh"/>
-                <constraint firstItem="4iP-Nd-z1k" firstAttribute="leading" secondItem="kWL-DL-QRA" secondAttribute="trailing" constant="9" id="DkR-yt-J4g"/>
-                <constraint firstItem="kTl-ux-cd3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="GlV-Ev-gfj"/>
-                <constraint firstItem="nht-Ol-Vn8" firstAttribute="leading" secondItem="kTl-ux-cd3" secondAttribute="leading" id="JW2-eE-mDM"/>
-                <constraint firstItem="eDz-lW-Y85" firstAttribute="leading" secondItem="kTl-ux-cd3" secondAttribute="trailing" constant="8" symbolic="YES" id="JeO-T8-j6V"/>
-                <constraint firstItem="sOv-vj-Wiz" firstAttribute="leading" secondItem="eDz-lW-Y85" secondAttribute="trailing" constant="8" symbolic="YES" id="KoB-TQ-R6n"/>
-                <constraint firstItem="JFo-3k-EIO" firstAttribute="top" secondItem="nht-Ol-Vn8" secondAttribute="bottom" constant="8" symbolic="YES" id="MJh-g0-zdM"/>
-                <constraint firstItem="nht-Ol-Vn8" firstAttribute="leading" secondItem="JFo-3k-EIO" secondAttribute="leading" id="Nl1-Bd-HNm"/>
-                <constraint firstItem="kTl-ux-cd3" firstAttribute="centerY" secondItem="eDz-lW-Y85" secondAttribute="centerY" id="bx8-CX-S6m"/>
-                <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="kTl-ux-cd3" secondAttribute="bottom" constant="15" id="dgb-dc-vF8"/>
-                <constraint firstItem="4iP-Nd-z1k" firstAttribute="top" secondItem="kWL-DL-QRA" secondAttribute="top" id="kjM-wj-YzF"/>
-                <constraint firstItem="JFo-3k-EIO" firstAttribute="top" secondItem="kWL-DL-QRA" secondAttribute="top" id="sJl-AP-0YZ"/>
-                <constraint firstItem="kWL-DL-QRA" firstAttribute="leading" secondItem="JFo-3k-EIO" secondAttribute="trailing" constant="8" symbolic="YES" id="xjm-mY-9I0"/>
+                <constraint firstItem="kTl-ux-cd3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="1dQ-9k-Nx2"/>
+                <constraint firstItem="kTl-ux-cd3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="1wl-Hk-FE1"/>
+                <constraint firstItem="kTl-ux-cd3" firstAttribute="centerY" secondItem="eDz-lW-Y85" secondAttribute="centerY" id="6Hk-M5-dMp"/>
+                <constraint firstItem="kTl-ux-cd3" firstAttribute="leading" secondItem="nht-Ol-Vn8" secondAttribute="leading" id="8U6-U0-tDA"/>
+                <constraint firstItem="UG0-Nh-75Q" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="DUp-v5-zDx"/>
+                <constraint firstItem="JFo-3k-EIO" firstAttribute="bottom" secondItem="UG0-Nh-75Q" secondAttribute="bottom" id="EkL-xD-all"/>
+                <constraint firstItem="4iP-Nd-z1k" firstAttribute="leading" secondItem="kWL-DL-QRA" secondAttribute="trailing" constant="9" id="LJL-ma-o0g"/>
+                <constraint firstItem="sOv-vj-Wiz" firstAttribute="leading" secondItem="eDz-lW-Y85" secondAttribute="trailing" constant="8" symbolic="YES" id="MpE-Ho-CgE"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="sOv-vj-Wiz" secondAttribute="trailing" id="NFI-bX-SUt"/>
+                <constraint firstItem="kWL-DL-QRA" firstAttribute="leading" secondItem="JFo-3k-EIO" secondAttribute="trailing" constant="8" symbolic="YES" id="OPd-dp-ktt"/>
+                <constraint firstItem="4iP-Nd-z1k" firstAttribute="top" secondItem="kWL-DL-QRA" secondAttribute="top" id="Oul-A5-E3J"/>
+                <constraint firstItem="eDz-lW-Y85" firstAttribute="leading" secondItem="kTl-ux-cd3" secondAttribute="trailing" constant="8" symbolic="YES" id="UqC-XY-XOc"/>
+                <constraint firstItem="UG0-Nh-75Q" firstAttribute="top" secondItem="nht-Ol-Vn8" secondAttribute="bottom" constant="5" id="VFO-Hg-Dyj"/>
+                <constraint firstItem="JFo-3k-EIO" firstAttribute="top" secondItem="nht-Ol-Vn8" secondAttribute="bottom" constant="8" symbolic="YES" id="Xhh-nB-TaK"/>
+                <constraint firstItem="eDz-lW-Y85" firstAttribute="centerY" secondItem="sOv-vj-Wiz" secondAttribute="centerY" id="bjx-V1-Ihs"/>
+                <constraint firstItem="kWL-DL-QRA" firstAttribute="top" secondItem="JFo-3k-EIO" secondAttribute="top" id="pIf-U9-dqv"/>
+                <constraint firstItem="JFo-3k-EIO" firstAttribute="leading" secondItem="nht-Ol-Vn8" secondAttribute="leading" id="pKI-sT-ppF"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="sOv-vj-Wiz" secondAttribute="bottom" constant="20" id="rde-FT-uc1"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="kTl-ux-cd3" secondAttribute="bottom" constant="15" id="uaI-VM-lGA"/>
+                <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="vwY-pX-FPf"/>
             </constraints>
             <point key="canvasLocation" x="341" y="248"/>
         </view>
@@ -158,6 +173,7 @@ Or maybe in a train, or better yet a plane //
     <resources>
         <image name="Acoustic-Guitar.png" width="48" height="48"/>
         <image name="arrow_24.png" width="24" height="24"/>
+        <image name="delete_24.png" width="24" height="24"/>
         <image name="minus_24.png" width="24" height="24"/>
         <image name="plus_24.png" width="24" height="24"/>
     </resources>

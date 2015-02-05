@@ -15,6 +15,13 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var user_name: UITextField!
     @IBOutlet weak var email_address: UITextField!
+    @IBOutlet var userLabel: UILabel!
+    @IBOutlet var goButton: UIButton!
+    
+    private var loginTimerCount : Int = 0
+    private var is_busy : Bool = false
+    private var timer : NSTimer?
+    private var audioPlayer : AVAudioPlayer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +41,6 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    @IBOutlet var userLabel: UILabel!
     
     func updateUserLabel() {
         
@@ -63,12 +67,31 @@ class LoginViewController: UIViewController {
         return result
     }
     
-    var is_busy : Bool = false
-    
     func on_finished_login() {
         // TODO: possible error handling or clean up post netopers stuff?
         println("finished netopers login")
+        
+        timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("verifyLogin"), userInfo: nil, repeats: true)
+        loginTimerCount = 0
     }
+    
+    func verifyLogin() {
+        println("verifying login on timer")
+        if let t = timer {
+            if (NetOpers.sharedInstance.user.is_logged_in()) {
+                println("login verified, stopping timer")
+                t.invalidate()
+            } else {
+                if loginTimerCount>3 {
+                    println("server was probably down, unlocking the go button to try again")
+                    is_busy = false
+                    t.invalidate()
+                }
+            }
+        }
+        loginTimerCount += 1
+    }
+    
     
     @IBAction func on_go(sender: AnyObject) {
         
@@ -202,8 +225,6 @@ class LoginViewController: UIViewController {
         println("on_login finished")
     }
     
-    var audioPlayer : AVAudioPlayer?
-    
     func playButtonSound(){
         var error:NSError?
         
@@ -220,8 +241,6 @@ class LoginViewController: UIViewController {
         }
         println(error)
     }
-    
-    @IBOutlet var goButton: UIButton!
     
     func on_start(){
         println("on_start called")

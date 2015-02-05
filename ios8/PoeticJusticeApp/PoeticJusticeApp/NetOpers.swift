@@ -205,7 +205,7 @@ class NetOpers {
                         
                     }
                     
-                }else if httpResponse.statusCode == 403{
+                } else if httpResponse.statusCode == 403 {
                     
                     println("Forbidden")
                     dispatch_async(dispatch_get_main_queue(),{
