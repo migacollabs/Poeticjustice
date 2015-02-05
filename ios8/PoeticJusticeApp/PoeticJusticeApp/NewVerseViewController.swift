@@ -101,9 +101,20 @@ class NewVerseViewController: UIViewController {
             params["max_participants"] = self.maxNumPlayers
             params["friends_only"] = self.friendsOnly.on
             params["owner_id"] = NetOpers.sharedInstance.user.id
-            params["next_user_id"] = NetOpers.sharedInstance.user.id
-            params["user_ids"] = String(NetOpers.sharedInstance.user.id) + ";"
+            params["next_index_user_ids"] = 0
+            params["max_lines"]=self.maxNumPlayers * 4
+            params["next_index_user_ids"]=0
+            
+            // need to make sure we allocate all user_ids slots
+            var user_ids : String = String(NetOpers.sharedInstance.user.id)
+            for i in 1...(self.maxNumPlayers-1) {
+                user_ids = user_ids + ";-1"
+            }
+            
+            params["user_ids"] = user_ids
             params["verse_category_topic_id"] = self.topic?.id
+            
+            println(params)
             
             NetOpers.sharedInstance.post(
                 NetOpers.sharedInstance.appserver_hostname! + "/m/edit/Verse",
@@ -175,8 +186,7 @@ class NewVerseViewController: UIViewController {
         let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
         vc.verseId = verseId
         vc.topic = topic
-        vc.newVerseViewController = self
-        navigationController?.pushViewController(vc, animated: true)
+        self.navigationController!.setViewControllers([self.navigationController!.viewControllers[0], vc], animated: true)
         
         is_busy = false
     }

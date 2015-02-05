@@ -64,8 +64,9 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
             if (refresh) {
+                println("refreshing friends")
                 var uId : String = String(NetOpers.sharedInstance.user.id)
-                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends?user_id=" + uId, loadFriends)
+                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends", loadFriends)
                 lastTabbed = NSDate()
             }
             
@@ -74,6 +75,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         updateUserLabel()
         
         is_busy = false
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
     var is_busy : Bool = false
@@ -129,6 +131,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func loadFriends(data: NSData?, response: NSURLResponse?, error: NSError?) {
+        println("loading friends")
         let httpResponse = response as NSHTTPURLResponse
         if httpResponse.statusCode == 200 {
             if data != nil {
@@ -138,6 +141,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     error: nil) as NSDictionary
                 
                 if let results = jsonResult["results"] as? NSArray{
+                    
+                    println("updating friends")
                     
                     self.friends.removeAll()
                     
@@ -235,6 +240,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 } else {
                     show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
                     is_busy = false
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 }
                 
             }

@@ -16,6 +16,12 @@ struct VerseRec {
     var next_user_id : Int = -1
     var owner_id : Int = -1
     var lines : [String] = []
+    var is_complete : Bool = false
+    var user_ids : [Int] = []
+    
+    func is_loaded() -> Bool {
+        return id>0
+    }
 }
 
 class WriteLineViewController: UIViewController, ADBannerViewDelegate {
@@ -26,23 +32,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     var maxNumPlayers : Int = 2
     
     var iAdBanner: ADBannerView?
-    
-    @IBAction func setNumberPlayers(sender: AnyObject) {
-        let sc = (sender as UISegmentedControl)
-        switch sc.selectedSegmentIndex
-        {
-        case 0:
-            maxNumPlayers = 2
-        case 1:
-            maxNumPlayers = 3
-        case 2:
-            maxNumPlayers = 4
-        case 3:
-            maxNumPlayers = 5
-        default:
-            break; 
-        }
-    }
     
     @IBOutlet var verseView: UITextView!
     
@@ -58,6 +47,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         }
     }
     
+    var is_my_turn : Bool = false
+    
     // for now, this is just to help clean up nav once this view is reached
     var newVerseViewController : NewVerseViewController?
     var worldVerseViewController : WorldVerseViewController?
@@ -67,19 +58,14 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // try to clean up nav once this view is loaded
-        if let nv = newVerseViewController {
-            self.navigationController!.setViewControllers([ self.navigationController!.viewControllers[0], self], animated : false)
-        }
-        
-        if let wv = worldVerseViewController {
-            self.navigationController!.setViewControllers([ self.navigationController!.viewControllers[0], self], animated : false)
-        }
+        self.sendButton.hidden = true
         
         verseView.text = ""
         setLine.text = ""
         
         title = "Your Line"
+        
+        self.sendLineLabel.text = "Your turn is coming up soon"
         
         self.configureView()
         updateUserLabel()
@@ -93,6 +79,14 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
             is_busy = true
             
             viewWillAppear(true)
+        }
+    }
+    
+    func updateNavigationTitle() {
+        if let t = topic {
+            if let ti = t.name as? String {
+                title = ti + " / " + String(self.verse.user_ids.count) + " players"
+            }
         }
     }
     
@@ -110,11 +104,12 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
             println("WriteLineViewController iAdBanner is nil")
         }
         
-        if let t = topic {
-            title = t.name as? String
-        }
+        updateNavigationTitle()
         
         if (NetOpers.sharedInstance.user.is_logged_in()) {
+            
+            updateSendLineLabel()
+            
             updateUserLabel()
             
             var refresh : Bool = false
@@ -185,6 +180,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         score = 2;
     }
     
+    @IBOutlet var sendLineLabel: UILabel!
+    
     private var verse : VerseRec = VerseRec()
     
     func loadVerse(data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -225,6 +222,14 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
                         self.verse.lines = li
                     }
                     
+                    if let ic = results["is_complete"] as? Bool {
+                        self.verse.is_complete = ic
+                    }
+                    
+                    if let ui = results["user_ids"] as? [Int] {
+                        self.verse.user_ids = ui
+                    }
+                    
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                         dispatch_async(dispatch_get_main_queue(),{
                             
@@ -235,6 +240,17 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
                             }
                             
                             self.verseView.text = self.verseView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                            
+                            if NetOpers.sharedInstance.user.is_logged_in() {
+                                if (!self.verse.is_complete) {
+                                    
+                                    self.is_my_turn = self.verse.next_user_id==NetOpers.sharedInstance.user.id
+                                    
+                                    self.updateSendLineLabel()
+                                }
+                            }
+                            
+                            self.updateNavigationTitle()
                             
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                             
@@ -272,6 +288,16 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         }
         println(error)
     }
+    
+    func updateSendLineLabel() {
+        if (is_my_turn) {
+            self.sendButton.hidden = false
+            self.sendLineLabel.text = "It's your turn!"
+        } else {
+            self.sendButton.hidden = true
+            self.sendLineLabel.text = "Your turn is coming up soon"
+        }
+    }
 
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var scoreView: UIView!
@@ -284,6 +310,10 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
         
         if (!is_busy) {
             is_busy = true
+            
+            is_my_turn = false
+            
+            updateSendLineLabel()
             
             println("Clicked send with score " + String(score) + " " +
                 setLine.text)
