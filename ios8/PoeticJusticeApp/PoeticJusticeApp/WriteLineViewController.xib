@@ -163,9 +163,19 @@ Or maybe in a train, or better yet a plane //
                         <action selector="sendLine:" destination="-1" eventType="touchUpInside" id="kfq-jd-APW"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cov-Zr-ffB">
+                    <rect key="frame" x="35" y="478" width="48" height="30"/>
+                    <state key="normal" title="Cancel">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onCancel:" destination="-1" eventType="touchUpInside" id="Q8S-CZ-dVt"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="cov-Zr-ffB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="35" id="00U-6E-SqJ"/>
                 <constraint firstItem="JFo-3k-EIO" firstAttribute="top" secondItem="nht-Ol-Vn8" secondAttribute="bottom" constant="8" symbolic="YES" id="4Wy-2Q-aI4"/>
                 <constraint firstItem="JFo-3k-EIO" firstAttribute="top" secondItem="kWL-DL-QRA" secondAttribute="top" id="4hC-Ub-UhX"/>
                 <constraint firstItem="kTl-ux-cd3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="6WV-AF-Cai"/>
@@ -184,6 +194,7 @@ Or maybe in a train, or better yet a plane //
                 <constraint firstItem="kWL-DL-QRA" firstAttribute="leading" secondItem="JFo-3k-EIO" secondAttribute="trailing" constant="8" symbolic="YES" id="TAi-EO-gL5"/>
                 <constraint firstItem="w6t-mw-f2l" firstAttribute="leading" secondItem="eDz-lW-Y85" secondAttribute="leading" id="WJj-AH-js9"/>
                 <constraint firstItem="eDz-lW-Y85" firstAttribute="leading" secondItem="Ai1-Kp-PL4" secondAttribute="leading" id="ezR-h8-vJv"/>
+                <constraint firstItem="cov-Zr-ffB" firstAttribute="top" secondItem="Ai1-Kp-PL4" secondAttribute="bottom" constant="8" id="ffg-fT-pTc"/>
                 <constraint firstItem="JFo-3k-EIO" firstAttribute="leading" secondItem="nht-Ol-Vn8" secondAttribute="leading" id="gCF-Ez-OHH"/>
                 <constraint firstItem="4pz-eP-0uX" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="gFe-PG-CrB"/>
                 <constraint firstItem="4iP-Nd-z1k" firstAttribute="leading" secondItem="kWL-DL-QRA" secondAttribute="trailing" constant="9" id="l7U-ZL-JZ3"/>
@@ -193,6 +204,13 @@ Or maybe in a train, or better yet a plane //
             </constraints>
             <point key="canvasLocation" x="341" y="248"/>
         </view>
+        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="st6-6X-d6r">
+            <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <state key="normal" title="Button">
+                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+            </state>
+        </button>
     </objects>
     <resources>
         <image name="Acoustic-Guitar.png" width="48" height="48"/>

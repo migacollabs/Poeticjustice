@@ -23,7 +23,7 @@ from pyaella.dinj import BorgLexicon, __borg_lex__
 Base = declarative_base(cls=PyaellaSQLAlchemyBase)
 ReflBase = declarative_base(cls=DeferredReflection)
 
-__autogen_date__ = "2015-01-27 09:38:56.241658"
+__autogen_date__ = "2015-02-05 06:05:06.249841"
 
 __schema_file__ = os.path.join(os.path.dirname(__file__), "domain.plr")
 
@@ -43,6 +43,7 @@ __all__ = [
 	"VerseCategoryTopic",
 	"Verse",
 	"LineXVerse",
+	"UserVerseHistory",
 ]
 
 
@@ -171,6 +172,13 @@ class Verse(PyaellaDataModel):
 
 
 class LineXVerse(PyaellaDataModel):
+	__metaclass__ = PyaellaDataModelMetaclass
+	
+	def __init__(self, base=Base, **kw):
+		PyaellaDataModel.__init__(self, base=base, **kw)
+
+
+class UserVerseHistory(PyaellaDataModel):
 	__metaclass__ = PyaellaDataModelMetaclass
 	
 	def __init__(self, base=Base, **kw):

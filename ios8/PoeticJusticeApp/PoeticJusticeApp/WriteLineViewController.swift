@@ -382,5 +382,58 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate {
     func hide_adbanner(){
         self.iAdBanner?.hidden = true
     }
+    
+    
+    @IBAction func onCancel(sender: AnyObject) {
+        println("onCancel called")
+        
+        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/v/close/id=\(self.verseId)",
+        completion_handler:{
+        data, response, error -> Void in
+            
+            let httpResponse = response as NSHTTPURLResponse
+            if httpResponse.statusCode == 200 {
+                if data != nil {
+                    
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
+                    
+                    println(jsonResult)
+                    
+                    dispatch_async(dispatch_get_main_queue(),{
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    })
+                    
+                }
+            }else{
+                println("Error")
+                println(error)
+            }
+            
+        
+        
+        })
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
+
+
+
+
+
+
+
+

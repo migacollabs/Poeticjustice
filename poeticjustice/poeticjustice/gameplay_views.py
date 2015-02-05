@@ -2,7 +2,9 @@ import os
 import sys
 import time
 import copy
+import json
 import datetime
+from collections import OrderedDict
 import traceback
 import logging
 import ConfigParser
@@ -630,19 +632,19 @@ def get_users_verse_history(request):
         if user and user.is_active:
             with SQLAlchemySessionFactory() as session:
 
-                U, V = ~User, ~Verse
-                rp = (session.query(V)
-                        .filter(V.owner_id==user.id)
-                        # .filter(V.complete==True)
-                        .order_by(V.last_upd)
+                U, V, UVH = ~User, ~Verse, ~UserVerseHistory
+                rp = (session.query(UVH)
+                        .filter(UVH.player_id==user.id)
+                        .order_by(UVH.last_upd)
                         ).all()
-                print 'get_users_verse_history rp', rp
 
-                return dict(
+                res = dict(
                     status='Ok',
-                    results=[Verse(entity=v).to_dict() for v in rp],
+                    results=[UserVerseHistory(entity=uvh).to_dict() for uvh in rp],
                     logged_in=auth_usrid
                     )
+                print res
+                return res
 
         raise HTTPUnauthorized
 
@@ -1182,6 +1184,193 @@ def join_verse(request):
             session.close()
         except:
             pass
+
+
+def get_verse_to_view(verse_id, session):
+    lines = OrderedDict()
+    verse = None
+    users = {}
+    owner_id = -1
+    if verse_id > 0:
+
+        U, V, LxV = ~User, ~Verse, ~LineXVerse
+        for row in session.query(V, LxV) \
+                .filter(V.id==verse_id) \
+                .filter(V.complete==False) \
+                .filter(LxV.verse_id==verse_id) \
+                .order_by(LxV.id):
+            lines[row.LineXVerse.id] = (row.LineXVerse.user_id, row.LineXVerse.line_text)
+            if not verse:
+                verse = row.Verse
+
+        if verse: # maybe no lines at all?
+            sq = (session.query(U.id)
+                    .filter(U.id.in_(verse.user_ids))
+                    ).subquery()
+            rp = (session.query(U.id, U.user_name)
+                    .filter(U.id.in_(sq))
+                    ).all()
+
+            # users [(id, email_address)]
+            users = [(row[0], row[1]) for row in rp]
+            verse = Verse(entity=verse)
+
+        else:
+            verse = Verse.load(int(verse_id), session)    
+            owner_id = verse.owner_id        
+
+    return \
+        verse, dict(results=dict(lines=lines,verse_id=verse_id,user_data=users,owner_id=owner_id))
+
+
+@view_config(
+    name='viewable',
+    request_method='GET',
+    context='poeticjustice:contexts.Verses',
+    renderer='json',
+    permission='edit')
+def view_verse(request):
+    print 'view_verse called', request
+    try:
+        args = list(request.subpath)
+        # kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
+        kwds = _process_subpath(request.subpath)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                
+                user = User(entity=session.merge(user))
+
+                verse, jsonable = get_verse_to_view(kwds['id'], session)
+
+                return jsonable
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except HTTPUnauthorized: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
+    name='close',
+    request_method='GET',
+    context='poeticjustice:contexts.Verses',
+    renderer='json',
+    permission='edit')
+def close_verse(request):
+    print 'close_verse called', request
+    try:
+        args = list(request.subpath)
+        # kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
+        kwds = _process_subpath(request.subpath)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                
+                user = User(entity=session.merge(user))
+
+                verse, jsonable = get_verse_to_view(kwds['id'], session)
+
+                user_version_history = None
+
+                if verse:
+
+                    verse.complete = True
+                    verse.save(session)
+
+                    for user_data in jsonable['results']['user_data']:
+
+                        user_id, _ = user_data
+
+                        lines_json = json.dumps(jsonable['results']['lines'])
+                        players_json = json.dumps(jsonable['results']['user_data'])
+
+                        user_version_history = UserVerseHistory(
+                                verse_id=verse.id,
+                                owner_id=verse.owner_id,
+                                player_id=user_id,
+                                topic_id=verse.verse_category_topic_id,
+                                title=verse.title,
+                                lines_record=lines_json,
+                                players_record=players_json
+                                ).save(session)
+
+                    # if verse.owner_id not in jsonable['results']['user_data']:
+
+                    #     lines_json = json.dumps(jsonable['results']['lines'])
+
+                    #     user_version_history = UserVerseHistory(
+                    #             verse_id=verse.id,
+                    #             owner_id=verse.owner_id,
+                    #             player_id=verse.owner_id,
+                    #             topic_id=verse.verse_category_topic_id,
+                    #             title=verse.title,
+                    #             lines_record=lines_json
+                    #             ).save(session)
+
+                        print 'USER_VERSION_HISTORY', user_version_history
+
+                return dict(
+                    status="Ok",
+                    verse=verse.to_dict() if verse else None,
+                    verse_rec=jsonable,
+                    user_version_history=\
+                        user_version_history.to_dict(ignore_fields=['lines_record']) \
+                        if user_version_history else None,
+                    user=user.to_dict()
+                    )
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except HTTPUnauthorized: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+
 
 
 
