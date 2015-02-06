@@ -27,6 +27,18 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate {
             if let title = self.verseTitle{
                 title.text = vhr.title
             }
+            if let vt = self.verseText{
+                vt.text! = ""
+                for lineRec in vhr.lines_recs{
+                    var user_name = ""
+                    if let pr = vhr.players[lineRec.player_id]{
+                        user_name = pr.user_name
+                    }
+                    vt.text! += lineRec.text
+                    vt.text! += "  - \(user_name)"
+                    vt.text! += "\n"
+                }
+            }
         }
     }
     
@@ -34,7 +46,7 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
-        self.load_verse()
+//        self.load_verse()
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,39 +56,39 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate {
     
     func load_verse(){
         
-        if let verseHistoryRec = self.detailItem{
+//        if let verseHistoryRec = self.detailItem{
+//        
+//            NetOpers.sharedInstance.get(
+//                NetOpers.sharedInstance.appserver_hostname! + "/v/verse/id=\(verseHistoryRec.id)", {data, response, error -> Void in
+//                    
+//                    let httpResponse = response as NSHTTPURLResponse
+//                    if httpResponse.statusCode == 200 {
+//                        if data != nil {
+//                            
+//                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+//                                data!, options: NSJSONReadingOptions.MutableContainers,
+//                                error: nil) as NSDictionary
+//                            
+//                            var verse = ""
+//                            if let results = jsonResult["results"] as? NSDictionary{
+//                                if let lines = results["lines"] as? NSArray{
+//                                    for line in lines{
+//                                        verse += "\(line)"
+//                                    }
+//                                }
+//                            }
+//
+//                            dispatch_async(dispatch_get_main_queue(),{
+//                                self.verseText.text = verse
+//                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+//                            })
+//                            
+//                        }
+//                    }
+//                    
+//            })
+//        }
         
-            NetOpers.sharedInstance.get(
-                NetOpers.sharedInstance.appserver_hostname! + "/v/verse/id=\(verseHistoryRec.id)", {data, response, error -> Void in
-                    
-                    let httpResponse = response as NSHTTPURLResponse
-                    if httpResponse.statusCode == 200 {
-                        if data != nil {
-                            
-                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                                data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSDictionary
-                            
-                            var verse = ""
-                            if let results = jsonResult["results"] as? NSDictionary{
-                                if let lines = results["lines"] as? NSArray{
-                                    for line in lines{
-                                        verse += "\(line)"
-                                    }
-                                }
-                            }
-
-                            dispatch_async(dispatch_get_main_queue(),{
-                                self.verseText.text = verse
-                                
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            })
-                            
-                        }
-                    }
-                    
-            })
-        }
     }
     
     

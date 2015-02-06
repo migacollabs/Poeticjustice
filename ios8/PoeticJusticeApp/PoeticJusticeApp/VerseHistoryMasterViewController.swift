@@ -110,7 +110,11 @@ class VerseHistoryMasterViewController: UITableViewController {
 
                             for (line_position, line_tuple) in linesDict{
                                 
-                                var p:Int? = (line_position as String).toInt()
+                                if let lp = line_position as? String{
+                                    
+                                }
+                                
+                                var p:Int? = (line_position as? String)!.toInt()
                                 if let lp = p{
                                     var vlr = VerseLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
                                     vh.lines_recs.append(vlr)
@@ -122,13 +126,18 @@ class VerseHistoryMasterViewController: UITableViewController {
                             }
                         }
                         
-//                        if let x = v["players_record"] as? String{
-//                            println(x)
-//                            let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-//                            let playersDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-//                                data!, options: NSJSONReadingOptions.MutableContainers,
-//                                error: nil) as NSDictionary
-//                        }
+                        if let x = v["players_record"] as? String{
+                            let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                            let playersArray: NSArray = NSJSONSerialization.JSONObjectWithData(
+                                data!, options: NSJSONReadingOptions.MutableContainers,
+                                error: nil) as NSArray
+                            for player in playersArray as NSArray{
+                                var pid = player[0] as Int
+                                var usrnm = player[1] as String
+                                vh.players[pid] = VersePlayerRec(user_id: pid, user_name: usrnm)
+                            }
+                            
+                        }
 
                         self.verses.append(vh)
                         

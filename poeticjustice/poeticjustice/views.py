@@ -216,7 +216,9 @@ def create_new_user_post(request):
             pass
 
 
-def _send_notification(user_obj, auth_hash, email_tmpl_file, logo_name=None):
+def _send_notification(user_obj, 
+        auth_hash, email_tmpl_file, 
+        subject='Poetic Justice', logo_name=None):
 
     ac = get_app_config()
     dconfig = get_dinj_config(ac)
@@ -248,7 +250,7 @@ def _send_notification(user_obj, auth_hash, email_tmpl_file, logo_name=None):
     .send_html_email({
         'to': user_obj.email_address,
         'from': smtp_user,
-        'subject': 'Poetic Justice - Verify your email!',
+        'subject': subject,
         'message_body': message_body},
         attached_logo=os.path.join(ASSETS_DIR, logo_name) if logo_name else None)
 
@@ -413,12 +415,23 @@ def login_post(request):
                         user = User(entity=user_obj)
 
                         if user.access_token == None:
-                            print 'NO ACCESS TOKEN', user.to_dict()
                             if not user.is_invited:
                                 user.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
-                                _send_notification(user, user.auth_hash, 
-                                    "email.verification.mako", 
-                                    logo_name="Conversation.png")
+
+                                try:
+                                    _send_notification(user, user.auth_hash, 
+                                        "email.verification.mako", 
+                                        subject='Poetic Justice - Verify your email!',
+                                        logo_name="Conversation.png")
+                                except:
+                                    print traceback.format_exc()
+                                    time.sleep(1)
+                                    print 'Trying to send email again'
+                                    _send_notification(user, user.auth_hash, 
+                                        "email.verification.mako", 
+                                        subject='Poetic Justice - Verify your email!',
+                                        logo_name="Conversation.png")
+
 
                                 user.is_invited = True
                                 user.save(session=session)
@@ -443,9 +456,20 @@ def login_post(request):
                             # new device
                             auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
                             user.auth_hash = auth_hash
-                            _send_notification(user, auth_hash, 
-                                "email.new.device.mako", 
-                                logo_name="Conversation.png")
+                            try:
+                                _send_notification(user, auth_hash, 
+                                    "email.new.device.mako", 
+                                    subject='Poetic Justice - Verify new device!',
+                                    logo_name="Conversation.png")
+                            except:
+                                print traceback.format_exc()
+                                time.sleep(1)
+                                print 'Trying to send email again'
+                                _send_notification(user, user.auth_hash, 
+                                    "email.verification.mako", 
+                                    subject='Poetic Justice - Verify new device!',
+                                    logo_name="Conversation.png")
+
 
                             user.device_rec = json.dumps(device_rec)
 

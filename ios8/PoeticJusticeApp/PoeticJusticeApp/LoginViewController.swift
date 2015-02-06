@@ -86,6 +86,7 @@ class LoginViewController: UIViewController {
                     println("server was probably down, unlocking the go button to try again")
                     is_busy = false
                     t.invalidate()
+                    self.userLabel.text = "Network error. Please try again!"
                 }
             }
         }
