@@ -116,7 +116,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Leaderboard"
+        return " "
     }
     
     func tableView(tableView : UITableView, numberOfRowsInSection section : Int) -> Int {

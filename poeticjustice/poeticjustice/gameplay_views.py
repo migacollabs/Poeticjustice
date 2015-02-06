@@ -424,8 +424,13 @@ def get_active_topics(request):
             with SQLAlchemySessionFactory() as session:
                 topics = {}
 
-                # seed topic data for 16 topics so far
-                for i in range(1, 17):
+                current_lvl = 16
+
+                if (user.level>1):
+                    current_lvl = 16 + ( (user.level-1) * 8)
+
+                # seed topic data for as many topics as necessary
+                for i in range(1, (current_lvl+1)):
                     topics[i]=None
 
                 V, T, U, UxU= ~Verse, ~VerseCategoryTopic, ~User, ~UserXUser
@@ -492,15 +497,15 @@ def get_active_topics(request):
                         "user_name":r[2].user_name, "src":'world', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
 
-                print 'open topics after world:', get_open_topic_keys(topics)
-
                 # TODO: optimize this - definitely a better way
                 results = []
                 for k in topics:
                     if topics[k]!=None:
                         results.append(topics[k])
 
-                return {"results":results}
+                res = {"results":results, "user_level":user.level, "user_score":user.user_score}
+                print res
+                return res
 
         raise HTTPUnauthorized
 
@@ -546,7 +551,7 @@ def get_topics(request):
 
             # see if the user is associated to a verse for this topic
             # change the limit later
-            for t in session.query(T).order_by(T.id).limit(16):
+            for t in session.query(T).order_by(T.id).limit(64):
                 topics.append({"id":t.id, "name":t.name, "min_points_req":t.min_points_req, 
                     "score_modifier":t.score_modifier, "main_icon_name":t.main_icon_name,
                     "verse_category_type_id":t.verse_category_type_id})

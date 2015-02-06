@@ -8,8 +8,14 @@
 
 import Foundation
 
-class User{
+protocol UserDelegate : class {
+    func handleUserLevelChange(oldLevel : Int, newLevel : Int)
+}
 
+class User{
+    
+    private var userDelegates : [UserDelegate] = []
+    
     var id: Int = -1
     var user_name: String = ""
     var email_address: String = ""
@@ -22,10 +28,22 @@ class User{
     var device_token: String = ""
     var user_prefs: String = ""
     var user_score : Int = 0
-    var level : Int = 0
+    var level : Int = 0 {
+        didSet{
+            for ul : UserDelegate in userDelegates {
+                ul.handleUserLevelChange(oldValue, newLevel: self.level)
+            }
+        }
+    }
     
     func is_logged_in() -> Bool {
         return self.id > 0
+    }
+    
+    func addUserDelegate(delegate : UserDelegate) {
+        if (!contains(userDelegates, {$0===delegate})) {
+            userDelegates.append(delegate)
+        }
     }
     
     init() {

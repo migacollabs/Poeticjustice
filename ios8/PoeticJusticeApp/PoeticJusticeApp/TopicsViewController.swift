@@ -32,7 +32,7 @@ struct ActiveTopicRec {
     var owner_id : Int = -1
 }
 
-class TopicsViewController: UIViewController {
+class TopicsViewController: UIViewController, UserDelegate {
 
     @IBOutlet weak var topicButton: TopicButton!
     @IBOutlet var topicScrollView: UIScrollView!
@@ -82,6 +82,9 @@ class TopicsViewController: UIViewController {
         
         // click on the tab, so refresh
         if (NetOpers.sharedInstance.user.is_logged_in()) {
+            
+            NetOpers.sharedInstance.user.addUserDelegate(self)
+            
             self.get_active_topics()
         }
         
@@ -91,6 +94,15 @@ class TopicsViewController: UIViewController {
     override func viewWillDisappear(animated: Bool){
 //        self.iAdBanner?.delegate = nil
 //        self.iAdBanner?.removeFromSuperview()
+    }
+    
+    func handleUserLevelChange(oldLevel : Int, newLevel : Int) {
+        println("handling user level change")
+        if ( !(oldLevel==newLevel) ) {
+            // if the level changed, refresh the topics
+            println("level changed, reloading all topics")
+            self.get_topics()
+        }
     }
     
     func refresh() {
@@ -107,7 +119,6 @@ class TopicsViewController: UIViewController {
             
             if (refresh) {
                 if (!is_busy) {
-                    is_busy = true
                     get_active_topics()
                 }
                 
@@ -142,16 +153,34 @@ class TopicsViewController: UIViewController {
     
     var is_initialized : Bool = false;
     
+    func isTopicButtonUnlocked(topicButton : TopicButton) -> Bool {
+        
+        var userLevel : Int = NetOpers.sharedInstance.user.level
+        
+        if (userLevel==1) {
+            if (topicButton.index<=16) {
+                return true
+            }
+        } else {
+            if (topicButton.index < (16 + ( (userLevel-1) * 8))) {
+                return true
+            }
+        }
+        return false
+    }
+    
     @IBAction func handleTopicButton(sender: AnyObject) {
         
-        if (is_initialized && (NetOpers.sharedInstance.user.is_logged_in())) {
+        var topicButton = (sender as TopicButton)
+        
+        if (is_initialized && (NetOpers.sharedInstance.user.is_logged_in()) && isTopicButtonUnlocked(topicButton)) {
             
             if (!is_busy) {
                 is_busy = true
                 
                 playButtonSound()
                 
-                var topicButton = (sender as TopicButton)
+                
                 var tag = topicButton.tag
                 var tid = self.topic_order[tag-1]
                 var topic = self.topics[tid] as Topic
@@ -259,7 +288,10 @@ class TopicsViewController: UIViewController {
                             
                             if let results = jsonResult["results"] as? NSArray {
                                 
-                                for topic in results{
+                                self.topics.removeAll(keepCapacity: false)
+                                self.topic_order.removeAll(keepCapacity: false)
+                                
+                                for topic in results {
                                     var t = Topic(rec:topic as NSDictionary)
                                     var tid = t.id! as Int
                                     self.topics[tid] = t
@@ -291,6 +323,7 @@ class TopicsViewController: UIViewController {
     
     func get_active_topics() {
         // TODO: don't let this be spammed
+        is_busy = true
         reset_topic_labels()
         println("get_active_topics called")
         self.active_topics = []
@@ -309,9 +342,17 @@ class TopicsViewController: UIViewController {
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: nil) as NSDictionary
                     
+                    if let level = jsonResult["user_level"] as? Int {
+                        NetOpers.sharedInstance.user.level = level
+                    }
+                    
+                    if let score = jsonResult["user_score"] as? Int {
+                        NetOpers.sharedInstance.user.user_score = score
+                    }
+                    
                     self.active_topics.removeAll()
                     
-                    if let results = jsonResult["results"] as? NSArray{
+                    if let results = jsonResult["results"] as? NSArray {
                         
                         for r in results {
                             
@@ -364,7 +405,11 @@ class TopicsViewController: UIViewController {
                 
                 self.dispatch_alert("Error", message: "Cannot load Topics", controller_title: "Ok")
                 
+                self.is_busy = false
+                
             }
+        } else {
+            self.is_busy = false
         }
 
     }
@@ -421,20 +466,36 @@ class TopicsViewController: UIViewController {
                 
             }
         }
+        
+        is_busy = false
     }
     
     
     func present_topics(){
         if self.topic_order.count > 0{
+            
+            var maxTopics : Int = 16
+            
+            if (NetOpers.sharedInstance.user.is_logged_in()) {
+                if (NetOpers.sharedInstance.user.level>1) {
+                    maxTopics = 16 + ( (NetOpers.sharedInstance.user.level-1) * 8)
+                }
+            }
+            
+            println("user max topics: " + String(maxTopics))
+            
             // self.topic_order = self.shuffle(self.topic_order)
-            for idx in 1...16{
+            for idx in 1...maxTopics{
                 
                 var tid = self.topic_order[idx-1]
                 var topic = self.topics[tid] as Topic
                 
                 var btn: TopicButton? = self.view.viewWithTag(idx) as? TopicButton
                 if btn != nil{
+                    println(topic.main_icon_name)
                     btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
+                } else {
+                    println("No button found for tag " + String(idx))
                 }
             }
             

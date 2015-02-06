@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LeaderboardViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
@@ -16,32 +15,32 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="CjO-jX-Jr0">
-                    <rect key="frame" x="0.0" y="0.0" width="592" height="600"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
-                        <rect key="frame" x="8" y="115" width="384" height="347"/>
-                    </variation>
-                </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zkn-3M-854">
                     <rect key="frame" x="275" y="470" width="50" height="32"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="arO-sb-nm3"/>
-                        <constraint firstAttribute="height" constant="32" id="kfl-FT-7Av"/>
+                        <constraint firstAttribute="height" constant="32" id="0fn-4A-GoW"/>
+                        <constraint firstAttribute="width" constant="50" id="ICr-jy-3aF"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="CjO-jX-Jr0">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="115" width="384" height="347"/>
+                    </variation>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="zkn-3M-854" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="PJ0-JA-tZX"/>
-                <constraint firstItem="CjO-jX-Jr0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Y1p-nV-4Pq"/>
-                <constraint firstAttribute="bottom" secondItem="CjO-jX-Jr0" secondAttribute="bottom" id="Y3a-8O-wjR"/>
-                <constraint firstAttribute="bottom" secondItem="zkn-3M-854" secondAttribute="bottom" constant="98" id="iGt-dp-UYF"/>
-                <constraint firstItem="CjO-jX-Jr0" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="lNe-F3-auY"/>
-                <constraint firstItem="CjO-jX-Jr0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pcL-sE-o38"/>
+                <constraint firstItem="CjO-jX-Jr0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0Az-ww-O9B"/>
+                <constraint firstAttribute="bottom" secondItem="CjO-jX-Jr0" secondAttribute="bottom" id="BpL-06-DG9"/>
+                <constraint firstAttribute="bottom" secondItem="zkn-3M-854" secondAttribute="bottom" constant="98" id="TRI-G5-faZ"/>
+                <constraint firstAttribute="trailing" secondItem="CjO-jX-Jr0" secondAttribute="trailing" id="gy0-Va-eoo"/>
+                <constraint firstItem="CjO-jX-Jr0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kkh-0u-fzn"/>
+                <constraint firstItem="CjO-jX-Jr0" firstAttribute="centerX" secondItem="zkn-3M-854" secondAttribute="centerX" id="sCa-NY-vIk"/>
             </constraints>
         </view>
     </objects>
