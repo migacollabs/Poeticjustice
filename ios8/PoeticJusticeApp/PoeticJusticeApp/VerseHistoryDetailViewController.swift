@@ -8,15 +8,25 @@
 
 import UIKit
 
-class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate {
+struct PlayerLines{
+    var userId = -1
+    var userName = ""
+    var line = ""
+    var avatar = "avatar_mexican_guy.png"
+}
+
+class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var verseTitle: UILabel!
     @IBOutlet weak var verseText: UITextView!
+    @IBOutlet weak var playersTable: UITableView!
+    
+    var playerData: [PlayerLines] = []
     
     var detailItem: VerseHistoryRec? {
         didSet {
-            // Update the view.
-            self.configureView()
+            // Might not have to do anything here
+            ()
         }
     }
     
@@ -27,17 +37,17 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate {
             if let title = self.verseTitle{
                 title.text = vhr.title
             }
-            if let vt = self.verseText{
-                vt.text! = ""
-                for lineRec in vhr.lines_recs{
-                    var user_name = ""
-                    if let pr = vhr.players[lineRec.player_id]{
-                        user_name = pr.user_name
-                    }
-                    vt.text! += lineRec.text
-                    vt.text! += "  - \(user_name)"
-                    vt.text! += "\n"
+
+            for lineRec in vhr.lines_recs{
+                var user_name = ""
+                
+                if let pr = vhr.players[lineRec.player_id]{
+                    user_name = pr.user_name
                 }
+                
+                var pl = PlayerLines(userId: lineRec.player_id, userName: user_name, line: lineRec.text, avatar: "avatar_mexican_guy.png")
+                self.playerData.append(pl)
+                
             }
         }
     }
@@ -54,45 +64,6 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func load_verse(){
-        
-//        if let verseHistoryRec = self.detailItem{
-//        
-//            NetOpers.sharedInstance.get(
-//                NetOpers.sharedInstance.appserver_hostname! + "/v/verse/id=\(verseHistoryRec.id)", {data, response, error -> Void in
-//                    
-//                    let httpResponse = response as NSHTTPURLResponse
-//                    if httpResponse.statusCode == 200 {
-//                        if data != nil {
-//                            
-//                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-//                                data!, options: NSJSONReadingOptions.MutableContainers,
-//                                error: nil) as NSDictionary
-//                            
-//                            var verse = ""
-//                            if let results = jsonResult["results"] as? NSDictionary{
-//                                if let lines = results["lines"] as? NSArray{
-//                                    for line in lines{
-//                                        verse += "\(line)"
-//                                    }
-//                                }
-//                            }
-//
-//                            dispatch_async(dispatch_get_main_queue(),{
-//                                self.verseText.text = verse
-//                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-//                            })
-//                            
-//                        }
-//                    }
-//                    
-//            })
-//        }
-        
-    }
-    
-    
-    
     
     // MARK: UITextFieldDelegate methods
     
@@ -108,6 +79,35 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    // MARK: TableViewDataSource and Delegate methods
+    
+    func tableView(tableView : UITableView, numberOfRowsInSection section : Int) -> Int {
+        return self.playerData.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell : PlayerTableViewCell = self.playersTable.dequeueReusableCellWithIdentifier("playerCell") as PlayerTableViewCell
+        var playerLine = playerData[indexPath.row]
+        cell.avatarImage.image = UIImage(named:playerLine.avatar)
+        cell.userName.text = playerLine.userName
+        cell.verseLine.text = playerLine.line
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
 

@@ -10,6 +10,11 @@ import UIKit
 
 class PlayerTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var avatarImage: UIImageView!
+    @IBOutlet weak var userName: UILabel!
+    
+    @IBOutlet weak var verseLine: UITextView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
