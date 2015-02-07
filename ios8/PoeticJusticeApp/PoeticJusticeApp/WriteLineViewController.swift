@@ -392,7 +392,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     }
     
     func cancelVerse() {
-        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/v/close/id=\(self.verseId)",
+        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/v/cancel/id=\(self.verseId)",
             completion_handler:{
                 data, response, error -> Void in
                 
@@ -404,6 +404,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                             data!, options: NSJSONReadingOptions.MutableContainers,
                             error: nil) as NSDictionary
                         
+                        // this should be the verse that we just deleted
                         println(jsonResult)
                         
                         dispatch_async(dispatch_get_main_queue(),{
