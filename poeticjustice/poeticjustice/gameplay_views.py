@@ -1371,6 +1371,84 @@ def close_verse(request):
             pass
 
 
+@view_config(
+    name='cancel',
+    request_method='GET',
+    context='poeticjustice:contexts.Verses',
+    renderer='json',
+    permission='edit')
+def cancel_verse(request):
+    print 'close_verse called', request
+    try:
+        args = list(request.subpath)
+        # kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
+        kwds = _process_subpath(request.subpath)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                
+                user = User(entity=session.merge(user))
+
+                verse, jsonable = get_verse_to_view(kwds['id'], session)
+                user_ids = [u[0] for u in jsonable['results']['user_data']]
+
+                U = ~User
+                for player in (
+                    session.query(U)
+                        .filter(U.id.in_(user_ids))
+                        ):
+
+                        if player and player.open_verse_ids:
+                            if verse.id in player.open_verse_ids:
+                                open_verse_ids = copy.deepcopy(player.open_verse_ids)
+                                open_verse_ids.pop(verse.id)
+                                setattr(player, 'open_verse_ids', open_verse_ids)
+                                session.add(player)
+
+                session.commit()
+
+                # bulk delete line x verses
+                LxV = ~LineXVerse
+                session.query(LxV).filter(LxV.verse_id==verse.id).delete(synchronize_session='fetch')
+
+                # finally, delete the verse
+                session.delete(~verse)
+
+                session.commit()
+
+                return dict(
+                    status="Ok",
+                    verse=verse.to_dict() if verse else None,
+                    user=user.to_dict()
+                    )
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except HTTPUnauthorized: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
 
 
 
