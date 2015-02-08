@@ -354,15 +354,12 @@ def get_friends(user):
             friends.append({'friend_id':uxu.user_id, 'approved':uxu.approved,
                 'email_address':u.email_address, 'user_name':u.user_name, 'src':'them'})
 
-    print 'friends', friends
-
     return {"results":friends}
 
 
 def get_verse(verseId, userId):
     lines = list()
-    last_user_id = None
-    next_user_id = userId
+    next_index_user_ids = -1
     owner_id = None
     is_complete = False
     user_ids = []
@@ -376,21 +373,12 @@ def get_verse(verseId, userId):
             # get the next user that is allowed
             verse = session.query(V).filter(V.id==verseId).first()
             owner_id = verse.owner_id
-            next_user_id = owner_id
+            next_index_user_ids = verse.next_index_user_ids
             is_complete = verse.complete
             user_ids = verse.user_ids
 
-            if (last_user_id):
-                i = verse.user_ids.index(last_user_id)
-                
-                if (i==len(verse.user_ids)-1):
-                    i = 0
-                else:
-                    i += 1
-
-                next_user_id = verse.user_ids[i] # could be -1 or a real user_id
-
-    return {"results":{"lines":lines, "next_user_id":next_user_id, "user_ids":user_ids, "is_complete":is_complete, "verse_id":verseId, "owner_id":owner_id}}
+    return {"results":{"lines":lines, "next_index_user_ids":next_index_user_ids, 
+        "user_ids":user_ids, "is_complete":is_complete, "verse_id":verseId, "owner_id":owner_id}}
 
 
 def get_open_topic_keys(topics):
@@ -421,6 +409,10 @@ def get_active_topics(request):
         if user and user.is_active and user.email_address==auth_usrid:
             print 'loading active topics for user', user.id
 
+            friend_ids = []
+            for f in get_friends(user)["results"]:
+                friend_ids.append(f["friend_id"])
+
             with SQLAlchemySessionFactory() as session:
                 topics = {}
 
@@ -443,46 +435,37 @@ def get_active_topics(request):
                     filter(T.id.in_(get_open_topic_keys(topics))):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'mine', "next_index_user_ids":r[0].next_index_user_ids, 
-                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
                 
                 if user.open_verse_ids:
-                    # topics that i've joined
+                    # friend topics that i've joined
                     for r in session.query(V, T, U).\
                         filter(V.verse_category_topic_id==T.id).\
                         filter(U.id==V.owner_id).\
+                        filter(U.id!=user.id).\
                         filter(V.id.in_(user.open_verse_ids)).\
                         filter(T.id.in_(get_open_topic_keys(topics))).\
                         filter(V.complete==False):
-                        topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                                "user_name":r[2].user_name, "src":'joined', "next_index_user_ids":r[0].next_index_user_ids, 
-                                "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
+                        if r[0].owner_id in friend_ids:
+                            topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                                    "user_name":r[2].user_name, "src":'joined_friend', "next_index_user_ids":r[0].next_index_user_ids, 
+                                    "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
+                        else:
+                            topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                                    "user_name":r[2].user_name, "src":'joined_world', "next_index_user_ids":r[0].next_index_user_ids, 
+                                    "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
 
                 # friendships
-                for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
-                    filter(UxU.user_id==user.id).\
-                    filter(UxU.friend_id==V.owner_id).\
-                    filter(U.id==V.owner_id).\
-                    filter(UxU.approved==True).\
+                for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
+                    filter(V.owner_id.in_(friend_ids)).\
                     filter(V.complete==False).\
+                    filter(U.id!=user.id).\
                     filter(V.friends_only==True).\
                     filter(V.participant_count<V.max_participants).\
                     filter(T.id.in_(get_open_topic_keys(topics))):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
-                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
-
-                for r in session.query(V, T, U, UxU).filter(V.verse_category_topic_id==T.id).\
-                    filter(UxU.friend_id==user.id).\
-                    filter(UxU.user_id==V.owner_id).\
-                    filter(U.id==V.owner_id).\
-                    filter(UxU.approved==True).\
-                    filter(V.complete==False).\
-                    filter(V.friends_only==True).\
-                    filter(V.participant_count<V.max_participants).\
-                    filter(T.id.in_(get_open_topic_keys(topics))):
-                    topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
-                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
 
                 # put global open verses last, so mine and friends show up first in topics view
                 # global open verses and topics that are not mine
@@ -495,7 +478,7 @@ def get_active_topics(request):
                     filter(T.id.in_(get_open_topic_keys(topics))):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'world', "next_index_user_ids":r[0].next_index_user_ids, 
-                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id}
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
 
                 # TODO: optimize this - definitely a better way
                 results = []
@@ -838,15 +821,15 @@ def save_verse_line(request):
             # mandatory fields every time
             line = request.params["line"]
             verseId = request.params["verse_id"]
-            scoreIncrement = request.params["score_increment"]
+            scoreIncrement = 1 # everyone gets a point for every line
 
             with SQLAlchemySessionFactory() as session:
 
                 verse = session.query(~Verse).filter((~Verse).id==verseId).first()
 
-                verse.next_index_user_ids += 1
+                verse.next_index_user_ids = verse.next_index_user_ids + 1
 
-                if verse.next_index_user_ids==len(verse.user_ids)-1:
+                if verse.next_index_user_ids==len(verse.user_ids):
                     verse.next_index_user_ids = 0
 
                 # if it's not the first line, update the previous line score for the line
@@ -869,6 +852,7 @@ def save_verse_line(request):
                 linexverse.save(session=session)
 
                 verse = Verse(entity=session.merge(verse))
+                setattr(verse, 'next_index_user_ids', verse.next_index_user_ids)
                 verse.save(session=session)
 
                 if (do_level_up(user)):
@@ -1151,22 +1135,24 @@ def join_verse(request):
                     # there's still a user slot available, so let's grab it
 
                     # first assign the next index id to the available slot
-                    v.next_index_user_ids = v.user_ids.index(-1)
+                    index = v.user_ids.index(-1)
 
                     # next update the verse user_ids array for this user
-                    user_ids[v.next_index_user_ids]=user.id
+                    user_ids[index]=user.id
+
+                    setattr(v, 'user_ids', user_ids)
 
                     v.participant_count += 1
-                    
-                    setattr(v, 'user_ids', user_ids)
-                    setattr(v, 'next_index_user_ids', v.next_index_user_ids)
-                    v.save(session)
 
-                    if v.next_index_user_ids==user_ids.index(user.id):
-                        # if the next player is the first player
-                        # let the new player go first
+                    # check if the previous user submitted their line
+                    last_user_id = user_ids[index-1]
+                    LXV = ~LineXVerse
+                    line = session.query(LXV).filter(LXV.verse_id==v.id).\
+                        filter(LXV.user_id==last_user_id).first()
+
+                    if line:
                         is_next = True
-
+                    
                     v.save(session)
 
                     user = User.load(user.id, session=session)

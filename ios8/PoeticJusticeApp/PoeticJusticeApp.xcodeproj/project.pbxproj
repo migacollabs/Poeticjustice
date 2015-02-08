@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		461EA1B71A855A370016CCC8 /* friend.png in Resources */ = {isa = PBXBuildFile; fileRef = 461EA1B41A855A370016CCC8 /* friend.png */; };
+		461EA1B81A855A370016CCC8 /* mine.png in Resources */ = {isa = PBXBuildFile; fileRef = 461EA1B51A855A370016CCC8 /* mine.png */; };
+		461EA1B91A855A370016CCC8 /* world.png in Resources */ = {isa = PBXBuildFile; fileRef = 461EA1B61A855A370016CCC8 /* world.png */; };
 		4649A3551A7C4BE800D7214B /* book_24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4649A3521A7C4BE800D7214B /* book_24.png */; };
 		4649A3561A7C4BE800D7214B /* book_48.png in Resources */ = {isa = PBXBuildFile; fileRef = 4649A3531A7C4BE800D7214B /* book_48.png */; };
 		4649A3571A7C4BE800D7214B /* book_64.png in Resources */ = {isa = PBXBuildFile; fileRef = 4649A3541A7C4BE800D7214B /* book_64.png */; };
@@ -412,6 +415,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		461EA1B41A855A370016CCC8 /* friend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = friend.png; sourceTree = "<group>"; };
+		461EA1B51A855A370016CCC8 /* mine.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mine.png; sourceTree = "<group>"; };
+		461EA1B61A855A370016CCC8 /* world.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = world.png; sourceTree = "<group>"; };
 		4649A3521A7C4BE800D7214B /* book_24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = book_24.png; sourceTree = "<group>"; };
 		4649A3531A7C4BE800D7214B /* book_48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = book_48.png; sourceTree = "<group>"; };
 		4649A3541A7C4BE800D7214B /* book_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = book_64.png; sourceTree = "<group>"; };
@@ -829,6 +835,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		461EA1B31A855A370016CCC8 /* topic_state.icons */ = {
+			isa = PBXGroup;
+			children = (
+				461EA1B41A855A370016CCC8 /* friend.png */,
+				461EA1B51A855A370016CCC8 /* mine.png */,
+				461EA1B61A855A370016CCC8 /* world.png */,
+			);
+			path = topic_state.icons;
+			sourceTree = "<group>";
+		};
 		46DEE1A91A7AE9C800016841 /* app.icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -917,6 +933,7 @@
 				46E3DD1A1A70403C006D059A /* User.swift */,
 				46E3DD161A704005006D059A /* TopicsViewController.swift */,
 				46E3DD171A704005006D059A /* TopicsViewController.xib */,
+				461EA1B31A855A370016CCC8 /* topic_state.icons */,
 				46EED8A41A780F20007CAC14 /* DeviceUtils.swift */,
 				46E3DF7A1A72C56E006D059A /* Topic.swift */,
 				46E3DD0E1A703F25006D059A /* WriteLineViewController.swift */,
@@ -1411,6 +1428,7 @@
 				46E3DE641A7045B7006D059A /* Blimp.png in Resources */,
 				46E3DF1A1A7045B7006D059A /* Seat.png in Resources */,
 				46E3DF2A1A7045B7006D059A /* Spanner.png in Resources */,
+				461EA1B81A855A370016CCC8 /* mine.png in Resources */,
 				46E3DE5D1A7045B7006D059A /* Bat-&-Ball.png in Resources */,
 				46E3DE811A7045B7006D059A /* Clock.png in Resources */,
 				46E3DED41A7045B7006D059A /* Magnifying-Glass.png in Resources */,
@@ -1507,6 +1525,7 @@
 				46E3DF6D1A7045B7006D059A /* Yin-Yang.png in Resources */,
 				46E3DE761A7045B7006D059A /* Cheese.png in Resources */,
 				46E3DEBE1A7045B7006D059A /* Ice-Cream.png in Resources */,
+				461EA1B91A855A370016CCC8 /* world.png in Resources */,
 				4649A36D1A7C4C9700D7214B /* plus_24.png in Resources */,
 				46E3DF0C1A7045B7006D059A /* Record.png in Resources */,
 				46E3DEB21A7045B7006D059A /* Gift-Box.png in Resources */,
@@ -1589,6 +1608,7 @@
 				46E3DE561A7045B7006D059A /* Apple.png in Resources */,
 				46DEE1C21A7AE9C800016841 /* help_24.png in Resources */,
 				46E3DF6A1A7045B7006D059A /* Wind-Turbine.png in Resources */,
+				461EA1B71A855A370016CCC8 /* friend.png in Resources */,
 				4649A3671A7C4C4600D7214B /* delete_24.png in Resources */,
 				46E3DF3A1A7045B7006D059A /* Tablet.png in Resources */,
 				46E3DF4C1A7045B7006D059A /* Truck.png in Resources */,

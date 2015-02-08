@@ -15,14 +15,17 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var playerTable: UITableView!
     @IBOutlet weak var verseTitle: UILabel!
     
+    @IBOutlet var topicButton: UIButton!
     @IBOutlet var joinButton: UIButton!
     @IBOutlet var newButton: UIButton!
     
+    var topic : Topic?
     var user_ids:[Int] = []
     var players: [User] = []
     var iAdBanner: ADBannerView?
     
     var activeTopic:ActiveTopicRec? {
+        // TODO: not necessary?
         didSet(newValue){
 //            self.configureView()
             self.user_ids.removeAll()
@@ -30,11 +33,12 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 for id in nv.verse_user_ids {
                     self.user_ids.append(id)
                 }
+                
             }
+            
+        
         }
     }
-    
-    var topic : Topic?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +85,14 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                     NetOpers.sharedInstance.appserver_hostname! + "/v/users/id=\(at.verse_id)", load_players)
             }
             
+            self.verseTitle.text = at.verse_title
+            
+        }
+        
+        if let t_btn = self.topicButton{
+            if let t = self.topic{
+                t_btn.setImage(UIImage(named: t.main_icon_name as String), forState: .Normal)
+            }
         }
     }
     
