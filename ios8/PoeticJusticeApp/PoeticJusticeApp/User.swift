@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Miga Collabs. All rights reserved.
 //
 
+import UIKit
 import Foundation
 
 protocol UserDelegate : class {
@@ -33,6 +34,21 @@ class User{
             for ul : UserDelegate in userDelegates {
                 ul.handleUserLevelChange(oldValue, newLevel: self.level)
             }
+        }
+    }
+    var avatarName: String = "avatar_mexican_guy.png" {
+        didSet{
+            println("Set new avatar name \(avatarName)")
+            let url = NetOpers.sharedInstance.appserver_hostname! + "/u/upsert-pref"
+            var param = Dictionary<String,String>()
+            param["avatar_name"] = avatarName
+            NetOpers.sharedInstance.post(url, params: param,
+                completion_handler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                    
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+            })
+            
         }
     }
     
@@ -82,6 +98,17 @@ class User{
         }
         if let up = user_data["user_prefs"] as? String {
             self.user_prefs = up
+            if !self.user_prefs.isEmpty{
+                let data = (self.user_prefs as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                data!, options: NSJSONReadingOptions.MutableContainers,
+                error: nil) as? NSDictionary{
+                    if let an = jsonResult["avatar_name"] as? String{
+                        self.avatarName = an
+                    }
+                        
+                }
+            }
         }
         if let us = user_data["user_score"] as? Int {
             self.user_score = us

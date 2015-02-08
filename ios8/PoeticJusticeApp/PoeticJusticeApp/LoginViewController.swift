@@ -274,7 +274,12 @@ class LoginViewController: UIViewController {
         var controller = sb.instantiateViewControllerWithIdentifier("VerseHistoryMasterViewController") as UIViewController
         self.presentViewController(controller, animated: true, completion: nil)
     }
-    
+
+    @IBAction func onShowAvatars(sender: AnyObject) {
+        var sb = UIStoryboard(name: "Main", bundle: nil)
+        var controller = sb.instantiateViewControllerWithIdentifier("AvatarPicCollectionViewController") as UIViewController
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
 
     
 }

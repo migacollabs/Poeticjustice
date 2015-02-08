@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import json
+import copy
 import datetime
 import traceback
 import logging
@@ -27,6 +28,7 @@ from pyaella.geo import GPSPoint
 from pyaella.metacode import tmpl as pyaella_templates
 from pyaella.server.processes import Emailer
 from pyaella.server.api import LutValues
+from pyaella.server.api import get_current_user, get_current_rbac_user
 
 import poeticjustice
 from poeticjustice import default_hashkey
@@ -615,6 +617,63 @@ def verify_new_user(request):
                 'logged_in': authenticated_userid(request),
                 'user': user
             }
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except:
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
+    name='upsert-pref',
+    request_method='POST',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def upsert_pref(request):
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(
+            request.subpath, formUrlEncodedParams=request.POST)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                user = session.merge(user)
+                user_prefs = user.user_prefs
+                if not user_prefs:
+                    user_prefs = {}
+                else:
+                    user_prefs = json.loads(user_prefs)
+                user_prefs.update(kwds)
+                user_prefs = json.dumps(user_prefs)
+                setattr(user, 'user_prefs', user_prefs)
+                
+                session.add(user)
+                session.commit()
+
+                return {
+                    'status':'Ok',
+                    'logged_in': auth_usrid,
+                }
+
+        else:
+            raise HTTPUnauthorized()
 
     except HTTPGone: raise
     except HTTPFound: raise

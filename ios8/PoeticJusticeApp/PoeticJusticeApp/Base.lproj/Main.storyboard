@@ -86,6 +86,59 @@
             </objects>
             <point key="canvasLocation" x="-194" y="848"/>
         </scene>
+        <!--Avatar Pic Collection View Controller-->
+        <scene sceneID="RXe-iF-VRK">
+            <objects>
+                <collectionViewController storyboardIdentifier="AvatarPicCollectionViewController" id="vmr-zO-x3l" customClass="AvatarPicCollectionViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="A4B-e7-Kwn">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="F8i-3p-cWB">
+                            <size key="itemSize" width="260" height="168"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="7oP-Hx-eMo" customClass="AvatarPicCollectionViewCell" customModule="PoeticJusticeApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eHq-gQ-M0c">
+                                            <rect key="frame" x="10" y="10" width="180" height="180"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="180" id="okq-LV-5eu"/>
+                                                <constraint firstAttribute="width" constant="180" id="zVo-K3-U4k"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="eHq-gQ-M0c" secondAttribute="centerX" id="49c-vk-iNi"/>
+                                    <constraint firstAttribute="centerY" secondItem="eHq-gQ-M0c" secondAttribute="centerY" id="ELl-84-LID"/>
+                                </constraints>
+                                <size key="customSize" width="200" height="200"/>
+                                <connections>
+                                    <outlet property="imageView" destination="eHq-gQ-M0c" id="BM9-j5-jbS"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="vmr-zO-x3l" id="3XR-Rh-gH2"/>
+                            <outlet property="delegate" destination="vmr-zO-x3l" id="ANP-1Y-z18"/>
+                        </connections>
+                    </collectionView>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gpj-5o-oO2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-485" y="1587"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
@@ -141,6 +194,7 @@
         <!--Write Line View Controller-->
         <scene sceneID="ZDc-Bd-Oqg">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A0V-37-tZK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Bp8-VX-3UL" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8wE-xp-UWx"/>
@@ -152,7 +206,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="A0V-37-tZK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="678" y="1238"/>
         </scene>
