@@ -11,7 +11,7 @@ import UIKit
 import Foundation
 import AVFoundation
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var user_name: UITextField!
     @IBOutlet weak var email_address: UITextField!
@@ -27,6 +27,14 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        if let s : String = NSUserDefaults.standardUserDefaults().objectForKey("emailAddress") as? String {
+            email_address.text = s
+        }
+        
+        if let s : String = NSUserDefaults.standardUserDefaults().objectForKey("userName") as? String {
+            user_name.text = s
+        }
+        
         NetOpers.sharedInstance.loginHandler = self
         NetOpers.sharedInstance.alertHandler = self
         
@@ -40,6 +48,11 @@ class LoginViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        self.view.endEditing(true);
+        return false;
     }
     
     func updateUserLabel() {
@@ -142,6 +155,8 @@ class LoginViewController: UIViewController {
                             
                             return
                         }
+                        
+                        NSUserDefaults.standardUserDefaults().setObject(em, forKey: "emailAddress")
                     }
                     
                     // verify user name
@@ -159,7 +174,11 @@ class LoginViewController: UIViewController {
                             
                             return
                         }
+                        
+                        NSUserDefaults.standardUserDefaults().setObject(un, forKey: "userName")
                     }
+                    
+                    NSUserDefaults.standardUserDefaults().synchronize()
                     
                     if let login_em = params["login"] as? String{
                         
@@ -187,6 +206,7 @@ class LoginViewController: UIViewController {
     }
     
     func on_email_notification() {
+        self.userLabel.text = "Email notification sent!"
         is_busy = false
     }
     

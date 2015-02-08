@@ -12,6 +12,7 @@
                 <outlet property="joinButton" destination="iTI-ob-VOF" id="GOA-ie-OeL"/>
                 <outlet property="newButton" destination="bZt-Bz-lq7" id="9B9-5I-phs"/>
                 <outlet property="playerTable" destination="CpR-k2-onq" id="zGh-ME-kXe"/>
+                <outlet property="topicButton" destination="dyA-jk-ccd" id="sBi-BJ-wz6"/>
                 <outlet property="verseTitle" destination="IO3-i6-GWv" id="mmp-ix-R38"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,29 +22,29 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="CpR-k2-onq">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="CpR-k2-onq">
                     <rect key="frame" x="0.0" y="158" width="600" height="221"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="221" id="8xg-dF-ssO"/>
                     </constraints>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IO3-i6-GWv">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IO3-i6-GWv">
                     <rect key="frame" x="64" y="108" width="528" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyA-jk-ccd">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dyA-jk-ccd">
                     <rect key="frame" x="8" y="95" width="48" height="48"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="48" id="r8F-pj-Z8y"/>
                     </constraints>
-                    <state key="normal" image="Acoustic-Guitar.png">
+                    <state key="normal" image="Init.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTI-ob-VOF">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTI-ob-VOF">
                     <rect key="frame" x="179" y="396" width="72" height="72"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="72" id="Q3o-3P-cML"/>
@@ -56,7 +57,7 @@
                         <action selector="onJoin:" destination="-1" eventType="touchUpInside" id="HXX-zI-1Zv"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZt-Bz-lq7">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZt-Bz-lq7">
                     <rect key="frame" x="349" y="396" width="72" height="72"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="72" id="qrK-Lv-qfQ"/>
@@ -68,7 +69,7 @@
                         <action selector="onStart:" destination="-1" eventType="touchUpInside" id="tWt-7D-stk"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="peu-Iq-tNk">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="peu-Iq-tNk">
                     <rect key="frame" x="259" y="429" width="82" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="82" id="Bwj-JI-AcV"/>
@@ -89,7 +90,7 @@
                 <constraint firstItem="peu-Iq-tNk" firstAttribute="leading" secondItem="iTI-ob-VOF" secondAttribute="trailing" constant="8" symbolic="YES" id="Eqf-EE-Op1"/>
                 <constraint firstItem="IO3-i6-GWv" firstAttribute="leading" secondItem="dyA-jk-ccd" secondAttribute="trailing" constant="8" symbolic="YES" id="G9m-Ea-rfQ"/>
                 <constraint firstAttribute="trailing" secondItem="CpR-k2-onq" secondAttribute="trailing" id="MeY-rA-WFQ"/>
-                <constraint firstItem="CpR-k2-onq" firstAttribute="top" secondItem="IO3-i6-GWv" secondAttribute="bottom" constant="29" id="XKB-F8-Op1"/>
+                <constraint firstItem="CpR-k2-onq" firstAttribute="top" relation="lessThanOrEqual" secondItem="IO3-i6-GWv" secondAttribute="bottom" constant="29" id="XKB-F8-Op1"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="centerX" secondItem="peu-Iq-tNk" secondAttribute="centerX" id="aSP-Ev-ZYs"/>
                 <constraint firstItem="dyA-jk-ccd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="95" id="dA9-aM-XWr"/>
                 <constraint firstItem="iTI-ob-VOF" firstAttribute="baseline" secondItem="bZt-Bz-lq7" secondAttribute="firstBaseline" id="dF9-VU-9lc"/>
@@ -101,7 +102,6 @@
         </view>
     </objects>
     <resources>
-        <image name="Acoustic-Guitar.png" width="48" height="48"/>
         <image name="Init.png" width="48" height="48"/>
     </resources>
 </document>

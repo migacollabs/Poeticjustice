@@ -13,7 +13,7 @@ import AVFoundation
 
 struct VerseRec {
     var id : Int = -1
-    var next_user_id : Int = -1
+    var next_index_user_ids : Int = -1 // TODO: remove this, replace with next_index_user_ids
     var owner_id : Int = -1
     var lines : [String] = []
     var is_complete : Bool = false
@@ -204,7 +204,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                     
                     /*
                     var id : Int = -1
-                    var next_user_id : Int = -1
+                    var next_index_user_ids : Int = -1
                     var owner_id : Int = -1
                     var lines : [String] = []
                     */
@@ -213,8 +213,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                         self.verse.id = id
                     }
                     
-                    if let nid = results["next_user_id"] as? Int {
-                        self.verse.next_user_id = nid
+                    if let nid = results["next_index_user_ids"] as? Int {
+                        self.verse.next_index_user_ids = nid
                     }
                     
                     if let oid = results["owner_id"] as? Int {
@@ -247,7 +247,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                             if NetOpers.sharedInstance.user.is_logged_in() {
                                 if (!self.verse.is_complete) {
                                     
-                                    self.is_my_turn = self.verse.next_user_id==NetOpers.sharedInstance.user.id
+                                    self.is_my_turn = find(self.verse.user_ids, NetOpers.sharedInstance.user.id)==self.verse.next_index_user_ids
                                     
                                     self.updateSendPlaceholder()
                                 }
