@@ -17,7 +17,10 @@ class HelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Help // FAQ"
+        title = "Help"
+        
+        var faqButton : UIBarButtonItem = UIBarButtonItem(title: "FAQ", style: UIBarButtonItemStyle.Plain, target: self, action: "handleFAQButton")
+        self.navigationItem.rightBarButtonItem = faqButton
         
         // Do any additional setup after loading the view.
         
@@ -39,7 +42,7 @@ class HelpViewController: UIViewController {
 //        self.iAdBanner?.removeFromSuperview()
     }
     
-    @IBAction func handleFAQButton(sender: AnyObject) {
+    func handleFAQButton() {
         let vc = FAQViewController(nibName: "FAQViewController", bundle:nil)
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -70,7 +73,6 @@ class HelpViewController: UIViewController {
     }
     
     @IBAction func handleButtonPress(sender: AnyObject) {
-        println("button press sound")
         playButtonSound()
     }
     

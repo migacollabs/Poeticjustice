@@ -264,7 +264,7 @@ PYAELLAC:
                     Sequence('verse_id_seq', start=1),  
                     server_default=text("nextval('verse_id_seq')"), 
                     primary_key=True)
-        title: Column(String, nullable=True)
+        title: Column(String, nullable=False)
         user_ids: Column(ARRAY(Integer), nullable=False)
         max_participants: Column(Integer, nullable=False, default=2)
         participant_count: Column(Integer, nullable=False, default=1)
