@@ -19,33 +19,33 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qRP-Qs-sqY">
-                    <rect key="frame" x="178" y="193" width="245" height="30"/>
+                    <rect key="frame" x="178" y="165" width="245" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="245" id="fpu-Rh-15w"/>
+                        <constraint firstAttribute="width" constant="245" id="Uba-im-dyr"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="user name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xBS-xc-17G">
-                    <rect key="frame" x="178" y="231" width="245" height="30"/>
+                    <rect key="frame" x="178" y="203" width="245" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Prw-C7-NFc">
-                    <rect key="frame" x="191" y="148" width="219" height="37"/>
+                    <rect key="frame" x="191" y="120" width="219" height="37"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="37" id="FkF-AG-Qet"/>
-                        <constraint firstAttribute="width" constant="219" id="cn8-UE-6pW"/>
+                        <constraint firstAttribute="width" constant="219" id="9zx-jx-jqT"/>
+                        <constraint firstAttribute="height" constant="37" id="zP1-M7-hzx"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DeK-pn-1LR">
-                    <rect key="frame" x="264" y="269" width="72" height="72"/>
+                    <rect key="frame" x="264" y="241" width="72" height="72"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="72" id="Q7Z-xk-6hV"/>
-                        <constraint firstAttribute="height" constant="72" id="uwV-AS-vXx"/>
+                        <constraint firstAttribute="height" constant="72" id="Uua-Yf-04x"/>
+                        <constraint firstAttribute="width" constant="72" id="hn1-Ox-tXL"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="Go!" backgroundImage="Init.png">
@@ -56,9 +56,9 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n5F-GW-h1o">
-                    <rect key="frame" x="229" y="420" width="143" height="24"/>
+                    <rect key="frame" x="229" y="414" width="143" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="143" id="RfQ-V3-qBv"/>
+                        <constraint firstAttribute="width" constant="143" id="Wiq-S0-I9L"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title=" Leaderboard" image="chart_up_24.png">
@@ -70,9 +70,9 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pMS-mk-VSp">
-                    <rect key="frame" x="260" y="471" width="81" height="24"/>
+                    <rect key="frame" x="260" y="382" width="81" height="24"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="81" id="Aqd-63-MtE"/>
+                        <constraint firstAttribute="width" constant="81" id="yzX-eb-Wpg"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title=" History" image="book_24.png">
@@ -84,17 +84,22 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are signed in as: fakeusername // 199 points" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OrP-Tz-qIv">
-                    <rect key="frame" x="0.0" y="366" width="600" height="21"/>
+                    <rect key="frame" x="0.0" y="321" width="600" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="Pfe-vJ-zLU"/>
+                        <constraint firstAttribute="height" constant="21" id="i2M-J2-dnF"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qb3-ed-ESX">
-                    <rect key="frame" x="277" y="503" width="44" height="30"/>
-                    <state key="normal" title="Avatar">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qb3-ed-ESX">
+                    <rect key="frame" x="250" y="350" width="100" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="CDc-SX-vz0"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title=" Avatar" image="man_24.png">
+                        <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -113,22 +118,24 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="n5F-GW-h1o" firstAttribute="centerX" secondItem="pMS-mk-VSp" secondAttribute="centerX" id="0fA-m5-D7p"/>
-                <constraint firstItem="Prw-C7-NFc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="148" id="A3S-h3-oH9"/>
-                <constraint firstItem="OrP-Tz-qIv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Bxv-uK-Uhx"/>
-                <constraint firstItem="DeK-pn-1LR" firstAttribute="top" secondItem="xBS-xc-17G" secondAttribute="bottom" constant="8" symbolic="YES" id="DIl-Dg-fHD"/>
-                <constraint firstItem="n5F-GW-h1o" firstAttribute="top" secondItem="OrP-Tz-qIv" secondAttribute="bottom" constant="33" id="Deo-ZD-e8Z"/>
-                <constraint firstItem="qRP-Qs-sqY" firstAttribute="centerX" secondItem="Prw-C7-NFc" secondAttribute="centerX" id="KQ7-Nk-D2Y"/>
-                <constraint firstItem="qRP-Qs-sqY" firstAttribute="leading" secondItem="xBS-xc-17G" secondAttribute="leading" id="LyZ-hD-xwT"/>
-                <constraint firstItem="pMS-mk-VSp" firstAttribute="top" secondItem="n5F-GW-h1o" secondAttribute="bottom" constant="27" id="Psu-JY-sCF"/>
-                <constraint firstItem="OrP-Tz-qIv" firstAttribute="centerX" secondItem="n5F-GW-h1o" secondAttribute="centerX" id="VQF-HX-QLU"/>
-                <constraint firstItem="OrP-Tz-qIv" firstAttribute="top" secondItem="DeK-pn-1LR" secondAttribute="bottom" constant="25" id="aF3-np-IgY"/>
-                <constraint firstItem="qRP-Qs-sqY" firstAttribute="trailing" secondItem="xBS-xc-17G" secondAttribute="trailing" id="bh5-Fz-BPC"/>
-                <constraint firstItem="qRP-Qs-sqY" firstAttribute="top" secondItem="Prw-C7-NFc" secondAttribute="bottom" constant="8" symbolic="YES" id="dmZ-UZ-OKG"/>
-                <constraint firstAttribute="trailing" secondItem="OrP-Tz-qIv" secondAttribute="trailing" id="ga6-pe-AHm"/>
-                <constraint firstItem="xBS-xc-17G" firstAttribute="centerX" secondItem="DeK-pn-1LR" secondAttribute="centerX" id="pr6-b7-RZW"/>
-                <constraint firstItem="xBS-xc-17G" firstAttribute="top" secondItem="qRP-Qs-sqY" secondAttribute="bottom" constant="8" symbolic="YES" id="qal-yU-b96"/>
-                <constraint firstItem="DeK-pn-1LR" firstAttribute="centerX" secondItem="OrP-Tz-qIv" secondAttribute="centerX" id="s5c-H0-20g"/>
+                <constraint firstItem="pMS-mk-VSp" firstAttribute="centerX" secondItem="Qb3-ed-ESX" secondAttribute="centerX" id="4Bb-Lj-QMI"/>
+                <constraint firstAttribute="trailing" secondItem="OrP-Tz-qIv" secondAttribute="trailing" id="8Wk-mx-OwY"/>
+                <constraint firstItem="qRP-Qs-sqY" firstAttribute="top" secondItem="Prw-C7-NFc" secondAttribute="bottom" constant="8" symbolic="YES" id="A0H-al-XNE"/>
+                <constraint firstItem="xBS-xc-17G" firstAttribute="centerX" secondItem="DeK-pn-1LR" secondAttribute="centerX" id="E6H-ZF-BDM"/>
+                <constraint firstItem="pMS-mk-VSp" firstAttribute="top" secondItem="Qb3-ed-ESX" secondAttribute="bottom" constant="8" symbolic="YES" id="IKg-kn-fnI"/>
+                <constraint firstItem="OrP-Tz-qIv" firstAttribute="top" secondItem="DeK-pn-1LR" secondAttribute="bottom" constant="8" symbolic="YES" id="TfF-19-pqd"/>
+                <constraint firstItem="OrP-Tz-qIv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="U0d-4X-Ume"/>
+                <constraint firstItem="Prw-C7-NFc" firstAttribute="centerX" secondItem="qRP-Qs-sqY" secondAttribute="centerX" id="VU0-UL-uy2"/>
+                <constraint firstItem="xBS-xc-17G" firstAttribute="top" secondItem="qRP-Qs-sqY" secondAttribute="bottom" constant="8" symbolic="YES" id="YP4-r1-yQt"/>
+                <constraint firstItem="qRP-Qs-sqY" firstAttribute="leading" secondItem="xBS-xc-17G" secondAttribute="leading" id="a78-P9-qfm"/>
+                <constraint firstItem="Qb3-ed-ESX" firstAttribute="centerX" secondItem="OrP-Tz-qIv" secondAttribute="centerX" id="eVK-p9-kRz"/>
+                <constraint firstItem="pMS-mk-VSp" firstAttribute="centerX" secondItem="n5F-GW-h1o" secondAttribute="centerX" id="hPq-fo-pDA"/>
+                <constraint firstItem="DeK-pn-1LR" firstAttribute="top" secondItem="xBS-xc-17G" secondAttribute="bottom" constant="8" symbolic="YES" id="hzc-d1-zII"/>
+                <constraint firstItem="Qb3-ed-ESX" firstAttribute="top" secondItem="OrP-Tz-qIv" secondAttribute="bottom" constant="8" symbolic="YES" id="jSb-XR-qIf"/>
+                <constraint firstItem="qRP-Qs-sqY" firstAttribute="trailing" secondItem="xBS-xc-17G" secondAttribute="trailing" id="lb4-nm-wJI"/>
+                <constraint firstItem="Prw-C7-NFc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="120" id="nNi-5O-eZi"/>
+                <constraint firstItem="n5F-GW-h1o" firstAttribute="top" secondItem="pMS-mk-VSp" secondAttribute="bottom" constant="8" symbolic="YES" id="rBe-Jh-cKB"/>
+                <constraint firstItem="DeK-pn-1LR" firstAttribute="centerX" secondItem="OrP-Tz-qIv" secondAttribute="centerX" id="ypd-xM-ASU"/>
             </constraints>
         </view>
     </objects>
@@ -136,5 +143,6 @@
         <image name="Init.png" width="48" height="48"/>
         <image name="book_24.png" width="24" height="24"/>
         <image name="chart_up_24.png" width="24" height="24"/>
+        <image name="man_24.png" width="24" height="24"/>
     </resources>
 </document>
