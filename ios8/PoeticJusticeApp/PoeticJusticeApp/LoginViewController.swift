@@ -301,6 +301,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.pushViewController(controller, animated: true)
     }
 
+    @IBAction func onShowTestResultScreen(sender: AnyObject) {
+        var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
+        var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as UIViewController
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
     
 }
 

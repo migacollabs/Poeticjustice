@@ -1208,12 +1208,12 @@ def get_verse_to_view(verse_id, session):
             sq = (session.query(U.id)
                     .filter(U.id.in_(verse.user_ids))
                     ).subquery()
-            rp = (session.query(U.id, U.user_name)
+            rp = (session.query(U.id, U.user_name, U.user_prefs)
                     .filter(U.id.in_(sq))
                     ).all()
 
             # users [(id, email_address)]
-            users = [(row[0], row[1]) for row in rp]
+            users = [(row[0], row[1], row[2]) for row in rp]
             verse = Verse(entity=verse)
 
         else:
@@ -1221,7 +1221,14 @@ def get_verse_to_view(verse_id, session):
             owner_id = verse.owner_id        
 
     return \
-        verse, dict(results=dict(lines=lines,verse_id=verse_id,user_data=users,owner_id=owner_id))
+        verse, dict(
+                results=dict(
+                    verse=verse.to_dict(),
+                    lines=lines,
+                    verse_id=verse_id,
+                    user_data=users,
+                    owner_id=owner_id)
+                )
 
 
 @view_config(
@@ -1231,6 +1238,35 @@ def get_verse_to_view(verse_id, session):
     renderer='json',
     permission='edit')
 def view_verse(request):
+    """
+
+    JSON repr
+    ---------
+
+    {'status': 'Ok',
+     'results': {
+           'lines': {'3': [11116, 'say some shit']},
+           'owner_id': -1,
+           'user_data': [[11116,
+                          'mat',
+                          '{"avatar_name": "avatar_jamaican_guy.png"}']],
+           'verse': {'complete': False,
+                     'current_user_id': 'None',
+                     'friends_only': True,
+                     'id': 7,
+                     'key': '6F5QRNXPMS9W1BDK',
+                     'max_lines': 16,
+                     'max_participants': 4,
+                     'next_index_user_ids': 1,
+                     'owner_id': 11116,
+                     'participant_count': 1,
+                     'title': 'Reno tennis',
+                     'user_ids': [11116, -1, -1, -1],
+                     'verse_category_topic_id': 6},
+           'verse_id': '7'}}
+
+    """
+
     print 'view_verse called', request
     try:
         args = list(request.subpath)
@@ -1254,7 +1290,11 @@ def view_verse(request):
 
                 verse, jsonable = get_verse_to_view(kwds['id'], session)
 
-                return jsonable
+                return dict(
+                    status="Ok",
+                    results=jsonable,
+                    )
+
 
         raise HTTPUnauthorized
 
