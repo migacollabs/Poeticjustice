@@ -11,7 +11,6 @@ import UIKit
 class CloseVerseViewController: UIViewController {
 
     @IBOutlet weak var verseTitle: UILabel!
-    @IBOutlet weak var verseText: UITextView!
     
     var verseId: Int = -1
     
@@ -85,7 +84,7 @@ class CloseVerseViewController: UIViewController {
                             }
                             
                             dispatch_async(dispatch_get_main_queue(),{
-                                self.verseText.text = verse
+//                                self.verseText.text = verse
                                 
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                             })

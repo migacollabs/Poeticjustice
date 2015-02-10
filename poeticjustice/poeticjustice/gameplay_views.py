@@ -1290,10 +1290,11 @@ def view_verse(request):
 
                 verse, jsonable = get_verse_to_view(kwds['id'], session)
 
-                return dict(
+                res = dict(
                     status="Ok",
-                    results=jsonable,
                     )
+                res.update(jsonable)
+                return res
 
 
         raise HTTPUnauthorized

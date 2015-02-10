@@ -17,7 +17,7 @@ class Avatar{
         "avatar_beanie_girl.png",
         "avatar_blond_guy.png",
         "avatar_bussiness_man.png",
-        "avatar_emo_girl",
+        "avatar_emo_girl.png",
         "avatar_fashion_girl.png",
         "avatar_ginger_girl.png",
         "avatar_ginger_guy.png",
