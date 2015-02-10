@@ -264,7 +264,7 @@ PYAELLAC:
                     Sequence('verse_id_seq', start=1),  
                     server_default=text("nextval('verse_id_seq')"), 
                     primary_key=True)
-        title: Column(String, nullable=True)
+        title: Column(String, nullable=False)
         user_ids: Column(ARRAY(Integer), nullable=False)
         max_participants: Column(Integer, nullable=False, default=2)
         participant_count: Column(Integer, nullable=False, default=1)
@@ -354,12 +354,14 @@ AFTER_CREATE_SQL:
             (11114, 2),
             (11115, 2);
 
+
         INSERT INTO user_x_users
             (user_id, friend_id, approved)
         VALUES
             (11111, 11112, true),
             (11111, 11113, true);
             -- TODO: need open friend requests
+
 
         INSERT INTO user_x_groups
             (user_id, group_id)
@@ -370,84 +372,82 @@ AFTER_CREATE_SQL:
             (11114, 1),
             (11115, 1);
 
+
         INSERT INTO verse_category_topics 
             (
                 name, min_points_req, score_modifier, main_icon_name, verse_category_type_id
             )
         VALUES
             ('Love', 0, 1, 'Heart.png', 1),
-            ('Trouble', 0, 1, 'Skull.png', 1),
-            ('70s', 0, 1, 'Oil-Lamp.png', 1),
-
-            ('NFL', 0, 1, 'American-Football.png', 2),
-            ('Baseball', 16, 1, 'Baseball-Helmet.png', 2),
-            ('Tennis', 48, 1, 'Tennis-Ball.png', 2),
-            ('Soccer', 96, 2, 'Pitch.png', 2),
-            ('Rugby', 144, 3, 'Football-Goal.png', 2),
-            ('Biking', 0, 1, 'Bike.png', 2),
-            ('Skating', 0, 1, 'Skateboard.png', 2),
-            ('NFL vs Rugby', 0, 2, 'Conversation.png', 2),
-
             ('Video Games', 0, 1, 'Game-Pad.png', 3),
-            ('Vintage Games', 16, 1, 'Vintage-Handheld.png', 3),
-            ('Arcade Games', 48, 1, 'Ghost.png', 3),
-            ('Board Games', 96, 2, 'Dice.png', 3),
-            ('Fantasy Games', 144, 3, 'Castle.png', 3),
-            ('PC vs Console', 0, 2, 'Conversation.png', 3),
-
             ('Movies', 0, 1, 'Clapper-Board.png', 4),
             ('Television', 0, 1, 'Tv-Set.png', 4),
             ('Celebrities', 0, 1, 'Star.png', 4),
-            ('Vintage', 0, 1, 'Record.png', 4),
-            ('Radio', 0, 1, 'Radio.png', 4),
-            ('70s and 80s', 0, 1, 'Cassette.png', 4),
-            ('Hip Hop', 0, 1, 'Ghetto-Blaster.png', 4),
-            ('Divas and Crooners', 0, 1, 'Microphone.png', 4),
-            ('Electronic', 0, 1, 'Synth.png', 4),
-            ('Country', 0, 1, 'Acoustic-Guitar.png', 4),
-            ('Rock', 0, 1, 'Amp.png', 4),
-
-            ('Graduation', 0, 1, 'Graduation-Cap.png', 5),
-            ('Band', 0, 1, 'Trumpet.png', 5),
             ('Class', 0, 1, 'Desk.png', 5),
-            ('Homework', 0, 1, 'Paper.png', 5),
-            ('Tests', 0, 1, 'Pad-&-Pencil.png', 5),
+            ('Radio', 0, 1, 'Radio.png', 4),
             ('Drivers Ed', 0, 1, 'Traffic-cone.png', 5),
-            ('Lunch Lady', 0, 1, 'Chefs-Hat.png', 5),
-            ('Professor', 0, 1, 'Spectacles.png', 5),
-            ('English', 0, 1, 'Book.png', 5),
-            ('Math', 0, 1, 'Calculator.png', 5),
-            ('Biology', 0, 1, 'Monkey.png', 5),
-            ('Chemistry', 0, 1, 'Flask.png', 5),
-
             ('Breakfast', 0, 1, 'Egg.png', 6),
-            ('Fast Food', 0, 1, 'Fries.png', 6),
-            ('Sushi', 0, 1, 'Sushi.png', 6),
-            ('Sweets', 0, 1, 'Ice-Lolly.png', 6),
             ('Dinner', 0, 1, 'Steak.png', 6),
-            ('Noodles', 0, 1, 'Noodles.png', 6),
-            ('Fruit', 0, 1, 'Apple.png', 6),
-            ('Pints', 0, 1, 'Pint.png', 6),
-
-            ('Rocket', 0, 1, 'Rocket.png', 7),
-            ('Inventions', 0, 1, 'Bulb.png', 7),
-            ('Space', 0, 1, 'Shuttle.png', 7),
-            ('UFOs', 0, 1, 'UFO.png', 7),
-
             ('Earth', 0, 1, 'Earth.png', 8),
-            ('Flowers', 0, 1, 'Flower.png', 8),
-            ('Rain', 0, 1, 'Light-Showers.png', 8),
-            ('Trees', 0, 1, 'Pine-Tree.png', 8),
             ('Rainbows', 0, 1, 'Rainbow.png', 8),
-            ('Storms', 0, 1, 'Storm.png', 8),
-            
-            ('Campfire', 0, 1, 'Flame.png', 9),
-            ('Vacation Photos', 0, 1, 'Photo.png', 9),
+            ('Sweets', 0, 1, 'Ice-Lolly.png', 6),
             ('Sunglasses', 0, 1, 'Shades.png', 9),
-            ('Seaside', 0, 1, 'Light-house.png', 9),
-            ('Picnics', 0, 1, 'Melon.png', 9),
-            ('Boating', 0, 1, 'Anchor.png', 9);
+            ('Tests', 0, 1, 'Pad-&-Pencil.png', 5),
+            ('Inventions', 0, 1, 'Bulb.png', 7),
 
+            ('NFL', 0, 1, 'American-Football.png', 2),
+            ('Vintage Games', 16, 1, 'Vintage-Handheld.png', 3),
+            ('Trouble', 0, 1, 'Skull.png', 1),
+            ('Graduation', 0, 1, 'Graduation-Cap.png', 5),
+            ('Fast Food', 0, 1, 'Fries.png', 6),
+            ('Flowers', 0, 1, 'Flower.png', 8),
+            ('Campfire', 0, 1, 'Flame.png', 9),
+            ('Seaside', 0, 1, 'Light-house.png', 9),
+
+            ('Baseball', 16, 1, 'Baseball-Helmet.png', 2),
+            ('Arcade Games', 48, 1, 'Ghost.png', 3),
+            ('70s and 80s', 0, 1, 'Cassette.png', 4),
+            ('Band', 0, 1, 'Trumpet.png', 5),
+            ('Sushi', 0, 1, 'Sushi.png', 6),
+            ('Rocket', 0, 1, 'Rocket.png', 7),
+            ('Vacation Photos', 0, 1, 'Photo.png', 9),
+            ('Vintage', 0, 1, 'Record.png', 4),
+
+            ('Tennis', 48, 1, 'Tennis-Ball.png', 2),
+            ('Board Games', 96, 2, 'Dice.png', 3),
+            ('Hip Hop', 0, 1, 'Ghetto-Blaster.png', 4),
+            ('Homework', 0, 1, 'Paper.png', 5),
+            ('Noodles', 0, 1, 'Noodles.png', 6),
+            ('Pints', 0, 1, 'Pint.png', 6),
+            ('70s', 0, 1, 'Oil-Lamp.png', 1),
+            ('Math', 0, 1, 'Calculator.png', 5),
+            
+            ('Soccer', 96, 2, 'Pitch.png', 2),
+            ('Fantasy Games', 144, 3, 'Castle.png', 3),
+            ('Rock', 0, 1, 'Amp.png', 4),
+            ('Biology', 0, 1, 'Monkey.png', 5),
+            ('Space', 0, 1, 'Shuttle.png', 7),
+            ('Trees', 0, 1, 'Pine-Tree.png', 8),
+            ('Picnics', 0, 1, 'Melon.png', 9),
+            ('Rain', 0, 1, 'Light-Showers.png', 8),
+
+            ('Rugby', 144, 3, 'Football-Goal.png', 2),
+            ('PC vs Console', 0, 2, 'Conversation.png', 3),
+            ('Lunch Lady', 0, 1, 'Chefs-Hat.png', 5),
+            ('Chemistry', 0, 1, 'Flask.png', 5),
+            ('UFOs', 0, 1, 'UFO.png', 7),
+            ('NFL vs Rugby', 0, 2, 'Conversation.png', 2),
+            ('Divas and Crooners', 0, 1, 'Microphone.png', 4),
+            ('Storms', 0, 1, 'Storm.png', 8),
+
+            ('Biking', 0, 1, 'Bike.png', 2),
+            ('Electronic', 0, 1, 'Synth.png', 4),
+            ('English', 0, 1, 'Book.png', 5),
+            ('Skating', 0, 1, 'Skateboard.png', 2),
+            ('Country', 0, 1, 'Acoustic-Guitar.png', 4),
+            ('Professor', 0, 1, 'Spectacles.png', 5),
+            ('Fruit', 0, 1, 'Apple.png', 6),
+            ('Boating', 0, 1, 'Anchor.png', 9);
 
          INSERT INTO verses
             (

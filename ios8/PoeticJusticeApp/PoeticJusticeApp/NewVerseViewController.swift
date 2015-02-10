@@ -16,13 +16,11 @@ class NewVerseViewController: UIViewController {
     @IBOutlet weak var verseTitle: UITextField!
     @IBOutlet weak var friendsOnly: UISwitch!
     @IBOutlet weak var topicButton: UIButton!
+    @IBOutlet var startButton: UIButton!
     
-    // TODO: if the verse it set, update the view
-    // to show the parameters for that verse
     var verseId : Int?
-    
+    var isBusy : Bool = false
     var maxNumPlayers : Int = 2
-    
     var iAdBanner: ADBannerView?
     
     var topic: Topic?{
@@ -65,7 +63,7 @@ class NewVerseViewController: UIViewController {
             self.view.addSubview(adb)
         }
         
-        is_busy = false
+        isBusy = false
     }
     
     override func viewWillDisappear(animated: Bool){
@@ -87,14 +85,27 @@ class NewVerseViewController: UIViewController {
     
     }
     
-    var is_busy : Bool = false
+    func showAlert(title:String, message:String, controller_title:String){
+        // TODO: this shows a warning "Presenting view controllers on detached view controllers is discouraged"
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
     
-    @IBOutlet var startButton: UIButton!
     
     @IBAction func onStart(sender: AnyObject) {
         
-        if (!is_busy) {
-            is_busy = true
+        if let vt = self.verseTitle.text{
+            var vtl = countElements(vt)
+            if (vtl==0) {
+                self.showAlert("Missing title", message: "Please enter a title for the verse", controller_title: "Ok")
+                return
+            }
+        }
+        
+        if (!isBusy) {
+            isBusy = true
          
             var params = Dictionary<String,AnyObject>()
             params["title"] = self.verseTitle.text
@@ -157,7 +168,7 @@ class NewVerseViewController: UIViewController {
                             
                         }
                     } else {
-                        self.is_busy = false
+                        self.isBusy = false
                     }
                     
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -195,7 +206,7 @@ class NewVerseViewController: UIViewController {
         vc.topic = topic
         self.navigationController!.setViewControllers([self.navigationController!.viewControllers[0], vc], animated: true)
         
-        is_busy = false
+        isBusy = false
     }
 
     /*
