@@ -304,7 +304,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func onShowTestResultScreen(sender: AnyObject) {
         var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
         var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
-        controller.verseId = 7
+        controller.verseId = 6 // this is just for testing
         self.navigationController?.pushViewController(controller, animated: true)
     }
     

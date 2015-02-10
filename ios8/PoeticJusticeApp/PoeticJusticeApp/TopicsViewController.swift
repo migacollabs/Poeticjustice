@@ -386,6 +386,12 @@ class TopicsViewController: UIViewController, UserDelegate {
                 
                 if let vid = verseId {
                     
+                    // TODO: Check to see if a verse for this topic and level is complete or
+                    // all the players have added their lines.. and if so
+                    // show the VerseResultsScreenViewController
+                    
+                    
+                    
                     if isOpen{
                         let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
                         vc.topic = topic

@@ -15,12 +15,16 @@ struct VerseResultScreenRec{
     var title = ""
     var owner_id = -1
     var user_ids:[Int] = []
+    var participantCount = -1
     
     // int is pk and position
     var lines_recs = Dictionary<Int,VerseResultScreenLineRec>()
     
     // int is user id
     var players = Dictionary<Int,VerseResultScreenPlayerRec >()
+    
+    // int is user_id and val is line position
+    var votes = Dictionary<Int,Int>()
 }
 
 struct VerseResultScreenLineRec{
@@ -121,6 +125,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     
                     if let verse = verseDict{
                         
+                        println(verse)
+                        
                         if let x = verse["id"] as? Int{
                             vrsr.id = x
                         }
@@ -135,6 +141,36 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         
                         if let x = verse["user_ids"] as? [Int]{
                             vrsr.user_ids = x
+                        }
+                        
+                        if let x = verse["participant_count"] as? Int{
+                            vrsr.participantCount = x
+                        }
+                        
+                        if let x = verse["votes"] as? String{
+                            let voteData = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                            if let votesDict = NSJSONSerialization.JSONObjectWithData(
+                                voteData!, options: NSJSONReadingOptions.MutableContainers,
+                                error: nil) as? NSDictionary{
+                                    //ok safely have a dict of votes
+                                    
+                                    for (player_id, linePos) in votesDict{
+                                        
+                                        var pid:Int? = (player_id as? String)!.toInt()
+                                        if let pid_ = pid{
+                                            // valid playerId int
+                                            var lp:Int? = (linePos as? String)!.toInt()
+                                            if let lp_ = lp{
+                                                vrsr.votes[pid_] = lp_
+                                            }
+                                        }
+                                        
+                                    }
+                            }
+
+                            
+                        }else{
+                            println("no votes yet")
                         }
                         
                     }else{
@@ -254,7 +290,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        println("cellForRowAtIndexPath called\(indexPath.row)")
+
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         if let pc = cell as? PlayerLineTableViewCell{
             
@@ -295,7 +331,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         if let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell{
             if let pc = cell as? PlayerLineTableViewCell{
                 var vlr = self.verseLinesForTable[indexPath.row]
-                println(vlr.player_id)
+                
+                // TODO: set the player's vote at the server
             }
         }
         
@@ -305,11 +342,18 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         println("willSelectRowAtIndexPath clicked " + String(indexPath.row))
         
-        if self.votingClosed{
+        // if every player has voted, don't allow selection
+        if self.verseRec?.votes.count == self.verseRec?.participantCount{
+            self.dispatch_alert("Whoops!", message: "Voting is closed!", controller_title: "Ok!")
             return nil
-        }else{
-            return indexPath
         }
+        
+        // check to see if this player has already voted
+        if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
+            self.dispatch_alert("Whoops!", message: "You've already voted!", controller_title: "Ok!")
+        }
+        
+        return indexPath
         
     }
     
@@ -323,6 +367,31 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - Alerts
+    
+    func dispatch_alert(title:String, message:String, controller_title:String){
+        
+        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+        dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            })
+        })
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
     
 }
 
