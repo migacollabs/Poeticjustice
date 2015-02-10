@@ -228,9 +228,20 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             if (!is_busy) {
                 is_busy = true
-             
+                
                 if (isValidEmail(self.friendEmailAddress.text)) {
-                    if (NetOpers.sharedInstance.user.is_logged_in()) {
+                    
+                    var exists : Bool = false
+                    
+                    for fr in self.friends {
+                        if (fr.email_address==self.friendEmailAddress.text) {
+                            exists = true
+                            is_busy = false
+                            break
+                        }
+                    }
+                    
+                    if (!exists && NetOpers.sharedInstance.user.is_logged_in()) {
                         add_friend(self.friendEmailAddress.text)
                     }
                 } else {
