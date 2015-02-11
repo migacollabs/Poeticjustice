@@ -125,6 +125,95 @@ def update_user_score(request):
         except:
             pass
 
+
+@view_config(
+    name='vote',
+    request_method='GET',
+    context='poeticjustice:contexts.Verses',
+    permission='edit',
+    renderer='json')
+def vote_for_user_line_verse(request):
+    print 'vote_for_user_line_verse called', request
+    try:
+        args = list(request.subpath)
+        # kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
+        kwds = _process_subpath(request.subpath)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                user = User(entity=session.merge(user))
+
+                player_id = kwds['pid']
+                verse_id = kwds['vid']
+                line_id = kwds['lid']
+
+                U, V, LxV = ~User, ~Verse, ~LineXVerse
+                rp = (session.query(U, V, LxV)
+                        .filter(U.id==player_id)
+                        .filter(V.id==verse_id)
+                        .filter(LxV.user_id==U.id)
+                        .filter(LxV.id==line_id)
+                        .filter(LxV.verse_id==V.id)
+                        ).first()
+
+                if rp:
+
+                    player, verse, lineXverse = rp
+
+                    # mark the fact that this user voted
+                    votes_d = json.loads(verse.votes) if verse.votes else {}
+
+                    if not votes_d:
+                        votes_d = {}
+                    if user.id in votes_d:
+                        raise HTTPConflict # this player has already voted
+                    votes_d[user.id] = lineXverse.id
+                    setattr(verse, 'votes', json.dumps(votes_d))
+                    session.add(verse) # commit later
+
+                    # increment the score on the line
+                    lineXverse.line_score += 1 if lineXverse.line_score else 1
+                    session.add(lineXverse)
+
+                    # increment the player's score
+                    player.user_score += 1
+                    session.add(player)
+
+                    session.commit()
+
+
+            return dict(
+                logged_in=auth_usrid,
+                user=user.to_dict()
+            )
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
 @view_config(
     name='removefriend',
     request_method='POST',
@@ -357,28 +446,50 @@ def get_friends(user):
     return {"results":friends}
 
 
-def get_verse(verseId, userId):
+def get_verse(verse_id, user_id):
     lines = list()
     next_index_user_ids = -1
     owner_id = None
     is_complete = False
+    has_all_lines = False
     user_ids = []
-    if verseId:
+    if verse_id:
         with SQLAlchemySessionFactory() as session:
             V, LxV = ~Verse, ~LineXVerse
-            for l in session.query(LxV).filter(LxV.verse_id==verseId).order_by(LxV.id):
+            for l in session.query(LxV).filter(LxV.verse_id==verse_id).order_by(LxV.id):
                 lines.append(l.line_text)
                 last_user_id = l.user_id
 
             # get the next user that is allowed
-            verse = session.query(V).filter(V.id==verseId).first()
+            verse = session.query(V).filter(V.id==verse_id).first()
             owner_id = verse.owner_id
             next_index_user_ids = verse.next_index_user_ids
+
+            # TODO: should check and set complete here?
             is_complete = verse.complete
             user_ids = verse.user_ids
+            has_all_lines = len(lines) == verse.participant_count * 4
 
-    return {"results":{"lines":lines, "next_index_user_ids":next_index_user_ids, 
-        "user_ids":user_ids, "is_complete":is_complete, "verse_id":verseId, "owner_id":owner_id}}
+            votes_d = json.loads(verse.votes) if verse.votes else {}
+            current_user_has_voted = user_id in votes_d
+
+
+    res = dict(
+        results=dict(
+            lines=lines,
+            next_index_user_ids=next_index_user_ids,
+            user_ids=user_ids,
+            is_complete=is_complete,
+            has_all_lines=has_all_lines,
+            current_user_has_voted=current_user_has_voted,
+            verse_id=verse_id,
+            owner_id=owner_id
+            )
+        )
+    print "returning from get_verse", res
+    return res
+
+
 
 
 def get_open_topic_keys(topics):
@@ -433,9 +544,15 @@ def get_active_topics(request):
                     filter(V.owner_id==U.id).\
                     filter(U.id==user.id).\
                     filter(T.id.in_(get_open_topic_keys(topics))):
+
+                    votes_d = json.loads(r[0].votes) if r[0].votes else {}
+                    current_user_has_voted = user.id in votes_d
+
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'mine', "next_index_user_ids":r[0].next_index_user_ids, 
-                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
+                        "current_user_has_voted":current_user_has_voted
+                        }
                 
                 if user.open_verse_ids:
                     # friend topics that i've joined
@@ -446,14 +563,22 @@ def get_active_topics(request):
                         filter(V.id.in_(user.open_verse_ids)).\
                         filter(T.id.in_(get_open_topic_keys(topics))).\
                         filter(V.complete==False):
+
+                        votes_d = json.loads(r[0].votes) if r[0].votes else {}
+                        current_user_has_voted = user.id in votes_d
+
                         if r[0].owner_id in friend_ids:
                             topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                                     "user_name":r[2].user_name, "src":'joined_friend', "next_index_user_ids":r[0].next_index_user_ids, 
-                                    "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
+                                    "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
+                                    "current_user_has_voted":current_user_has_voted
+                                    }
                         else:
                             topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                                     "user_name":r[2].user_name, "src":'joined_world', "next_index_user_ids":r[0].next_index_user_ids, 
-                                    "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
+                                    "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
+                                    "current_user_has_voted":current_user_has_voted
+                                    }
 
                 # friendships
                 for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
@@ -463,9 +588,15 @@ def get_active_topics(request):
                     filter(V.friends_only==True).\
                     filter(V.participant_count<V.max_participants).\
                     filter(T.id.in_(get_open_topic_keys(topics))):
+
+                    votes_d = json.loads(r[0].votes) if r[0].votes else {}
+                    current_user_has_voted = user.id in votes_d
+
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
-                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
+                        "current_user_has_voted":current_user_has_voted
+                        }
 
                 # put global open verses last, so mine and friends show up first in topics view
                 # global open verses and topics that are not mine
@@ -476,9 +607,15 @@ def get_active_topics(request):
                     filter(V.friends_only==False).\
                     filter(V.participant_count<V.max_participants).\
                     filter(T.id.in_(get_open_topic_keys(topics))):
+
+                    votes_d = json.loads(r[0].votes) if r[0].votes else {}
+                    current_user_has_voted = user.id in votes_d
+
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'world', "next_index_user_ids":r[0].next_index_user_ids, 
-                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title}
+                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
+                        "current_user_has_voted":current_user_has_voted
+                        }
 
                 # TODO: optimize this - definitely a better way
                 results = []

@@ -191,6 +191,9 @@ class TopicsViewController: UIViewController, UserDelegate {
     var is_busy : Bool = false
     var has_topics : Bool = false
     
+    // key is verse id
+    var navigatingActiveTopics = Dictionary<Int,Topic>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -390,8 +393,6 @@ class TopicsViewController: UIViewController, UserDelegate {
                     // all the players have added their lines.. and if so
                     // show the VerseResultsScreenViewController
                     
-                    
-                    
                     if isOpen{
                         let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
                         vc.topic = topic
@@ -399,10 +400,18 @@ class TopicsViewController: UIViewController, UserDelegate {
                         navigationController?.pushViewController(vc, animated: true)
                         
                     }else{
-                        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
-                        vc.verseId = vid
-                        vc.topic = topic
-                        navigationController?.pushViewController(vc, animated: true)
+                        
+                        var params = Dictionary<String,AnyObject>()
+                        params["verse_id"]=vid
+                        params["user_id"]=NetOpers.sharedInstance.user.id
+                        
+                        self.navigatingActiveTopics[vid] = topic
+                        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, openNextView)
+                        
+//                        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+//                        vc.verseId = vid
+//                        vc.topic = topic
+//                        navigationController?.pushViewController(vc, animated: true)
                     }
                     
                 } else {
@@ -417,6 +426,121 @@ class TopicsViewController: UIViewController, UserDelegate {
             
         }
         
+    }
+    
+    func openNextView(data: NSData?, response: NSURLResponse?, error: NSError?){
+        
+        
+        let httpResponse = response as NSHTTPURLResponse
+        if httpResponse.statusCode == 200 {
+            if data != nil {
+                
+                println("loading data...")
+                
+                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                    data!, options: NSJSONReadingOptions.MutableContainers,
+                    error: nil) as NSDictionary
+                
+                if let results = jsonResult["results"] as? NSDictionary {
+                    
+                    println(results)
+                    
+                    // TODO: WHY WHY WHY is this a String?!
+                    if let vid_ = results["verse_id"] as? String{
+                        
+                        // this should print out the type of the var
+                        // which happens to be _TtSS, a string
+                        println( "TypeName0 = \(_stdlib_getTypeName(vid_))")
+                        
+                        var vid__:Int? = (vid_ as String).toInt()
+                        if let vid = vid__{
+                            if let topic = self.navigatingActiveTopics[vid]{
+                                
+                                // there is a verse and a topic
+                                if let x = results["is_complete"] as? Bool{
+                                    
+                                    if x == false {
+                                        
+                                        self.dispatch_writeline_controller(vid, topic: topic)
+                                        
+                                    }else{
+                                        
+                                        // not marked complete yet, but have all the
+                                        // expected lines been submitted?
+                                        var has_all_lines = false
+                                        if let x = results["has_all_lines"] as? Bool{
+                                            has_all_lines = x
+                                        }
+                                        
+                                        var line_count = 0
+                                        if let x = results["lines"] as? NSArray{
+                                            line_count = x.count
+                                        }
+                                        
+                                        var user_count = 0
+                                        if let x = results["user_ids"] as? NSArray{
+                                            for user_id in x {
+                                                if user_id as NSString != "-1"{
+                                                    user_count += 1
+                                                }
+                                            }
+                                        }
+                                        
+                                        if has_all_lines || user_count * 4 == line_count{
+                                            
+                                            // ok.. probably not possible the server didnt mark this correctly?
+                                            // show the result screen
+                                            self.dispatch_resultsscreen_controller(vid, topic: topic)
+                                            
+                                        }else{
+                                            
+                                            // truly not complete
+                                            self.dispatch_writeline_controller(vid, topic: topic)
+                                        }
+                                        
+                                    }
+                                    
+                                }else{
+                                    self.dispatch_alert("Error", message: "Bad gameplay state - no is_complete flag", controller_title: "Ok")
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    }else{
+                        self.dispatch_alert("Error", message: "Bad gameplay state - invalid Verse Id", controller_title: "Ok")
+                    }
+                    
+                }
+            }
+        }else{
+            self.dispatch_alert("Error", message: "Cannot get Verse for Topic", controller_title: "Ok")
+        }
+
+    }
+    
+    func dispatch_writeline_controller(verseId:Int, topic:Topic){
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+            vc.verseId = verseId
+            vc.topic = topic
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        })
+        
+    }
+    
+    func dispatch_resultsscreen_controller(verseId:Int, topic:Topic){
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
+            var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
+            controller.verseId = verseId
+            self.navigationController?.pushViewController(controller, animated: true)
+            
+        })
     }
     
     // MARK - Topics
@@ -525,6 +649,8 @@ class TopicsViewController: UIViewController, UserDelegate {
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: nil) as NSDictionary
+                    
+                    println(jsonResult)
                     
                     if let level = jsonResult["user_level"] as? Int {
                         NetOpers.sharedInstance.user.level = level

@@ -9,6 +9,8 @@
 import UIKit
 
 
+let HOSTNAME = NetOpers.sharedInstance.appserver_hostname!
+
 
 struct VerseResultScreenRec{
     var id = -1
@@ -333,6 +335,14 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 var vlr = self.verseLinesForTable[indexPath.row]
                 
                 // TODO: set the player's vote at the server
+                
+                // pid is the user to vote for
+                var pid = vlr.player_id
+                var lid = vlr.position
+                
+                // TODO: this should be a post
+                NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: nil)
+                
             }
         }
         

@@ -294,7 +294,7 @@ PYAELLAC:
                     server_default=text("nextval('line_id_seq')"), 
                     primary_key=True)
         line_text: Column(String)
-        line_score: Column(Integer)
+        line_score: Column(Integer, nullable=False, default=0)
         added: Column(Boolean, default=False, nullable=False)
         user_level: Column(Integer, default=1, nullable=False)
     Relations:
