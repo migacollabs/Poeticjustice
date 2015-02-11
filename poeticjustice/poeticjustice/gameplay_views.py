@@ -305,7 +305,7 @@ def add_user_friend(request):
 
                 if (uxu is None):
                     uxu = session.query(UxU).filter(UxU.user_id==friend.id).\
-                    filter(UxU.friend_id==user.id).first()
+                        filter(UxU.friend_id==user.id).first()
 
                 if (uxu is None):
                     # creating a new friendship
@@ -316,8 +316,9 @@ def add_user_friend(request):
                     # relationship already exists so approve it
                     print 'approving friendship ', uxu.id
                     uxu.approved = True
-                    session.add(uxu)
-                    session.commit()
+                    setattr(uxu, 'approved', True)
+                    uxu = UserXUser(entity=session.merge(uxu))
+                    uxu.save(session=session)
 
                 return get_friends(user)
 
@@ -355,15 +356,18 @@ def get_leaderboard(request):
 
         with SQLAlchemySessionFactory() as session:
             if user_id:
-                
+                has_user = False
                 for r in session.query(U).filter(U.is_active==true).order_by(desc(U.user_score)).limit(14):
+                    if (r.id==user_id):
+                        has_user = True
                     users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id})
 
-                if user.id not in users:
+                if has_user==False:
                     for r in session.query(U).filter(U.id==user_id):
                         users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id})
             else:
                 for r in session.query(U).filter(U.is_active==True).order_by(desc(U.user_score)).limit(15):
+                    print 'user_name', r.user_name
                     users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id})
 
         return {"results":users}
@@ -958,7 +962,6 @@ def save_verse_line(request):
             # mandatory fields every time
             line = request.params["line"]
             verseId = request.params["verse_id"]
-            scoreIncrement = 1 # everyone gets a point for every line
 
             with SQLAlchemySessionFactory() as session:
 
@@ -969,24 +972,12 @@ def save_verse_line(request):
                 if verse.next_index_user_ids==len(verse.user_ids):
                     verse.next_index_user_ids = 0
 
-                # if it's not the first line, update the previous line score for the line
-                # and user
-                lxv = session.query(~LineXVerse).filter((~LineXVerse).verse_id==verse.id).\
-                    order_by(desc((~LineXVerse).id)).first()
-
-                if lxv:
-                    lxv.line_score = lxv.line_score + int(scoreIncrement)
-                    lxv = LineXVerse(entity=session.merge(lxv))
-                    lxv.save(session=session)
-
-                    lastUser = session.query(~User).filter((~User).id==lxv.user_id).first()
-                    lastUser.user_score = lastUser.user_score + int(scoreIncrement)
-                    lastUser = User(entity=session.merge(lastUser))
-                    lastUser.save(session=session)
-
                 # finally, save this users line
-                linexverse = LineXVerse(user_id=user.id, verse_id=verse.id, line_text=line, line_score=0, user_level=user.level)
+                linexverse = LineXVerse(user_id=user.id, verse_id=verse.id, line_text=line, line_score=1, user_level=user.level)
                 linexverse.save(session=session)
+
+                user = User(entity=session.merge(user))
+                user.user_score = user.user_score + 1
 
                 verse = Verse(entity=session.merge(verse))
                 setattr(verse, 'next_index_user_ids', verse.next_index_user_ids)
@@ -994,11 +985,11 @@ def save_verse_line(request):
 
                 if (do_level_up(user)):
                     print 'user is leveling up'
-                    user = User(entity=session.merge(user))
                     user.level = user.level + 1
-                    user.save(session=session)
                 else:
                     print 'user is not leveling up'
+
+                user.save(session=session)
 
                 return get_verse(verse.id, user.id)
 

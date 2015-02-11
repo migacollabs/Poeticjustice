@@ -93,42 +93,6 @@ Or maybe in a train, or better yet a plane //
                         <action selector="sendLine:" destination="-1" eventType="touchUpInside" id="kfq-jd-APW"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4iP-Nd-z1k">
-                    <rect key="frame" x="153" y="441" width="45" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="45" id="2p1-zm-T1Y"/>
-                    </constraints>
-                    <state key="normal" image="plus_24.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <variation key="widthClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="697" y="388" width="30" height="30"/>
-                    </variation>
-                    <connections>
-                        <action selector="incrementScore:" destination="-1" eventType="touchUpInside" id="mnN-Gm-rH6"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWL-DL-QRA">
-                    <rect key="frame" x="102" y="441" width="42" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="42" id="tc4-4f-iZx"/>
-                    </constraints>
-                    <state key="normal" image="minus_24.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <variation key="widthClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="646" y="388" width="30" height="30"/>
-                    </variation>
-                    <connections>
-                        <action selector="decrementScore:" destination="-1" eventType="touchUpInside" id="xAE-Bw-Lte"/>
-                    </connections>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apply Points:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFo-3k-EIO">
-                    <rect key="frame" x="8" y="441" width="86" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UG0-Nh-75Q">
                     <rect key="frame" x="462" y="438" width="130" height="24"/>
                     <constraints>
@@ -151,18 +115,11 @@ Or maybe in a train, or better yet a plane //
                 <constraint firstItem="kTl-ux-cd3" firstAttribute="centerY" secondItem="eDz-lW-Y85" secondAttribute="centerY" id="6Hk-M5-dMp"/>
                 <constraint firstItem="kTl-ux-cd3" firstAttribute="leading" secondItem="nht-Ol-Vn8" secondAttribute="leading" id="8U6-U0-tDA"/>
                 <constraint firstItem="UG0-Nh-75Q" firstAttribute="trailing" secondItem="nht-Ol-Vn8" secondAttribute="trailing" id="DUp-v5-zDx"/>
-                <constraint firstItem="JFo-3k-EIO" firstAttribute="bottom" secondItem="UG0-Nh-75Q" secondAttribute="bottom" id="EkL-xD-all"/>
-                <constraint firstItem="4iP-Nd-z1k" firstAttribute="leading" secondItem="kWL-DL-QRA" secondAttribute="trailing" constant="9" id="LJL-ma-o0g"/>
                 <constraint firstItem="sOv-vj-Wiz" firstAttribute="leading" secondItem="eDz-lW-Y85" secondAttribute="trailing" constant="8" symbolic="YES" id="MpE-Ho-CgE"/>
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="sOv-vj-Wiz" secondAttribute="trailing" id="NFI-bX-SUt"/>
-                <constraint firstItem="kWL-DL-QRA" firstAttribute="leading" secondItem="JFo-3k-EIO" secondAttribute="trailing" constant="8" symbolic="YES" id="OPd-dp-ktt"/>
-                <constraint firstItem="4iP-Nd-z1k" firstAttribute="top" secondItem="kWL-DL-QRA" secondAttribute="top" id="Oul-A5-E3J"/>
                 <constraint firstItem="eDz-lW-Y85" firstAttribute="leading" secondItem="kTl-ux-cd3" secondAttribute="trailing" constant="8" symbolic="YES" id="UqC-XY-XOc"/>
                 <constraint firstItem="UG0-Nh-75Q" firstAttribute="top" secondItem="nht-Ol-Vn8" secondAttribute="bottom" constant="5" id="VFO-Hg-Dyj"/>
-                <constraint firstItem="JFo-3k-EIO" firstAttribute="top" secondItem="nht-Ol-Vn8" secondAttribute="bottom" constant="8" symbolic="YES" id="Xhh-nB-TaK"/>
                 <constraint firstItem="eDz-lW-Y85" firstAttribute="centerY" secondItem="sOv-vj-Wiz" secondAttribute="centerY" id="bjx-V1-Ihs"/>
-                <constraint firstItem="kWL-DL-QRA" firstAttribute="top" secondItem="JFo-3k-EIO" secondAttribute="top" id="pIf-U9-dqv"/>
-                <constraint firstItem="JFo-3k-EIO" firstAttribute="leading" secondItem="nht-Ol-Vn8" secondAttribute="leading" id="pKI-sT-ppF"/>
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="sOv-vj-Wiz" secondAttribute="bottom" constant="20" id="rde-FT-uc1"/>
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="top" secondItem="kTl-ux-cd3" secondAttribute="bottom" constant="15" id="uaI-VM-lGA"/>
                 <constraint firstItem="nht-Ol-Vn8" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="vwY-pX-FPf"/>
@@ -174,7 +131,5 @@ Or maybe in a train, or better yet a plane //
         <image name="Acoustic-Guitar.png" width="48" height="48"/>
         <image name="arrow_24.png" width="24" height="24"/>
         <image name="delete_24.png" width="24" height="24"/>
-        <image name="minus_24.png" width="24" height="24"/>
-        <image name="plus_24.png" width="24" height="24"/>
     </resources>
 </document>

@@ -36,8 +36,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     @IBOutlet var verseView: UITextView!
     
-    // TODO: is there a way to reset this?
-    var score : Int = 1;
     var line : String = "";
     var verseId : Int = 0;
     var should_begin_banner = false
@@ -177,14 +175,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func decrementScore(sender: AnyObject) {
-        score = 0;
-    }
-    
-    @IBAction func incrementScore(sender: AnyObject) {
-        score = 2;
-    }
-    
     private var verse : VerseRec = VerseRec()
     
     func loadVerse(data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -209,7 +199,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                     var lines : [String] = []
                     */
                     
-                    if let id = results["id"] as? Int {
+                    if let id = results["verse_id"] as? Int {
                         self.verse.id = id
                     }
                     
@@ -283,7 +273,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     func playButtonSound(){
         var error:NSError?
         
-        if let path = NSBundle.mainBundle().pathForResource("Typing", ofType: "wav") {
+        if let path = NSBundle.mainBundle().pathForResource("Pencil", ofType: "wav") {
             audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path), fileTypeHint: "wav", error: &error)
             
             if let sound = audioPlayer {
@@ -308,7 +298,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     }
 
     @IBOutlet var sendButton: UIButton!
-    @IBOutlet var scoreView: UIView!
     
     @IBOutlet var setLine: UITextField!
     
@@ -323,8 +312,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
             
             updateSendPlaceholder()
             
-            println("Clicked send with score " + String(score) + " " +
-                setLine.text)
+            println("Clicked send " + setLine.text)
             
             playButtonSound()
             
@@ -332,7 +320,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
             params["topic_id"]=topic?.id
             params["line"]=setLine.text
             params["verse_id"]=verseId
-            params["score_increment"]=score
             
             println("hitting saveline url")
             println(params)
