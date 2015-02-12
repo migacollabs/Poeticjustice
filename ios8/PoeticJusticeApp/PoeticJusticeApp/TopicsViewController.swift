@@ -455,12 +455,11 @@ class TopicsViewController: UIViewController, UserDelegate {
                     
                     println(results)
                     
-                    // TODO: WHY WHY WHY is this a String?!
-                    if let vid_ = results["verse_id"] as? String{
+                    if let vid = results["verse_id"] as? Int{
                         
-                        var vid__:Int? = (vid_ as String).toInt()
+                        //var vid__:Int? = (vid_ as String).toInt()
                                                 
-                        if let vid = vid__{
+                        //if let vid = vid__{
                             if let topic = self.navigatingActiveTopics[vid]{
                                 
                                 // there is a verse and a topic
@@ -511,7 +510,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                                 
                             }
                             
-                        }
+                        //}
                         
                     }else{
                         self.dispatch_alert("Error", message: "Bad gameplay state - invalid Verse Id", controller_title: "Ok")

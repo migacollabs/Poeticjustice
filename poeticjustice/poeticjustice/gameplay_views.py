@@ -458,6 +458,7 @@ def get_verse(verse_id, user_id):
     has_all_lines = False
     user_ids = []
     if verse_id:
+        verse_id = int(verse_id)
         with SQLAlchemySessionFactory() as session:
             V, LxV = ~Verse, ~LineXVerse
             for l in session.query(LxV).filter(LxV.verse_id==verse_id).order_by(LxV.id):

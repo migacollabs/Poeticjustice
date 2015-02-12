@@ -18,6 +18,7 @@ struct VerseRec {
     var lines : [String] = []
     var is_complete : Bool = false
     var user_ids : [Int] = []
+    var has_all_lines: Bool = false
     
     func is_loaded() -> Bool {
         return id>0
@@ -203,6 +204,15 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                         self.verse.id = id
                     }
                     
+                    if let hal = results["has_all_lines"] as? Bool {
+                        if hal && self.verse.id > 0{
+                            if let t = self.topic{
+                                self.dispatch_resultsscreen_controller(self.verse.id, topic: t)
+                                return // bail out
+                            }
+                        }
+                    }
+                    
                     if let nid = results["next_index_user_ids"] as? Int {
                         self.verse.next_index_user_ids = nid
                     }
@@ -219,9 +229,11 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                         self.verse.is_complete = ic
                     }
                     
+                    
                     if let ui = results["user_ids"] as? [Int] {
                         self.verse.user_ids = ui
                     }
+                    
                     
                     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                         dispatch_async(dispatch_get_main_queue(),{
@@ -340,6 +352,18 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    func dispatch_resultsscreen_controller(verseId:Int, topic:Topic){
+        dispatch_async(dispatch_get_main_queue(), {
+            
+            var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
+            var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
+            controller.verseId = verseId
+            self.navigationController?.pushViewController(controller, animated: true)
+            
+        })
+    }
     
     // MARK: - Ad Banner
     
