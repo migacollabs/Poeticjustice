@@ -160,17 +160,11 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                         
                                         var pid:Int? = (player_id as? String)!.toInt()
                                         if let pid_ = pid{
-                                            // valid playerId int
-                                            var lp:Int? = (linePos as? String)!.toInt()
-                                            if let lp_ = lp{
-                                                vrsr.votes[pid_] = lp_
-                                            }
+                                            vrsr.votes[pid_] = linePos as? Int
                                         }
-                                        
                                     }
                             }
 
-                            
                         }else{
                             println("no votes yet")
                         }
@@ -204,19 +198,28 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     if let playersArray = results["user_data"] as? NSArray{
                         for player in playersArray as NSArray{
                             
+                            println(player)
+                            
                             var pid = player[0] as Int
                             var usrnm = player[1] as String
                             
-                            var avnStr = player[2] as String
-                            if !avnStr.isEmpty{
-                                let upData = (avnStr as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                            var avnStr:String? = player[2] as? String
+                            if avnStr == nil{
+                                avnStr = ""
+                            }
+                            
+                            if !avnStr!.isEmpty{
+                                let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                                 let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                     upData!, options: NSJSONReadingOptions.MutableContainers,
                                     error: nil) as NSDictionary
-                                avnStr = userPrefs["avatar_name"] as String
+                                avnStr = userPrefs["avatar_name"] as? String
+                            }else{
+                                avnStr = "avatar_mexican_guy.png"
                             }
                             
-                            vrsr.players[pid] = VerseResultScreenPlayerRec(user_id: pid, user_name: usrnm, avatar_name:avnStr)
+                            vrsr.players[pid] = VerseResultScreenPlayerRec(
+                                user_id: pid, user_name: usrnm, avatar_name:avnStr!)
                             
                         }
                         

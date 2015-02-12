@@ -453,15 +453,19 @@ class TopicsViewController: UIViewController, UserDelegate {
                         println( "TypeName0 = \(_stdlib_getTypeName(vid_))")
                         
                         var vid__:Int? = (vid_ as String).toInt()
+                        
+                        println(vid__)
+                        
                         if let vid = vid__{
                             if let topic = self.navigatingActiveTopics[vid]{
                                 
                                 // there is a verse and a topic
                                 if let x = results["is_complete"] as? Bool{
                                     
-                                    if x == false {
+                                    if x == true {
                                         
-                                        self.dispatch_writeline_controller(vid, topic: topic)
+                                        self.dispatch_resultsscreen_controller(vid, topic: topic)
+                                        
                                         
                                     }else{
                                         
@@ -480,13 +484,13 @@ class TopicsViewController: UIViewController, UserDelegate {
                                         var user_count = 0
                                         if let x = results["user_ids"] as? NSArray{
                                             for user_id in x {
-                                                if user_id as NSString != "-1"{
+                                                if user_id as Int != -1{
                                                     user_count += 1
                                                 }
                                             }
                                         }
                                         
-                                        if has_all_lines || user_count * 4 == line_count{
+                                        if has_all_lines || user_count * 4 >= line_count{
                                             
                                             // ok.. probably not possible the server didnt mark this correctly?
                                             // show the result screen

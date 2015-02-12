@@ -181,7 +181,7 @@ def vote_for_user_line_verse(request):
                     setattr(verse, 'votes', json.dumps(votes_d))
                     session.add(verse) # commit later
 
-                    # increment the score on the line
+                    # increment lineXverse multiply previous by 2
                     lineXverse.line_score += 1 if lineXverse.line_score else 1
                     session.add(lineXverse)
 
@@ -1350,7 +1350,7 @@ def get_verse_to_view(verse_id, session):
                     ).all()
 
             # users [(id, email_address)]
-            users = [(row[0], row[1], row[2]) for row in rp]
+            users = [(row[0], row[1], row[2] if row[0] else "") for row in rp]
             verse = Verse(entity=verse)
 
         else:
