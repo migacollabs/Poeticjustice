@@ -54,7 +54,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     
     var avatar = Avatar()
     
-    var votingClosed = false
+    var stillVoting = false
     
     var verseId: Int? {
         didSet {
@@ -273,7 +273,29 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     }
                 }
                 
+                
                 self.tableView.reloadData()
+                
+                // check if this user has voted on this verse and select the row
+                if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
+
+                    var i = 0
+                    var foundMatch = false
+                    for vlft in self.verseLinesForTable{
+                        if vlft.position == self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
+                            foundMatch = true
+                            break
+                        }else{
+                            i++
+                        }
+                    }
+                    
+                    if foundMatch{
+                        let indexPath = NSIndexPath(forRow:i,inSection:0)
+                        self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+                    }
+                    
+                }
                 
             }
         }
@@ -343,8 +365,15 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 var pid = vlr.player_id
                 var lid = vlr.position
                 
+                self.stillVoting = true
+                
                 // TODO: this should be a post
-                NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: nil)
+                NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                    
+                    self.stillVoting = false
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    
+                })
                 
             }
         }
@@ -355,6 +384,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         println("willSelectRowAtIndexPath clicked " + String(indexPath.row))
         
+        if self.stillVoting{
+            return nil
+        }
+        
         // if every player has voted, don't allow selection
         if self.verseRec?.votes.count == self.verseRec?.participantCount{
             self.dispatch_alert("Whoops!", message: "Voting is closed!", controller_title: "Ok!")
@@ -364,6 +397,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         // check to see if this player has already voted
         if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
             self.dispatch_alert("Whoops!", message: "You've already voted!", controller_title: "Ok!")
+            return nil
         }
         
         return indexPath

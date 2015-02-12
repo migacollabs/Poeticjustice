@@ -458,14 +458,8 @@ class TopicsViewController: UIViewController, UserDelegate {
                     // TODO: WHY WHY WHY is this a String?!
                     if let vid_ = results["verse_id"] as? String{
                         
-                        // this should print out the type of the var
-                        // which happens to be _TtSS, a string
-                        println( "TypeName0 = \(_stdlib_getTypeName(vid_))")
-                        
                         var vid__:Int? = (vid_ as String).toInt()
-                        
-                        println(vid__)
-                        
+                                                
                         if let vid = vid__{
                             if let topic = self.navigatingActiveTopics[vid]{
                                 
@@ -500,15 +494,12 @@ class TopicsViewController: UIViewController, UserDelegate {
                                             }
                                         }
                                         
-                                        if has_all_lines || user_count * 4 >= line_count{
+                                        if (has_all_lines || (line_count >= user_count * 4 && user_count > 1)){
                                             
-                                            // ok.. probably not possible the server didnt mark this correctly?
-                                            // show the result screen
                                             self.dispatch_resultsscreen_controller(vid, topic: topic)
                                             
                                         }else{
                                             
-                                            // truly not complete
                                             self.dispatch_writeline_controller(vid, topic: topic)
                                         }
                                         

@@ -182,11 +182,11 @@ def vote_for_user_line_verse(request):
                     session.add(verse) # commit later
 
                     # increment lineXverse multiply previous by 2
-                    lineXverse.line_score += 1 if lineXverse.line_score else 1
+                    lineXverse.line_score *= 2 if lineXverse.line_score and lineXverse.line_score > 0 else 1
                     session.add(lineXverse)
 
                     # increment the player's score
-                    player.user_score += 1
+                    player.user_score += lineXverse.line_score
                     session.add(player)
 
                     session.commit()
