@@ -42,6 +42,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
+        updateUserLabel()
         is_busy = false
     }
     
@@ -65,6 +66,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.navigationController?.navigationBar.topItem?.title = ""
         } else {
             self.userLabel.text = "You are not signed in"
+            
+            title = "Home"
+            self.navigationController?.navigationBar.topItem?.title = ""
         }
     }
     

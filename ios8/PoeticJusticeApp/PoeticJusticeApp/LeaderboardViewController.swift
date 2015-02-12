@@ -88,6 +88,8 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                             lr.user_score = us
                         }
                         
+                        println(lr.user_name)
+                        
                         self.leaderboard_users.append(lr)
                     }
                     
@@ -116,7 +118,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return " "
+        return ""
     }
     
     func tableView(tableView : UITableView, numberOfRowsInSection section : Int) -> Int {
@@ -130,7 +132,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
             cell.textLabel?.text = String(lur.user_score) + " - " + lur.user_name
 
             if (lur.user_id==NetOpers.sharedInstance.user.id) {
-                cell.contentView.backgroundColor = UIColor.yellowColor()
+                cell.contentView.backgroundColor = UIColor.lightGrayColor()
             } else {
                 cell.contentView.backgroundColor = UIColor.whiteColor()
             }

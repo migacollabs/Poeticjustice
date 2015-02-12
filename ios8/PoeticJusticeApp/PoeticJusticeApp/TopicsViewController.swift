@@ -251,6 +251,16 @@ class TopicsViewController: UIViewController, UserDelegate {
         // click on the tab, so refresh
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             
+            var avatarView : UIImageView = UIImageView()
+            avatarView.image = UIImage(named: NetOpers.sharedInstance.user.avatarName)
+            avatarView.frame = CGRect(
+                x: 720,
+                y: 890,
+                width: 123,
+                height: 127
+            )
+            self.topicScrollView.addSubview(avatarView)
+            
             NetOpers.sharedInstance.user.addUserDelegate(self)
             
             self.fetchActiveTopics()
