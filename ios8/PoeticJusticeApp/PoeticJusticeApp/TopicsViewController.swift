@@ -213,6 +213,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     var lastUserEmailAddress : String = ""
     
     private var avatarView : UIImageView = UIImageView()
+    private var badgeView : UIImageView = UIImageView()
     
     var is_busy : Bool = false
     var has_topics : Bool = false
@@ -235,6 +236,7 @@ class TopicsViewController: UIViewController, UserDelegate {
             }
         }
         
+        self.avatarView.addSubview(badgeView)
         self.view.addSubview(avatarView)
         
         lastUserEmailAddress = NetOpers.sharedInstance.user.email_address
@@ -262,7 +264,17 @@ class TopicsViewController: UIViewController, UserDelegate {
             height: 127
         )
         
+        // positioned in the avatar view
+        badgeView.frame = CGRect(
+            x: 30,
+            y: 97,
+            width: 24,
+            height: 24
+        )
+        
         avatarView.image = UIImage(named: NetOpers.sharedInstance.user.avatarName)
+        
+        badgeView.image = UIImage(named: "lvl_" + String(NetOpers.sharedInstance.user.level) + ".png")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -341,6 +353,7 @@ class TopicsViewController: UIViewController, UserDelegate {
             
             if (refresh) {
                 if (!is_busy) {
+                    updateAvatar(UIScreen.mainScreen().bounds.size);
                     fetchActiveTopics()
                     refreshed = true
                 }
