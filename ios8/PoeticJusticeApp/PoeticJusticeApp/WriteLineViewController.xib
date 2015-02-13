@@ -8,6 +8,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
                 <outlet property="cancelButton" destination="UG0-Nh-75Q" id="Cdd-PE-nCd"/>
+                <outlet property="player1Avatar" destination="YRm-xm-AAV" id="oty-Zo-S5e"/>
+                <outlet property="player2Avatar" destination="glD-PP-aSL" id="bzb-Nh-a3q"/>
+                <outlet property="player3Avatar" destination="kIV-lE-03q" id="dzI-b4-lFN"/>
+                <outlet property="player4Avatar" destination="rzQ-1X-Nl5" id="C4d-bg-R6e"/>
+                <outlet property="player5Avatar" destination="ukL-33-D9t" id="GRs-Sb-SYj"/>
                 <outlet property="sendButton" destination="sOv-vj-Wiz" id="5Gt-Bw-QHD"/>
                 <outlet property="setLine" destination="eDz-lW-Y85" id="g2m-Of-QIG"/>
                 <outlet property="topicButton" destination="kTl-ux-cd3" id="vLW-Gs-PoM"/>
@@ -20,7 +25,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nht-Ol-Vn8">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nht-Ol-Vn8">
                     <rect key="frame" x="8" y="123" width="584" height="310"/>
                     <color key="backgroundColor" white="0.97039473684210542" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -107,6 +112,21 @@ Or maybe in a train, or better yet a plane //
                         <action selector="onCancel:" destination="-1" eventType="touchUpInside" id="H3Q-Yq-2Rp"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YRm-xm-AAV">
+                    <rect key="frame" x="8" y="441" width="54" height="54"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="glD-PP-aSL">
+                    <rect key="frame" x="70" y="441" width="54" height="54"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kIV-lE-03q">
+                    <rect key="frame" x="132" y="441" width="54" height="54"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rzQ-1X-Nl5">
+                    <rect key="frame" x="194" y="441" width="54" height="54"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ukL-33-D9t">
+                    <rect key="frame" x="256" y="441" width="54" height="54"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

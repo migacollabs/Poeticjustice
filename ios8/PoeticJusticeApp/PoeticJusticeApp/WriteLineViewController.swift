@@ -20,6 +20,9 @@ struct VerseRec {
     var user_ids : [Int] = []
     var has_all_lines: Bool = false
     
+    // int is user id
+    var players = Dictionary<Int,PlayerRec >()
+    
     func is_loaded() -> Bool {
         return id>0
     }
@@ -31,6 +34,14 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     @IBOutlet weak var topicButton: UIButton!
     
     var maxNumPlayers : Int = 2
+    
+    
+    @IBOutlet weak var player1Avatar: UIImageView!
+    @IBOutlet weak var player2Avatar: UIImageView!
+    @IBOutlet weak var player3Avatar: UIImageView!
+    @IBOutlet weak var player4Avatar: UIImageView!
+    @IBOutlet weak var player5Avatar: UIImageView!
+    
     
     @IBOutlet var cancelButton: UIButton!
     var iAdBanner: ADBannerView?
@@ -232,6 +243,38 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                     
                     if let ui = results["user_ids"] as? [Int] {
                         self.verse.user_ids = ui
+                    }
+                    
+                    if let playersArray = results["user_data"] as? NSArray{
+                        for player in playersArray as NSArray{
+                            
+                            println(player)
+                            
+                            var pid = player[0] as Int
+                            var usrnm = player[1] as String
+                            
+                            var avnStr:String? = player[2] as? String
+                            if avnStr == nil{
+                                avnStr = ""
+                            }
+                            
+                            if !avnStr!.isEmpty{
+                                let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                                let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                    upData!, options: NSJSONReadingOptions.MutableContainers,
+                                    error: nil) as NSDictionary
+                                avnStr = userPrefs["avatar_name"] as? String
+                            }else{
+                                avnStr = "avatar_mexican_guy.png"
+                            }
+                            
+                            verse.players[pid] = PlayerRec(
+                                user_id: pid, user_name: usrnm, avatar_name:avnStr!)
+                            
+                        }
+                        
+                    }else{
+                        println("corrupt user_data")
                     }
                     
                     
