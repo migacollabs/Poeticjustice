@@ -315,6 +315,7 @@ PYAELLAC:
         title: Column(String)
         lines_record: Column(Text)
         players_record: Column(Text)
+        level: Column(Integer)
     Options:
         - add_tr_standard_mod.sql.mako
 
