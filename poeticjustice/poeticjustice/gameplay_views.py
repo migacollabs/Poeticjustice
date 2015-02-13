@@ -451,22 +451,44 @@ def get_friends(user):
 
 
 def get_verse(verse_id, user_id):
+
+    print 'get_verse called', verse_id, user_id
+
     lines = list()
+    lines_d = OrderedDict()
     next_index_user_ids = -1
     owner_id = None
     is_complete = False
     has_all_lines = False
-    user_ids = []
+    user_ids = {}
+    users = None
+    verse = None
+    current_user_has_voted = False
+
     if verse_id:
         verse_id = int(verse_id)
-        with SQLAlchemySessionFactory() as session:
-            V, LxV = ~Verse, ~LineXVerse
-            for l in session.query(LxV).filter(LxV.verse_id==verse_id).order_by(LxV.id):
-                lines.append(l.line_text)
-                last_user_id = l.user_id
 
-            # get the next user that is allowed
-            verse = session.query(V).filter(V.id==verse_id).first()
+        with SQLAlchemySessionFactory() as session:
+
+            # V, LxV = ~Verse, ~LineXVerse
+            # for l in session.query(LxV).filter(LxV.verse_id==verse_id).order_by(LxV.id):
+            #     lines.append(l.line_text)
+            #     last_user_id = l.user_id
+
+            U, V, LxV = ~User, ~Verse, ~LineXVerse
+            for row in session.query(V, LxV) \
+                    .filter(V.id==verse_id) \
+                    .filter(LxV.verse_id==verse_id) \
+                    .order_by(LxV.id):
+                lines.append(row.LineXVerse.line_text)
+                lines_d[row.LineXVerse.id] = (row.LineXVerse.user_id, row.LineXVerse.line_text)
+                if not verse:
+                    verse = row.Verse
+
+            if not verse:
+                # no verse obj yet, because there are no lines yet
+                verse = session.query(V).filter(V.id==verse_id).first()
+
             owner_id = verse.owner_id
             next_index_user_ids = verse.next_index_user_ids
 
@@ -477,6 +499,19 @@ def get_verse(verse_id, user_id):
 
             votes_d = json.loads(verse.votes) if verse.votes else {}
             current_user_has_voted = user_id in votes_d
+
+            # get user data
+            sq = (session.query(U.id)
+                    .filter(U.id.in_(verse.user_ids))
+                    ).subquery()
+            rp = (session.query(U.id, U.user_name, U.user_prefs)
+                    .filter(U.id.in_(sq))
+                    ).all()
+
+            # users [(id, email_address, user_prefs jsonable str)]
+            # let the client unserialize the json if they need it
+            users = [(row[0], row[1], row[2] if row[0] else "") for row in rp]
+
     else:
         verse_id = -1
 
@@ -484,8 +519,10 @@ def get_verse(verse_id, user_id):
     res = dict(
         results=dict(
             lines=lines,
+            lines_d=lines_d,
             next_index_user_ids=next_index_user_ids,
             user_ids=user_ids,
+            user_data=users,
             is_complete=is_complete,
             has_all_lines=has_all_lines,
             current_user_has_voted=current_user_has_voted,
@@ -726,7 +763,7 @@ def get_topics(request):
     renderer='json')
 def get_user_active_verses(request):
     try:
-        print 'saving new line for verse'
+        print 'get_user_active_verses'
         auth_usrid = authenticated_userid(request)
         user, user_type_names, user_type_lookup = (
             get_current_rbac_user(auth_usrid,

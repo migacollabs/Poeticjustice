@@ -16,6 +16,9 @@ from mako.template import Template
 #amazon s3 support
 from boto.s3.connection import S3Connection, Location
 from boto.s3.key import Key
+
+from geoip import geolite2
+
 # pyaella imports
 from pyaella import *
 from pyaella import dinj
@@ -396,6 +399,17 @@ def login_post(request):
         device_token = request.params['device_token'] if 'device_token' in request.params else None
         device_type = request.params['device_type'] if 'device_type' in request.params else None
 
+        user_country = "AAA"
+        try:
+            if request.remote_addr:
+                geo_match = geolite2.lookup("97.124.28.77")
+                if geo_match:
+                    user_country = geo_match.country
+        except:
+            pass
+
+        print 'USER_COUNTRY', user_country
+
         if not device_token and device_type != "DEVICETYPEBROWSER":
             raise HTTPForbidden
 
@@ -500,7 +514,7 @@ def login_post(request):
                             email_address=login,
                             password=sha512("NOPASSWORD").hexdigest(),
                             user_name=request.params['user_name'] if 'user_name' in request.params else None,
-                            country_code=request.params['country_code'] if 'country_code' in request.params else "USA")
+                            country_code=user_country)
 
                         user_obj.save(session=session)
 

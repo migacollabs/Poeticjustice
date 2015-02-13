@@ -12,7 +12,6 @@ import AVFoundation
 
 class NewVerseViewController: UIViewController {
     
-    
     @IBOutlet weak var verseTitle: UITextField!
     @IBOutlet weak var friendsOnly: UISwitch!
     @IBOutlet weak var topicButton: UIButton!
@@ -21,6 +20,8 @@ class NewVerseViewController: UIViewController {
     var verseId : Int?
     var isBusy : Bool = false
     var maxNumPlayers : Int = 2
+    var audioPlayer : AVAudioPlayer?
+    
     var iAdBanner: ADBannerView?
     
     var topic: Topic?{
@@ -177,8 +178,6 @@ class NewVerseViewController: UIViewController {
         }
     
     }
-    
-    var audioPlayer : AVAudioPlayer?
     
     func playButtonSound(){
         var error:NSError?
