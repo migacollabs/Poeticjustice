@@ -19,7 +19,7 @@ from boto.s3.connection import S3Connection, Location
 from boto.s3.key import Key
 
 # sqlalchemy
-from sqlalchemy import or_, desc, and_
+from sqlalchemy import or_, desc, and_, not_
 from  sqlalchemy.sql.expression import func
 
 # pyaella imports
@@ -504,6 +504,19 @@ def get_open_topic_keys(topics):
             keys.append(k)
     return keys
 
+
+def get_verse_history_ids(user, min_level):
+    # return all completed verse ids that have been completed
+    # for the current level and below
+    completed = []
+    with SQLAlchemySessionFactory() as session:
+        UVH = ~UserVerseHistory
+        for r in session.query(UVH).filter(UVH.player_id==user.id).\
+            filter(UVH.level<=min_level):
+            completed.append(r.verse_id)
+    return completed
+
+
 @view_config(
     name='active-topics',
     request_method='GET',
@@ -527,7 +540,8 @@ def get_active_topics(request):
 
             friend_ids = []
             for f in get_friends(user)["results"]:
-                friend_ids.append(f["friend_id"])
+                if (f["approved"]==True):
+                    friend_ids.append(f["friend_id"])
 
             with SQLAlchemySessionFactory() as session:
                 topics = {}
@@ -541,22 +555,27 @@ def get_active_topics(request):
                 for i in range(1, (current_lvl+1)):
                     topics[i]=None
 
+                # TODO: need to figure out a way to return fresh new topic/verses when the user
+                # levels up - check for verses not in UserVerseHistory
+                # only for lower levels...
+                verse_history_ids = get_verse_history_ids(user, (user.level-1))
+
                 V, T, U, UxU= ~Verse, ~VerseCategoryTopic, ~User, ~UserXUser
 
                 # topics that are mine
                 for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
-                    filter(V.complete==False).\
                     filter(V.owner_id==U.id).\
                     filter(U.id==user.id).\
+                    filter(not_(V.id.in_(verse_history_ids))).\
                     filter(T.id.in_(get_open_topic_keys(topics))):
 
                     votes_d = json.loads(r[0].votes) if r[0].votes else {}
-                    current_user_has_voted = user.id in votes_d
+                    current_user_has_voted = str(user.id) in votes_d.keys()
 
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'mine', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                        "current_user_has_voted":current_user_has_voted
+                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
                         }
                 
                 if user.open_verse_ids:
@@ -567,59 +586,59 @@ def get_active_topics(request):
                         filter(U.id!=user.id).\
                         filter(V.id.in_(user.open_verse_ids)).\
                         filter(T.id.in_(get_open_topic_keys(topics))).\
-                        filter(V.complete==False):
+                        filter(not_(V.id.in_(verse_history_ids))):
 
                         votes_d = json.loads(r[0].votes) if r[0].votes else {}
-                        current_user_has_voted = user.id in votes_d
+                        current_user_has_voted = str(user.id) in votes_d.keys()
 
                         if r[0].owner_id in friend_ids:
                             topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                                     "user_name":r[2].user_name, "src":'joined_friend', "next_index_user_ids":r[0].next_index_user_ids, 
                                     "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                                    "current_user_has_voted":current_user_has_voted
+                                    "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
                                     }
                         else:
                             topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                                     "user_name":r[2].user_name, "src":'joined_world', "next_index_user_ids":r[0].next_index_user_ids, 
                                     "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                                    "current_user_has_voted":current_user_has_voted
+                                    "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
                                     }
 
                 # friendships
                 for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
                     filter(V.owner_id.in_(friend_ids)).\
-                    filter(V.complete==False).\
                     filter(U.id!=user.id).\
                     filter(V.friends_only==True).\
                     filter(V.participant_count<V.max_participants).\
-                    filter(T.id.in_(get_open_topic_keys(topics))):
+                    filter(T.id.in_(get_open_topic_keys(topics))).\
+                    filter(not_(V.id.in_(verse_history_ids))):
 
                     votes_d = json.loads(r[0].votes) if r[0].votes else {}
-                    current_user_has_voted = user.id in votes_d
+                    current_user_has_voted = str(user.id) in votes_d.keys()
 
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                        "current_user_has_voted":current_user_has_voted
+                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
                         }
 
                 # put global open verses last, so mine and friends show up first in topics view
                 # global open verses and topics that are not mine
                 for r in session.query(V, T, U).filter(V.verse_category_topic_id==T.id).\
-                    filter(V.complete==False).\
                     filter(V.owner_id==U.id).\
                     filter(U.id!=user.id).\
                     filter(V.friends_only==False).\
                     filter(V.participant_count<V.max_participants).\
-                    filter(T.id.in_(get_open_topic_keys(topics))):
+                    filter(T.id.in_(get_open_topic_keys(topics))).\
+                    filter(not_(V.id.in_(verse_history_ids))):
 
                     votes_d = json.loads(r[0].votes) if r[0].votes else {}
-                    current_user_has_voted = user.id in votes_d
+                    current_user_has_voted = str(user.id) in votes_d.keys()
 
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'world', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                        "current_user_has_voted":current_user_has_voted
+                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
                         }
 
                 # TODO: optimize this - definitely a better way
@@ -1495,7 +1514,8 @@ def close_verse(request):
                                 topic_id=verse.verse_category_topic_id,
                                 title=verse.title,
                                 lines_record=lines_json,
-                                players_record=players_json
+                                players_record=players_json,
+                                level=user.level
                                 ).save(session)
 
                     # if verse.owner_id not in jsonable['results']['user_data']:

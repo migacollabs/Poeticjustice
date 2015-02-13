@@ -31,17 +31,36 @@ struct ActiveTopicRec {
     var user_name : String = ""
     var verse_title : String = ""
     var owner_id : Int = -1
+    var current_user_has_voted : Bool = false
     
     func getTopicStateImageName() -> String {
+        
+        println("ActiveTopicRec.getTopicStateImageName \(current_user_has_voted)")
+        
         if (self.src=="mine") {
+            if (self.current_user_has_voted) {
+                return "mine_complete.png"
+            }
             return "mine.png"
         } else if (self.src=="joined_friend") {
+            if (self.current_user_has_voted) {
+                return "friend_complete.png"
+            }
             return "friend.png"
         } else if (self.src=="joined_world") {
+            if (self.current_user_has_voted) {
+                return "world_complete.png"
+            }
             return "world.png"
         } else if (self.src=="friend") {
+            if (self.current_user_has_voted) {
+                return "friend_complete.png"
+            }
             return "friend.png"
         } else if (self.src=="world") {
+            if (self.current_user_has_voted) {
+                return "world_complete.png"
+            }
             return "world.png"
         }
         // TODO: shouldn't happen but just in case, see
@@ -124,13 +143,18 @@ class ActiveTopic {
             // otherwise, "sell" the topic
             self.topicLabel?.text=self.activeTopicRec.verse_title
         }
+        
+        self.topicStateImage?.image = UIImage(named: self.activeTopicRec.getTopicStateImageName());
+        
     }
     
     func animate() {
         println("animating topic state for topic_id \(activeTopicRec.topic_id)")
-        if (self.isUserParticipating()) {
-            // if the user is a participant and the turns left changes, display it
-            self.rotateImage(self.topicStateImage!, duration: self.topicStateAnimDuration)
+        if (self.activeTopicRec.current_user_has_voted==false) {
+            if (self.isUserParticipating()) {
+                // if the user is a participant and the turns left changes, display it
+                self.rotateImage(self.topicStateImage!, duration: self.topicStateAnimDuration)
+            }
         }
     }
     
@@ -188,6 +212,8 @@ class TopicsViewController: UIViewController, UserDelegate {
     var is_initialized : Bool = false;
     var lastUserEmailAddress : String = ""
     
+    private var avatarView : UIImageView = UIImageView()
+    
     var is_busy : Bool = false
     var has_topics : Bool = false
     
@@ -209,9 +235,34 @@ class TopicsViewController: UIViewController, UserDelegate {
             }
         }
         
+        self.view.addSubview(avatarView)
+        
         lastUserEmailAddress = NetOpers.sharedInstance.user.email_address
         
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        
+        updateAvatar(size);
+        
+//        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+//            
+//        } else {
+//            
+//        }
+    }
+    
+    func updateAvatar(size : CGSize) {
+        
+        avatarView.frame = CGRect(
+            x: size.width-100, // 720,
+            y: 80, //  200,
+            width: 123,
+            height: 127
+        )
+        
+        avatarView.image = UIImage(named: NetOpers.sharedInstance.user.avatarName)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -251,15 +302,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         // click on the tab, so refresh
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             
-            var avatarView : UIImageView = UIImageView()
-            avatarView.image = UIImage(named: NetOpers.sharedInstance.user.avatarName)
-            avatarView.frame = CGRect(
-                x: 720,
-                y: 890,
-                width: 123,
-                height: 127
-            )
-            self.topicScrollView.addSubview(avatarView)
+            updateAvatar(UIScreen.mainScreen().bounds.size);
             
             NetOpers.sharedInstance.user.addUserDelegate(self)
             
@@ -704,6 +747,10 @@ class TopicsViewController: UIViewController, UserDelegate {
                             
                             if let ti = r["title"] as? String {
                                 atr.verse_title = ti
+                            }
+                            
+                            if let cuhv = r["current_user_has_voted"] as? Bool {
+                                atr.current_user_has_voted = cuhv
                             }
                             
                             activeTopicRecs.append(atr)
