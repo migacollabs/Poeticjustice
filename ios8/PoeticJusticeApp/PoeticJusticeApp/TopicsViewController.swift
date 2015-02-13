@@ -374,7 +374,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     func playButtonSound(){
         var error:NSError?
         
-        if let path = NSBundle.mainBundle().pathForResource("Button Press", ofType: "wav") {
+        if let path = NSBundle.mainBundle().pathForResource("Page Turn", ofType: "wav") {
             audioPlayer = AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: path), fileTypeHint: "wav", error: &error)
             
             if let sound = audioPlayer {
@@ -382,7 +382,6 @@ class TopicsViewController: UIViewController, UserDelegate {
                 sound.prepareToPlay()
                 
                 sound.play()
-                println("play sound")
             }
         }
         println(error)
