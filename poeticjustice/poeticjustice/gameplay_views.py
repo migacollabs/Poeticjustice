@@ -477,6 +477,8 @@ def get_verse(verse_id, user_id):
 
             votes_d = json.loads(verse.votes) if verse.votes else {}
             current_user_has_voted = user_id in votes_d
+    else:
+        verse_id = -1
 
 
     res = dict(
