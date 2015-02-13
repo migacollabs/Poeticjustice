@@ -307,6 +307,29 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                             
                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                             
+                            var i = 0
+                            for user_id in self.verse.user_ids{
+                                if let pr = self.verse.players[user_id]{
+                                    
+                                    switch i{
+                                    case 0:
+                                        self.player1Avatar.image = UIImage(named: pr.avatar_name)
+                                    case 1:
+                                        self.player2Avatar.image = UIImage(named: pr.avatar_name)
+                                    case 2:
+                                        self.player3Avatar.image = UIImage(named: pr.avatar_name)
+                                    case 3:
+                                        self.player4Avatar.image = UIImage(named: pr.avatar_name)
+                                    case 4:
+                                        self.player5Avatar.image = UIImage(named: pr.avatar_name)
+                                    default:
+                                        ()
+                                    }
+                                    i++
+                                }
+                            }
+                            
+                            
                             self.is_busy = false
                         })
                     })
