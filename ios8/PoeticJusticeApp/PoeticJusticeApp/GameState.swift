@@ -24,3 +24,15 @@ class GameState{
         }
     }
 }
+
+struct PlayerLineRec{
+    var position = -1
+    var text = ""
+    var player_id = -1
+}
+
+struct PlayerRec{
+    var user_id = -1
+    var user_name = ""
+    var avatar_name = "avatar_mexican_guy.png"
+}

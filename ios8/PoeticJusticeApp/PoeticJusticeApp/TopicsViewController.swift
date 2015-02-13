@@ -583,8 +583,8 @@ class TopicsViewController: UIViewController, UserDelegate {
     func dispatch_writeline_controller(verseId:Int, topic:Topic){
         dispatch_async(dispatch_get_main_queue(), {
             
-//            let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
-            let vc = NewWriteLineViewController(nibName: "NewWriteLineViewController", bundle:nil)
+            let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+            //let vc = NewWriteLineViewController(nibName: "NewWriteLineViewController", bundle:nil)
             vc.verseId = verseId
             vc.topic = topic
             self.navigationController?.pushViewController(vc, animated: true)

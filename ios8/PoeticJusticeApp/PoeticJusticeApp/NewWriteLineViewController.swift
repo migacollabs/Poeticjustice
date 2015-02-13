@@ -42,17 +42,6 @@ struct VerseWriteLineScreenRec{
     }
 }
 
-struct PlayerLineRec{
-    var position = -1
-    var text = ""
-    var player_id = -1
-}
-
-struct PlayerRec{
-    var user_id = -1
-    var user_name = ""
-    var avatar_name = "avatar_mexican_guy.png"
-}
 
 class NewWriteLineViewController:
     UIViewController, ADBannerViewDelegate, UITextFieldDelegate, UITableViewDelegate{
@@ -93,7 +82,7 @@ class NewWriteLineViewController:
         super.viewDidLoad()
         
         // register our custom cell
-        self.playerLineTableView.registerClass(PlayerLineTableViewCell.self as AnyClass, forCellReuseIdentifier: "Cell")
+        self.playerLineTableView.registerNib(UINib(nibName: "PlayerLineTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         var refreshButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
         self.navigationItem.rightBarButtonItem = refreshButton
@@ -570,6 +559,7 @@ class NewWriteLineViewController:
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        println("DEQUEUED \(cell)")
         if let pc = cell as? PlayerLineTableViewCell{
             
             // get the line
@@ -578,6 +568,7 @@ class NewWriteLineViewController:
             // get the player record so we can
             // set the avatar and userName
             var playerRec = self.verse.players[vlr.player_id]
+            
             
             pc.avatarImage.image = UIImage(named: playerRec!.avatar_name)
             pc.userName.text = playerRec!.user_name
