@@ -166,6 +166,7 @@ def vote_for_user_line_verse(request):
                         .filter(LxV.verse_id==V.id)
                         ).first()
 
+                do_add_to_history = False
                 if rp:
 
                     player, verse, lineXverse = rp
@@ -189,8 +190,23 @@ def vote_for_user_line_verse(request):
                     player.user_score += lineXverse.line_score
                     session.add(player)
 
+
+                    if len(verse.user_ids) == len(votes_d):
+                        if not verse.complete:
+                            verse.complete = True
+                            session.add(verse)
+                            do_add_to_history = True
+                            print 'verse is complete'
+
                     session.commit()
 
+                    if do_add_to_history:
+                        print 'adding to history'
+                        try:
+                            verse, jsonable, user_version_history = \
+                                close_verse_add_to_history(verse.id, user, session)
+                        except:
+                            print traceback.format_exc()
 
             return dict(
                 logged_in=auth_usrid,
@@ -464,6 +480,7 @@ def get_verse(verse_id, user_id):
     users = None
     verse = None
     current_user_has_voted = False
+    votes_d = {}
 
     if verse_id:
         verse_id = int(verse_id)
@@ -523,6 +540,7 @@ def get_verse(verse_id, user_id):
             next_index_user_ids=next_index_user_ids,
             user_ids=user_ids,
             user_data=users,
+            votes=votes_d,
             is_complete=is_complete,
             has_all_lines=has_all_lines,
             current_user_has_voted=current_user_has_voted,
@@ -1050,7 +1068,16 @@ def save_verse_line(request):
 
                 user.save(session=session)
 
-                return get_verse(verse.id, user.id)
+                res = get_verse(verse.id, user.id)
+
+                if len(res['results']['votes']) == len(res['results']['user_ids']):
+                    # everyone's voted
+                    if verse.complete:
+                        verse.complete = True
+                        verse.save(session=session)
+                        verse.commit()
+
+                return res
 
         raise HTTPUnauthorized
 
@@ -1384,7 +1411,6 @@ def get_verse_to_view(verse_id, session):
         U, V, LxV = ~User, ~Verse, ~LineXVerse
         for row in session.query(V, LxV) \
                 .filter(V.id==verse_id) \
-                .filter(V.complete==False) \
                 .filter(LxV.verse_id==verse_id) \
                 .order_by(LxV.id):
             lines[row.LineXVerse.id] = (row.LineXVerse.user_id, row.LineXVerse.line_text)
@@ -1502,6 +1528,39 @@ def view_verse(request):
             pass
 
 
+def close_verse_add_to_history(verse_id, user, session):
+
+    verse, jsonable = get_verse_to_view(verse_id, session)
+
+    user_version_history = None
+
+    if verse:
+
+        verse.complete = True
+        session.add(verse)
+
+        for user_data in jsonable['results']['user_data']:
+
+            user_id, _, _ = user_data
+
+            lines_json = json.dumps(jsonable['results']['lines'])
+
+            players_json = json.dumps(jsonable['results']['user_data'])
+
+            user_version_history = UserVerseHistory(
+                    verse_id=verse.id,
+                    owner_id=verse.owner_id,
+                    player_id=user_id,
+                    topic_id=verse.verse_category_topic_id,
+                    title=verse.title,
+                    lines_record=lines_json,
+                    players_record=players_json,
+                    level=user.level
+                    ).save(session)
+
+        return verse, jsonable, user_version_history
+
+
 @view_config(
     name='close',
     request_method='GET',
@@ -1530,47 +1589,8 @@ def close_verse(request):
                 
                 user = User(entity=session.merge(user))
 
-                verse, jsonable = get_verse_to_view(kwds['id'], session)
-
-                user_version_history = None
-
-                if verse:
-
-                    verse.complete = True
-                    verse.save(session)
-
-                    for user_data in jsonable['results']['user_data']:
-
-                        user_id, _ = user_data
-
-                        lines_json = json.dumps(jsonable['results']['lines'])
-                        players_json = json.dumps(jsonable['results']['user_data'])
-
-                        user_version_history = UserVerseHistory(
-                                verse_id=verse.id,
-                                owner_id=verse.owner_id,
-                                player_id=user_id,
-                                topic_id=verse.verse_category_topic_id,
-                                title=verse.title,
-                                lines_record=lines_json,
-                                players_record=players_json,
-                                level=user.level
-                                ).save(session)
-
-                    # if verse.owner_id not in jsonable['results']['user_data']:
-
-                    #     lines_json = json.dumps(jsonable['results']['lines'])
-
-                    #     user_version_history = UserVerseHistory(
-                    #             verse_id=verse.id,
-                    #             owner_id=verse.owner_id,
-                    #             player_id=verse.owner_id,
-                    #             topic_id=verse.verse_category_topic_id,
-                    #             title=verse.title,
-                    #             lines_record=lines_json
-                    #             ).save(session)
-
-                        print 'USER_VERSION_HISTORY', user_version_history
+                verse, jsonable, user_version_history = \
+                    close_verse_add_to_history(kwds['id'], user, session)
 
                 return dict(
                     status="Ok",
@@ -1640,20 +1660,34 @@ def cancel_verse(request):
                         if player and player.open_verse_ids:
                             if verse.id in player.open_verse_ids:
                                 open_verse_ids = copy.deepcopy(player.open_verse_ids)
-                                open_verse_ids.pop(verse.id)
+                                if len(open_verse_ids) > 0:
+                                    open_verse_ids.remove(verse.id)
                                 setattr(player, 'open_verse_ids', open_verse_ids)
                                 session.add(player)
 
                 session.commit()
 
-                # bulk delete line x verses
-                LxV = ~LineXVerse
-                session.query(LxV).filter(LxV.verse_id==verse.id).delete(synchronize_session='fetch')
+                def del_it():
+                    # bulk delete line x verses
+                    LxV = ~LineXVerse
+                    session.query(LxV).filter(LxV.verse_id==verse.id).delete(synchronize_session='fetch')
 
-                # finally, delete the verse
-                session.delete(~verse)
+                    print 'before delete of verse', verse, jsonable
+                    # finally, delete the verse
+                    session.delete(~verse)
 
-                session.commit()
+                    session.commit()
+
+
+                try:
+                    del_it()
+                except:
+                    print traceback.format_exc()
+                    try:
+                        time.sleep(1)
+                        del_it()
+                    except:
+                        raise HTTPConflict
 
                 return dict(
                     status="Ok",
