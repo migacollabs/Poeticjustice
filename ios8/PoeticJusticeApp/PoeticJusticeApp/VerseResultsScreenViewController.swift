@@ -45,12 +45,16 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     
     @IBOutlet weak var verseTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var votesLeftLabel: UILabel!
+    @IBOutlet weak var voteMsgLabel: UILabel!
     
     var viewLoaded: Bool = false
     
     var verseRec: VerseResultScreenRec?
     
     var verseLinesForTable:[VerseResultScreenLineRec] = []
+    
+    var verseLinesForVoting = [Int:VerseResultScreenLineRec]()
     
     var avatar = Avatar()
     
@@ -186,6 +190,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                 
                                 vrsr.lines_recs[p!] = vlr
                                 
+                                self.verseLinesForVoting[vlr.position] = vlr
+                                
                             }else{
                                 println("corrupt line pk")
                             }
@@ -278,6 +284,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 // check if this user has voted on this verse and select the row
                 if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
+                    
+                    self.voteMsgLabel.text = "You've voted!"
 
                     var i = 0
                     var foundMatch = false
@@ -295,6 +303,48 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
                     }
                     
+                }
+                
+                if let vr = self.verseRec{
+                    
+                    self.votesLeftLabel.text = "\(vr.votes.count)\\\(vr.user_ids.count)"
+                    
+                    // if all the votes are in
+                    if vr.votes.count == vr.user_ids.count{
+                        
+                        self.voteMsgLabel.text = "All votes are in!"
+                        
+                        var linesForPlayer = [Int:Int]()
+                        
+                        for pid in vr.user_ids{
+                            linesForPlayer[pid as Int] = 0 as Int
+                        }
+                        
+                        // tally votes for each player's line
+                        for (voter, line_id) in vr.votes{
+                            if let vlfv = self.verseLinesForVoting[line_id as Int]{
+                                linesForPlayer[vlfv.player_id]! += 1
+                            }
+                        }
+                        
+                        var winnerId = 0
+                        var prevScore = 0
+                        for (player_id, tally) in linesForPlayer{
+                            if tally > prevScore{
+                                prevScore = tally
+                                winnerId = player_id
+                            }
+                        }
+                        if winnerId > 0{
+                            var userName = self.verseRec?.players[winnerId]?.user_name
+                            // there is a winner
+                            self.dispatch_alert("We have a winner!", message: userName!, controller_title: "Ok")
+                        }else{
+                            // we have a tie
+                            self.dispatch_alert("Winner", message: "We have a tie", controller_title: "Ok")
+                        }
+                        
+                    }
                 }
                 
             }
