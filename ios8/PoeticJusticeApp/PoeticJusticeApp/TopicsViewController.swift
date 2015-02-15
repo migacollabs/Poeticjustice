@@ -154,6 +154,11 @@ class ActiveTopic {
             if (self.isUserParticipating()) {
                 // if the user is a participant and the turns left changes, display it
                 self.rotateImage(self.topicStateImage!, duration: self.topicStateAnimDuration)
+            } else {
+                println("Stopping animation!")
+                self.topicStateImage?.image = nil
+                // reset the image so it stops animation
+                self.topicStateImage?.image = UIImage(named: self.activeTopicRec.getTopicStateImageName());
             }
         }
     }

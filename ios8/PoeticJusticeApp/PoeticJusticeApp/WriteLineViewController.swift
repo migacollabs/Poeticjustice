@@ -71,7 +71,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         self.navigationItem.rightBarButtonItem = refreshButton
         
         self.sendButton.hidden = true
-        self.cancelButton.hidden = true
         
         verseView.text = ""
         setLine.text = ""
@@ -111,8 +110,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     override func viewWillAppear(animated: Bool) {
         
-        self.cancelButton.hidden = true
-        
         var screen_height = UIScreen.mainScreen().bounds.height
         self.canDisplayBannerAds = true
         self.iAdBanner = self.appdelegate().iAdBanner
@@ -127,13 +124,11 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         
         updateNavigationTitle()
         
+        self.cancelButton.hidden = true
+        
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             
-            if (self.verse.is_loaded()) {
-                if (NetOpers.sharedInstance.user.id==self.verse.owner_id) {
-                    self.cancelButton.hidden = false
-                }
-            }
+            updateCancelButton()
             
             updateSendPlaceholder()
             
@@ -297,9 +292,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                     self.updateSendPlaceholder()
                                 }
                                 
-                                if self.verse.owner_id==NetOpers.sharedInstance.user.id {
-                                    self.cancelButton.hidden = false
-                                }
+                                self.updateCancelButton()
                                 
                             }
                             
@@ -468,6 +461,58 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         self.iAdBanner?.hidden = true
     }
     
+    func updateCancelButton() {
+        if (self.verse.is_loaded()) {
+            self.cancelButton.hidden = false
+            if (NetOpers.sharedInstance.user.id==self.verse.owner_id) {
+                self.cancelButton.setTitle(" Cancel", forState: UIControlState.Normal)
+            } else {
+                self.cancelButton.setTitle(" Leave", forState: UIControlState.Normal)
+            }
+        } else {
+            self.cancelButton.hidden = true
+        }
+    }
+    
+    
+    func leaveVerse() {
+        var params = Dictionary<String,AnyObject>()
+        params["verse_id"]=self.verseId
+        
+        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/leave", params: params,
+            completion_handler:{
+                data, response, error -> Void in
+                
+                let httpResponse = response as NSHTTPURLResponse
+                if httpResponse.statusCode == 200 {
+                    if data != nil {
+                        
+                        let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                            data!, options: NSJSONReadingOptions.MutableContainers,
+                            error: nil) as NSDictionary
+                        
+                        // this should be the verse that we just left
+                        println(jsonResult)
+                        
+                        dispatch_async(dispatch_get_main_queue(),{
+                            
+                            println("leaving verse")
+                            
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            
+                            self.navigationController?.popViewControllerAnimated(true)
+                        })
+                        
+                    }
+                }else{
+                    println("Error")
+                    println(error)
+                }
+                
+        })
+        
+    }
+    
     func cancelVerse() {
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/v/cancel/id=\(self.verseId)",
             completion_handler:{
@@ -500,10 +545,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         })
     }
     
-    
-    @IBAction func onCancel(sender: AnyObject) {
-        println("onCancel called")
-        
+    func cancel() {
         let cancelController = UIAlertController(title: "Cancel Verse", message: "Do you want to cancel this verse?", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         let noAction = UIAlertAction(title: "No", style: .Default, handler: {
@@ -519,7 +561,34 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         cancelController.addAction(yesAction)
         
         self.presentViewController(cancelController, animated: true, completion: nil)
+    }
+    
+    func leave() {
+        let cancelController = UIAlertController(title: "Leave Verse", message: "Do you want to leave this verse?", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
+        let noAction = UIAlertAction(title: "No", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            // do nothing
+        })
+        let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            self.leaveVerse()
+        })
+        
+        cancelController.addAction(noAction)
+        cancelController.addAction(yesAction)
+        
+        self.presentViewController(cancelController, animated: true, completion: nil)
+    }
+    
+    // cancel if the owner, leave if a participant
+    @IBAction func onCancel(sender: AnyObject) {
+        println("onCancel/leave called")
+        if self.verse.owner_id==NetOpers.sharedInstance.user.id {
+            cancel()
+        } else {
+            leave()
+        }
     }
     
 }

@@ -75,6 +75,72 @@ def get_site_addr():
         sn = get_dinj_config(get_app_config()).Web.SiteName 
         return sn + ':%s'%PORT if PORT not in ['80', ''] else ''
 
+@view_config(
+    name='leave',
+    request_method='POST',
+    context='poeticjustice:contexts.Users',
+    renderer='json')
+def leave_verse(request):
+    print 'leave_verse called', request
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
+        ac = get_app_config()
+        dconfig = get_dinj_config(ac)
+        auth_usrid = authenticated_userid(request)
+        user, user_type_names, user_type_lookup = (
+            get_current_rbac_user(auth_usrid,
+                accept_user_type_names=[
+                    'sys',
+                    'player'
+                ]
+            )
+        )
+
+        if user and user.is_active:
+            with SQLAlchemySessionFactory() as session:
+                verse_id = kwds['verse_id']
+
+                V = ~Verse
+                verse = session.query(V).filter(V.id==verse_id).first()
+                
+                verse_user_ids = copy.deepcopy(verse.user_ids)
+                for i in range(len(verse_user_ids)):
+                    if (verse_user_ids[i]==int(user.id)):
+                        verse_user_ids[i]=-1
+
+                verse = Verse(entity=session.merge(verse))
+                setattr(verse, 'user_ids', verse_user_ids)
+                verse.participant_count = verse.participant_count - 1
+
+                verse.save(session)
+
+                open_verse_ids = copy.deepcopy(user.open_verse_ids)
+                open_verse_ids.remove(int(verse_id))
+
+                user = User(entity=session.merge(user))
+                setattr(user, 'open_verse_ids', open_verse_ids)
+
+                user.save(session)
+
+                return {"results":"ok"}
+
+        raise HTTPUnauthorized
+
+    except HTTPGone: raise
+    except HTTPFound: raise
+    except HTTPUnauthorized: raise
+    except HTTPConflict: raise
+    except:
+        print traceback.format_exc()
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Invalid query parameters?')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
 
 @view_config(
     name='score',
@@ -1417,6 +1483,7 @@ def get_verse_to_view(verse_id, session):
             if not verse:
                 verse = row.Verse
 
+        # TODO: what about player's that join a verse, write a line, then leave?
         if verse: # maybe no lines at all?
             sq = (session.query(U.id)
                     .filter(U.id.in_(verse.user_ids))
