@@ -248,12 +248,17 @@ class TopicsViewController: UIViewController, UserDelegate {
         
         updateAvatar(size);
         
-//        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
-//            
-//        } else {
-//            
-//        }
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+            println("landscape")
+        } else {
+            println("portraight")
+        }
     }
+    
+
     
     func updateAvatar(size : CGSize) {
         
