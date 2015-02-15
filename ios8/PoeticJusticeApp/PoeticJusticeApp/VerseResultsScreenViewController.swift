@@ -327,16 +327,18 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                             }
                         }
                         
-                        var winnerId = 0
-                        var prevScore = 0
+                        var winners:[Int] = []
+                        var highestScore = 0
                         for (player_id, tally) in linesForPlayer{
-                            if tally > prevScore{
-                                prevScore = tally
-                                winnerId = player_id
+                            if tally > highestScore{
+                                highestScore = tally
+                                winners = [player_id]
+                            }else if tally == highestScore{
+                                winners.append(player_id)
                             }
                         }
-                        if winnerId > 0{
-                            var userName = self.verseRec?.players[winnerId]?.user_name
+                        if winners.count == 1{
+                            var userName = self.verseRec?.players[winners[0]]?.user_name
                             // there is a winner
                             self.dispatch_alert("We have a winner!", message: userName!, controller_title: "Ok")
                         }else{
