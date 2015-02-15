@@ -107,7 +107,6 @@ def create_new_user(request):
 def _save_user(user, session):
 
     user.password = sha512("NOPASSWORD").hexdigest()
-    user.country_code = 'USA'
     user.is_active = True
 
     user.save(session=session)
@@ -521,6 +520,7 @@ def login_post(request):
                         device_rec_json = json.dumps(user_obj.device_rec) if user_obj.device_rec else None
 
                         print device_rec_json
+                        print user_obj.country_code
 
                         auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
 
