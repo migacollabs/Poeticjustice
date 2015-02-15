@@ -324,12 +324,25 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             // get the line
             var vlr = verseLinesForTable[indexPath.row]
             
-            // get the player record so we can 
+            // get the player record so we can
             // set the avatar and userName
-            var playerRec = self.verseRec?.players[vlr.player_id]
-    
-            pc.avatarImage.image = UIImage(named: playerRec!.avatar_name)
-            pc.userName.text = playerRec!.user_name
+            // TODO: should we display the players who joined but then left?
+            if let vr = self.verseRec {
+                var found : Bool = false
+                for id in vr.players.keys {
+                    if (id==vlr.player_id) {
+                        found = true
+                        let playerRec : VerseResultScreenPlayerRec = vr.players[vlr.player_id]!
+                        pc.avatarImage.image = UIImage(named: playerRec.avatar_name)
+                        pc.userName.text = playerRec.user_name
+                        break
+                    }
+                }
+                if (found==false) {
+                    pc.avatarImage.image = UIImage(named: "man_24.png")
+                    pc.userName.text = ""
+                }
+            }
             
             // set the line text
             pc.verseLine.text = vlr.text
