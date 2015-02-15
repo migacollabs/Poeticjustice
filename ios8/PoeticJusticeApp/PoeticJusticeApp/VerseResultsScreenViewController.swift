@@ -428,15 +428,44 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 var pid = vlr.player_id
                 var lid = vlr.position
                 
-                self.stillVoting = true
                 
-                // TODO: this should be a post
-                NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-                    
-                    self.stillVoting = false
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    
+                let voteController = UIAlertController(title: "Confirm Vote", message: "You sure? Last chance!", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                
+                let noAction = UIAlertAction(title: "No", style: .Default, handler: {
+                    (alert: UIAlertAction!) -> Void in
+                    // delete friend
+                    return
                 })
+                let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
+                    (alert: UIAlertAction!) -> Void in
+                    
+                    self.stillVoting = true
+                    
+                    // TODO: this should be a post
+                    NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                        
+                        // add the vote here for immediacy, the votes will be refreshed
+                        // later, but the table has to respond correctly
+                        self.verseRec?.votes[NetOpers.sharedInstance.user.id] = lid
+                        
+                        self.stillVoting = false
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        
+                        // update label for some feedback
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.voteMsgLabel.text = "Vote confirmed!"
+                        })
+                        
+                    })
+
+                })
+                
+                voteController.addAction(noAction)
+                voteController.addAction(yesAction)
+
+                
+                self.presentViewController(voteController, animated: true, completion: nil)
                 
             }
         }
