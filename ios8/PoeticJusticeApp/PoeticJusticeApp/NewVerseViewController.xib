@@ -40,7 +40,7 @@
                     </connections>
                 </segmentedControl>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K6e-HB-zNq">
-                    <rect key="frame" x="337" y="251" width="51" height="31"/>
+                    <rect key="frame" x="337" y="256" width="51" height="31"/>
                 </switch>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Players" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DG2-7a-AMu">
                     <rect key="frame" x="173" y="222" width="143" height="21"/>
@@ -49,7 +49,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Friends Only" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c00-ns-UcJ">
-                    <rect key="frame" x="219" y="256" width="97" height="21"/>
+                    <rect key="frame" x="219" y="261" width="97" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -79,7 +79,7 @@
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give it a Title!" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B0b-AV-HFa">
                     <rect key="frame" x="173" y="154" width="255" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                 </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -87,14 +87,14 @@
                 <constraint firstItem="87b-hi-OAG" firstAttribute="top" secondItem="B0b-AV-HFa" secondAttribute="bottom" constant="31" id="3TZ-Zs-Qjt"/>
                 <constraint firstItem="c00-ns-UcJ" firstAttribute="trailing" secondItem="DG2-7a-AMu" secondAttribute="trailing" id="43h-Ps-t3x"/>
                 <constraint firstItem="87b-hi-OAG" firstAttribute="leading" secondItem="DG2-7a-AMu" secondAttribute="trailing" constant="21" id="9db-h6-Mga"/>
-                <constraint firstItem="K6e-HB-zNq" firstAttribute="top" secondItem="87b-hi-OAG" secondAttribute="bottom" constant="8" symbolic="YES" id="COS-N2-1lM"/>
+                <constraint firstItem="K6e-HB-zNq" firstAttribute="top" secondItem="87b-hi-OAG" secondAttribute="bottom" constant="13" id="COS-N2-1lM"/>
                 <constraint firstItem="B0b-AV-HFa" firstAttribute="leading" secondItem="DG2-7a-AMu" secondAttribute="leading" id="IKT-p4-J22"/>
                 <constraint firstItem="K6e-HB-zNq" firstAttribute="leading" secondItem="87b-hi-OAG" secondAttribute="leading" id="L8X-v2-wxJ"/>
                 <constraint firstItem="c00-ns-UcJ" firstAttribute="centerY" secondItem="K6e-HB-zNq" secondAttribute="centerY" id="MSk-V4-ufX"/>
                 <constraint firstItem="B0b-AV-HFa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RBd-r4-9GE"/>
                 <constraint firstItem="K6e-HB-zNq" firstAttribute="leading" secondItem="87b-hi-OAG" secondAttribute="leading" id="fzU-93-gT3"/>
                 <constraint firstItem="B0b-AV-HFa" firstAttribute="centerX" secondItem="DR7-QI-ZtV" secondAttribute="centerX" id="g5m-IH-nDY"/>
-                <constraint firstItem="DR7-QI-ZtV" firstAttribute="top" secondItem="c00-ns-UcJ" secondAttribute="bottom" constant="55" id="kRQ-WR-dmz"/>
+                <constraint firstItem="DR7-QI-ZtV" firstAttribute="top" secondItem="c00-ns-UcJ" secondAttribute="bottom" constant="50" id="kRQ-WR-dmz"/>
                 <constraint firstItem="B0b-AV-HFa" firstAttribute="trailing" secondItem="87b-hi-OAG" secondAttribute="trailing" id="ltR-e2-hJl"/>
                 <constraint firstItem="DEl-6Z-Nux" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="82" id="oV4-wG-3qc"/>
                 <constraint firstItem="K6e-HB-zNq" firstAttribute="top" secondItem="87b-hi-OAG" secondAttribute="bottom" constant="10" id="rLz-td-CU8"/>

@@ -45,12 +45,16 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     
     @IBOutlet weak var verseTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var votesLeftLabel: UILabel!
+    @IBOutlet weak var voteMsgLabel: UILabel!
     
     var viewLoaded: Bool = false
     
     var verseRec: VerseResultScreenRec?
     
     var verseLinesForTable:[VerseResultScreenLineRec] = []
+    
+    var verseLinesForVoting = [Int:VerseResultScreenLineRec]()
     
     var avatar = Avatar()
     
@@ -186,6 +190,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                 
                                 vrsr.lines_recs[p!] = vlr
                                 
+                                self.verseLinesForVoting[vlr.position] = vlr
+                                
                             }else{
                                 println("corrupt line pk")
                             }
@@ -278,6 +284,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 // check if this user has voted on this verse and select the row
                 if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
+                    
+                    self.voteMsgLabel.text = "You've voted!"
 
                     var i = 0
                     var foundMatch = false
@@ -295,6 +303,50 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
                     }
                     
+                }
+                
+                if let vr = self.verseRec{
+                    
+                    self.votesLeftLabel.text = "\(vr.votes.count)\\\(vr.user_ids.count)"
+                    
+                    // if all the votes are in
+                    if vr.votes.count == vr.user_ids.count{
+                        
+                        self.voteMsgLabel.text = "All votes are in!"
+                        
+                        var linesForPlayer = [Int:Int]()
+                        
+                        for pid in vr.user_ids{
+                            linesForPlayer[pid as Int] = 0 as Int
+                        }
+                        
+                        // tally votes for each player's line
+                        for (voter, line_id) in vr.votes{
+                            if let vlfv = self.verseLinesForVoting[line_id as Int]{
+                                linesForPlayer[vlfv.player_id]! += 1
+                            }
+                        }
+                        
+                        var winners:[Int] = []
+                        var highestScore = 0
+                        for (player_id, tally) in linesForPlayer{
+                            if tally > highestScore{
+                                highestScore = tally
+                                winners = [player_id]
+                            }else if tally == highestScore{
+                                winners.append(player_id)
+                            }
+                        }
+                        if winners.count == 1{
+                            var userName = self.verseRec?.players[winners[0]]?.user_name
+                            // there is a winner
+                            self.dispatch_alert("We have a winner!", message: userName!, controller_title: "Ok")
+                        }else{
+                            // we have a tie
+                            self.dispatch_alert("Winner", message: "We have a tie", controller_title: "Ok")
+                        }
+                        
+                    }
                 }
                 
             }
@@ -378,15 +430,44 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 var pid = vlr.player_id
                 var lid = vlr.position
                 
-                self.stillVoting = true
                 
-                // TODO: this should be a post
-                NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-                    
-                    self.stillVoting = false
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    
+                let voteController = UIAlertController(title: "Confirm Vote", message: "You sure? Last chance!", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                
+                let noAction = UIAlertAction(title: "No", style: .Default, handler: {
+                    (alert: UIAlertAction!) -> Void in
+                    // delete friend
+                    return
                 })
+                let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
+                    (alert: UIAlertAction!) -> Void in
+                    
+                    self.stillVoting = true
+                    
+                    // TODO: this should be a post
+                    NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                        
+                        // add the vote here for immediacy, the votes will be refreshed
+                        // later, but the table has to respond correctly
+                        self.verseRec?.votes[NetOpers.sharedInstance.user.id] = lid
+                        
+                        self.stillVoting = false
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        
+                        // update label for some feedback
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.voteMsgLabel.text = "Vote confirmed!"
+                        })
+                        
+                    })
+
+                })
+                
+                voteController.addAction(noAction)
+                voteController.addAction(yesAction)
+
+                
+                self.presentViewController(voteController, animated: true, completion: nil)
                 
             }
         }

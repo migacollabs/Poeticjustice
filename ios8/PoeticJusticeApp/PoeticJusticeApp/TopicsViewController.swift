@@ -253,12 +253,17 @@ class TopicsViewController: UIViewController, UserDelegate {
         
         updateAvatar(size);
         
-//        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
-//            
-//        } else {
-//            
-//        }
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        
+        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
+            println("landscape")
+        } else {
+            println("portraight")
+        }
     }
+    
+
     
     func updateAvatar(size : CGSize) {
         
@@ -602,9 +607,12 @@ class TopicsViewController: UIViewController, UserDelegate {
     func dispatch_resultsscreen_controller(verseId:Int, topic:Topic){
         dispatch_async(dispatch_get_main_queue(), {
             
+            println(self.navigationController)
+            
             var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
             var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
             controller.verseId = verseId
+            self.navigationController?.popViewControllerAnimated(false)
             self.navigationController?.pushViewController(controller, animated: true)
             
         })
