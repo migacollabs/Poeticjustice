@@ -419,7 +419,13 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
             var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
             var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
             controller.verseId = verseId
-            self.navigationController?.pushViewController(controller, animated: true)
+            
+            var viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+            
+            viewControllers.removeAtIndex(viewControllers.count-1)
+            viewControllers.append(controller)
+            
+            self.navigationController?.viewControllers = viewControllers
             
         })
     }
