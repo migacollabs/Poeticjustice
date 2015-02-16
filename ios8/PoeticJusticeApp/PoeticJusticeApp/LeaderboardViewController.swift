@@ -11,7 +11,29 @@ import UIKit
 struct LeaderboardUserRec {
     var user_name : String = ""
     var user_score : Int = -1
+    var level : Int = 1
+    var avatar_name : String = "avatar_mexican_guy.png"
     var user_id : Int = -1
+}
+
+class LeaderboardTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var desc: UITextView!
+    @IBOutlet weak var avatarImage: UIImageView!
+    @IBOutlet weak var levelImage : UIImageView!
+    @IBOutlet weak var userName: UILabel!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        // Configure the view for the selected state
+    }
+    
 }
 
 class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -22,13 +44,15 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // register our custom cell
+        self.myTableView.registerNib(UINib(nibName: "LeaderboardTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        
         var refreshButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
         self.navigationItem.rightBarButtonItem = refreshButton
         
         title = "Leaderboard"
 
         // Do any additional setup after loading the view.
-        self.myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier : "cell")
         self.myTableView.dataSource = self
         self.myTableView.delegate = self
     }
@@ -88,7 +112,13 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                             lr.user_score = us
                         }
                         
-                        println(lr.user_name)
+                        if let a = lu["avatar_name"] as? String {
+                            lr.avatar_name = a
+                        }
+                        
+                        if let l = lu["level"] as? Int {
+                            lr.level = l
+                        }
                         
                         self.leaderboard_users.append(lr)
                     }
@@ -125,18 +155,26 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         return leaderboard_users.count
     }
     
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
-        if let lur = self.leaderboard_users[indexPath.row] as LeaderboardUserRec? {
-
-            cell.textLabel?.text = String(lur.user_score) + " - " + lur.user_name
-
-            if (lur.user_id==NetOpers.sharedInstance.user.id) {
-                cell.contentView.backgroundColor = UIColor.lightGrayColor()
-            } else {
-                cell.contentView.backgroundColor = UIColor.whiteColor()
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        
+        if let lc = cell as? LeaderboardTableViewCell{
+            if let lur = self.leaderboard_users[indexPath.row] as LeaderboardUserRec? {
+                
+                lc.desc.text = String(indexPath.row+1) + ". " + String(lur.user_score) + " points";
+                lc.levelImage.image = UIImage(named: "lvl_" + String(lur.level) + ".png")
+                lc.avatarImage.image = UIImage(named: lur.avatar_name)
+                lc.userName.text = lur.user_name
+                
+                if (lur.user_id==NetOpers.sharedInstance.user.id) {
+                    lc.userName.font = UIFont.boldSystemFontOfSize(13.0)
+                }
             }
         }
+        
         return cell
     }
 

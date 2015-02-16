@@ -420,6 +420,14 @@ def add_user_friend(request):
         except:
             pass
 
+
+def get_user_pref_data(user, key):
+    if (user.user_prefs):
+        data = json.loads(user.user_prefs)
+        if key in data:
+            return data[key]
+    return {key:None}
+
 # TODO: split this into two and memoize the public one?
 @view_config(
     name='leaderboard',
@@ -439,18 +447,20 @@ def get_leaderboard(request):
         with SQLAlchemySessionFactory() as session:
             if user_id:
                 has_user = False
-                for r in session.query(U).filter(U.is_active==true).order_by(desc(U.user_score)).limit(14):
+                for r in session.query(U).filter(U.is_active==true).order_by(desc(U.user_score)).limit(24):
                     if (r.id==user_id):
                         has_user = True
-                    users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id})
+                    users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
+                        "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level})
 
                 if has_user==False:
                     for r in session.query(U).filter(U.id==user_id):
-                        users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id})
+                        users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
+                        "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level})
             else:
-                for r in session.query(U).filter(U.is_active==True).order_by(desc(U.user_score)).limit(15):
-                    print 'user_name', r.user_name
-                    users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id})
+                for r in session.query(U).filter(U.is_active==True).order_by(desc(U.user_score)).limit(25):
+                    users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
+                        "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level})
 
         return {"results":users}
 
