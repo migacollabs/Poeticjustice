@@ -18,7 +18,7 @@ struct LeaderboardUserRec {
 
 class LeaderboardTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var desc: UITextView!
+    @IBOutlet weak var desc: UILabel!
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var levelImage : UIImageView!
     @IBOutlet weak var userName: UILabel!
@@ -170,7 +170,8 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                 lc.userName.text = lur.user_name
                 
                 if (lur.user_id==NetOpers.sharedInstance.user.id) {
-                    lc.userName.font = UIFont.boldSystemFontOfSize(13.0)
+                    // lc.userName.font = UIFont.boldSystemFontOfSize(13.0)
+                    lc.backgroundColor = UIColor.lightGrayColor()
                 }
             }
         }
