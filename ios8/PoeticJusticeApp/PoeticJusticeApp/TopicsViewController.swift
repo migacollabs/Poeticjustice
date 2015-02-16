@@ -144,8 +144,6 @@ class ActiveTopic {
             self.topicLabel?.text=self.activeTopicRec.verse_title
         }
         
-        self.topicStateImage?.image = UIImage(named: self.activeTopicRec.getTopicStateImageName());
-        
     }
     
     func animate() {
@@ -846,7 +844,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         for atr : ActiveTopicRec in activeTopicRecs {
             // TODO: figure out how to make this not optional as active topics can start loading before topics finished?
             if let at : ActiveTopic = self.getActiveTopic(atr) as? ActiveTopic {
-                if (at.isUserUpNext(NetOpers.sharedInstance.user.id)) {
+                if (at.isUserUpNext(NetOpers.sharedInstance.user.id) && !at.activeTopicRec.current_user_has_voted) {
                     upNextCount += 1;
                 }
                 

@@ -330,7 +330,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         // tally votes for each player's line
                         for (voter, line_id) in vr.votes{
                             if let vlfv = self.verseLinesForVoting[line_id as Int]{
-                                linesForPlayer[vlfv.player_id]! += 1
+                                if (contains(linesForPlayer.keys, vlfv.player_id)) {
+                                    linesForPlayer[vlfv.player_id]! += 1
+                                }
                             }
                         }
                         
