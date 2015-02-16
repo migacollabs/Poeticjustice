@@ -144,49 +144,59 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func onJoinedCompletionHandeler(data:NSData?, response:NSURLResponse?, error:NSError?){
         println("onJoinedCompletionHandeler called")
-        let httpResponse = response as NSHTTPURLResponse
-        if httpResponse.statusCode == 200{
-            
-            if data != nil{
-                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                    data!, options: NSJSONReadingOptions.MutableContainers,
-                    error: nil) as NSDictionary
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200{
                 
-                println(jsonResult)
-                
-                if let new_player = jsonResult["user"] as? NSDictionary{
-                    println("new player \(new_player)")
-                    var u = User(user_data:new_player as NSDictionary)
-                    self.players.append(u)
-                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                        dispatch_async(dispatch_get_main_queue(),{
-                            
-                            self.playerTable.reloadData()
-                            let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
-                            vc.verseId = self.verseId!
-                            vc.topic = self.topic
-                            self.navigationController!.setViewControllers([self.navigationController!.viewControllers[0],vc], animated: true)
-                            
-                            self.is_busy = false
-                            
+                if data != nil{
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
+                    
+                    println(jsonResult)
+                    
+                    if let new_player = jsonResult["user"] as? NSDictionary{
+                        println("new player \(new_player)")
+                        var u = User(user_data:new_player as NSDictionary)
+                        self.players.append(u)
+                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                            dispatch_async(dispatch_get_main_queue(),{
+                                
+                                self.playerTable.reloadData()
+                                let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+                                vc.verseId = self.verseId!
+                                vc.topic = self.topic
+                                self.navigationController!.setViewControllers([self.navigationController!.viewControllers[0],vc], animated: true)
+                                
+                                self.is_busy = false
+                                
+                            })
                         })
-                    })
+                    }
                 }
+                
+            }else{
+                switch httpResponse.statusCode{
+                case 401:
+                    // 401 Unauthorized, verse not is not open to world
+                    dispatch_alert("Unauthorized", message:"Verse is no longer open to the World", controller_title:"Ok", goBackToTopics:true)
+                case 409:
+                    // 409 Conflict err, verse no longer available
+                    dispatch_alert("Unauthorized", message:"Verse is not open to the World", controller_title:"Ok", goBackToTopics:true)
+                default:
+                    println("Unhandled Err Code \(httpResponse.statusCode)")
+                    break;
+                }
+                is_busy = false
             }
-            
-        }else{
-            switch httpResponse.statusCode{
-            case 401:
-                // 401 Unauthorized, verse not is not open to world
-                dispatch_alert("Unauthorized", message:"Verse is no longer open to the World", controller_title:"Ok", goBackToTopics:true)
-            case 409:
-                // 409 Conflict err, verse no longer available
-                dispatch_alert("Unauthorized", message:"Verse is not open to the World", controller_title:"Ok", goBackToTopics:true)
-            default:
-                println("Unhandled Err Code \(httpResponse.statusCode)")
-                break;
+        }
+        
+        if (error != nil) {
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to join verse", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to join verse", controller_title:"Ok")
             }
-            is_busy = false
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
         
     }
@@ -204,39 +214,47 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func load_players(data:NSData?, response:NSURLResponse?, error:NSError?){
         println("load_players called")
-        let httpResponse = response as NSHTTPURLResponse
-        if httpResponse.statusCode == 200 {
-            if data != nil {
-                
-                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                    data!, options: NSJSONReadingOptions.MutableContainers,
-                    error: nil) as NSDictionary
-                
-                if let players = jsonResult["verse_users"] as? NSArray{
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                if data != nil {
                     
-                    self.players.removeAll()
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
                     
-                    for player in players{
-                        var u = User(user_data:player as NSDictionary)
-                        self.players.append(u)
+                    if let players = jsonResult["verse_users"] as? NSArray{
+                        
+                        self.players.removeAll()
+                        
+                        for player in players{
+                            var u = User(user_data:player as NSDictionary)
+                            self.players.append(u)
+                        }
+                        
+                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                            dispatch_async(dispatch_get_main_queue(),{
+                                
+                                self.playerTable.reloadData()
+                                
+                            })
+                        })
+                        
                     }
                     
-                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                        dispatch_async(dispatch_get_main_queue(),{
-                            
-                            self.playerTable.reloadData()
-                            
-                        })
-                    })
-                    
                 }
-                
+            }else{
+                println(httpResponse.statusCode)
             }
-        }else{
-            println(httpResponse.statusCode)
         }
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        if (error != nil) {
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to load players", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to load players", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
         
     }
     
@@ -321,44 +339,13 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         return UIApplication.sharedApplication().delegate as AppDelegate
     }
     
-    
-    
-    
-    
-    
-//    func loadPlayers(data: NSData?, response: NSURLResponse?, error: NSError?) {
-//        let httpResponse = response as NSHTTPURLResponse
-//        if httpResponse.statusCode == 200 {
-//            if data != nil {
-//                
-//                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-//                    data!, options: NSJSONReadingOptions.MutableContainers,
-//                    error: nil) as NSDictionary
-//                
-//                if let results = jsonResult["results"] as? NSArray{
-//                    
-//                    self.players.removeAll()
-//                    
-//                    for p in results {
-//                        
-//                    }
-//                    
-//                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-//                        dispatch_async(dispatch_get_main_queue(),{
-//                            
-//                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-//                        })
-//                    })
-//                    
-//                }
-//                
-//            }
-//        }
-//        
-//        if (error != nil) {
-//            println(error)
-//        }
-//        
-//    }
+    func show_alert(title:String, message:String, controller_title:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
     
 }

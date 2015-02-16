@@ -84,59 +84,65 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func loadLeaderboard(data: NSData?, response: NSURLResponse?, error: NSError?) {
-        let httpResponse = response as NSHTTPURLResponse
-        if httpResponse.statusCode == 200 {
-            if data != nil {
-                
-                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                    data!, options: NSJSONReadingOptions.MutableContainers,
-                    error: nil) as NSDictionary
-                
-                if let results = jsonResult["results"] as? NSArray{
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                if data != nil {
                     
-                    self.leaderboard_users.removeAll()
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
                     
-                    for lu in results {
+                    if let results = jsonResult["results"] as? NSArray{
                         
-                        var lr : LeaderboardUserRec = LeaderboardUserRec()
+                        self.leaderboard_users.removeAll()
                         
-                        if let un = lu["user_name"] as? String {
-                            lr.user_name = un
-                        }
-
-                        if let uid = lu["user_id"] as? Int {
-                            lr.user_id = uid
-                        }
-
-                        if let us = lu["user_score"] as? Int {
-                            lr.user_score = us
+                        for lu in results {
+                            
+                            var lr : LeaderboardUserRec = LeaderboardUserRec()
+                            
+                            if let un = lu["user_name"] as? String {
+                                lr.user_name = un
+                            }
+                            
+                            if let uid = lu["user_id"] as? Int {
+                                lr.user_id = uid
+                            }
+                            
+                            if let us = lu["user_score"] as? Int {
+                                lr.user_score = us
+                            }
+                            
+                            if let a = lu["avatar_name"] as? String {
+                                lr.avatar_name = a
+                            }
+                            
+                            if let l = lu["level"] as? Int {
+                                lr.level = l
+                            }
+                            
+                            self.leaderboard_users.append(lr)
                         }
                         
-                        if let a = lu["avatar_name"] as? String {
-                            lr.avatar_name = a
-                        }
-                        
-                        if let l = lu["level"] as? Int {
-                            lr.level = l
-                        }
-                        
-                        self.leaderboard_users.append(lr)
+                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                            dispatch_async(dispatch_get_main_queue(),{
+                                self.myTableView.reloadData()
+                                
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            })
+                        })
                     }
                     
-                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                        dispatch_async(dispatch_get_main_queue(),{
-                            self.myTableView.reloadData()
-                            
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                        })
-                    })
                 }
-                
             }
         }
         
         if (error != nil) {
-            println(error)
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to load leaderboard", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to load leaderboard", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
         
     }
@@ -179,6 +185,15 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         return cell
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
 
     /*

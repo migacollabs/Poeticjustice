@@ -92,14 +92,6 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
 //        self.iAdBanner?.removeFromSuperview()
     }
     
-    func show_alert(title:String, message:String, controller_title:String){
-        // TODO: this shows a warning "Presenting view controllers on detached view controllers is discouraged"
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-    }
-    
     func delete_friend(fr : FriendRec?) {
     
         var params = Dictionary<String,AnyObject>()
@@ -128,78 +120,84 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func loadFriends(data: NSData?, response: NSURLResponse?, error: NSError?) {
         println("loading friends")
-        let httpResponse = response as NSHTTPURLResponse
-        if httpResponse.statusCode == 200 {
-            if data != nil {
-                
-                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                    data!, options: NSJSONReadingOptions.MutableContainers,
-                    error: nil) as NSDictionary
-                
-                if let results = jsonResult["results"] as? NSArray{
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                if data != nil {
                     
-                    println("updating friends")
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
                     
-                    self.friends.removeAll()
-                    
-                    for f in results {
+                    if let results = jsonResult["results"] as? NSArray{
                         
-                        /*
-                        var src : String = ""
-                        var friend_id : Int = -1
-                        var email_address : String = ""
-                        var user_name : String = ""
-                        var approved : String = ""
-                        */
+                        println("updating friends")
                         
-                        var fr = FriendRec()
+                        self.friends.removeAll()
                         
-                        if let src = f["src"] as? String {
-                            fr.src = src
+                        for f in results {
+                            
+                            /*
+                            var src : String = ""
+                            var friend_id : Int = -1
+                            var email_address : String = ""
+                            var user_name : String = ""
+                            var approved : String = ""
+                            */
+                            
+                            var fr = FriendRec()
+                            
+                            if let src = f["src"] as? String {
+                                fr.src = src
+                            }
+                            
+                            if let fid = f["friend_id"] as? Int {
+                                fr.friend_id = fid
+                            }
+                            
+                            if let ea = f["email_address"] as? String {
+                                fr.email_address = ea
+                            }
+                            
+                            if let un = f["user_name"] as? String {
+                                fr.user_name = un
+                            }
+                            
+                            if let ap = f["approved"] as? Bool {
+                                fr.approved = ap
+                            }
+                            
+                            self.friends.append(fr)
+                            
                         }
                         
-                        if let fid = f["friend_id"] as? Int {
-                            fr.friend_id = fid
-                        }
-                        
-                        if let ea = f["email_address"] as? String {
-                            fr.email_address = ea
-                        }
-                        
-                        if let un = f["user_name"] as? String {
-                            fr.user_name = un
-                        }
-                        
-                        if let ap = f["approved"] as? Bool {
-                            fr.approved = ap
-                        }
-
-                        self.friends.append(fr)
-                        
+                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                            dispatch_async(dispatch_get_main_queue(),{
+                                self.myTableView.reloadData()
+                                
+                                // TODO: maybe make the badge value friend request counts and update
+                                // the name of the badge to the total count.  for example the
+                                // the name could '7 Friends' with a badge of '2' to show
+                                // the user has 7 friends and 2 friend requests
+                                self.navigationController?.tabBarItem.badgeValue = String(self.friends.count)
+                                
+                                self.is_busy = false
+                                
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            })
+                        })
                     }
                     
-                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                        dispatch_async(dispatch_get_main_queue(),{
-                            self.myTableView.reloadData()
-                            
-                            // TODO: maybe make the badge value friend request counts and update
-                            // the name of the badge to the total count.  for example the
-                            // the name could '7 Friends' with a badge of '2' to show
-                            // the user has 7 friends and 2 friend requests
-                            self.navigationController?.tabBarItem.badgeValue = String(self.friends.count)
-                            
-                            self.is_busy = false
-                            
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                        })
-                    })
                 }
-            
             }
         }
         
         if (error != nil) {
-            println(error)
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to load friends", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to load friends", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
         
     }
@@ -245,7 +243,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                         add_friend(self.friendEmailAddress.text)
                     }
                 } else {
-                    show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
+                    self.show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
                     is_busy = false
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 }
@@ -340,6 +338,15 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func appdelegate () -> AppDelegate{
         return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
 }

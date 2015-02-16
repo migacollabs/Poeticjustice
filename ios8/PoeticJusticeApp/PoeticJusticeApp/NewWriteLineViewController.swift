@@ -215,157 +215,163 @@ class NewWriteLineViewController:
     
     
     func loadVerse(data: NSData?, response: NSURLResponse?, error: NSError?) {
-        let httpResponse = response as NSHTTPURLResponse
-        if httpResponse.statusCode == 200 {
-            if data != nil {
-                
-                println("loading data...")
-                
-                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                    data!, options: NSJSONReadingOptions.MutableContainers,
-                    error: nil) as NSDictionary
-                
-                if let results = jsonResult["results"] as? NSDictionary {
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                if data != nil {
                     
-                    println(results)
+                    println("loading data...")
                     
-                    if let id = results["verse_id"] as? Int {
-                        self.verse.id = id
-                    }
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
                     
-                    if let hal = results["has_all_lines"] as? Bool {
-                        if hal && self.verse.id > 0{
-                            if let t = self.topic{
-                                self.dispatch_resultsscreen_controller(self.verse.id, topic: t)
-                                return // bail out
-                            }
-                        }
-                    }
-                    
-                    if let nid = results["next_index_user_ids"] as? Int {
-                        self.verse.next_index_user_ids = nid
-                    }
-                    
-                    if let oid = results["owner_id"] as? Int {
-                        self.verse.owner_id = oid
-                    }
-                    
-                    if let li = results["lines"] as? [String] {
-                        self.verse.lines = li
-                    }
-                    
-                    if let ic = results["is_complete"] as? Bool {
-                        self.verse.is_complete = ic
-                    }
-                    
-                    if let ui = results["user_ids"] as? [Int] {
-                        self.verse.user_ids = ui
-                    }
-                    
-                    
-                    if let linesDict = results["lines_d"] as? NSDictionary{
+                    if let results = jsonResult["results"] as? NSDictionary {
                         
-                        for (line_position, line_tuple) in linesDict{
-                            
-                            // json dict key is str, change to int
-                            var p:Int? = (line_position as? String)!.toInt()
-                            
-                            if let lp = p{
-                                var vlr = PlayerLineRec(
-                                    position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
-                                
-                                verse.lines_recs[p!] = vlr
-                                
-                            }else{
-                                println("corrupt line pk")
-                            }
-                            
-                        }
-                    }else{
-                        println("corrupt lines data")
-                    }
-                    
-                    if let playersArray = results["user_data"] as? NSArray{
-                        for player in playersArray as NSArray{
-                            
-                            println(player)
-                            
-                            var pid = player[0] as Int
-                            var usrnm = player[1] as String
-                            
-                            var avnStr:String? = player[2] as? String
-                            if avnStr == nil{
-                                avnStr = ""
-                            }
-                            
-                            if !avnStr!.isEmpty{
-                                let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-                                let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                                    upData!, options: NSJSONReadingOptions.MutableContainers,
-                                    error: nil) as NSDictionary
-                                avnStr = userPrefs["avatar_name"] as? String
-                            }else{
-                                avnStr = "avatar_mexican_guy.png"
-                            }
-                            
-                            verse.players[pid] = PlayerRec(
-                                user_id: pid, user_name: usrnm, avatar_name:avnStr!)
-                            
+                        println(results)
+                        
+                        if let id = results["verse_id"] as? Int {
+                            self.verse.id = id
                         }
                         
-                    }else{
-                        println("corrupt user_data")
-                    }
-                    
-                    
-                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                        dispatch_async(dispatch_get_main_queue(),{
+                        if let hal = results["has_all_lines"] as? Bool {
+                            if hal && self.verse.id > 0{
+                                if let t = self.topic{
+                                    self.dispatch_resultsscreen_controller(self.verse.id, topic: t)
+                                    return // bail out
+                                }
+                            }
+                        }
+                        
+                        if let nid = results["next_index_user_ids"] as? Int {
+                            self.verse.next_index_user_ids = nid
+                        }
+                        
+                        if let oid = results["owner_id"] as? Int {
+                            self.verse.owner_id = oid
+                        }
+                        
+                        if let li = results["lines"] as? [String] {
+                            self.verse.lines = li
+                        }
+                        
+                        if let ic = results["is_complete"] as? Bool {
+                            self.verse.is_complete = ic
+                        }
+                        
+                        if let ui = results["user_ids"] as? [Int] {
+                            self.verse.user_ids = ui
+                        }
+                        
+                        
+                        if let linesDict = results["lines_d"] as? NSDictionary{
                             
-                            println(self.verse.lines_recs)
-                            println(self.verse.players)
-                            
-                            
-                            if NetOpers.sharedInstance.user.is_logged_in() {
-                                if (!self.verse.is_complete) {
+                            for (line_position, line_tuple) in linesDict{
+                                
+                                // json dict key is str, change to int
+                                var p:Int? = (line_position as? String)!.toInt()
+                                
+                                if let lp = p{
+                                    var vlr = PlayerLineRec(
+                                        position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
                                     
-                                    self.is_my_turn = find(self.verse.user_ids, NetOpers.sharedInstance.user.id)==self.verse.next_index_user_ids
+                                    verse.lines_recs[p!] = vlr
                                     
-                                    self.updateSendPlaceholder()
+                                }else{
+                                    println("corrupt line pk")
                                 }
                                 
-                                self.updateCancelButton()
+                            }
+                        }else{
+                            println("corrupt lines data")
+                        }
+                        
+                        if let playersArray = results["user_data"] as? NSArray{
+                            for player in playersArray as NSArray{
+                                
+                                println(player)
+                                
+                                var pid = player[0] as Int
+                                var usrnm = player[1] as String
+                                
+                                var avnStr:String? = player[2] as? String
+                                if avnStr == nil{
+                                    avnStr = ""
+                                }
+                                
+                                if !avnStr!.isEmpty{
+                                    let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                                    let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                        upData!, options: NSJSONReadingOptions.MutableContainers,
+                                        error: nil) as NSDictionary
+                                    avnStr = userPrefs["avatar_name"] as? String
+                                }else{
+                                    avnStr = "avatar_mexican_guy.png"
+                                }
+                                
+                                verse.players[pid] = PlayerRec(
+                                    user_id: pid, user_name: usrnm, avatar_name:avnStr!)
                                 
                             }
                             
-                            self.updateNavigationTitle()
-                            
-                            // sort asc because lines have pks that asc
-                            let sortedLinePos = Array(self.verse.lines_recs.keys).sorted(<)
-                            
-                            for linePos in sortedLinePos{
-                                println("appending line")
-                                self.verseLinesForTable.append(self.verse.lines_recs[linePos]!)
-                            }
-                            
-                            println(self.verseLinesForTable)
-                            
-                            
-                            self.playerLineTableView.reloadData()
-                            
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            
-                            self.is_busy = false
+                        }else{
+                            println("corrupt user_data")
+                        }
+                        
+                        
+                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                            dispatch_async(dispatch_get_main_queue(),{
+                                
+                                println(self.verse.lines_recs)
+                                println(self.verse.players)
+                                
+                                
+                                if NetOpers.sharedInstance.user.is_logged_in() {
+                                    if (!self.verse.is_complete) {
+                                        
+                                        self.is_my_turn = find(self.verse.user_ids, NetOpers.sharedInstance.user.id)==self.verse.next_index_user_ids
+                                        
+                                        self.updateSendPlaceholder()
+                                    }
+                                    
+                                    self.updateCancelButton()
+                                    
+                                }
+                                
+                                self.updateNavigationTitle()
+                                
+                                // sort asc because lines have pks that asc
+                                let sortedLinePos = Array(self.verse.lines_recs.keys).sorted(<)
+                                
+                                for linePos in sortedLinePos{
+                                    println("appending line")
+                                    self.verseLinesForTable.append(self.verse.lines_recs[linePos]!)
+                                }
+                                
+                                println(self.verseLinesForTable)
+                                
+                                
+                                self.playerLineTableView.reloadData()
+                                
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                
+                                self.is_busy = false
+                            })
                         })
-                    })
-                } else {
-                    println("unable to get results")
+                    } else {
+                        println("unable to get results")
+                    }
+                    
                 }
-                
             }
         }
         
         if (error != nil) {
-            println(error)
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to start new verse", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to start new verse", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
     }
     
@@ -499,28 +505,37 @@ class NewWriteLineViewController:
             completion_handler:{
                 data, response, error -> Void in
                 
-                let httpResponse = response as NSHTTPURLResponse
-                if httpResponse.statusCode == 200 {
-                    if data != nil {
-                        
-                        let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                            data!, options: NSJSONReadingOptions.MutableContainers,
-                            error: nil) as NSDictionary
-                        
-                        // this should be the verse that we just deleted
-                        println(jsonResult)
-                        
-                        dispatch_async(dispatch_get_main_queue(),{
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        if data != nil {
                             
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                data!, options: NSJSONReadingOptions.MutableContainers,
+                                error: nil) as NSDictionary
                             
-                            self.navigationController?.popViewControllerAnimated(true)
-                        })
-                        
+                            // this should be the verse that we just deleted
+                            println(jsonResult)
+                            
+                            dispatch_async(dispatch_get_main_queue(),{
+                                
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                
+                                self.navigationController?.popViewControllerAnimated(true)
+                            })
+                            
+                        }
+                    }else{
+                        println(error)
                     }
-                }else{
-                    println("Error")
-                    println(error)
+                }
+                
+                if (error != nil) {
+                    if let e = error?.localizedDescription {
+                        self.show_alert("Unable to leave verse", message: e, controller_title:"Ok")
+                    } else {
+                        self.show_alert("Network error", message: "Unable to leave verse", controller_title:"Ok")
+                    }
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 }
                 
         })
@@ -532,30 +547,38 @@ class NewWriteLineViewController:
             completion_handler:{
                 data, response, error -> Void in
                 
-                let httpResponse = response as NSHTTPURLResponse
-                if httpResponse.statusCode == 200 {
-                    if data != nil {
-                        
-                        let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                            data!, options: NSJSONReadingOptions.MutableContainers,
-                            error: nil) as NSDictionary
-                        
-                        // this should be the verse that we just deleted
-                        println(jsonResult)
-                        
-                        dispatch_async(dispatch_get_main_queue(),{
+                if let httpResponse = response as? NSHTTPURLResponse {
+                    if httpResponse.statusCode == 200 {
+                        if data != nil {
                             
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                data!, options: NSJSONReadingOptions.MutableContainers,
+                                error: nil) as NSDictionary
                             
-                            self.navigationController?.popViewControllerAnimated(true)
-                        })
-                        
+                            // this should be the verse that we just deleted
+                            println(jsonResult)
+                            
+                            dispatch_async(dispatch_get_main_queue(),{
+                                
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                
+                                self.navigationController?.popViewControllerAnimated(true)
+                            })
+                            
+                        }
+                    }else{
+                        println(error)
                     }
-                }else{
-                    println("Error")
-                    println(error)
                 }
                 
+                if (error != nil) {
+                    if let e = error?.localizedDescription {
+                        self.show_alert("Unable to cancel verse", message: e, controller_title:"Ok")
+                    } else {
+                        self.show_alert("Network error", message: "Unable to cancel verse", controller_title:"Ok")
+                    }
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                }
         })
     }
     
@@ -655,6 +678,14 @@ class NewWriteLineViewController:
             //            PropertyStore.sharedInstance.removePropertyAtIndex(indexPath.row)
             //            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
 }

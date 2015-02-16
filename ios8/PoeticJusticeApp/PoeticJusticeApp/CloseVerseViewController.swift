@@ -32,31 +32,41 @@ class CloseVerseViewController: UIViewController {
             NetOpers.sharedInstance.get(
                 NetOpers.sharedInstance.appserver_hostname! + "/v/close/id=\(self.verseId)", {data, response, error -> Void in
                     
-                    let httpResponse = response as NSHTTPURLResponse
-                    if httpResponse.statusCode == 200 {
-                        if data != nil {
-                            
-                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                                data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSDictionary
-                            
-                            if let status = jsonResult["status"] as? String{
-                                if status == "Ok"{
-                                    
+                    if let httpResponse = response as? NSHTTPURLResponse {
+                        if httpResponse.statusCode == 200 {
+                            if data != nil {
+                                
+                                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                    data!, options: NSJSONReadingOptions.MutableContainers,
+                                    error: nil) as NSDictionary
+                                
+                                if let status = jsonResult["status"] as? String{
+                                    if status == "Ok"{
+                                        
+                                    }
                                 }
+                                
+                                dispatch_async(dispatch_get_main_queue(),{
+                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                })
+                                
                             }
-                            
-                            dispatch_async(dispatch_get_main_queue(),{
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            })
-                            
                         }
                     }
                     
+                    if (error != nil) {
+                        if let e = error?.localizedDescription {
+                            self.show_alert("Unable to close verse", message: e, controller_title:"Ok")
+                        } else {
+                            self.show_alert("Network error", message: "Unable to close verse", controller_title:"Ok")
+                        }
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    }
             })
         }else{
             //raise error message
         }
+        
     }
     
     
@@ -66,37 +76,56 @@ class CloseVerseViewController: UIViewController {
             NetOpers.sharedInstance.get(
                 NetOpers.sharedInstance.appserver_hostname! + "/v/view/id=\(self.verseId)", {data, response, error -> Void in
                     
-                    let httpResponse = response as NSHTTPURLResponse
-                    if httpResponse.statusCode == 200 {
-                        if data != nil {
-                            
-                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                                data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSDictionary
-                            
-                            var verse = ""
-                            if let results = jsonResult["results"] as? NSDictionary{
-                                if let lines = results["lines"] as? NSArray{
-                                    for line in lines{
-                                        verse += "\(line)"
+                    if let httpResponse = response as? NSHTTPURLResponse {
+                        if httpResponse.statusCode == 200 {
+                            if data != nil {
+                                
+                                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                    data!, options: NSJSONReadingOptions.MutableContainers,
+                                    error: nil) as NSDictionary
+                                
+                                var verse = ""
+                                if let results = jsonResult["results"] as? NSDictionary{
+                                    if let lines = results["lines"] as? NSArray{
+                                        for line in lines{
+                                            verse += "\(line)"
+                                        }
                                     }
                                 }
-                            }
-                            
-                            dispatch_async(dispatch_get_main_queue(),{
-//                                self.verseText.text = verse
                                 
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            })
-                            
+                                dispatch_async(dispatch_get_main_queue(),{
+                                    //                                self.verseText.text = verse
+                                    
+                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                })
+                                
+                            }
                         }
                     }
                     
+                    if (error != nil) {
+                        if let e = error?.localizedDescription {
+                            self.show_alert("Unable to load verse", message: e, controller_title:"Ok")
+                        } else {
+                            self.show_alert("Network error", message: "Unable to load verse", controller_title:"Ok")
+                        }
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    }
+                
             })
         }else{
             //raise error message
         }
         
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
 
     /*
