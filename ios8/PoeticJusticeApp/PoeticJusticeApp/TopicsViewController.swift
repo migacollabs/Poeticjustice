@@ -160,7 +160,9 @@ class ActiveTopic {
         if (self.activeTopicRec.current_user_has_voted==false) {
             if (self.isUserParticipating()) {
                 // if the user is a participant and the turns left changes, display it
-                self.rotateImage(self.topicStateImage!, duration: self.topicStateAnimDuration)
+                if let t = self.topicStateImage {
+                    self.rotateImage(t, duration: self.topicStateAnimDuration)
+                }
             }
         }
     }
