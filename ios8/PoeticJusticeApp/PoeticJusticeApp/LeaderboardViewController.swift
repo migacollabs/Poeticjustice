@@ -172,6 +172,8 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                 if (lur.user_id==NetOpers.sharedInstance.user.id) {
                     // lc.userName.font = UIFont.boldSystemFontOfSize(13.0)
                     lc.backgroundColor = UIColor.lightGrayColor()
+                } else {
+                    lc.backgroundColor = UIColor.whiteColor()
                 }
             }
         }
