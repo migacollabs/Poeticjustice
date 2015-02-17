@@ -13,6 +13,8 @@ let reuseIdentifier = "Cell"
 class AvatarPicCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     var avatar = Avatar()
+    
+    var selectedIndexPathRow: Int = -1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,7 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
         // Do any additional setup after loading the view.
         
         self.collectionView?.allowsSelection = true
+        self.collectionView?.allowsMultipleSelection = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,6 +60,7 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        println("cellForItemAtIndexPath called")
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as UICollectionViewCell
     
@@ -69,23 +73,34 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
             cell.backgroundColor = UIColor.blackColor()
         }
         
+        if self.selectedIndexPathRow == indexPath.row{
+            cell.backgroundColor = UIColor.blueColor()
+        }else{
+            cell.backgroundColor = UIColor.whiteColor()
+        }
+        
         return cell
     }
 
     // MARK: UICollectionViewDelegate
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-        println(indexPath.row)
+        var cell = collectionView.cellForItemAtIndexPath(indexPath)
+        if self.selectedIndexPathRow == indexPath.row{
+            cell!.backgroundColor = UIColor.blueColor()
+        }else{
+            cell!.backgroundColor = UIColor.whiteColor()
+        }
         NetOpers.sharedInstance.user.avatarName = self.avatar.get_avatar_file_name(indexPath.row)!
-        
     }
 
-    /*
+    
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        self.selectedIndexPathRow = indexPath.row
         return true
     }
-    */
+    
 
     /*
     // Uncomment this method to specify if the specified item should be selected
