@@ -22,10 +22,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var is_busy : Bool = false
     private var timer : NSTimer?
     private var audioPlayer : AVAudioPlayer?
+
+    let tapRec = UITapGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        tapRec.addTarget(self, action: "tappedView")
+        self.view.addGestureRecognizer(tapRec)
         
         if let s : String = NSUserDefaults.standardUserDefaults().objectForKey("emailAddress") as? String {
             email_address.text = s
@@ -311,6 +316,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
         controller.verseId = 6 // this is just for testing
         self.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    
+    // MARK: - gestures
+    
+    func tappedView(){
+        self.user_name.resignFirstResponder()
+        self.email_address.resignFirstResponder()
     }
     
 }

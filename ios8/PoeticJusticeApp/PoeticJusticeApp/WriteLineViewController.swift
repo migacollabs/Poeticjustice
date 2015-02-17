@@ -60,6 +60,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     var is_my_turn : Bool = false
     
+    let tapRec = UITapGestureRecognizer()
+    
     // for now, this is just to help clean up nav once this view is reached
     var newVerseViewController : NewVerseViewController?
     var worldVerseViewController : WorldVerseViewController?
@@ -80,6 +82,11 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         self.setLine.placeholder  = "Your turn is coming up soon!"
         
         self.setLine.delegate = self
+        
+        tapRec.addTarget(self, action: "tappedView")
+        self.verseView.addGestureRecognizer(tapRec)
+//        self.view.addGestureRecognizer(tapRec)
+        
         
         self.configureView()
         
@@ -631,6 +638,12 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
             
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    // MARK: - gestures
+    
+    func tappedView(){
+        self.setLine.resignFirstResponder()
     }
     
 }

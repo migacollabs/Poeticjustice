@@ -103,6 +103,7 @@ class NewWriteLineViewController:
     
     
     func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        println("textFieldShouldReturn")
         self.view.endEditing(true);
         return false;
     }

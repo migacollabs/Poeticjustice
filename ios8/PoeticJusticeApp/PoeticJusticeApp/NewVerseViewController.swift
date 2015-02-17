@@ -10,7 +10,7 @@ import UIKit
 import iAd
 import AVFoundation
 
-class NewVerseViewController: UIViewController {
+class NewVerseViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var verseTitle: UITextField!
     @IBOutlet weak var friendsOnly: UISwitch!
@@ -21,6 +21,8 @@ class NewVerseViewController: UIViewController {
     var isBusy : Bool = false
     var maxNumPlayers : Int = 2
     var audioPlayer : AVAudioPlayer?
+    
+    let tapRec = UITapGestureRecognizer()
     
     var iAdBanner: ADBannerView?
     
@@ -49,6 +51,12 @@ class NewVerseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tapRec.addTarget(self, action: "tappedView")
+        self.view.addGestureRecognizer(tapRec)
+        
+        self.verseTitle.delegate = self
+        
         self.configureView()
         // Do any additional setup after loading the view.
     }
@@ -238,6 +246,20 @@ class NewVerseViewController: UIViewController {
             
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    
+    // MARK: - text delegate
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        self.verseTitle.resignFirstResponder()
+        return true;
+    }
+    
+
+    // MARK: - gestures
+    
+    func tappedView(){
+        self.verseTitle.resignFirstResponder()
     }
     
 }
