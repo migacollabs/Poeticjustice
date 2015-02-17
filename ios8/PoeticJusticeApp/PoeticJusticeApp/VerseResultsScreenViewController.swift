@@ -107,151 +107,158 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         println("loadVerse called")
         
-        let httpResponse = response as NSHTTPURLResponse
-        if httpResponse.statusCode == 200 {
-            if data != nil {
-                
-                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                    data!, options: NSJSONReadingOptions.MutableContainers,
-                    error: nil) as NSDictionary
-                
-                println(jsonResult)
-                
-                if let results = jsonResult["results"] as? NSDictionary{
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                if data != nil {
                     
-                    var vrsr = VerseResultScreenRec()
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
                     
-                    var verseDict: NSDictionary?
+                    println(jsonResult)
                     
-                    if let x = results["verse"] as? NSDictionary{
-                        verseDict = x
-                    }else{
-                        println("corrupt verse results data")
-                    }
-                    
-                    if let verse = verseDict{
+                    if let results = jsonResult["results"] as? NSDictionary{
                         
-                        println(verse)
+                        var vrsr = VerseResultScreenRec()
                         
-                        if let x = verse["id"] as? Int{
-                            vrsr.id = x
-                        }
+                        var verseDict: NSDictionary?
                         
-                        if let x = verse["title"] as? String{
-                            vrsr.title = x
-                        }
-                        
-                        if let x = verse["owner_id"] as? Int{
-                            vrsr.owner_id = x
-                        }
-                        
-                        if let x = verse["user_ids"] as? [Int]{
-                            vrsr.user_ids = x
-                        }
-                        
-                        if let x = verse["participant_count"] as? Int{
-                            vrsr.participantCount = x
-                        }
-                        
-                        if let x = verse["votes"] as? String{
-                            let voteData = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-                            if let votesDict = NSJSONSerialization.JSONObjectWithData(
-                                voteData!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as? NSDictionary{
-                                    //ok safely have a dict of votes
-                                    
-                                    for (player_id, linePos) in votesDict{
-                                        
-                                        var pid:Int? = (player_id as? String)!.toInt()
-                                        if let pid_ = pid{
-                                            vrsr.votes[pid_] = linePos as? Int
-                                        }
-                                    }
-                            }
-
+                        if let x = results["verse"] as? NSDictionary{
+                            verseDict = x
                         }else{
-                            println("no votes yet")
+                            println("corrupt verse results data")
                         }
                         
-                    }else{
-                        println("corrupt verse data")
-                    }
-                    
-                    if let linesDict = results["lines"] as? NSDictionary{
-                        
-                        for (line_position, line_tuple) in linesDict{
+                        if let verse = verseDict{
                             
-                            // json dict key is str, change to int
-                            var p:Int? = (line_position as? String)!.toInt()
+                            println(verse)
                             
-                            if let lp = p{
-                                var vlr = VerseResultScreenLineRec(
-                                    position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
-                                
-                                vrsr.lines_recs[p!] = vlr
-                                
-                                self.verseLinesForVoting[vlr.position] = vlr
+                            if let x = verse["id"] as? Int{
+                                vrsr.id = x
+                            }
+                            
+                            if let x = verse["title"] as? String{
+                                vrsr.title = x
+                            }
+                            
+                            if let x = verse["owner_id"] as? Int{
+                                vrsr.owner_id = x
+                            }
+                            
+                            if let x = verse["user_ids"] as? [Int]{
+                                vrsr.user_ids = x
+                            }
+                            
+                            if let x = verse["participant_count"] as? Int{
+                                vrsr.participantCount = x
+                            }
+                            
+                            if let x = verse["votes"] as? String{
+                                let voteData = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                                if let votesDict = NSJSONSerialization.JSONObjectWithData(
+                                    voteData!, options: NSJSONReadingOptions.MutableContainers,
+                                    error: nil) as? NSDictionary{
+                                        //ok safely have a dict of votes
+                                        
+                                        for (player_id, linePos) in votesDict{
+                                            
+                                            var pid:Int? = (player_id as? String)!.toInt()
+                                            if let pid_ = pid{
+                                                vrsr.votes[pid_] = linePos as? Int
+                                            }
+                                        }
+                                }
                                 
                             }else{
-                                println("corrupt line pk")
+                                println("no votes yet")
                             }
                             
-                        }
-                    }else{
-                        println("corrupt lines data")
-                    }
-                    
-                    if let playersArray = results["user_data"] as? NSArray{
-                        for player in playersArray as NSArray{
-                            
-                            println(player)
-                            
-                            var pid = player[0] as Int
-                            var usrnm = player[1] as String
-                            
-                            var avnStr:String? = player[2] as? String
-                            if avnStr == nil{
-                                avnStr = ""
-                            }
-                            
-                            if !avnStr!.isEmpty{
-                                let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-                                let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                                    upData!, options: NSJSONReadingOptions.MutableContainers,
-                                    error: nil) as NSDictionary
-                                avnStr = userPrefs["avatar_name"] as? String
-                            }else{
-                                avnStr = "avatar_mexican_guy.png"
-                            }
-                            
-                            vrsr.players[pid] = VerseResultScreenPlayerRec(
-                                user_id: pid, user_name: usrnm, avatar_name:avnStr!)
-                            
+                        }else{
+                            println("corrupt verse data")
                         }
                         
-                    }else{
-                        println("corrupt user_data")
-                    }
-                    
-                    self.verseRec = vrsr
-                    
-                    
-                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                        dispatch_async(dispatch_get_main_queue(),{
+                        if let linesDict = results["lines"] as? NSDictionary{
                             
-                            self.configureView()
+                            for (line_position, line_tuple) in linesDict{
+                                
+                                // json dict key is str, change to int
+                                var p:Int? = (line_position as? String)!.toInt()
+                                
+                                if let lp = p{
+                                    var vlr = VerseResultScreenLineRec(
+                                        position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
+                                    
+                                    vrsr.lines_recs[p!] = vlr
+                                    
+                                    self.verseLinesForVoting[vlr.position] = vlr
+                                    
+                                }else{
+                                    println("corrupt line pk")
+                                }
+                                
+                            }
+                        }else{
+                            println("corrupt lines data")
+                        }
+                        
+                        if let playersArray = results["user_data"] as? NSArray{
+                            for player in playersArray as NSArray{
+                                
+                                println(player)
+                                
+                                var pid = player[0] as Int
+                                var usrnm = player[1] as String
+                                
+                                var avnStr:String? = player[2] as? String
+                                if avnStr == nil{
+                                    avnStr = ""
+                                }
+                                
+                                if !avnStr!.isEmpty{
+                                    let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                                    let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                        upData!, options: NSJSONReadingOptions.MutableContainers,
+                                        error: nil) as NSDictionary
+                                    avnStr = userPrefs["avatar_name"] as? String
+                                }else{
+                                    avnStr = "avatar_mexican_guy.png"
+                                }
+                                
+                                vrsr.players[pid] = VerseResultScreenPlayerRec(
+                                    user_id: pid, user_name: usrnm, avatar_name:avnStr!)
+                                
+                            }
                             
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            
+                        }else{
+                            println("corrupt user_data")
+                        }
+                        
+                        self.verseRec = vrsr
+                        
+                        
+                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                            dispatch_async(dispatch_get_main_queue(),{
+                                
+                                self.configureView()
+                                
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                
+                            })
                         })
-                    })
+                    }
+                    
                 }
-                
             }
+
         }
         
         if (error != nil) {
-            println(error)
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to load verse", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to load verse", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
     }
 
@@ -323,7 +330,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         // tally votes for each player's line
                         for (voter, line_id) in vr.votes{
                             if let vlfv = self.verseLinesForVoting[line_id as Int]{
-                                linesForPlayer[vlfv.player_id]! += 1
+                                if (contains(linesForPlayer.keys, vlfv.player_id)) {
+                                    linesForPlayer[vlfv.player_id]! += 1
+                                }
                             }
                         }
                         
@@ -531,11 +540,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func show_alert(title:String, message:String, controller_title:String){
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
 }

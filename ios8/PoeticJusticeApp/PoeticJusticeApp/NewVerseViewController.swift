@@ -139,40 +139,48 @@ class NewVerseViewController: UIViewController {
                 NetOpers.sharedInstance.appserver_hostname! + "/m/edit/Verse",
                 params: params, {(data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
                     
-                    // if the server is down, it will die here
-                    // how to catch/fix without exceptions?
-                    
-                    let httpResponse = response as NSHTTPURLResponse
-                    if httpResponse.statusCode == 200 {
-                        if data != nil {
-                            
-                            let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                                data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSDictionary
-                            
-                            if let model_name = jsonResult["model"] as? String{
-                                println(model_name)
-                                if model_name == "<class 'poeticjustice.models.Verse'>"{
-                                    if let results = jsonResult["results"] as? NSArray{
-                                        var d = results[0] as? NSDictionary
-                                        if d != nil{
-                                            dispatch_async(dispatch_get_main_queue(),{
-                                                self.start_accepted(d!["id"] as Int)
-                                            })
+                    if let httpResponse = response as? NSHTTPURLResponse {
+                        if httpResponse.statusCode == 200 {
+                            if data != nil {
+                                
+                                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                    data!, options: NSJSONReadingOptions.MutableContainers,
+                                    error: nil) as NSDictionary
+                                
+                                if let model_name = jsonResult["model"] as? String{
+                                    println(model_name)
+                                    if model_name == "<class 'poeticjustice.models.Verse'>"{
+                                        if let results = jsonResult["results"] as? NSArray{
+                                            var d = results[0] as? NSDictionary
+                                            if d != nil{
+                                                dispatch_async(dispatch_get_main_queue(),{
+                                                    self.start_accepted(d!["id"] as Int)
+                                                })
+                                                
+                                            }
                                             
                                         }
-                                        
                                     }
                                 }
+                                
+                                
                             }
-                            
-                            
+                        } else {
+                            self.isBusy = false
                         }
-                    } else {
-                        self.isBusy = false
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     }
                     
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    if (error != nil) {
+                        if let e = error?.localizedDescription {
+                            self.show_alert("Unable to start new verse", message: e, controller_title:"Ok")
+                        } else {
+                            self.show_alert("Network error", message: "Unable to start new verse", controller_title:"Ok")
+                        }
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    }
+                    
             })
             
         }
@@ -221,6 +229,15 @@ class NewVerseViewController: UIViewController {
     
     func appdelegate () -> AppDelegate{
         return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
 }

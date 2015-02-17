@@ -197,7 +197,6 @@ class NetOpers {
                                         }
                                     }
                                     
-                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                 })
                             })
                             
@@ -217,7 +216,6 @@ class NetOpers {
                             self.loginHandler!.on_email_notification()
                         }
                         
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     })
                     
                 }else{

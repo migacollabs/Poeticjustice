@@ -104,6 +104,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     is_busy = false
                     t.invalidate()
                     self.userLabel.text = "Network error. Please try again!"
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 }
             }
         }

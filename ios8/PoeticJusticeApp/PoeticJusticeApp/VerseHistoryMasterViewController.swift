@@ -70,95 +70,100 @@ class VerseHistoryMasterViewController: UITableViewController {
     func load_verses(data: NSData?, response: NSURLResponse?, error: NSError?){
         println("load_verses called")
         
-        let httpResponse = response as NSHTTPURLResponse
-        if httpResponse.statusCode == 200 {
-            if data != nil {
-                
-                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                    data!, options: NSJSONReadingOptions.MutableContainers,
-                    error: nil) as NSDictionary
-                
-                if let results = jsonResult["results"] as? NSArray{
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                if data != nil {
                     
-                    var verses:[VerseHistoryRec] = []
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
                     
-                    for v in results {
+                    if let results = jsonResult["results"] as? NSArray{
                         
-                        var vh = VerseHistoryRec()
+                        var verses:[VerseHistoryRec] = []
                         
-                        if let x = v["id"] as? Int{
-                            vh.id = x
-                        }
-                        
-                        if let x = v["title"] as? String{
-                            vh.title = x
-                        }
-                        
-                        if let x = v["owner_id"] as? Int{
-                            vh.owner_id = x
-                        }
-                        
-                        if let x = v["user_ids"] as? [Int]{
-                            vh.user_ids = x
-                        }
-                        
-                        if let x = v["lines_record"] as? String{
-                            let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-                            let linesDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                                data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSDictionary
-
-                            for (line_position, line_tuple) in linesDict{
-                                
-                                if let lp = line_position as? String{
-                                    
-                                }
-                                
-                                var p:Int? = (line_position as? String)!.toInt()
-                                if let lp = p{
-                                    var vlr = VerseLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
-                                    vh.lines_recs.append(vlr)
-                                    
-                                }else{
-                                    println("corrupt data")
-                                }
-
-                            }
-                        }
-                        
-                        if let x = v["players_record"] as? String{
-                            let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-                            let playersArray: NSArray = NSJSONSerialization.JSONObjectWithData(
-                                data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSArray
-                            for player in playersArray as NSArray{
-                                var pid = player[0] as Int
-                                var usrnm = player[1] as String
-                                vh.players[pid] = VersePlayerRec(user_id: pid, user_name: usrnm)
+                        for v in results {
+                            
+                            var vh = VerseHistoryRec()
+                            
+                            if let x = v["id"] as? Int{
+                                vh.id = x
                             }
                             
+                            if let x = v["title"] as? String{
+                                vh.title = x
+                            }
+                            
+                            if let x = v["owner_id"] as? Int{
+                                vh.owner_id = x
+                            }
+                            
+                            if let x = v["user_ids"] as? [Int]{
+                                vh.user_ids = x
+                            }
+                            
+                            if let x = v["lines_record"] as? String{
+                                let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                                let linesDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                    data!, options: NSJSONReadingOptions.MutableContainers,
+                                    error: nil) as NSDictionary
+                                
+                                for (line_position, line_tuple) in linesDict{
+                                    
+                                    if let lp = line_position as? String{
+                                        
+                                    }
+                                    
+                                    var p:Int? = (line_position as? String)!.toInt()
+                                    if let lp = p{
+                                        var vlr = VerseLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
+                                        vh.lines_recs.append(vlr)
+                                        
+                                    }else{
+                                        println("corrupt data")
+                                    }
+                                    
+                                }
+                            }
+                            
+                            if let x = v["players_record"] as? String{
+                                let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                                let playersArray: NSArray = NSJSONSerialization.JSONObjectWithData(
+                                    data!, options: NSJSONReadingOptions.MutableContainers,
+                                    error: nil) as NSArray
+                                for player in playersArray as NSArray{
+                                    var pid = player[0] as Int
+                                    var usrnm = player[1] as String
+                                    vh.players[pid] = VersePlayerRec(user_id: pid, user_name: usrnm)
+                                }
+                                
+                            }
+                            
+                            self.verses.append(vh)
+                            
                         }
-
-                        self.verses.append(vh)
                         
-                    }
-                    
-                    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                        dispatch_async(dispatch_get_main_queue(),{
-                            
-                            self.tableView.reloadData()
-                            
-                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            
+                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                            dispatch_async(dispatch_get_main_queue(),{
+                                
+                                self.tableView.reloadData()
+                                
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                
+                            })
                         })
-                    })
+                    }
                 }
-                
             }
         }
         
         if (error != nil) {
-            println(error)
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to load verse history", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to load verse history", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
     }
     
@@ -188,6 +193,15 @@ class VerseHistoryMasterViewController: UITableViewController {
         if editingStyle == .Delete {
 //            PropertyStore.sharedInstance.removePropertyAtIndex(indexPath.row)
 //            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

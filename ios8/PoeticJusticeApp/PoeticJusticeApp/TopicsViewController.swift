@@ -144,21 +144,23 @@ class ActiveTopic {
             self.topicLabel?.text=self.activeTopicRec.verse_title
         }
         
-        self.topicStateImage?.image = UIImage(named: self.activeTopicRec.getTopicStateImageName());
-        
     }
     
     func animate() {
         println("animating topic state for topic_id \(activeTopicRec.topic_id)")
+        
+        self.topicStateImage?.image = nil
+        
+        // reset the image so it stops animation
+        self.topicStateImage?.image = UIImage(named: self.activeTopicRec.getTopicStateImageName());
+        
+        // rotate it if necessary
         if (self.activeTopicRec.current_user_has_voted==false) {
             if (self.isUserParticipating()) {
                 // if the user is a participant and the turns left changes, display it
-                self.rotateImage(self.topicStateImage!, duration: self.topicStateAnimDuration)
-            } else {
-                println("Stopping animation!")
-                self.topicStateImage?.image = nil
-                // reset the image so it stops animation
-                self.topicStateImage?.image = UIImage(named: self.activeTopicRec.getTopicStateImageName());
+                if let t = self.topicStateImage {
+                    self.rotateImage(t, duration: self.topicStateAnimDuration)
+                }
             }
         }
     }
@@ -256,11 +258,6 @@ class TopicsViewController: UIViewController, UserDelegate {
         var screen_height = UIScreen.mainScreen().bounds.height
         self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
         
-        if UIDevice.currentDevice().orientation.isLandscape.boolValue {
-            println("landscape")
-        } else {
-            println("portraight")
-        }
     }
     
 
@@ -507,26 +504,25 @@ class TopicsViewController: UIViewController, UserDelegate {
     
     func openNextView(data: NSData?, response: NSURLResponse?, error: NSError?){
         
-        
-        let httpResponse = response as NSHTTPURLResponse
-        if httpResponse.statusCode == 200 {
-            if data != nil {
-                
-                println("loading data...")
-                
-                let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                    data!, options: NSJSONReadingOptions.MutableContainers,
-                    error: nil) as NSDictionary
-                
-                if let results = jsonResult["results"] as? NSDictionary {
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                if data != nil {
                     
-                    println(results)
+                    println("loading data...")
                     
-                    if let vid = results["verse_id"] as? Int{
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
+                    
+                    if let results = jsonResult["results"] as? NSDictionary {
                         
-                        //var vid__:Int? = (vid_ as String).toInt()
-                                                
-                        //if let vid = vid__{
+                        println(results)
+                        
+                        if let vid = results["verse_id"] as? Int{
+                            
+                            //var vid__:Int? = (vid_ as String).toInt()
+                            
+                            //if let vid = vid__{
                             if let topic = self.navigatingActiveTopics[vid]{
                                 
                                 // there is a verse and a topic
@@ -572,22 +568,33 @@ class TopicsViewController: UIViewController, UserDelegate {
                                     }
                                     
                                 }else{
-                                    self.dispatch_alert("Error", message: "Bad gameplay state - no is_complete flag", controller_title: "Ok")
+                                    self.show_alert("Error", message: "Bad gameplay state - no is_complete flag", controller_title: "Ok")
                                 }
                                 
                             }
                             
-                        //}
+                            //}
+                            
+                        }else{
+                            self.show_alert("Error", message: "Bad gameplay state - invalid Verse Id", controller_title: "Ok")
+                        }
                         
-                    }else{
-                        self.dispatch_alert("Error", message: "Bad gameplay state - invalid Verse Id", controller_title: "Ok")
                     }
-                    
                 }
+            }else{
+                self.show_alert("Error", message: "Cannot get Verse for Topic", controller_title: "Ok")
             }
-        }else{
-            self.dispatch_alert("Error", message: "Cannot get Verse for Topic", controller_title: "Ok")
         }
+        
+        if (error != nil) {
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to cancel verse", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to cancel verse", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
+        
 
     }
     
@@ -628,8 +635,6 @@ class TopicsViewController: UIViewController, UserDelegate {
     
     func loadTopicData(data:NSData?, response:NSURLResponse?, error:NSError?){
         
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        
         if let httpResponse = response as? NSHTTPURLResponse {
             if httpResponse.statusCode == 200 {
                 
@@ -659,7 +664,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                             has_topics = true
                            
                     }else{
-                        self.dispatch_alert("Error", message: "No Topics", controller_title: "Ok")
+                        self.show_alert("Error", message: "No topics found", controller_title: "Ok")
                     }
 
                 }
@@ -669,11 +674,21 @@ class TopicsViewController: UIViewController, UserDelegate {
                 })
                 
             }else{
-                // TODO: handle specific errors
-                self.dispatch_alert("Error: Unable to load Topics", message: "Please make sure to sign in", controller_title: "Ok")
+                self.show_alert("Error: Unable to load Topics", message: "Please make sure to sign in", controller_title: "Ok")
 
             }
         }
+        
+        if (error != nil) {
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to load topics", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to load topics", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
+        
+        
     }
     
     func fetchActiveTopics() {
@@ -713,8 +728,6 @@ class TopicsViewController: UIViewController, UserDelegate {
     func loadActiveTopicData(data:NSData?, response:NSURLResponse?, error:NSError?){
         
         var activeTopicRecs : [ActiveTopicRec] = []
-        
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         
         if let httpResponse = response as? NSHTTPURLResponse {
             if httpResponse.statusCode == 200 {
@@ -791,14 +804,23 @@ class TopicsViewController: UIViewController, UserDelegate {
                 
             } else {
                 
-                self.dispatch_alert("Error", message: "Cannot load Topics", controller_title: "Ok")
+                self.show_alert("Error", message: "Cannot load Topics", controller_title: "Ok")
                 
                 self.is_busy = false
-                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }
             
         } else {
             self.is_busy = false
+        }
+        
+        if (error != nil) {
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to load topics", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to load topics", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
         
         dispatch_async(dispatch_get_main_queue(), {
@@ -822,7 +844,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         for atr : ActiveTopicRec in activeTopicRecs {
             // TODO: figure out how to make this not optional as active topics can start loading before topics finished?
             if let at : ActiveTopic = self.getActiveTopic(atr) as? ActiveTopic {
-                if (at.isUserUpNext(NetOpers.sharedInstance.user.id)) {
+                if (at.isUserUpNext(NetOpers.sharedInstance.user.id) && !at.activeTopicRec.current_user_has_voted) {
                     upNextCount += 1;
                 }
                 
@@ -866,6 +888,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         }
         
         is_busy = false
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
     func getTopicLabel(index : Int) -> TopicLabel? {
@@ -975,27 +998,13 @@ class TopicsViewController: UIViewController, UserDelegate {
     
     // MARK: - notification, alerts
     
-    func dispatch_alert(title:String, message:String, controller_title:String){
-        
-        let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(priority, 0), { ()->() in
-            dispatch_async(dispatch_get_main_queue(), {
-                
-                let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
-                
-                self.presentViewController(alertController, animated: true, completion: nil)
-                
-            })
-        })
-    }
-    
     func show_alert(title:String, message:String, controller_title:String){
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
 
 }
