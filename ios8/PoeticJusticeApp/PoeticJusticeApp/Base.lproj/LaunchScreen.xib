@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -10,112 +12,118 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 Miga Col.Labs. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="20" y="439" width="441" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test your wit and knowledge against others in a game of verse!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsB-Xe-fce">
-                    <rect key="frame" x="20" y="161" width="441" height="53"/>
+                <imageView userInteractionEnabled="NO" alpha="0.39999999999999963" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Lw2-YT-qSu">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGf-b7-onA">
+                    <rect key="frame" x="102" y="247" width="50" height="104"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="53" id="cJb-f9-o2Q"/>
+                        <constraint firstAttribute="width" constant="50" id="YmU-XG-t5e"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BmG-6e-l4H">
-                    <rect key="frame" x="160" y="262" width="48" height="48"/>
-                    <state key="normal" image="90s-controller.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J5V-l7-H6g">
-                    <rect key="frame" x="216" y="262" width="48" height="48"/>
-                    <state key="normal" image="Baseball-Helmet.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIH-WL-kV2">
-                    <rect key="frame" x="160" y="318" width="48" height="48"/>
-                    <state key="normal" image="Earth.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zD-cw-gm8">
-                    <rect key="frame" x="216" y="318" width="48" height="48"/>
-                    <state key="normal" image="Dice.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Awy-ug-aHZ">
-                    <rect key="frame" x="272" y="318" width="48" height="48"/>
-                    <state key="normal" image="Acoustic-Guitar.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjN-8A-n8y">
-                    <rect key="frame" x="272" y="260" width="48" height="48"/>
-                    <state key="normal" image="Happy-Face.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Poetic Justice" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="20" y="110" width="441" height="43"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYp-7A-JYZ">
-                    <rect key="frame" x="328" y="260" width="50" height="104"/>
+                    <rect key="frame" x="328" y="247" width="50" height="104"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="3os-xx-mjr"/>
+                        <constraint firstAttribute="width" constant="50" id="fI9-Ki-fOf"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGf-b7-onA">
-                    <rect key="frame" x="102" y="262" width="50" height="104"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Poetic Justice" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
+                    <rect key="frame" x="20" y="96" width="441" height="43"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bjN-8A-n8y">
+                    <rect key="frame" x="272" y="247" width="48" height="48"/>
+                    <state key="normal" image="Happy-Face.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Awy-ug-aHZ">
+                    <rect key="frame" x="272" y="303" width="48" height="48"/>
+                    <state key="normal" image="Acoustic-Guitar.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zD-cw-gm8">
+                    <rect key="frame" x="216" y="303" width="48" height="48"/>
+                    <state key="normal" image="Dice.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIH-WL-kV2">
+                    <rect key="frame" x="160" y="303" width="48" height="48"/>
+                    <state key="normal" image="Earth.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J5V-l7-H6g">
+                    <rect key="frame" x="216" y="247" width="48" height="48"/>
+                    <state key="normal" image="Baseball-Helmet.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 Miga Col.Labs.  All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
+                    <rect key="frame" x="20" y="438" width="441" height="34"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="Ait-W8-Fw6"/>
+                        <constraint firstAttribute="height" constant="34" id="Bzl-6Z-Vvp"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="highlightedColor" red="0.96128825674762264" green="1" blue="0.98117400446077174" alpha="1" colorSpace="calibratedRGB"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BmG-6e-l4H">
+                    <rect key="frame" x="160" y="247" width="48" height="48"/>
+                    <state key="normal" image="90s-controller.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test your wit and knowledge against others in a game of verse!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nsB-Xe-fce">
+                    <rect key="frame" x="20" y="147" width="441" height="39"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="BmG-6e-l4H" firstAttribute="top" secondItem="TGf-b7-onA" secondAttribute="top" id="0f2-VO-BVe"/>
-                <constraint firstItem="Awy-ug-aHZ" firstAttribute="top" secondItem="bjN-8A-n8y" secondAttribute="bottom" constant="10" id="42J-t6-7hO"/>
-                <constraint firstItem="J5V-l7-H6g" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7cM-qh-o4A"/>
-                <constraint firstItem="Awy-ug-aHZ" firstAttribute="leading" secondItem="3zD-cw-gm8" secondAttribute="trailing" constant="8" symbolic="YES" id="B1F-T0-dFd"/>
-                <constraint firstItem="nsB-Xe-fce" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="8" symbolic="YES" id="DRP-Pi-PHH"/>
-                <constraint firstItem="AIH-WL-kV2" firstAttribute="leading" secondItem="BmG-6e-l4H" secondAttribute="leading" id="DcG-CN-zj4"/>
-                <constraint firstItem="BmG-6e-l4H" firstAttribute="top" secondItem="J5V-l7-H6g" secondAttribute="top" id="HpZ-dM-CBL"/>
-                <constraint firstItem="uYp-7A-JYZ" firstAttribute="leading" secondItem="bjN-8A-n8y" secondAttribute="trailing" constant="8" symbolic="YES" id="IOn-uj-aLn"/>
-                <constraint firstItem="bjN-8A-n8y" firstAttribute="top" secondItem="nsB-Xe-fce" secondAttribute="bottom" constant="46" id="KP4-1v-c8q"/>
-                <constraint firstItem="nsB-Xe-fce" firstAttribute="leading" secondItem="8ie-xW-0ye" secondAttribute="leading" id="RDX-BL-Wkx"/>
-                <constraint firstItem="J5V-l7-H6g" firstAttribute="leading" secondItem="3zD-cw-gm8" secondAttribute="leading" id="Vzm-7r-QVg"/>
-                <constraint firstItem="bjN-8A-n8y" firstAttribute="top" secondItem="uYp-7A-JYZ" secondAttribute="top" id="Y1w-6b-IqB"/>
-                <constraint firstItem="nsB-Xe-fce" firstAttribute="leading" secondItem="kId-c2-rCX" secondAttribute="leading" id="aWq-IW-Vfv"/>
-                <constraint firstItem="nsB-Xe-fce" firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" id="cfd-Tl-rNd"/>
-                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="e1B-aN-2tQ"/>
-                <constraint firstItem="AIH-WL-kV2" firstAttribute="bottom" secondItem="TGf-b7-onA" secondAttribute="bottom" id="h40-te-DOz"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="uYp-7A-JYZ" secondAttribute="bottom" constant="75" id="kvE-FG-N7r"/>
-                <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="mdP-iZ-dMB"/>
-                <constraint firstItem="AIH-WL-kV2" firstAttribute="top" secondItem="BmG-6e-l4H" secondAttribute="bottom" constant="8" symbolic="YES" id="nVC-s7-GRg"/>
-                <constraint firstItem="3zD-cw-gm8" firstAttribute="top" secondItem="Awy-ug-aHZ" secondAttribute="top" id="oR4-IW-Or7"/>
-                <constraint firstItem="J5V-l7-H6g" firstAttribute="leading" secondItem="BmG-6e-l4H" secondAttribute="trailing" constant="8" symbolic="YES" id="pL3-xb-Wqh"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="TGf-b7-onA" secondAttribute="bottom" constant="73" id="qKZ-qK-c4v"/>
-                <constraint firstItem="nsB-Xe-fce" firstAttribute="trailing" secondItem="8ie-xW-0ye" secondAttribute="trailing" id="qvQ-o4-QOD"/>
-                <constraint firstItem="8ie-xW-0ye" firstAttribute="centerX" secondItem="3zD-cw-gm8" secondAttribute="centerX" id="sny-fN-TIz"/>
-                <constraint firstItem="AIH-WL-kV2" firstAttribute="top" secondItem="3zD-cw-gm8" secondAttribute="top" id="vkC-gM-MtI"/>
-                <constraint firstItem="bjN-8A-n8y" firstAttribute="leading" secondItem="Awy-ug-aHZ" secondAttribute="leading" id="w4r-2W-gIx"/>
-                <constraint firstItem="BmG-6e-l4H" firstAttribute="leading" secondItem="TGf-b7-onA" secondAttribute="trailing" constant="8" symbolic="YES" id="xTc-Lg-Pce"/>
-                <constraint firstItem="bjN-8A-n8y" firstAttribute="leading" secondItem="J5V-l7-H6g" secondAttribute="trailing" constant="8" symbolic="YES" id="zeG-Dm-a0y"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="leading" secondItem="8ie-xW-0ye" secondAttribute="leading" id="0N2-Q0-yvH"/>
+                <constraint firstItem="TGf-b7-onA" firstAttribute="top" secondItem="nsB-Xe-fce" secondAttribute="bottom" constant="61" id="0vG-l2-ZXO"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="leading" secondItem="kId-c2-rCX" secondAttribute="leading" id="2vU-8o-5c9"/>
+                <constraint firstItem="3zD-cw-gm8" firstAttribute="top" secondItem="Awy-ug-aHZ" secondAttribute="top" id="4Li-uL-Ebd"/>
+                <constraint firstItem="AIH-WL-kV2" firstAttribute="top" secondItem="BmG-6e-l4H" secondAttribute="bottom" constant="8" symbolic="YES" id="5gX-Jc-bmw"/>
+                <constraint firstItem="bjN-8A-n8y" firstAttribute="top" secondItem="J5V-l7-H6g" secondAttribute="top" id="68M-d5-8u5"/>
+                <constraint firstItem="Awy-ug-aHZ" firstAttribute="leading" secondItem="bjN-8A-n8y" secondAttribute="leading" id="89v-XK-nwY"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="8" symbolic="YES" id="8x7-aN-heG"/>
+                <constraint firstItem="BmG-6e-l4H" firstAttribute="top" secondItem="TGf-b7-onA" secondAttribute="top" id="BQ2-sL-nCS"/>
+                <constraint firstItem="3zD-cw-gm8" firstAttribute="top" secondItem="AIH-WL-kV2" secondAttribute="top" id="DeP-hl-gRa"/>
+                <constraint firstItem="bjN-8A-n8y" firstAttribute="leading" secondItem="J5V-l7-H6g" secondAttribute="trailing" constant="8" symbolic="YES" id="DpX-8c-WxG"/>
+                <constraint firstItem="J5V-l7-H6g" firstAttribute="centerX" secondItem="nsB-Xe-fce" secondAttribute="centerX" id="Gxr-Wr-dUq"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="trailing" secondItem="8ie-xW-0ye" secondAttribute="trailing" id="Hxj-zc-5Ee"/>
+                <constraint firstItem="TGf-b7-onA" firstAttribute="firstBaseline" secondItem="uYp-7A-JYZ" secondAttribute="firstBaseline" id="LRq-IS-a1H"/>
+                <constraint firstAttribute="trailing" secondItem="Lw2-YT-qSu" secondAttribute="trailing" id="Obm-hA-ld8"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="QBe-X4-j9v"/>
+                <constraint firstItem="BmG-6e-l4H" firstAttribute="leading" secondItem="AIH-WL-kV2" secondAttribute="leading" id="TSH-8K-lnq"/>
+                <constraint firstItem="nsB-Xe-fce" firstAttribute="trailing" secondItem="kId-c2-rCX" secondAttribute="trailing" id="TTg-Sc-bLx"/>
+                <constraint firstItem="AIH-WL-kV2" firstAttribute="bottom" secondItem="TGf-b7-onA" secondAttribute="bottom" id="WlU-wb-wEx"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="TGf-b7-onA" secondAttribute="bottom" constant="87" id="b3K-AF-d3A"/>
+                <constraint firstItem="J5V-l7-H6g" firstAttribute="centerX" secondItem="Lw2-YT-qSu" secondAttribute="centerX" id="cT4-ao-w9R"/>
+                <constraint firstItem="TGf-b7-onA" firstAttribute="baseline" secondItem="uYp-7A-JYZ" secondAttribute="baseline" id="iuS-Mi-hCP"/>
+                <constraint firstItem="Lw2-YT-qSu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="kNt-PE-FNf"/>
+                <constraint firstItem="J5V-l7-H6g" firstAttribute="leading" secondItem="BmG-6e-l4H" secondAttribute="trailing" constant="8" symbolic="YES" id="lFv-Mf-cxf"/>
+                <constraint firstItem="uYp-7A-JYZ" firstAttribute="leading" secondItem="bjN-8A-n8y" secondAttribute="trailing" constant="8" symbolic="YES" id="njh-yi-1Yp"/>
+                <constraint firstItem="BmG-6e-l4H" firstAttribute="leading" secondItem="TGf-b7-onA" secondAttribute="trailing" constant="8" symbolic="YES" id="onh-2s-cjk"/>
+                <constraint firstItem="8ie-xW-0ye" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottomMargin" id="t3H-Ra-38v"/>
+                <constraint firstItem="BmG-6e-l4H" firstAttribute="top" secondItem="J5V-l7-H6g" secondAttribute="top" id="u3y-Me-bUe"/>
+                <constraint firstAttribute="bottom" secondItem="Lw2-YT-qSu" secondAttribute="bottom" id="uaE-dp-K0w"/>
+                <constraint firstItem="3zD-cw-gm8" firstAttribute="leading" secondItem="J5V-l7-H6g" secondAttribute="leading" id="vB2-Wg-7sE"/>
+                <constraint firstItem="Lw2-YT-qSu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xFA-bh-YCf"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -129,5 +137,6 @@
         <image name="Dice.png" width="48" height="48"/>
         <image name="Earth.png" width="48" height="48"/>
         <image name="Happy-Face.png" width="48" height="48"/>
+        <image name="title_background.jpg" width="768" height="768"/>
     </resources>
 </document>

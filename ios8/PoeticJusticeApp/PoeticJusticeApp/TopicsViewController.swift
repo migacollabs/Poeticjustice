@@ -260,7 +260,22 @@ class TopicsViewController: UIViewController, UserDelegate {
         
     }
     
-
+    func didUserCompleteGame() -> Bool {
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
+            if (NetOpers.sharedInstance.user.level==7) {
+                var complete_count : Int = 0
+                for ar in self.activeTopics {
+                    if (ar.activeTopicRec.current_user_has_voted) {
+                        complete_count += 1;
+                    }
+                }
+                if (complete_count==64) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
     
     func updateAvatar(size : CGSize) {
         
