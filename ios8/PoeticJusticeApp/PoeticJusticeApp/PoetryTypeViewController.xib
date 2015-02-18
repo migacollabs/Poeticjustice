@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PoetryTypeViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
+            <connections>
+                <outlet property="definitionLabel" destination="Ecf-ds-YZp" id="GFy-Jv-SoR"/>
+                <outlet property="poetryTypePicker" destination="Sfe-xq-DEk" id="dRI-FU-9Pb"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="yOC-oo-Qp3">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
+                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sfe-xq-DEk">
+                    <rect key="frame" x="0.0" y="378" width="600" height="162"/>
+                </pickerView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ecf-ds-YZp">
+                    <rect key="frame" x="8" y="94" width="584" height="150"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="150" id="Rgc-fx-YSw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="yOC-oo-Qp3" firstAttribute="leading" secondItem="Sfe-xq-DEk" secondAttribute="leading" id="2T6-Op-Pce"/>
+                <constraint firstItem="Sfe-xq-DEk" firstAttribute="trailing" secondItem="yOC-oo-Qp3" secondAttribute="trailing" id="2sQ-ht-Ou1"/>
+                <constraint firstItem="Sfe-xq-DEk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6Mx-JD-nEw"/>
+                <constraint firstItem="Ecf-ds-YZp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="94" id="Kns-2J-eOU"/>
+                <constraint firstItem="yOC-oo-Qp3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="NF7-qc-agW"/>
+                <constraint firstAttribute="trailing" secondItem="yOC-oo-Qp3" secondAttribute="trailing" id="cMa-dI-NNH"/>
+                <constraint firstItem="Ecf-ds-YZp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="f5m-vZ-pwI"/>
+                <constraint firstAttribute="bottom" secondItem="Sfe-xq-DEk" secondAttribute="bottom" constant="60" id="hy7-bf-rQm"/>
+                <constraint firstAttribute="bottom" secondItem="yOC-oo-Qp3" secondAttribute="bottom" id="mGj-9K-sNs"/>
+                <constraint firstItem="Sfe-xq-DEk" firstAttribute="centerX" secondItem="Ecf-ds-YZp" secondAttribute="centerX" id="z4n-OQ-wSG"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="title_background.jpg" width="768" height="768"/>
+    </resources>
+</document>
