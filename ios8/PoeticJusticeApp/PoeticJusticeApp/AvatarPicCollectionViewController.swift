@@ -14,6 +14,8 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
     
     var avatar = Avatar()
     
+    var selectedColour = UIColor(red:0.67, green:0.93, blue:0.94, alpha:1.0)
+    
     var selectedIndexPathRow: Int = -1
 
     override func viewDidLoad() {
@@ -74,7 +76,7 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
         }
         
         if self.selectedIndexPathRow == indexPath.row{
-            cell.backgroundColor = UIColor.blueColor()
+            cell.backgroundColor = self.selectedColour
         }else{
             cell.backgroundColor = UIColor.whiteColor()
         }
@@ -87,7 +89,7 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         var cell = collectionView.cellForItemAtIndexPath(indexPath)
         if self.selectedIndexPathRow == indexPath.row{
-            cell!.backgroundColor = UIColor.blueColor()
+            cell!.backgroundColor = self.selectedColour
         }else{
             cell!.backgroundColor = UIColor.whiteColor()
         }
@@ -97,6 +99,11 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
     
     // Uncomment this method to specify if the specified item should be highlighted during tracking
     override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if self.selectedIndexPathRow > -1 && self.selectedIndexPathRow != indexPath.row{
+            var prevIndexPath = NSIndexPath(forRow:self.selectedIndexPathRow, inSection:0)
+            var cell = collectionView.cellForItemAtIndexPath(prevIndexPath)
+            cell?.backgroundColor = UIColor.whiteColor()
+        }
         self.selectedIndexPathRow = indexPath.row
         return true
     }
