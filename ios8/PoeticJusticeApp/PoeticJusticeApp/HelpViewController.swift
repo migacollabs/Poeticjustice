@@ -47,6 +47,11 @@ class HelpViewController: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+    @IBAction func handlePoetryTypeButton(sender: AnyObject) {
+        let vc = PoetryTypeViewController(nibName: "PoetryTypeViewController", bundle:nil)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

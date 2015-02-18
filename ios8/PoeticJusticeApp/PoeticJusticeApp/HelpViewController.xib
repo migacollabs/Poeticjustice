@@ -18,118 +18,110 @@
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gameplay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ev5-6N-OwT">
                     <rect key="frame" x="8" y="72" width="106" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="106" id="eSA-Iz-VSU"/>
+                        <constraint firstAttribute="width" constant="106" id="lfF-ge-LXT"/>
+                        <constraint firstAttribute="height" constant="21" id="o0r-QX-XVq"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=regular" fixedFrame="YES">
                         <rect key="frame" x="49" y="106" width="110" height="21"/>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Choose a topic and write a line.  That’s it!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miD-2U-7cP">
-                    <rect key="frame" x="8" y="101" width="579" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types of Poetry" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4f-bt-pRC">
+                    <rect key="frame" x="8" y="264" width="111" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="nBR-FA-1tf"/>
+                        <constraint firstAttribute="height" constant="21" id="odZ-aH-8QR"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="135" width="317" height="21"/>
-                    </variation>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verses and Lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m8-bd-KJH">
-                    <rect key="frame" x="8" y="130" width="147" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="147" id="F1i-Ai-dy6"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="164" width="166" height="21"/>
-                    </variation>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRe-70-Vgc">
-                    <rect key="frame" x="168" y="130" width="31" height="27"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="31" id="3bj-iX-e90"/>
-                    </constraints>
-                    <state key="normal" image="sound_24.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <attributedString key="userComments">
-                        <fragment content="Listen to an example">
-                            <attributes>
-                                <font key="NSFont" metaFont="smallSystem"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                            </attributes>
-                        </fragment>
-                    </attributedString>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="326" y="312" width="40" height="38"/>
-                    </variation>
-                    <connections>
-                        <action selector="handleButtonPress:" destination="-1" eventType="touchUpInside" id="mFX-He-FKf"/>
-                    </connections>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Earn Points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5yS-pG-0x9">
-                    <rect key="frame" x="8" y="391" width="106" height="21"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=regular" fixedFrame="YES">
                         <rect key="frame" x="49" y="520" width="94" height="21"/>
                     </variation>
                 </label>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMh-fO-YVa">
-                    <rect key="frame" x="8" y="159" width="584" height="224"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Earn Points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5yS-pG-0x9">
+                    <rect key="frame" x="8" y="331" width="106" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="224" id="ojM-Go-c9h"/>
+                        <constraint firstAttribute="height" constant="21" id="qQf-9H-kK0"/>
                     </constraints>
-                    <string key="text">A “line” is a short phrasing of words, sometimes with a rhythmic intent (such as a line in poetry or a rap verse).  For example, say the following out loud while emphasizing the numbers: "One and Two and Three and Four and".    With the basic rhythm down, here’s an example of four lines where four individual players each wrote a single line:  “I’m the first, this is my line” /
-“Since I’m up next, my line will rhyme” /
-“I’m the third, so start a-new” /
-“This is fun, so impromptu!” /</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                </textView>
-                <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="Gain points by sharing your knowledge and being creative.  And remember to have fun!" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7YU-wI-u6A">
-                    <rect key="frame" x="8" y="425" width="584" height="53"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="53" id="hdz-up-MHw"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                    <nil key="highlightedColor"/>
                     <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="549" width="317" height="69"/>
+                        <rect key="frame" x="49" y="520" width="94" height="21"/>
                     </variation>
-                </textView>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQZ-xT-xPq">
+                    <rect key="frame" x="8" y="293" width="281" height="30"/>
+                    <state key="normal" title="Read about various forms of poetry here.">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="handlePoetryTypeButton:" destination="-1" eventType="touchUpInside" id="Vbw-uT-k4r"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topics, Verses and Lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m8-bd-KJH">
+                    <rect key="frame" x="8" y="155" width="176" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="uvC-Fx-igW"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular" fixedFrame="YES">
+                        <rect key="frame" x="49" y="164" width="166" height="21"/>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVa-Pf-6KI">
+                    <rect key="frame" x="8" y="191" width="584" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="65" id="JNs-68-ZJt"/>
+                    </constraints>
+                    <string key="text">Topics are used as a guideline to provide a subject for all players to write about.  Verses can be thought of as a collection of lines for a chosen Topic.  A Line can be thought of as a single line within a poem, lyric, or rap.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0b-AC-diX">
+                    <rect key="frame" x="8" y="101" width="584" height="56"/>
+                    <string key="text">Choose a topic, start a verse, and start writing a line.  Others can join your verse for some turn-based goodness!  Join other open verses to earn more points and wax poetic!</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kho-qW-80u">
+                    <rect key="frame" x="8" y="360" width="584" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="65" id="Cqw-eb-wc9"/>
+                    </constraints>
+                    <string key="text">Every player earns a point for submitting a line.  When a verse is completed, each player can select their favorite line which gives the author of that line a very nice point boost!</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="yMh-fO-YVa" firstAttribute="top" secondItem="oRe-70-Vgc" secondAttribute="bottom" constant="2" id="05e-Ju-dFF"/>
-                <constraint firstItem="yMh-fO-YVa" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="0br-Ax-1mp"/>
-                <constraint firstItem="miD-2U-7cP" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="2rz-rD-256"/>
-                <constraint firstItem="oRe-70-Vgc" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="trailing" constant="13" id="5DM-3a-UyK"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="trailing" secondItem="ev5-6N-OwT" secondAttribute="trailing" id="5pl-4c-TEw"/>
-                <constraint firstItem="miD-2U-7cP" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="8" symbolic="YES" id="728-nA-EqR"/>
-                <constraint firstItem="1m8-bd-KJH" firstAttribute="leading" secondItem="yMh-fO-YVa" secondAttribute="leading" id="CLV-a5-Xxl"/>
-                <constraint firstAttribute="trailing" secondItem="miD-2U-7cP" secondAttribute="trailing" constant="13" id="K8e-B6-7Iz"/>
-                <constraint firstItem="oRe-70-Vgc" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="top" id="RZK-p3-slE"/>
-                <constraint firstItem="yMh-fO-YVa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="VYE-U0-9Tq"/>
-                <constraint firstItem="7YU-wI-u6A" firstAttribute="top" secondItem="5yS-pG-0x9" secondAttribute="bottom" constant="13" id="Zew-B5-kBQ"/>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="b1v-Fz-fte"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="leading" secondItem="yMh-fO-YVa" secondAttribute="leading" id="co0-BX-fEh"/>
-                <constraint firstItem="7YU-wI-u6A" firstAttribute="leading" secondItem="5yS-pG-0x9" secondAttribute="leading" id="eYp-sc-IrE"/>
-                <constraint firstItem="7YU-wI-u6A" firstAttribute="trailing" secondItem="yMh-fO-YVa" secondAttribute="trailing" id="fZH-9w-1Ae"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="top" secondItem="yMh-fO-YVa" secondAttribute="bottom" constant="8" symbolic="YES" id="fgI-17-r5T"/>
-                <constraint firstItem="1m8-bd-KJH" firstAttribute="top" secondItem="miD-2U-7cP" secondAttribute="bottom" constant="8" symbolic="YES" id="lLP-Fc-nKh"/>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="leading" secondItem="miD-2U-7cP" secondAttribute="leading" id="n1d-vh-DgB"/>
-                <constraint firstItem="yMh-fO-YVa" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="bottom" constant="8" symbolic="YES" id="vXT-BB-UEo"/>
+                <constraint firstItem="kho-qW-80u" firstAttribute="trailing" secondItem="bVa-Pf-6KI" secondAttribute="trailing" id="1t6-c2-en5"/>
+                <constraint firstItem="t0b-AC-diX" firstAttribute="leading" secondItem="ev5-6N-OwT" secondAttribute="leading" id="5AN-lh-bmg"/>
+                <constraint firstItem="kho-qW-80u" firstAttribute="top" secondItem="5yS-pG-0x9" secondAttribute="bottom" constant="8" symbolic="YES" id="Ai3-Tq-lmh"/>
+                <constraint firstItem="DQZ-xT-xPq" firstAttribute="top" secondItem="b4f-bt-pRC" secondAttribute="bottom" constant="8" symbolic="YES" id="C9C-lm-GUZ"/>
+                <constraint firstItem="bVa-Pf-6KI" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="bottom" constant="15" id="DGO-BK-e6b"/>
+                <constraint firstItem="bVa-Pf-6KI" firstAttribute="top" secondItem="t0b-AC-diX" secondAttribute="bottom" constant="34" id="FeE-tT-0G8"/>
+                <constraint firstItem="t0b-AC-diX" firstAttribute="trailing" secondItem="bVa-Pf-6KI" secondAttribute="trailing" id="Mp6-RE-iZW"/>
+                <constraint firstItem="bVa-Pf-6KI" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="NrJ-JL-BRm"/>
+                <constraint firstItem="bVa-Pf-6KI" firstAttribute="leading" secondItem="b4f-bt-pRC" secondAttribute="leading" id="SQZ-yp-6cf"/>
+                <constraint firstItem="DQZ-xT-xPq" firstAttribute="leading" secondItem="b4f-bt-pRC" secondAttribute="leading" id="U88-en-71e"/>
+                <constraint firstItem="t0b-AC-diX" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="8" symbolic="YES" id="WYt-o7-njY"/>
+                <constraint firstItem="kho-qW-80u" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="dS7-mt-Y6g"/>
+                <constraint firstItem="ev5-6N-OwT" firstAttribute="trailing" secondItem="5yS-pG-0x9" secondAttribute="trailing" id="dnR-6E-VNk"/>
+                <constraint firstItem="ev5-6N-OwT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="fwD-bJ-Gfp"/>
+                <constraint firstItem="t0b-AC-diX" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="hZ0-eS-RGO"/>
+                <constraint firstItem="DQZ-xT-xPq" firstAttribute="leading" secondItem="5yS-pG-0x9" secondAttribute="leading" id="kI6-Pt-4fn"/>
+                <constraint firstItem="1m8-bd-KJH" firstAttribute="leading" secondItem="bVa-Pf-6KI" secondAttribute="leading" id="l6P-7I-hdb"/>
+                <constraint firstItem="5yS-pG-0x9" firstAttribute="top" secondItem="DQZ-xT-xPq" secondAttribute="bottom" constant="8" symbolic="YES" id="pBP-DC-AGW"/>
+                <constraint firstItem="kho-qW-80u" firstAttribute="leading" secondItem="5yS-pG-0x9" secondAttribute="leading" id="q6g-oI-XKJ"/>
+                <constraint firstItem="b4f-bt-pRC" firstAttribute="top" secondItem="bVa-Pf-6KI" secondAttribute="bottom" constant="8" symbolic="YES" id="ta7-lF-WNG"/>
+                <constraint firstItem="1m8-bd-KJH" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="62" id="tmx-Xb-igX"/>
             </constraints>
             <point key="canvasLocation" x="83" y="-87"/>
         </view>
     </objects>
-    <resources>
-        <image name="sound_24.png" width="24" height="24"/>
-    </resources>
 </document>
