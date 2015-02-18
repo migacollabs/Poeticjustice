@@ -510,7 +510,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         return 100.0
     }
-    
 
     /*
     // MARK: - Navigation

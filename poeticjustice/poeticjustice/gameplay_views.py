@@ -21,6 +21,7 @@ from boto.s3.key import Key
 # sqlalchemy
 from sqlalchemy import or_, desc, and_, not_
 from  sqlalchemy.sql.expression import func
+from sqlalchemy.orm import aliased
 
 # pyaella imports
 from pyaella import *
@@ -526,20 +527,29 @@ def get_friends(user):
     with SQLAlchemySessionFactory() as session:
         user = User(entity=session.merge(user))
         U, UxU = ~User, ~UserXUser
-        for u, uxu in session.query(U, UxU).\
+        MyFriend = aliased(U, name="friend")
+        for u, uxu, friend in session.query(U, UxU, MyFriend).\
             filter(U.id==UxU.friend_id).\
-            filter(UxU.user_id==user.id):
+            filter(UxU.user_id==user.id).\
+            filter(MyFriend.id==U.id):
             friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
-                'email_address':u.email_address, 'user_name':u.user_name, 'src':'me'})
+                'email_address':u.email_address, 'user_name':u.user_name, 'src':'me',
+                'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs
+                })
 
         # others who have invited me
-        for u, uxu in session.query(U, UxU).\
+        for u, uxu, friend in session.query(U, UxU, MyFriend).\
             filter(UxU.user_id==U.id).\
-            filter(UxU.friend_id==user.id):
+            filter(UxU.friend_id==user.id).\
+            filter(MyFriend.id==U.id):
             friends.append({'friend_id':uxu.user_id, 'approved':uxu.approved,
-                'email_address':u.email_address, 'user_name':u.user_name, 'src':'them'})
+                'email_address':u.email_address, 'user_name':u.user_name, 'src':'them',
+                'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs
+                })
 
-    return {"results":friends}
+    res = {"results":friends}
+    print 'RESULTS', res
+    return res
 
 
 def get_verse(verse_id, user_id):

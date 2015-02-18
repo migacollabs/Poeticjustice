@@ -15,6 +15,10 @@ struct FriendRec {
     var email_address : String = ""
     var user_name : String = ""
     var approved : Bool = false
+    var user_score: Int = -1
+    var level: Int = -1
+    var user_prefs: String = ""
+    var avatar_name: String = "avatar_mexican_guy.png"
 }
 
 import UIKit
@@ -38,7 +42,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         title = "Friends"
         
-        self.myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier : "cell")
+//        self.myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier : "cell")
+        self.myTableView.registerNib(UINib(nibName: "FriendsTableViewCell", bundle: nil), forCellReuseIdentifier: "FriendCell")
         self.myTableView.dataSource = self
         self.myTableView.delegate = self
         self.friendEmailAddress.delegate = self
@@ -166,12 +171,39 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 fr.approved = ap
                             }
                             
+                            if let score = f["user_score"] as? Int {
+                                fr.user_score = score
+                            }
+                            
+                            if let up = f["user_prefs"] as? String {
+                                fr.user_prefs = up
+                                
+                                if !up.isEmpty{
+                                    let upData = (up as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                                    let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                        upData!, options: NSJSONReadingOptions.MutableContainers,
+                                        error: nil) as NSDictionary
+                                    if let avn = userPrefs["avatar_name"] as? String{
+                                        fr.avatar_name = avn
+                                    }
+                                }
+                                
+                            }
+                            
+                            if let lvl = f["level"] as? Int{
+                                fr.level = lvl
+                            }
+                            
                             self.friends.append(fr)
                             
                         }
                         
                         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                             dispatch_async(dispatch_get_main_queue(),{
+                                
+                                self.friendEmailAddress.text = ""
+                                self.friendEmailAddress.resignFirstResponder()
+                                
                                 self.myTableView.reloadData()
                                 
                                 // TODO: maybe make the badge value friend request counts and update
@@ -262,12 +294,51 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
+        
+        var cell : FriendsTableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("FriendCell") as FriendsTableViewCell
         if let fr = self.friends[indexPath.row] as FriendRec? {
-            cell.textLabel?.text = get_display_name(fr)
+            cell.emailAddress.text = get_display_name(fr)
+            cell.points.text = String(fr.user_score)
+            cell.level.text = String(fr.level)
+            cell.avatar.image = UIImage(named: fr.avatar_name)
         }
+        
+        
         return cell
     }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return 100.0
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            println("commitEditingStyle called")
+
+            if let friend = self.friends[indexPath.row] as FriendRec? {
+                
+                removeFriend = friend
+                
+                if (!is_busy) {
+                    is_busy = true
+                    if (NetOpers.sharedInstance.user.is_logged_in()) {
+                        
+                        delete_friend(removeFriend!)
+                        
+                        //tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                    }
+                }
+                
+            }
+        }
+    }
+    
+    
     
     func get_display_name(fr : FriendRec) -> String {
         if fr.src=="me" {
@@ -295,7 +366,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             removeFriend = friend
         }
 
-        var cell : UITableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
+        var cell : FriendsTableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("FriendCell") as FriendsTableViewCell
 
         if let f = self.friends[indexPath.row] as FriendRec? {
             
