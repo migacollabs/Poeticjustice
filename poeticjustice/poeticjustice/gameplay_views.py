@@ -722,7 +722,7 @@ def get_active_topics(request):
                         }
                 
                 if user.open_verse_ids:
-                    # friend topics that i've joined
+                    # world or friend open topics that i've joined
                     for r in session.query(V, T, U).\
                         filter(V.verse_category_topic_id==T.id).\
                         filter(U.id==V.owner_id).\

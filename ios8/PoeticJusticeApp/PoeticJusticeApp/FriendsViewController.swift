@@ -206,11 +206,22 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 
                                 self.myTableView.reloadData()
                                 
+                                var badgeCount : Int = 0
+                                for fr : FriendRec in self.friends {
+                                    if (!fr.approved && fr.src=="them") {
+                                        badgeCount += 1
+                                    }
+                                }
+                                
                                 // TODO: maybe make the badge value friend request counts and update
                                 // the name of the badge to the total count.  for example the
                                 // the name could '7 Friends' with a badge of '2' to show
                                 // the user has 7 friends and 2 friend requests
-                                self.navigationController?.tabBarItem.badgeValue = String(self.friends.count)
+                                if (badgeCount>0) {
+                                    self.navigationController?.tabBarItem.badgeValue = String(badgeCount)
+                                } else {
+                                    self.navigationController?.tabBarItem.badgeValue = nil
+                                }
                                 
                                 self.is_busy = false
                                 
