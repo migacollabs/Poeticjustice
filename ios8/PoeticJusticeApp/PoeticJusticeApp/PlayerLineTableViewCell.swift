@@ -13,6 +13,7 @@ class PlayerLineTableViewCell: UITableViewCell {
     @IBOutlet weak var verseLine: UITextView!
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var levelBadgeImage: UIImageView!
     
     
     override func awakeFromNib() {

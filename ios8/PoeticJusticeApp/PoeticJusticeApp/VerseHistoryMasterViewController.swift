@@ -14,7 +14,7 @@ struct VerseHistoryRec{
     var title = ""
     var owner_id = -1
     var user_ids:[Int] = []
-    var lines_recs:[VerseLineRec] = []
+    var lines_recs = Dictionary<Int,VerseLineRec>()
     var players = Dictionary<Int,VersePlayerRec>()
 }
 
@@ -27,6 +27,9 @@ struct VerseLineRec{
 struct VersePlayerRec{
     var user_id = -1
     var user_name = ""
+    var user_score = -1
+    var level = 1
+    var avatar_name = "avatar_mexican_guy.png"
 }
 
 class VerseHistoryMasterViewController: UITableViewController {
@@ -117,7 +120,7 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     var p:Int? = (line_position as? String)!.toInt()
                                     if let lp = p{
                                         var vlr = VerseLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
-                                        vh.lines_recs.append(vlr)
+                                        vh.lines_recs[vlr.position] = vlr
                                         
                                     }else{
                                         println("corrupt data")
@@ -132,13 +135,39 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     data!, options: NSJSONReadingOptions.MutableContainers,
                                     error: nil) as NSArray
                                 for player in playersArray as NSArray{
+                                    
+                                    // U.id, U.user_name, U.user_prefs, U.user_score, U.level
                                     var pid = player[0] as Int
                                     var usrnm = player[1] as String
-                                    vh.players[pid] = VersePlayerRec(user_id: pid, user_name: usrnm)
+                                    
+                                    var avnStr:String? = player[2] as? String
+                                    if avnStr == nil{
+                                        avnStr = ""
+                                    }
+                                    
+                                    if !avnStr!.isEmpty{
+                                        let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                                        let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                            upData!, options: NSJSONReadingOptions.MutableContainers,
+                                            error: nil) as NSDictionary
+                                        avnStr = userPrefs["avatar_name"] as? String
+                                    }else{
+                                        avnStr = "avatar_mexican_guy.png"
+                                    }
+                                    
+                                    var score = player[3] as Int
+                                    var level = player[4] as Int
+                                    
+                                    vh.players[pid] = VersePlayerRec(
+                                                        user_id: pid,
+                                                        user_name: usrnm,
+                                                        user_score:score,
+                                                        level:level,
+                                                        avatar_name:avnStr!)
                                 }
                                 
                             }
-                            
+
                             self.verses.append(vh)
                             
                         }

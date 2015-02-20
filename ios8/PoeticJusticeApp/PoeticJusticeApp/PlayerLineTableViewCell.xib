@@ -40,19 +40,30 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="91J-7u-hd0">
+                    <rect key="frame" x="499" y="23" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="H3M-XM-VAT"/>
+                        <constraint firstAttribute="width" secondItem="91J-7u-hd0" secondAttribute="height" multiplier="1:1" id="SkC-ev-4ly"/>
+                        <constraint firstAttribute="width" constant="24" id="WyJ-c5-aHx"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Lnh-Bi-tme" firstAttribute="leading" secondItem="91J-7u-hd0" secondAttribute="trailing" constant="15" id="9ZT-dI-H2X"/>
                 <constraint firstItem="Lnh-Bi-tme" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="IsF-3S-s1u"/>
                 <constraint firstItem="HVj-Yx-891" firstAttribute="leading" relation="lessThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" constant="431" id="M9I-9d-IRA"/>
                 <constraint firstItem="oLd-p9-SEW" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="eHS-sz-ZD1"/>
                 <constraint firstAttribute="trailing" secondItem="Lnh-Bi-tme" secondAttribute="trailing" constant="8" id="gh8-wn-nec"/>
                 <constraint firstItem="oLd-p9-SEW" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="hHT-Ht-HuA"/>
                 <constraint firstAttribute="trailing" secondItem="HVj-Yx-891" secondAttribute="trailing" constant="8" id="hpt-JJ-63Z"/>
+                <constraint firstItem="91J-7u-hd0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="23" id="njD-J9-it4"/>
                 <constraint firstItem="HVj-Yx-891" firstAttribute="top" secondItem="Lnh-Bi-tme" secondAttribute="bottom" constant="8" id="rMB-J1-y2A"/>
             </constraints>
             <connections>
                 <outlet property="avatarImage" destination="Lnh-Bi-tme" id="wq4-bf-qfB"/>
+                <outlet property="levelBadgeImage" destination="91J-7u-hd0" id="fmZ-TS-bWV"/>
                 <outlet property="userName" destination="HVj-Yx-891" id="EQY-Yq-tdx"/>
                 <outlet property="verseLine" destination="oLd-p9-SEW" id="u3h-Ra-Hrt"/>
             </connections>

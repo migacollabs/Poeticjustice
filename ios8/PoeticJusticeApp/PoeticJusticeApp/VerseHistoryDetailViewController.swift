@@ -13,6 +13,7 @@ struct PlayerLines{
     var userName = ""
     var line = ""
     var avatar = "avatar_mexican_guy.png"
+    var level = 1
 }
 
 class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
@@ -20,6 +21,7 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, U
     @IBOutlet weak var verseTitle: UILabel!
     @IBOutlet weak var verseText: UITextView!
     @IBOutlet weak var playersTable: UITableView!
+    @IBOutlet weak var topicIconImage: UIImageView!
     
     var playerData: [PlayerLines] = []
     
@@ -37,18 +39,33 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, U
             if let title = self.verseTitle{
                 title.text = vhr.title
             }
-
-            for lineRec in vhr.lines_recs{
+            
+        
+                
+            // sort asc because lines have pks that asc
+            let sortedLinePos = Array(vhr.lines_recs.keys).sorted(<)
+            
+            for linePos in sortedLinePos{
+                
+                var lineRec = vhr.lines_recs[linePos]!
+                
                 var user_name = ""
+                var level = 1
+                var avatar = "avatar_mexican_guy.png"
                 
                 if let pr = vhr.players[lineRec.player_id]{
                     user_name = pr.user_name
+                    level = pr.level
+                    avatar = pr.avatar_name
                 }
                 
-                var pl = PlayerLines(userId: lineRec.player_id, userName: user_name, line: lineRec.text, avatar: "avatar_mexican_guy.png")
+                var pl = PlayerLines(userId: lineRec.player_id,
+                    userName: user_name, line: lineRec.text, avatar: avatar, level:level)
+                
                 self.playerData.append(pl)
                 
             }
+            
         }
     }
     
@@ -87,11 +104,12 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell : PlayerTableViewCell = self.playersTable.dequeueReusableCellWithIdentifier("playerCell") as PlayerTableViewCell
+        var cell : PlayerLineTableViewCell = self.playersTable.dequeueReusableCellWithIdentifier("PlayerCell") as PlayerLineTableViewCell
         var playerLine = playerData[indexPath.row]
         cell.avatarImage.image = UIImage(named:playerLine.avatar)
         cell.userName.text = playerLine.userName
         cell.verseLine.text = playerLine.line
+        cell.levelBadgeImage.image = UIImage(named: "lvl_" + String(playerLine.level) + ".png")
         return cell
     }
     
@@ -99,15 +117,9 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, U
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+ 
 }
+
+
+
 

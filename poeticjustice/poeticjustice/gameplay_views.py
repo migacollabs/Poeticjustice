@@ -1508,12 +1508,13 @@ def get_verse_to_view(verse_id, session):
             sq = (session.query(U.id)
                     .filter(U.id.in_(verse.user_ids))
                     ).subquery()
-            rp = (session.query(U.id, U.user_name, U.user_prefs)
+            rp = (session.query(U.id, U.user_name, U.user_prefs, U.user_score, U.level)
                     .filter(U.id.in_(sq))
                     ).all()
 
             # users [(id, email_address)]
-            users = [(row[0], row[1], row[2] if row[0] else "") for row in rp]
+            users = [(row[0], row[1], row[2] if row[0] else "", row[3], row[4]) for row in rp]
+            print 'users', users
             verse = Verse(entity=verse)
 
         else:
@@ -1628,7 +1629,10 @@ def close_verse_add_to_history(verse_id, user, session):
 
         for user_data in jsonable['results']['user_data']:
 
-            user_id, _, _ = user_data
+            print user_data
+            # U.id, U.user_name, U.user_prefs, U.user_score, U.level
+
+            user_id, user_name, user_prefs, score, level = user_data
 
             lines_json = json.dumps(jsonable['results']['lines'])
 
@@ -1642,7 +1646,7 @@ def close_verse_add_to_history(verse_id, user, session):
                     title=verse.title,
                     lines_record=lines_json,
                     players_record=players_json,
-                    level=user.level
+                    level=level
                     ).save(session)
 
         return verse, jsonable, user_version_history

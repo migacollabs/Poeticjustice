@@ -46,9 +46,12 @@
                                                         <constraint firstAttribute="height" constant="54" id="WM9-g5-J15"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6O-Qg-vzb">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r6O-Qg-vzb">
                                                     <rect key="frame" x="8" y="8" width="420" height="54"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <accessibility key="accessibilityConfiguration">
+                                                        <accessibilityTraits key="traits" none="YES" notEnabled="YES"/>
+                                                    </accessibility>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="420" id="1ba-Pk-WUy"/>
                                                         <constraint firstAttribute="height" constant="54" id="ZDF-MS-Kv7"/>
@@ -76,6 +79,14 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cWP-l9-JCh">
+                                                    <rect key="frame" x="504" y="23" width="24" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="2Ic-U7-QxE"/>
+                                                        <constraint firstAttribute="width" secondItem="cWP-l9-JCh" secondAttribute="height" multiplier="1:1" id="95R-QT-wk6"/>
+                                                        <constraint firstAttribute="width" constant="24" id="ggs-GM-0xq"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="qyJ-ld-R1v" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="r6O-Qg-vzb" secondAttribute="trailing" constant="108" id="3Hg-hO-deE"/>
@@ -87,6 +98,8 @@
                                                     <variation key="heightClass=compact-widthClass=regular" constant="5"/>
                                                 </constraint>
                                                 <constraint firstItem="r6O-Qg-vzb" firstAttribute="leading" secondItem="9BQ-sx-cyx" secondAttribute="leadingMargin" id="Sjs-V4-MRI"/>
+                                                <constraint firstItem="qyJ-ld-R1v" firstAttribute="leading" secondItem="cWP-l9-JCh" secondAttribute="trailing" constant="8" id="UxS-3g-9gO"/>
+                                                <constraint firstItem="cWP-l9-JCh" firstAttribute="top" secondItem="9BQ-sx-cyx" secondAttribute="topMargin" constant="15" id="Wdl-4q-S41"/>
                                                 <constraint firstItem="r6O-Qg-vzb" firstAttribute="top" secondItem="9BQ-sx-cyx" secondAttribute="topMargin" id="bDg-Wi-Yeb"/>
                                                 <constraint firstItem="Jxu-vD-bH5" firstAttribute="leading" relation="lessThanOrEqual" secondItem="9BQ-sx-cyx" secondAttribute="leadingMargin" constant="429" id="bQ3-pP-i0Z">
                                                     <variation key="heightClass=compact-widthClass=regular" constant="626"/>
@@ -102,6 +115,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="avatarImage" destination="qyJ-ld-R1v" id="UJ5-Wb-Fdw"/>
+                                            <outlet property="levelBadgeImage" destination="cWP-l9-JCh" id="Qq9-mU-AcR"/>
                                             <outlet property="userName" destination="Jxu-vD-bH5" id="M9a-zp-rjL"/>
                                             <outlet property="verseLine" destination="r6O-Qg-vzb" id="HS8-ER-lSF"/>
                                         </connections>

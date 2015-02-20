@@ -38,6 +38,8 @@ struct VerseResultScreenLineRec{
 struct VerseResultScreenPlayerRec{
     var user_id = -1
     var user_name = ""
+    var user_score = -1
+    var level = 1
     var avatar_name = "avatar_mexican_guy.png"
 }
 
@@ -224,8 +226,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                     avnStr = "avatar_mexican_guy.png"
                                 }
                                 
+                                var pnts = player[3] as Int
+                                var lvl = player[4] as Int
+                                
                                 vrsr.players[pid] = VerseResultScreenPlayerRec(
-                                    user_id: pid, user_name: usrnm, avatar_name:avnStr!)
+                                    user_id: pid, user_name: usrnm, user_score:pnts, level:lvl,
+                                    avatar_name:avnStr!)
                                 
                             }
                             
@@ -395,6 +401,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         found = true
                         let playerRec : VerseResultScreenPlayerRec = vr.players[vlr.player_id]!
                         pc.avatarImage.image = UIImage(named: playerRec.avatar_name)
+                        pc.levelBadgeImage.image = UIImage(named: "lvl_" + String(playerRec.level) + ".png")
                         pc.userName.text = playerRec.user_name
                         break
                     }
