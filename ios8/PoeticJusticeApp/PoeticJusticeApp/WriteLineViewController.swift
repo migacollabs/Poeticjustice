@@ -11,9 +11,47 @@ import Foundation
 import iAd
 import AVFoundation
 
+class UIVerticalAlignLabel: UILabel {
+    enum VerticalAlignment : Int {
+        case VerticalAlignmentTop = 0
+        case VerticalAlignmentMiddle = 1
+        case VerticalAlignmentBottom = 2
+    }
+    
+    var verticalAlignment : VerticalAlignment = .VerticalAlignmentTop {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
+    required init(coder aDecoder: NSCoder){
+        super.init(coder: aDecoder)
+    }
+    
+    override func textRectForBounds(bounds: CGRect, limitedToNumberOfLines: Int) -> CGRect {
+        let rect = super.textRectForBounds(bounds, limitedToNumberOfLines: limitedToNumberOfLines)
+        
+        switch(verticalAlignment) {
+        case .VerticalAlignmentTop:
+            return CGRectMake(bounds.origin.x, bounds.origin.y, rect.size.width, rect.size.height)
+        case .VerticalAlignmentMiddle:
+            return CGRectMake(bounds.origin.x, bounds.origin.y + (bounds.size.height - rect.size.height) / 2, rect.size.width, rect.size.height)
+        case .VerticalAlignmentBottom:
+            return CGRectMake(bounds.origin.x, bounds.origin.y + (bounds.size.height - rect.size.height), rect.size.width, rect.size.height)
+        default:
+            return bounds
+        }
+    }
+    
+    override func drawTextInRect(rect: CGRect) {
+        let r = self.textRectForBounds(rect, limitedToNumberOfLines: self.numberOfLines)
+        super.drawTextInRect(r)
+    }
+}
+
 struct VerseRec {
     var id : Int = -1
-    var next_index_user_ids : Int = -1 // TODO: remove this, replace with next_index_user_ids
+    var next_index_user_ids : Int = -1
     var owner_id : Int = -1
     var lines : [String] = []
     var is_complete : Bool = false
@@ -46,7 +84,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     @IBOutlet var cancelButton: UIButton!
     var iAdBanner: ADBannerView?
     
-    @IBOutlet var verseView: UITextView!
+    @IBOutlet var verseView: UILabel!
     
     var line : String = "";
     var verseId : Int = 0;
@@ -108,7 +146,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     func updateNavigationTitle() {
         if let t = topic {
             if let ti = t.name as? String {
-                title = ti + " / " + String(self.verse.user_ids.count) + " players"
+                title = ti
             }
         }
     }
@@ -283,13 +321,32 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                             dispatch_async(dispatch_get_main_queue(),{
                                 
-                                self.verseView.text = ""
+                                var texts : NSMutableAttributedString = NSMutableAttributedString(string: "")
                                 
-                                for l : String in self.verse.lines {
-                                    self.verseView.text = self.verseView.text + "\n" + l
+                                var lineNum : Int = 0
+                                for i in 0...((self.verse.user_ids.count*4)-1) {
+                                    
+                                    lineNum = i + 1
+                                    
+                                    if (i < self.verse.lines.count) {
+                                        
+                                        var line = NSMutableAttributedString(string:"\(lineNum). " + self.verse.lines[i] + "\n")
+                                    
+                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: NSRange(location: 0, length: countElements(String(lineNum))+1))
+                                        
+                                        texts.appendAttributedString(line)
+                                    } else {
+                                        
+                                        var line = NSMutableAttributedString(string:"\(lineNum).\n")
+                                        
+                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: NSRange(location: 0, length: countElements(String(lineNum))+1))
+                                        
+                                        texts.appendAttributedString(line)
+                                        
+                                    }
                                 }
                                 
-                                self.verseView.text = self.verseView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                                self.verseView.attributedText = texts
                                 
                                 if NetOpers.sharedInstance.user.is_logged_in() {
                                     if (!self.verse.is_complete) {
@@ -305,30 +362,28 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                 
                                 self.updateNavigationTitle()
                                 
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                                
                                 var i = 0
-                                for user_id in self.verse.user_ids{
-                                    if let pr = self.verse.players[user_id]{
-                                        
-                                        switch i{
-                                        case 0:
-                                            self.player1Avatar.image = UIImage(named: pr.avatar_name)
-                                        case 1:
-                                            self.player2Avatar.image = UIImage(named: pr.avatar_name)
-                                        case 2:
-                                            self.player3Avatar.image = UIImage(named: pr.avatar_name)
-                                        case 3:
-                                            self.player4Avatar.image = UIImage(named: pr.avatar_name)
-                                        case 4:
-                                            self.player5Avatar.image = UIImage(named: pr.avatar_name)
-                                        default:
-                                            ()
-                                        }
-                                        i++
+                                for user_id in self.verse.user_ids {
+                                
+                                    switch i{
+                                    case 0:
+                                        self.player1Avatar.image = self.getPlayerAvatarImageName(user_id)
+                                    case 1:
+                                        self.player2Avatar.image = self.getPlayerAvatarImageName(user_id)
+                                    case 2:
+                                        self.player3Avatar.image = self.getPlayerAvatarImageName(user_id)
+                                    case 3:
+                                        self.player4Avatar.image = self.getPlayerAvatarImageName(user_id)
+                                    case 4:
+                                        self.player5Avatar.image = self.getPlayerAvatarImageName(user_id)
+                                    default:
+                                        ()
                                     }
+                                    
+                                    i++
                                 }
                                 
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                 
                                 self.is_busy = false
                             })
@@ -352,6 +407,13 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         
     }
     
+    func getPlayerAvatarImageName(userId : Int) -> UIImage {
+        if let pr = self.verse.players[userId]{
+            return UIImage(named: pr.avatar_name)!
+        }
+        return UIImage(named: "man_48.png")!
+    }
+    
     var audioPlayer : AVAudioPlayer?
     
     func playButtonSound(){
@@ -371,13 +433,35 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         println(error)
     }
     
+    func getCountTurnsLeft() -> Int {
+        if let playerPos : Int = find(self.verse.user_ids, NetOpers.sharedInstance.user.id) {
+            if (playerPos > self.verse.next_index_user_ids) {
+                return playerPos - self.verse.next_index_user_ids
+            } else if (playerPos < self.verse.next_index_user_ids) {
+                return (self.verse.user_ids.count) - self.verse.next_index_user_ids + playerPos
+            }
+        }
+        return 0
+    }
+    
     func updateSendPlaceholder() {
         if (is_my_turn) {
+            self.setLine.enabled = true
             self.sendButton.hidden = false
             self.setLine.placeholder = "It's your turn!"
         } else {
             self.sendButton.hidden = true
-            self.setLine.placeholder  = "Your turn is coming up soon!"
+            self.setLine.enabled = false
+            if (NetOpers.sharedInstance.user.is_logged_in()) {
+                var turnsLeft : Int = self.getCountTurnsLeft()
+                if (turnsLeft==1) {
+                    self.setLine.placeholder = "You're up in \(turnsLeft) turn!"
+                } else {
+                    self.setLine.placeholder = "You're up in \(turnsLeft) turns!"
+                }
+            } else {
+                self.setLine.placeholder = "Your turn is coming up soon!"
+            }
         }
     }
 

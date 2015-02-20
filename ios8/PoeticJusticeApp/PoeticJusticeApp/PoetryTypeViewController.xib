@@ -22,20 +22,20 @@
                 </imageView>
                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sfe-xq-DEk">
                     <rect key="frame" x="0.0" y="378" width="600" height="162"/>
-                </pickerView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ecf-ds-YZp">
-                    <rect key="frame" x="8" y="94" width="584" height="150"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="150" id="Rgc-fx-YSw"/>
+                        <constraint firstAttribute="height" constant="162" id="7RD-ik-gMw"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                </pickerView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="14" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ecf-ds-YZp">
+                    <rect key="frame" x="8" y="94" width="584" height="20"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Definitions borrowed from Wikipedia" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPE-2e-fxa">
                     <rect key="frame" x="161" y="528" width="279" height="12"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="279" id="VXQ-v1-w9n"/>
+                        <constraint firstAttribute="width" constant="279" id="FB3-i4-Kcw"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="10"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -44,19 +44,20 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="yOC-oo-Qp3" firstAttribute="leading" secondItem="Sfe-xq-DEk" secondAttribute="leading" id="2T6-Op-Pce"/>
-                <constraint firstItem="Sfe-xq-DEk" firstAttribute="trailing" secondItem="yOC-oo-Qp3" secondAttribute="trailing" id="2sQ-ht-Ou1"/>
-                <constraint firstItem="Sfe-xq-DEk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6Mx-JD-nEw"/>
-                <constraint firstItem="BPE-2e-fxa" firstAttribute="centerX" secondItem="Sfe-xq-DEk" secondAttribute="centerX" id="B1k-je-pHB"/>
-                <constraint firstItem="Ecf-ds-YZp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="94" id="Kns-2J-eOU"/>
-                <constraint firstItem="yOC-oo-Qp3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="NF7-qc-agW"/>
-                <constraint firstAttribute="trailing" secondItem="yOC-oo-Qp3" secondAttribute="trailing" id="cMa-dI-NNH"/>
+                <constraint firstItem="Sfe-xq-DEk" firstAttribute="trailing" secondItem="yOC-oo-Qp3" secondAttribute="trailing" id="1pS-xY-Hiz"/>
+                <constraint firstItem="Sfe-xq-DEk" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ecf-ds-YZp" secondAttribute="bottom" constant="75" id="9ul-Av-Geb"/>
+                <constraint firstItem="Sfe-xq-DEk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Uc2-B8-aQG"/>
+                <constraint firstItem="Ecf-ds-YZp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="WzO-HH-LxF"/>
+                <constraint firstItem="Ecf-ds-YZp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="94" id="Yok-Ni-D7Y"/>
+                <constraint firstItem="yOC-oo-Qp3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bUy-eF-SyY"/>
                 <constraint firstItem="BPE-2e-fxa" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Sfe-xq-DEk" secondAttribute="bottom" constant="31" id="cw3-R4-V3Z"/>
-                <constraint firstItem="Ecf-ds-YZp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="f5m-vZ-pwI"/>
-                <constraint firstItem="BPE-2e-fxa" firstAttribute="bottom" secondItem="Sfe-xq-DEk" secondAttribute="bottom" id="gOT-Kp-t4E"/>
-                <constraint firstAttribute="bottom" secondItem="Sfe-xq-DEk" secondAttribute="bottom" constant="60" id="hy7-bf-rQm"/>
-                <constraint firstAttribute="bottom" secondItem="yOC-oo-Qp3" secondAttribute="bottom" id="mGj-9K-sNs"/>
-                <constraint firstItem="Sfe-xq-DEk" firstAttribute="centerX" secondItem="Ecf-ds-YZp" secondAttribute="centerX" id="z4n-OQ-wSG"/>
+                <constraint firstAttribute="trailing" secondItem="yOC-oo-Qp3" secondAttribute="trailing" id="dRI-j1-uUo"/>
+                <constraint firstAttribute="bottom" secondItem="Sfe-xq-DEk" secondAttribute="bottom" constant="60" id="dda-TB-XrX"/>
+                <constraint firstItem="Sfe-xq-DEk" firstAttribute="centerX" secondItem="Ecf-ds-YZp" secondAttribute="centerX" id="inG-Fz-iqU"/>
+                <constraint firstItem="Sfe-xq-DEk" firstAttribute="leading" secondItem="yOC-oo-Qp3" secondAttribute="leading" id="lQv-kM-sda"/>
+                <constraint firstItem="BPE-2e-fxa" firstAttribute="centerX" secondItem="Sfe-xq-DEk" secondAttribute="centerX" id="mjU-gB-e13"/>
+                <constraint firstItem="BPE-2e-fxa" firstAttribute="bottom" secondItem="Sfe-xq-DEk" secondAttribute="bottom" id="uyi-u5-y3x"/>
+                <constraint firstAttribute="bottom" secondItem="yOC-oo-Qp3" secondAttribute="bottom" id="vgq-iA-7s1"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
