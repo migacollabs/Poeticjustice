@@ -35,7 +35,7 @@ struct ActiveTopicRec {
     
     func getTopicStateImageName() -> String {
         
-        println("ActiveTopicRec.getTopicStateImageName \(current_user_has_voted)")
+        // println("ActiveTopicRec.getTopicStateImageName \(current_user_has_voted)")
         
         if (self.src=="mine") {
             if (self.current_user_has_voted) {
@@ -78,21 +78,35 @@ class ActiveTopic {
     }
     
     private var topicButton : TopicButton?  // sort of a permanent button
-    private var topicStateImage : UIImageView? // transient
+    private var topicStateImage : UIImageView = UIImageView() // permanent really
     private var topicLabel : TopicLabel? // permanent, text transient
     private var buttonIndex : Int = -1 // permanent
     private var refreshed : Bool = false // used to diff active topics
     
     private var topicStateAnimDuration : NSTimeInterval = 4.0
     
-    init(activeTopicRec : ActiveTopicRec, topicButton : TopicButton, topicStateImage : UIImageView, topicLabel : TopicLabel, buttonIndex : Int) {
+    init(activeTopicRec : ActiveTopicRec, topicButton : TopicButton, topicLabel : TopicLabel, buttonIndex : Int) {
         self.activeTopicRec = activeTopicRec
         self.topicButton = topicButton
-        self.topicStateImage = topicStateImage
         self.topicLabel = topicLabel
         self.buttonIndex = buttonIndex
         
+        self.topicStateImage.image = UIImage(named: activeTopicRec.getTopicStateImageName());
+        
+        self.topicStateImage.frame = CGRect(
+            x: topicButton.center.x - (topicButton.frame.width * 0.5),
+            y: topicButton.center.y - (topicButton.frame.height * 0.5),
+            width: topicButton.frame.width ,
+            height: topicButton.frame.height
+        )
+        
+        println("Created topicStateImage topic_id \(activeTopicRec.topic_id) - \(topicStateImage) for button index \(topicButton.index) and verse_id \(activeTopicRec.verse_id)")
+        
         self.refreshed = true
+    }
+    
+    func getTopicStateImage() -> UIImageView {
+        return self.topicStateImage
     }
     
     func setStale() {
@@ -106,14 +120,15 @@ class ActiveTopic {
     func unload() {
         // unload resources before remove this instance
         // from a list
-        self.topicStateImage?.removeFromSuperview()
-        self.topicStateImage = nil
+        println("unloading ActiveTopic for topic_id \(self.activeTopicRec.topic_id)")
+        self.topicStateImage.image = nil
+        // self.topicStateImage.removeFromSuperview()
         self.topicLabel?.text = ""
     }
     
     func getCountTurnsLeft() -> Int {
         if let playerPos : Int = find(activeTopicRec.verse_user_ids, NetOpers.sharedInstance.user.id) {
-            println("playerPos \(playerPos) in verse_user_ids \(activeTopicRec.verse_user_ids) next_index \(activeTopicRec.next_index_user_ids)")
+            // println("playerPos \(playerPos) in verse_user_ids \(activeTopicRec.verse_user_ids) next_index \(activeTopicRec.next_index_user_ids)")
             if (playerPos > activeTopicRec.next_index_user_ids) {
                 return playerPos - activeTopicRec.next_index_user_ids
             } else if (playerPos < activeTopicRec.next_index_user_ids) {
@@ -131,7 +146,7 @@ class ActiveTopic {
             
             let counts : Int = self.getCountTurnsLeft()
             
-            println("refresh active topic_id \(activeTopicRec.topic_id) counts \(counts)")
+            println("refresh active topic_id \(activeTopicRec.topic_id) - turns left for player \(counts)")
             
             topicStateAnimDuration = NSTimeInterval(counts) * 1.5
             
@@ -149,18 +164,14 @@ class ActiveTopic {
     func animate() {
         println("animating topic state for topic_id \(activeTopicRec.topic_id)")
         
-        self.topicStateImage?.image = nil
-        
         // reset the image so it stops animation
-        self.topicStateImage?.image = UIImage(named: self.activeTopicRec.getTopicStateImageName());
+        self.topicStateImage.image = UIImage(named: self.activeTopicRec.getTopicStateImageName());
         
         // rotate it if necessary
         if (self.activeTopicRec.current_user_has_voted==false) {
             if (self.isUserParticipating()) {
                 // if the user is a participant and the turns left changes, display it
-                if let t = self.topicStateImage {
-                    self.rotateImage(t, duration: self.topicStateAnimDuration)
-                }
+                self.rotateImage(self.topicStateImage, duration: self.topicStateAnimDuration)
             }
         }
     }
@@ -212,7 +223,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     var iAdBanner: ADBannerView?
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
-    var activeTopics:[ActiveTopic] = []
+    var activeTopics : Dictionary<Int, ActiveTopic> = Dictionary<Int, ActiveTopic>() // key = topic_id
     var should_begin_banner = true
     var lastTabbed : NSDate?
     var audioPlayer : AVAudioPlayer?
@@ -264,7 +275,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             if (NetOpers.sharedInstance.user.level==7) {
                 var complete_count : Int = 0
-                for ar in self.activeTopics {
+                for (topicId, ar) in self.activeTopics {
                     if (ar.activeTopicRec.current_user_has_voted) {
                         complete_count += 1;
                     }
@@ -303,17 +314,18 @@ class TopicsViewController: UIViewController, UserDelegate {
         
         println("TopicsViewController.viewWillAppear called")
         
+        is_busy = true
+        
         // very important, the user changed in the same app instance
         // so reinitialize everything
         if (NetOpers.sharedInstance.user.email_address != self.lastUserEmailAddress) {
             self.topic_order.removeAll(keepCapacity: false)
             self.topics.removeAll(keepCapacity: false)
             
-            for at in self.activeTopics {
+            for (topicId, at) in self.activeTopics {
                 at.unload()
             }
             
-            self.activeTopics.removeAll(keepCapacity: false)
             self.is_initialized = false
             self.has_topics = false
             
@@ -321,6 +333,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         }
         
         if (!has_topics) {
+            // do this here to handle the leveling up as well as init
             self.fetchTopics()
         }
         
@@ -329,7 +342,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         //self.iAdBanner?.delegate = self
         self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
         if let adb = self.iAdBanner{
-            println("adding ad banner subview ")
+            // println("adding ad banner subview ")
             self.view.addSubview(adb)
         }
         
@@ -340,10 +353,16 @@ class TopicsViewController: UIViewController, UserDelegate {
             
             NetOpers.sharedInstance.user.addUserDelegate(self)
             
-            self.fetchActiveTopics()
+            if (has_topics) {
+                // this eventually leads to is_busy = false
+                self.fetchActiveTopics()
+            } else {
+                is_busy = false
+            }
+        } else {
+            is_busy = false
         }
         
-        is_busy = false
     }
     
     override func viewWillDisappear(animated: Bool){
@@ -352,10 +371,9 @@ class TopicsViewController: UIViewController, UserDelegate {
     }
     
     func handleUserLevelChange(oldLevel : Int, newLevel : Int) {
-        println("handling user level change")
         if ( !(oldLevel==newLevel) ) {
             // if the level changed, refresh the topics
-            println("level changed, reloading all topics")
+            println("user level changed, reloading all topics")
             self.fetchTopics()
         }
     }
@@ -408,7 +426,6 @@ class TopicsViewController: UIViewController, UserDelegate {
                 sound.play()
             }
         }
-        println(error)
     }
     
     func isTopicButtonUnlocked(topicButton : TopicButton) -> Bool {
@@ -450,13 +467,13 @@ class TopicsViewController: UIViewController, UserDelegate {
                 var isOpen = false // could be open friend or world
                 var activeTopic: ActiveTopicRec? = nil
                 
-                for at in self.activeTopics {
+                for (topicId, at) in self.activeTopics {
                     
                     let activeTopicRec = at.activeTopicRec
                     
                     if (activeTopicRec.topic_id==tid) {
                         
-                        println("button press topic_id \(tid) activeTopicRec.verse_user_ids \(activeTopicRec.verse_user_ids) src \(activeTopicRec.src)")
+                        // println("button press topic_id \(tid) activeTopicRec.verse_user_ids \(activeTopicRec.verse_user_ids) src \(activeTopicRec.src)")
                         
                         // i've either joined or created these verses
                         if (at.isUserParticipating() || activeTopicRec.owner_id==NetOpers.sharedInstance.user.id){
@@ -510,7 +527,6 @@ class TopicsViewController: UIViewController, UserDelegate {
                     
                 }
                 
-                is_busy = false
             }
             
         }
@@ -523,7 +539,7 @@ class TopicsViewController: UIViewController, UserDelegate {
             if httpResponse.statusCode == 200 {
                 if data != nil {
                     
-                    println("loading data...")
+                    // println("loading data...")
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
@@ -531,7 +547,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                     
                     if let results = jsonResult["results"] as? NSDictionary {
                         
-                        println(results)
+                        // println(results)
                         
                         if let vid = results["verse_id"] as? Int{
                             
@@ -629,7 +645,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     func dispatch_resultsscreen_controller(verseId:Int, topic:Topic){
         dispatch_async(dispatch_get_main_queue(), {
             
-            println(self.navigationController)
+            // println(self.navigationController)
             
             var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
             var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
@@ -674,6 +690,12 @@ class TopicsViewController: UIViewController, UserDelegate {
                                 }
                             }
                             
+                            if (NetOpers.sharedInstance.user.is_logged_in()) {
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    self.fetchActiveTopics()
+                                }
+                            }
+                        
                             // needs to happen at least once, even if
                             // a severe error happens
                             has_topics = true
@@ -703,35 +725,33 @@ class TopicsViewController: UIViewController, UserDelegate {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
         
-        
     }
     
     func fetchActiveTopics() {
         // TODO: don't let this be spammed
         is_busy = true
-        println("fetchActiveTopics called")
+        // println("fetchActiveTopics called")
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", loadActiveTopicData)
     }
     
     func getActiveTopic(activeTopicRec : ActiveTopicRec) -> AnyObject? {
-        for at : ActiveTopic in self.activeTopics {
-            if (at.activeTopicRec.verse_id==activeTopicRec.verse_id) {
-                at.activeTopicRec = activeTopicRec // refresh this
+        for (topicId, at) in self.activeTopics {
+            if (at.activeTopicRec.topic_id==activeTopicRec.topic_id) {
+                at.activeTopicRec = activeTopicRec
                 return at
             }
         }
         
         if let index = find(self.topic_order, activeTopicRec.topic_id) {
-            // TODO: precautionary let here - need to figure out order view objects are rendered
+            
             var topicButton: TopicButton? = self.view.viewWithTag((index+1)) as? TopicButton
-            var topicStateImage: UIImageView = self.getTopicStateImage((index+1), imageName: activeTopicRec.getTopicStateImageName())
             var topicLabel: TopicLabel = self.getTopicLabel((index+1))!
             
-            println("found topicButton \(topicButton) topicStateImage \(topicStateImage) activeTopicRec \(activeTopicRec) topicLabel \(topicLabel) index \(index)")
+            var at : ActiveTopic = ActiveTopic(activeTopicRec: activeTopicRec, topicButton: topicButton!, topicLabel: topicLabel, buttonIndex: index)
             
-            var at : ActiveTopic = ActiveTopic(activeTopicRec: activeTopicRec, topicButton: topicButton!, topicStateImage: topicStateImage, topicLabel: topicLabel, buttonIndex: index)
+            self.topicScrollView.addSubview(at.getTopicStateImage())
             
-            self.activeTopics.append(at)
+            self.activeTopics[activeTopicRec.topic_id] = at
             
             return at
         }
@@ -752,8 +772,6 @@ class TopicsViewController: UIViewController, UserDelegate {
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: nil) as NSDictionary
-                    
-                    println(jsonResult)
                     
                     if let level = jsonResult["user_level"] as? Int {
                         NetOpers.sharedInstance.user.level = level
@@ -844,66 +862,90 @@ class TopicsViewController: UIViewController, UserDelegate {
 
     }
     
+    private var is_syncing : Bool = false
+    
     func syncActiveTopics(activeTopicRecs : [ActiveTopicRec]) {
         
-        is_busy = true
-        
-        // mark all active topics as stale before data refresh
-        for at : ActiveTopic in self.activeTopics {
-            at.setStale()
-        }
-        
-        var upNextCount : Int = 0
-        var joinedCount : Int = 0
-        
-        for atr : ActiveTopicRec in activeTopicRecs {
-            // TODO: figure out how to make this not optional as active topics can start loading before topics finished?
-            if let at : ActiveTopic = self.getActiveTopic(atr) as? ActiveTopic {
-                if (at.isUserUpNext(NetOpers.sharedInstance.user.id) && !at.activeTopicRec.current_user_has_voted) {
-                    upNextCount += 1;
+        if (!is_syncing) {
+            
+            is_syncing = true
+            is_busy = true
+            
+            // mark invalid past active topics as stale before data refresh
+            for (topicId, at) in self.activeTopics {
+                var found : Bool = false
+                for atr : ActiveTopicRec in activeTopicRecs {
+                    if (atr.topic_id==at.activeTopicRec.topic_id) {
+                        found = true
+                        break;
+                    }
                 }
-                
-                if (at.isUserParticipating()) {
-                    joinedCount += 1;
+                if (!found) {
+                    at.setStale()
                 }
-            }
-        }
-        
-        self.navigationController?.tabBarItem.badgeValue = String(upNextCount) + " / " + String(joinedCount)
-        
-        // clean up by removing all stale active topics
-        var staleActiveTopics : [Int] = []
-        
-        var i : Int = 0
-        for at : ActiveTopic in self.activeTopics {
-            if (at.isStale()) {
-                at.unload()
-                staleActiveTopics.append(at.activeTopicRec.topic_id)
-            } else {
-                at.refresh()
-                at.animate()
             }
             
-            i += 1
-        }
-        
-        println("stale active topic ids \(staleActiveTopics) activeTopics count \(self.activeTopics.count)")
-        
-        for topicId : Int in staleActiveTopics {
-            var index : Int = -1
-            for at : ActiveTopic in self.activeTopics {
-                if (at.activeTopicRec.topic_id==topicId) {
-                    break
+            var upNextCount : Int = 0
+            var joinedCount : Int = 0
+            
+            for atr : ActiveTopicRec in activeTopicRecs {
+                
+                if let at : ActiveTopic = self.getActiveTopic(atr) as? ActiveTopic {
+                    
+                    if (at.isUserUpNext(NetOpers.sharedInstance.user.id) && !at.activeTopicRec.current_user_has_voted) {
+                        upNextCount += 1;
+                    }
+                    
+                    if (at.isUserParticipating()) {
+                        joinedCount += 1;
+                    }
                 }
-                index += 1
             }
-            if (index > -1) {
-                self.activeTopics.removeAtIndex(index)
+            
+            if (upNextCount > 0) {
+                self.navigationController?.tabBarItem.badgeValue = String(upNextCount)
+            } else {
+                self.navigationController?.tabBarItem.badgeValue = nil
             }
+            
+            // clean up by removing all stale active topics
+            var staleActiveTopics : [Int] = []
+            
+            var i : Int = 0
+            for (topicId, at) in self.activeTopics {
+                
+                if (at.isStale()) {
+                    at.unload()
+                    staleActiveTopics.append(at.activeTopicRec.topic_id)
+                } else {
+                    at.refresh()
+                    at.animate()
+                }
+                
+                i += 1
+            }
+            
+            println("stale check: topic_ids \(staleActiveTopics) of \(self.activeTopics.count) total topics are stale")
+            
+            for topicId : Int in staleActiveTopics {
+                var index : Int = -1
+                for (topicId, at) in self.activeTopics {
+                    if (at.activeTopicRec.topic_id==topicId) {
+                        println("removing stale topic for topic_id \(topicId)")
+                        break
+                    }
+                    index += 1
+                }
+                if (index > -1) {
+                    self.activeTopics[topicId]=nil
+                }
+            }
+            
+            is_syncing = false
+            is_busy = false
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
         
-        is_busy = false
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
     func getTopicLabel(index : Int) -> TopicLabel? {
@@ -917,30 +959,10 @@ class TopicsViewController: UIViewController, UserDelegate {
         return nil
     }
     
-    func getTopicStateImage(index : Int, imageName : String) -> UIImageView {
-        let image = UIImage(named: imageName)
-        let imageView = UIImageView(image: image!)
-        
-        if let btn: TopicButton = self.view.viewWithTag(index) as? TopicButton {
-            
-            imageView.frame = CGRect(
-                x: btn.center.x - (btn.frame.width * 0.5),
-                y: btn.center.y - (btn.frame.height * 0.5),
-                width: imageView.frame.width ,
-                height: imageView.frame.height
-            )
-            
-            println("adding topic state image to subview for \(imageName)")
-            self.topicScrollView.addSubview(imageView)
-            
-        }
-        return imageView
-    }
-    
     func loadTopicButtons(){
         if (self.topic_order.count > 0 && self.topics.count>0) {
             
-            println("loading topic buttons")
+            // println("loading topic buttons")
             
             var maxTopics : Int = 16
             
@@ -950,7 +972,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                 }
             }
             
-            println("num topics for level: " + String(maxTopics))
+            // println("num topics for level: " + String(maxTopics))
             
             // self.topic_order = self.shuffle(self.topic_order)
             for idx in 1...maxTopics{
@@ -960,14 +982,13 @@ class TopicsViewController: UIViewController, UserDelegate {
                 
                 var btn: TopicButton? = self.view.viewWithTag(idx) as? TopicButton
                 if btn != nil{
-                    println(topic.main_icon_name)
+                    // println(topic.main_icon_name)
                     btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
                 } else {
                     println("no button found for tag " + String(idx))
                 }
             }
             
-            is_busy = false
             is_initialized = true
         }
     }

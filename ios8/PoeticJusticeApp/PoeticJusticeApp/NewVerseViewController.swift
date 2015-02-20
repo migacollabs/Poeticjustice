@@ -55,6 +55,8 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
         tapRec.addTarget(self, action: "tappedView")
         self.view.addGestureRecognizer(tapRec)
         
+        title = "New Verse"
+        
         self.verseTitle.delegate = self
         
         self.configureView()
