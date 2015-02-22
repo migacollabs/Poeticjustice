@@ -49,6 +49,17 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var votesLeftLabel: UILabel!
     @IBOutlet weak var voteMsgLabel: UILabel!
+    @IBOutlet weak var topicImage: UIImageView!
+    
+    @IBOutlet weak var avatarPlayerOne: UIImageView!
+    @IBOutlet weak var avatarPlayerTwo: UIImageView!
+    @IBOutlet weak var avatarPlayerThree: UIImageView!
+    @IBOutlet weak var avatarPlayerFour: UIImageView!
+    @IBOutlet weak var avatarPlayerFive: UIImageView!
+    
+    @IBOutlet weak var currentUserName: UILabel!
+    @IBOutlet weak var currentUserLevel: UIImageView!
+    @IBOutlet weak var currentUserPoints: UILabel!
     
     var viewLoaded: Bool = false
     
@@ -64,6 +75,14 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     
     var verseId: Int? {
         didSet {
+            if self.viewLoaded{
+                self.configureView()
+            }
+        }
+    }
+    
+    var topic: Topic?{
+        didSet{
             if self.viewLoaded{
                 self.configureView()
             }
@@ -280,6 +299,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     title.text = vr.title
                 }
                 
+                if let topic = self.topic{
+                    self.topicImage.image = 
+                }
+                
                 if let lineRecs = self.verseRec?.lines_recs{
                     
                     // sort asc because lines have pks that asc
@@ -298,7 +321,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 // check if this user has voted on this verse and select the row
                 if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
                     
-                    self.voteMsgLabel.text = "You've voted!"
+//                    self.voteMsgLabel.text = "You've voted!"
 
                     var i = 0
                     var foundMatch = false
@@ -325,7 +348,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     // if all the votes are in
                     if vr.votes.count == vr.user_ids.count{
                         
-                        self.voteMsgLabel.text = "All votes are in!"
+//                        self.voteMsgLabel.text = "All votes are in!"
                         
                         var linesForPlayer = [Int:Int]()
                         
@@ -363,12 +386,83 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         
                     }
                 }
+                                
+                var i = 0
+                for user_id in vr.players.keys {
+                    
+                    switch i{
+                    case 0:
+                        self.avatarPlayerOne.image = self.getPlayerAvatarImageName(user_id)
+                    case 1:
+                        self.avatarPlayerTwo.image = self.getPlayerAvatarImageName(user_id)
+                    case 2:
+                        self.avatarPlayerThree.image = self.getPlayerAvatarImageName(user_id)
+                    case 3:
+                        self.avatarPlayerFour.image = self.getPlayerAvatarImageName(user_id)
+                    case 4:
+                        self.avatarPlayerFive.image = self.getPlayerAvatarImageName(user_id)
+                    default:
+                        ()
+                    }
+                    
+                    i++
+                }
                 
             }
         }
         
         
         
+    }
+    
+    func highlightAvatar(userId:Int){
+
+        self.avatarPlayerOne.backgroundColor = UIColor.clearColor()
+        self.avatarPlayerTwo.backgroundColor = UIColor.clearColor()
+        self.avatarPlayerThree.backgroundColor = UIColor.clearColor()
+        self.avatarPlayerFour.backgroundColor = UIColor.clearColor()
+        self.avatarPlayerFive.backgroundColor = UIColor.clearColor()
+        
+        var arr:[Int] = Array(self.verseRec!.players.keys)
+        
+        if let idx = find(arr, userId){
+            
+            for uid in self.verseRec!.players.keys {
+                
+                switch idx{
+                case 0:
+                    self.avatarPlayerOne.backgroundColor = GameStateColors.SelectedColor
+                case 1:
+                    self.avatarPlayerTwo.backgroundColor = GameStateColors.SelectedColor
+                case 2:
+                    self.avatarPlayerThree.backgroundColor = GameStateColors.SelectedColor
+                case 3:
+                    self.avatarPlayerFour.backgroundColor = GameStateColors.SelectedColor
+                case 4:
+                    self.avatarPlayerFive.backgroundColor = GameStateColors.SelectedColor
+                default:
+                    ()
+                }
+            }
+            
+        }
+        
+    }
+    
+    func updateCurrentUser(userId:Int){
+        var player = self.verseRec!.players[userId]
+        println("updateCurrentUser \(player)")
+        if let x = self.currentUserName{
+            println("updateCurrentUser \(x)")
+            x.text = player!.user_name
+        }
+        if let x = self.currentUserLevel{
+            println("updateCurrentUser \(x)")
+            x.image = UIImage(named: "lvl_" + String(player!.level) + ".png")
+        }
+        if let x = self.currentUserPoints{
+            x.text = String(player!.user_score) + "pnts"
+        }
     }
     
     
@@ -400,8 +494,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     if (id==vlr.player_id) {
                         found = true
                         let playerRec : VerseResultScreenPlayerRec = vr.players[vlr.player_id]!
-                        pc.avatarImage.image = UIImage(named: playerRec.avatar_name)
-                        pc.levelBadgeImage.image = UIImage(named: "lvl_" + String(playerRec.level) + ".png")
+                        //pc.avatarImage.image = UIImage(named: playerRec.avatar_name)
+                        //pc.levelBadgeImage.image = UIImage(named: "lvl_" + String(playerRec.level) + ".png")
                         pc.userName.text = playerRec.user_name
                         break
                     }
@@ -413,7 +507,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             }
             
             // set the line text
-            pc.verseLine.text = vlr.text
+            //pc.verseLine.text = vlr.text
+            pc.verseLabel.text = vlr.text
             
             
         }
@@ -481,7 +576,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 voteController.addAction(noAction)
                 voteController.addAction(yesAction)
-
                 
                 self.presentViewController(voteController, animated: true, completion: nil)
                 
@@ -493,6 +587,11 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
         println("willSelectRowAtIndexPath clicked " + String(indexPath.row))
+        
+        var vlr = self.verseLinesForTable[indexPath.row]
+        
+        self.highlightAvatar(vlr.player_id)
+        self.updateCurrentUser(vlr.player_id)
         
         if self.stillVoting{
             return nil
@@ -515,7 +614,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        return 100.0
+        return 60.0
     }
 
     /*
@@ -552,6 +651,13 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func getPlayerAvatarImageName(userId : Int) -> UIImage {
+        if let pr = self.verseRec?.players[userId]{
+            return UIImage(named: pr.avatar_name)!
+        }
+        return UIImage(named: "man_48.png")!
     }
     
 }
