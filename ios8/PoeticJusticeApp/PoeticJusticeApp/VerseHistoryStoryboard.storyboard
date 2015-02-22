@@ -91,7 +91,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Qb7-lV-BCG" id="KTu-Fn-BDP">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_mexican_guy.png" translatesAutoresizingMaskIntoConstraints="NO" id="OWN-EN-6QK">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default.png" translatesAutoresizingMaskIntoConstraints="NO" id="OWN-EN-6QK">
                                                     <rect key="frame" x="488" y="10" width="72" height="72"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="72" id="96M-1V-Dfh"/>
@@ -328,7 +328,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="avatar_mexican_guy.png" width="256" height="256"/>
+        <image name="avatar_default.png" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ngA-fR-pAL"/>

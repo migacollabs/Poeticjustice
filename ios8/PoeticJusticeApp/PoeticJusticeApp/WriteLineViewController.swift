@@ -305,7 +305,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                         error: nil) as NSDictionary
                                     avnStr = userPrefs["avatar_name"] as? String
                                 }else{
-                                    avnStr = "avatar_mexican_guy.png"
+                                    avnStr = "avatar_default.png"
                                 }
                                 
                                 verse.players[pid] = PlayerRec(
@@ -321,6 +321,23 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                             dispatch_async(dispatch_get_main_queue(),{
                                 
+                                // setting this here because it looks like the paragraph
+                                // stuff below messes with the label properties
+                                var fontSizeMap : Dictionary<Int, CGFloat> = Dictionary<Int, CGFloat>()
+                                fontSizeMap[0]=19
+                                fontSizeMap[1]=18
+                                fontSizeMap[2]=17
+                                fontSizeMap[3]=16
+                                fontSizeMap[4]=15
+                                fontSizeMap[5]=12
+                                fontSizeMap[6]=10
+                                
+                                // TODO: probably should map font by device height too along with the label?
+                                    
+                                let fontSize : CGFloat = fontSizeMap[self.verse.user_ids.count]!
+                                
+                                let font : UIFont = UIFont(name: "Helvetica Neue", size: fontSize)!
+                                
                                 var texts : NSMutableAttributedString = NSMutableAttributedString(string: "")
                                 
                                 var lineNum : Int = 0
@@ -332,14 +349,23 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                         
                                         var line = NSMutableAttributedString(string:"\(lineNum). " + self.verse.lines[i] + "\n")
                                     
-                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: NSRange(location: 0, length: countElements(String(lineNum))+1))
+                                        line.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: line.length))
+                                        
+                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.30), range: NSRange(location: 0, length: countElements(String(lineNum))+1))
+                                        
+                                        let paraStyle = NSMutableParagraphStyle()
+                                        paraStyle.headIndent = 20.0
+                                        
+                                        line.addAttribute(NSParagraphStyleAttributeName, value: paraStyle, range: NSRange(location: 0, length: line.length))
                                         
                                         texts.appendAttributedString(line)
                                     } else {
                                         
                                         var line = NSMutableAttributedString(string:"\(lineNum).\n")
                                         
-                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: NSRange(location: 0, length: countElements(String(lineNum))+1))
+                                        line.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: line.length))
+                                        
+                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.30), range: NSRange(location: 0, length: countElements(String(lineNum))+1))
                                         
                                         texts.appendAttributedString(line)
                                         
@@ -347,6 +373,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                 }
                                 
                                 self.verseView.attributedText = texts
+                                
                                 
                                 if NetOpers.sharedInstance.user.is_logged_in() {
                                     if (!self.verse.is_complete) {
@@ -411,7 +438,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         if let pr = self.verse.players[userId]{
             return UIImage(named: pr.avatar_name)!
         }
-        return UIImage(named: "man_48.png")!
+        return UIImage(named: "avatar_default.png")!
     }
     
     var audioPlayer : AVAudioPlayer?

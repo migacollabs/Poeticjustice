@@ -306,7 +306,7 @@ class NewWriteLineViewController:
                                         error: nil) as NSDictionary
                                     avnStr = userPrefs["avatar_name"] as? String
                                 }else{
-                                    avnStr = "avatar_mexican_guy.png"
+                                    avnStr = "avatar_default.png"
                                 }
                                 
                                 verse.players[pid] = PlayerRec(

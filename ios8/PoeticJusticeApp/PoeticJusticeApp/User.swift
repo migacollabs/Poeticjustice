@@ -36,7 +36,7 @@ class User{
             }
         }
     }
-    var avatarName: String = "avatar_mexican_guy.png" {
+    var avatarName: String = "avatar_default.png" {
         didSet{
             println("Set new avatar name \(avatarName)")
             let url = NetOpers.sharedInstance.appserver_hostname! + "/u/upsert-pref"

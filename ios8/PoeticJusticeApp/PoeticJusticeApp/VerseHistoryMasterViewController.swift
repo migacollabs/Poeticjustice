@@ -29,7 +29,7 @@ struct VersePlayerRec{
     var user_name = ""
     var user_score = -1
     var level = 1
-    var avatar_name = "avatar_mexican_guy.png"
+    var avatar_name = "avatar_default.png"
 }
 
 class VerseHistoryMasterViewController: UITableViewController {
@@ -152,7 +152,7 @@ class VerseHistoryMasterViewController: UITableViewController {
                                             error: nil) as NSDictionary
                                         avnStr = userPrefs["avatar_name"] as? String
                                     }else{
-                                        avnStr = "avatar_mexican_guy.png"
+                                        avnStr = "avatar_default.png"
                                     }
                                     
                                     var score = player[3] as Int
