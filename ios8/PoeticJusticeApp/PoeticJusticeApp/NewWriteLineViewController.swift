@@ -363,6 +363,9 @@ class NewWriteLineViewController:
                     }
                     
                 }
+            } else {
+                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the verse.  Please try again.", controller_title:"Ok")
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }
         }
         
@@ -526,7 +529,8 @@ class NewWriteLineViewController:
                             
                         }
                     }else{
-                        println(error)
+                        self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the verse.  Please try again.", controller_title:"Ok")
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     }
                 }
                 
@@ -568,7 +572,8 @@ class NewWriteLineViewController:
                             
                         }
                     }else{
-                        println(error)
+                        self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem canceling the verse.  Please try again.", controller_title:"Ok")
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     }
                 }
                 
