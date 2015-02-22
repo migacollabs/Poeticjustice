@@ -37,7 +37,7 @@
                         <constraint firstAttribute="width" constant="100" id="jl0-1P-k5L"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" title=" Avatar" image="man_24.png">
+                    <state key="normal" title=" Avatar" image="player_24.png">
                         <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -153,7 +153,7 @@
         <image name="Init.png" width="48" height="48"/>
         <image name="book_24.png" width="24" height="24"/>
         <image name="chart_up_24.png" width="24" height="24"/>
-        <image name="man_24.png" width="24" height="24"/>
+        <image name="player_24.png" width="24" height="24"/>
         <image name="title_background.jpg" width="768" height="768"/>
     </resources>
 </document>

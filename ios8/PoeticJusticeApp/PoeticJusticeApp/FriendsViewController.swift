@@ -18,7 +18,7 @@ struct FriendRec {
     var user_score: Int = -1
     var level: Int = -1
     var user_prefs: String = ""
-    var avatar_name: String = "avatar_mexican_guy.png"
+    var avatar_name: String = "avatar_default.png"
 }
 
 import UIKit

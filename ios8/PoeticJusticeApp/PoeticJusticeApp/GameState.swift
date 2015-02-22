@@ -34,5 +34,5 @@ struct PlayerLineRec{
 struct PlayerRec{
     var user_id = -1
     var user_name = ""
-    var avatar_name = "avatar_mexican_guy.png"
+    var avatar_name = "avatar_default.png"
 }

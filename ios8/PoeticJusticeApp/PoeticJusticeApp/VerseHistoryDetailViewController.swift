@@ -12,7 +12,7 @@ struct PlayerLines{
     var userId = -1
     var userName = ""
     var line = ""
-    var avatar = "avatar_mexican_guy.png"
+    var avatar = "avatar_default.png"
     var level = 1
 }
 
@@ -51,7 +51,7 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, U
                 
                 var user_name = ""
                 var level = 1
-                var avatar = "avatar_mexican_guy.png"
+                var avatar = "avatar_default.png"
                 
                 if let pr = vhr.players[lineRec.player_id]{
                     user_name = pr.user_name

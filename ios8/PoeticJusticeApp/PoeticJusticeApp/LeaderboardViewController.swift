@@ -12,7 +12,7 @@ struct LeaderboardUserRec {
     var user_name : String = ""
     var user_score : Int = -1
     var level : Int = 1
-    var avatar_name : String = "avatar_mexican_guy.png"
+    var avatar_name : String = "avatar_default.png"
     var user_id : Int = -1
 }
 

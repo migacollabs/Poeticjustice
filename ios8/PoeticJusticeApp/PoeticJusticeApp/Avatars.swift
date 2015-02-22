@@ -41,7 +41,8 @@ class Avatar{
         "avatar_smart_guy.png",
         "avatar_sport_girl.png",
         "avatar_sport_guy.png",
-        "avatar_working_girl.png"
+        "avatar_working_girl.png",
+        "avatar_default.png"
     ]
     
     func get_avatar_file_name(avatarId:Int) -> String?{
