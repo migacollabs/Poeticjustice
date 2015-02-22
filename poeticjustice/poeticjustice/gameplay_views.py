@@ -255,6 +255,10 @@ def vote_for_user_line_verse(request):
 
                     # increment the player's score
                     player.user_score += lineXverse.line_score
+                    if not player.num_of_favorited_lines:
+                        player.num_of_favorited_lines = 1
+                    else:
+                        player.num_of_favorited_lines += 1
                     session.add(player)
 
 

@@ -47,7 +47,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     
     @IBOutlet weak var verseTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var votesLeftLabel: UILabel!
     @IBOutlet weak var voteMsgLabel: UILabel!
     @IBOutlet weak var topicImage: UIImageView!
     
@@ -194,6 +193,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                 println("no votes yet")
                             }
                             
+                            println(vrsr.votes)
+                            
                         }else{
                             println("corrupt verse data")
                         }
@@ -299,8 +300,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     title.text = vr.title
                 }
                 
+                println(self.topic)
                 if let topic = self.topic{
-                    self.topicImage.image = 
+                    println(topic.main_icon_name)
+                    self.topicImage.image = UIImage(named: topic.main_icon_name as String)
                 }
                 
                 if let lineRecs = self.verseRec?.lines_recs{
@@ -321,7 +324,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 // check if this user has voted on this verse and select the row
                 if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
                     
-//                    self.voteMsgLabel.text = "You've voted!"
+                    self.voteMsgLabel.text = "You've voted!"
 
                     var i = 0
                     var foundMatch = false
@@ -343,12 +346,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 if let vr = self.verseRec{
                     
-                    self.votesLeftLabel.text = "\(vr.votes.count)\\\(vr.user_ids.count)"
+                    self.voteMsgLabel.text = "\(vr.votes.count)\\\(vr.user_ids.count)"
                     
                     // if all the votes are in
                     if vr.votes.count == vr.user_ids.count{
                         
-//                        self.voteMsgLabel.text = "All votes are in!"
+                        self.voteMsgLabel.text = "All votes are in!"
                         
                         var linesForPlayer = [Int:Int]()
                         
@@ -557,18 +560,37 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     // TODO: this should be a post
                     NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
                         
-                        // add the vote here for immediacy, the votes will be refreshed
-                        // later, but the table has to respond correctly
-                        self.verseRec?.votes[NetOpers.sharedInstance.user.id] = lid
-                        
-                        self.stillVoting = false
-                        
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                        
-                        // update label for some feedback
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.voteMsgLabel.text = "Vote confirmed!"
-                        })
+                        if let httpResponse = response as? NSHTTPURLResponse {
+                            if httpResponse.statusCode == 200 {
+                                if data != nil {
+                                    
+                                    // add the vote here for immediacy, the votes will be refreshed
+                                    // later, but the table has to respond correctly
+                                    self.verseRec?.votes[NetOpers.sharedInstance.user.id] = lid
+                                    
+                                    println("supposedly voted \(self.verseRec)")
+                                    
+                                    self.stillVoting = false
+                                    
+                                    // update label for some feedback
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.voteMsgLabel.text = "Vote confirmed!"
+                                    })
+                                    
+                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                    
+                                }
+                            }
+                            
+                            if (error != nil) {
+                                if let e = error?.localizedDescription {
+                                    self.show_alert("Unable to vote", message: e, controller_title:"Ok")
+                                } else {
+                                    self.show_alert("Network error", message: "Unable to leave verse", controller_title:"Ok")
+                                }
+                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            }
+                        }
                         
                     })
 

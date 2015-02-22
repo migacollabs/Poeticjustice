@@ -93,8 +93,12 @@
                                     <outlet property="delegate" destination="c6T-9w-qsm" id="DPM-C9-pxD"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="msg" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnE-Z7-Bt5">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="msg" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnE-Z7-Bt5">
                                 <rect key="frame" x="456" y="72" width="128" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="H8F-3W-tcL"/>
+                                    <constraint firstAttribute="width" constant="128" id="cGb-QA-teX"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -259,9 +263,11 @@
                             <constraint firstItem="caO-rZ-GhL" firstAttribute="leading" secondItem="Y5r-tP-dw9" secondAttribute="trailing" constant="8" id="TEf-UG-eTt"/>
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="leading" secondItem="hnh-XD-aKr" secondAttribute="trailing" constant="-428" id="UU2-Wk-OKT"/>
                             <constraint firstItem="67h-87-etI" firstAttribute="top" secondItem="Mgf-cC-hpq" secondAttribute="bottom" constant="-50" id="V10-1P-boG"/>
+                            <constraint firstItem="hnE-Z7-Bt5" firstAttribute="trailing" secondItem="jQ5-e5-6Uw" secondAttribute="trailingMargin" id="XZZ-jf-jCR"/>
                             <constraint firstItem="hnh-XD-aKr" firstAttribute="top" secondItem="Q1o-Fb-ueg" secondAttribute="bottom" constant="21" id="XlR-Xh-nNh"/>
                             <constraint firstItem="5wv-f1-r5d" firstAttribute="top" secondItem="67h-87-etI" secondAttribute="bottom" constant="8" id="Y08-bv-BZ2"/>
                             <constraint firstItem="67h-87-etI" firstAttribute="leading" secondItem="Y5r-tP-dw9" secondAttribute="trailing" constant="-49" id="YXh-Dt-CJ6"/>
+                            <constraint firstItem="hnE-Z7-Bt5" firstAttribute="top" secondItem="Q1o-Fb-ueg" secondAttribute="bottom" constant="8" id="YaJ-MZ-uMB"/>
                             <constraint firstItem="hnh-XD-aKr" firstAttribute="leading" secondItem="g3w-LE-8EA" secondAttribute="trailing" constant="8" id="Yd9-bW-Qy8"/>
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="-16" id="cBz-0r-Io9"/>
                             <constraint firstItem="caO-rZ-GhL" firstAttribute="leading" secondItem="Y5r-tP-dw9" secondAttribute="trailing" constant="8" id="eaR-Fq-ZRm"/>
@@ -327,7 +333,7 @@
                         <outlet property="tableView" destination="0DR-KU-NfP" id="2GX-Sk-UbH"/>
                         <outlet property="topicImage" destination="g3w-LE-8EA" id="u8a-1p-QdT"/>
                         <outlet property="verseTitle" destination="hnh-XD-aKr" id="nJl-zu-o3N"/>
-                        <outlet property="votesLeftLabel" destination="hnE-Z7-Bt5" id="eRi-va-Hqd"/>
+                        <outlet property="voteMsgLabel" destination="hnE-Z7-Bt5" id="sg6-su-Mhv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yWg-ps-qZy" userLabel="First Responder" sceneMemberID="firstResponder"/>

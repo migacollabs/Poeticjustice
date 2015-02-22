@@ -650,6 +650,7 @@ class TopicsViewController: UIViewController, UserDelegate {
             var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
             var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
             controller.verseId = verseId
+            controller.topic = topic
             self.navigationController?.popViewControllerAnimated(false)
             self.navigationController?.pushViewController(controller, animated: true)
             
