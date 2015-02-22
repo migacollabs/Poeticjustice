@@ -133,6 +133,9 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                     }
                     
                 }
+            } else {
+                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the leaderboard.  Please try again.", controller_title:"Ok")
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }
         }
         

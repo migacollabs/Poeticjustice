@@ -420,6 +420,9 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                     }
                     
                 }
+            } else {
+                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the verse.  Please try again.", controller_title:"Ok")
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }
         }
         
@@ -635,8 +638,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                             
                         }
                     }else{
-                        println("Error")
-                        println(error)
+                        self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem leaving the verse.  Please try again.", controller_title:"Ok")
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     }
                 }
                 
@@ -678,8 +681,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                             
                         }
                     }else{
-                        println("Error")
-                        println(error)
+                        self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem canceling the verse.  Please try again.", controller_title:"Ok")
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     }
                 }
                 

@@ -231,6 +231,9 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     }
                     
                 }
+            } else {
+                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading friends.  Please try again.", controller_title:"Ok")
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }
         }
         

@@ -613,15 +613,15 @@ class TopicsViewController: UIViewController, UserDelegate {
                     }
                 }
             }else{
-                self.show_alert("Error", message: "Cannot get Verse for Topic", controller_title: "Ok")
+                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the verse for the selected topic.  Please try again.", controller_title:"Ok")
             }
         }
         
         if (error != nil) {
             if let e = error?.localizedDescription {
-                self.show_alert("Unable to cancel verse", message: e, controller_title:"Ok")
+                self.show_alert("Unable to load verse", message: e, controller_title:"Ok")
             } else {
-                self.show_alert("Network error", message: "Unable to cancel verse", controller_title:"Ok")
+                self.show_alert("Network error", message: "Unable to load verse", controller_title:"Ok")
             }
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
@@ -711,7 +711,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                 })
                 
             }else{
-                self.show_alert("Error: Unable to load Topics", message: "Please make sure to sign in", controller_title: "Ok")
+                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the topics.  Please try again.", controller_title:"Ok")
 
             }
         }
@@ -837,7 +837,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                 
             } else {
                 
-                self.show_alert("Error", message: "Cannot load Topics", controller_title: "Ok")
+                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the topics.  Please try again.", controller_title:"Ok")
                 
                 self.is_busy = false
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false

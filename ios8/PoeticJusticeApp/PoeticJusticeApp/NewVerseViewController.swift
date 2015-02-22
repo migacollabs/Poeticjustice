@@ -175,11 +175,16 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
                                 
                                 
                             }
+                            
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            
                         } else {
                             self.isBusy = false
+                            
+                            self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem starting a new verse.  Please try again.", controller_title:"Ok")
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         }
                         
-                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                     }
                     
                     if (error != nil) {
