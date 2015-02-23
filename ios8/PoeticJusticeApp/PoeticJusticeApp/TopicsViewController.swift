@@ -310,6 +310,8 @@ class TopicsViewController: UIViewController, UserDelegate {
         badgeView.image = UIImage(named: "lvl_" + String(NetOpers.sharedInstance.user.level) + ".png")
     }
     
+    private var viewedGameComplete : Bool = false;
+    
     override func viewWillAppear(animated: Bool) {
         
         println("TopicsViewController.viewWillAppear called")
@@ -352,6 +354,11 @@ class TopicsViewController: UIViewController, UserDelegate {
             updateAvatar(UIScreen.mainScreen().bounds.size);
             
             NetOpers.sharedInstance.user.addUserDelegate(self)
+            
+            if (!viewedGameComplete && self.didUserCompleteGame()) {
+                self.show_game_complete_screen()
+                viewedGameComplete = true
+            }
             
             if (has_topics) {
                 // this eventually leads to is_busy = false
@@ -1041,6 +1048,15 @@ class TopicsViewController: UIViewController, UserDelegate {
             alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
             
             self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func show_game_complete_screen(){
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            let gameController : GameCompleteViewController = GameCompleteViewController(nibName: "GameCompleteViewController", bundle: nil)
+            
+            self.navigationController?.pushViewController(gameController, animated: true)
         }
     }
 
