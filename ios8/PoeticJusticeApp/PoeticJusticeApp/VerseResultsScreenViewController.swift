@@ -438,15 +438,15 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 switch idx{
                 case 0:
-                    self.avatarPlayerOne.backgroundColor = GameStateColors.Green
+                    self.avatarPlayerOne.backgroundColor = GameStateColors.GreenD
                 case 1:
-                    self.avatarPlayerTwo.backgroundColor = GameStateColors.Green
+                    self.avatarPlayerTwo.backgroundColor = GameStateColors.GreenD
                 case 2:
-                    self.avatarPlayerThree.backgroundColor = GameStateColors.Green
+                    self.avatarPlayerThree.backgroundColor = GameStateColors.GreenD
                 case 3:
-                    self.avatarPlayerFour.backgroundColor = GameStateColors.Green
+                    self.avatarPlayerFour.backgroundColor = GameStateColors.GreenD
                 case 4:
-                    self.avatarPlayerFive.backgroundColor = GameStateColors.Green
+                    self.avatarPlayerFive.backgroundColor = GameStateColors.GreenD
                 default:
                     ()
                 }
@@ -528,7 +528,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         }
         
         var customView = UIView()
-        customView.backgroundColor = GameStateColors.Green
+        customView.backgroundColor = GameStateColors.GreenD
         cell.selectedBackgroundView = customView
         return cell
     }

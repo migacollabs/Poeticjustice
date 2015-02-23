@@ -44,16 +44,69 @@ struct PlayerRec{
 
 class GameStateColors{
     
-    class var SelectedColor: UIColor {
-        return UIColor(red:0.67, green:0.93, blue:0.94, alpha:1.0)
+    class var LightBlue: UIColor {
+        return UIColor(red:84/255, green:199/255, blue:252/255, alpha:1.0)
     }
     
-    class var LightBlue: UIColor {
-        return UIColor(red:84/256, green:199/256, blue:252/256, alpha:1.0)
+    class var Yellow: UIColor {
+        return UIColor(red:255/255, green:205/255, blue:0/255, alpha:1.0)
+    }
+    
+    class var Gold: UIColor {
+        return UIColor(red:255/255, green:150/255, blue:0/255, alpha:1.0)
+    }
+    
+    class var Pink: UIColor {
+        return UIColor(red:255/255, green:40/255, blue:81/255, alpha:1.0)
+    }
+
+    class var Blue: UIColor {
+        return UIColor(red:0/255, green:118/255, blue:255/255, alpha:1.0)
     }
     
     class var Green: UIColor {
-        return UIColor(red:68/256, green:216/256, blue:94/256, alpha:1.0)
+        return UIColor(red:68/255, green:216/255, blue:94/255, alpha:1.0)
+    }
+    
+    class var Red: UIColor {
+        return UIColor(red:255/255, green:56/255, blue:36/255, alpha:1.0)
+    }
+    
+    class var Grey: UIColor {
+        return UIColor(red:142/255, green:142/255, blue:147/255, alpha:1.0)
+    }
+    
+
+    class var LightBlueD: UIColor {
+        return UIColor(red:63/255, green:149/255, blue:188/255, alpha:1.0)
+    }
+    
+    class var YellowD: UIColor {
+        return UIColor(red:191/255, green:154/255, blue:0/255, alpha:1.0)
+    }
+    
+    class var GoldD: UIColor {
+        return UIColor(red:191/255, green:112/255, blue:0/255, alpha:1.0)
+    }
+    
+    class var PinkD: UIColor {
+        return UIColor(red:191/255, green:30/255, blue:61/255, alpha:1.0)
+    }
+    
+    class var BlueD: UIColor {
+        return UIColor(red:0/255, green:88/255, blue:191/255, alpha:1.0)
+    }
+    
+    class var GreenD: UIColor {
+        return UIColor(red:48/255, green:155/255, blue:67/255, alpha:1.0)
+    }
+    
+    class var RedD: UIColor {
+        return UIColor(red:191/255, green:42/255, blue:27/255, alpha:1.0)
+    }
+    
+    class var GreyD: UIColor {
+        return UIColor(red:80/255, green:80/255, blue:83/255, alpha:1.0)
     }
     
 }
