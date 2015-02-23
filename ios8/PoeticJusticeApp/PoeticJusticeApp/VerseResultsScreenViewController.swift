@@ -49,27 +49,25 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var voteMsgLabel: UILabel!
     @IBOutlet weak var topicImage: UIImageView!
-    
     @IBOutlet weak var avatarPlayerOne: UIImageView!
     @IBOutlet weak var avatarPlayerTwo: UIImageView!
     @IBOutlet weak var avatarPlayerThree: UIImageView!
     @IBOutlet weak var avatarPlayerFour: UIImageView!
     @IBOutlet weak var avatarPlayerFive: UIImageView!
-    
     @IBOutlet weak var currentUserName: UILabel!
     @IBOutlet weak var currentUserLevel: UIImageView!
     @IBOutlet weak var currentUserPoints: UILabel!
+    @IBOutlet weak var winnerUserName: UILabel!
+    @IBOutlet weak var winnerIcon: UIImageView!
+    
+    var selectedRow:Int?
+    var currentPlayerVotedFor:NSIndexPath?
     
     var viewLoaded: Bool = false
-    
     var verseRec: VerseResultScreenRec?
-    
     var verseLinesForTable:[VerseResultScreenLineRec] = []
-    
     var verseLinesForVoting = [Int:VerseResultScreenLineRec]()
-    
     var avatar = Avatar()
-    
     var stillVoting = false
     
     var verseId: Int? {
@@ -92,6 +90,11 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        // clear the labels
+        self.currentUserName.text = ""
+        self.currentUserPoints.text = ""
+        self.winnerUserName.text = ""
         
         self.viewLoaded = true
         
@@ -321,7 +324,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     }
                 }
                 
-                
                 self.tableView.reloadData()
                 
                 // check if this user has voted on this verse and select the row
@@ -342,6 +344,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     
                     if foundMatch{
                         let indexPath = NSIndexPath(forRow:i,inSection:0)
+                        self.currentPlayerVotedFor = indexPath
                         self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
                     }
                     
@@ -384,7 +387,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         if winners.count == 1{
                             var userName = self.verseRec?.players[winners[0]]?.user_name
                             // there is a winner
-                            self.dispatch_alert("We have a winner!", message: userName!, controller_title: "Ok")
+                            self.winnerUserName.text = userName
+                            self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
+                            //self.dispatch_alert("We have a winner!", message: userName!, controller_title: "Ok")
                         }else{
                             // we have a tie
                             self.dispatch_alert("Winner", message: "We have a tie", controller_title: "Ok")
@@ -413,12 +418,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     
                     i++
                 }
-                
             }
         }
-        
-        
-        
     }
     
     func highlightAvatar(userId:Int){
@@ -437,15 +438,15 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 switch idx{
                 case 0:
-                    self.avatarPlayerOne.backgroundColor = GameStateColors.SelectedColor
+                    self.avatarPlayerOne.backgroundColor = GameStateColors.Green
                 case 1:
-                    self.avatarPlayerTwo.backgroundColor = GameStateColors.SelectedColor
+                    self.avatarPlayerTwo.backgroundColor = GameStateColors.Green
                 case 2:
-                    self.avatarPlayerThree.backgroundColor = GameStateColors.SelectedColor
+                    self.avatarPlayerThree.backgroundColor = GameStateColors.Green
                 case 3:
-                    self.avatarPlayerFour.backgroundColor = GameStateColors.SelectedColor
+                    self.avatarPlayerFour.backgroundColor = GameStateColors.Green
                 case 4:
-                    self.avatarPlayerFive.backgroundColor = GameStateColors.SelectedColor
+                    self.avatarPlayerFive.backgroundColor = GameStateColors.Green
                 default:
                     ()
                 }
@@ -488,6 +489,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         if let pc = cell as? PlayerLineTableViewCell{
             
+            pc.yourPickLabel.text = "" // clear it
+            
             // get the line
             var vlr = verseLinesForTable[indexPath.row]
             
@@ -503,6 +506,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         //pc.avatarImage.image = UIImage(named: playerRec.avatar_name)
                         //pc.levelBadgeImage.image = UIImage(named: "lvl_" + String(playerRec.level) + ".png")
                         pc.userName.text = playerRec.user_name
+                        
+                        if self.currentPlayerVotedFor != nil && self.currentPlayerVotedFor!.row == indexPath.row{
+                            // this is the line the current player voted for
+                            pc.yourPickLabel.text = "Your Pick!"
+                        }
+                        
                         break
                     }
                 }
@@ -516,8 +525,11 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             //pc.verseLine.text = vlr.text
             pc.verseLabel.text = vlr.text
             
-            
         }
+        
+        var customView = UIView()
+        customView.backgroundColor = GameStateColors.Green
+        cell.selectedBackgroundView = customView
         return cell
     }
     
@@ -536,82 +548,113 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         println("clicked " + String(indexPath.row))
-
-        if let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell{
-            if let pc = cell as? PlayerLineTableViewCell{
-                var vlr = self.verseLinesForTable[indexPath.row]
+        
+        self.selectedRow = indexPath.row
+        
+        if self.verseRec?.votes.count != self.verseRec?.participantCount{
+            
+            if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
                 
-                // TODO: set the player's vote at the server
-                
-                // pid is the user to vote for
-                var pid = vlr.player_id
-                var lid = vlr.position
-                
-                
-                let voteController = UIAlertController(title: "Confirm Vote", message: "You sure? Last chance!", preferredStyle: UIAlertControllerStyle.ActionSheet)
-                
-                let noAction = UIAlertAction(title: "No", style: .Default, handler: {
-                    (alert: UIAlertAction!) -> Void in
-                    // delete friend
-                    return
-                })
-                let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
-                    (alert: UIAlertAction!) -> Void in
-                    
-                    self.stillVoting = true
-                    
-                    // TODO: this should be a post
-                    NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+            }else{
+            
+                if let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell{
+                    if let pc = cell as? PlayerLineTableViewCell{
+                        var vlr = self.verseLinesForTable[indexPath.row]
                         
-                        if let httpResponse = response as? NSHTTPURLResponse {
-                            if httpResponse.statusCode == 200 {
-                                if data != nil {
-                                    
-                                    // add the vote here for immediacy, the votes will be refreshed
-                                    // later, but the table has to respond correctly
-                                    self.verseRec?.votes[NetOpers.sharedInstance.user.id] = lid
-                                    
-                                    println("supposedly voted \(self.verseRec)")
-                                    
-                                    self.stillVoting = false
-                                    
-                                    // update label for some feedback
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        self.voteMsgLabel.text = "Vote confirmed!"
-                                    })
-                                    
-                                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                                    
-                                }
-                            }
+                        // TODO: set the player's vote at the server
+                        
+                        // pid is the user to vote for
+                        var pid = vlr.player_id
+                        var lid = vlr.position
+                        
+                        
+                        let voteController = UIAlertController(title: "Confirm Vote", message: "You sure? Last chance!", preferredStyle: UIAlertControllerStyle.ActionSheet)
+                        
+                        let noAction = UIAlertAction(title: "No", style: .Default, handler: {
+                            (alert: UIAlertAction!) -> Void in
+                            // delete friend
+                            return
+                        })
+                        let yesAction = UIAlertAction(title: "Yes", style: .Default, handler: {
+                            (alert: UIAlertAction!) -> Void in
                             
-                            if (error != nil) {
-                                if let e = error?.localizedDescription {
-                                    self.show_alert("Unable to vote", message: e, controller_title:"Ok")
-                                } else {
-                                    self.show_alert("Network error", message: "Unable to leave verse", controller_title:"Ok")
+                            self.stillVoting = true
+                            
+                            // TODO: this should be a post
+                            NetOpers.sharedInstance.get(HOSTNAME + "/v/vote/pid=\(pid)/vid=\(self.verseId!)/lid=\(lid)", completion_handler: { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                                
+                                if let httpResponse = response as? NSHTTPURLResponse {
+                                    if httpResponse.statusCode == 200 {
+                                        if data != nil {
+                                            
+                                            // add the vote here for immediacy, the votes will be refreshed
+                                            // later, but the table has to respond correctly
+                                            self.verseRec?.votes[NetOpers.sharedInstance.user.id] = lid
+                                            
+                                            println("supposedly voted \(self.verseRec)")
+                                            
+                                            self.stillVoting = false
+                                            
+                                            // update label for some feedback
+                                            dispatch_async(dispatch_get_main_queue(), {
+                                                self.voteMsgLabel.text = "Vote confirmed!"
+                                            })
+                                            
+                                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                            
+                                        }
+                                    }
+                                    
+                                    if (error != nil) {
+                                        if let e = error?.localizedDescription {
+                                            self.show_alert("Unable to vote", message: e, controller_title:"Ok")
+                                        } else {
+                                            self.show_alert("Network error", message: "Unable to leave verse", controller_title:"Ok")
+                                        }
+                                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                                    }
                                 }
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            }
-                        }
+                                
+                            })
+                            
+                        })
                         
-                    })
-
-                })
-                
-                voteController.addAction(noAction)
-                voteController.addAction(yesAction)
-                
-                self.presentViewController(voteController, animated: true, completion: nil)
+                        voteController.addAction(noAction)
+                        voteController.addAction(yesAction)
+                        
+                        self.presentViewController(voteController, animated: true, completion: nil)
+                        
+                    }
+                    
+                }
                 
             }
+            
         }
         
     }
     
+//    func tableView(tableView: UITableView, willDeselectRowAtIndexPath indexPath: NSIndexPath) {
+//        println("willDeselectRowAtIndexPath called")
+//    }
+//    
+//    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+//        println("didDeselectRowAtIndexPath called")
+//    }
+    
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         
         println("willSelectRowAtIndexPath clicked " + String(indexPath.row))
+        
+//        if self.selectedRow != nil && self.selectedRow != indexPath.row{
+//            println("calling deselect row \(self.selectedRow)")
+//            let sindexPath = NSIndexPath(forRow:self.selectedRow!,inSection:0)
+//            self.tableView.deselectRowAtIndexPath(sindexPath, animated: true)
+//            var cell = self.tableView.cellForRowAtIndexPath(sindexPath)
+//            cell?.contentView.backgroundColor = UIColor.whiteColor()
+//            cell?.backgroundColor = UIColor.whiteColor()
+//            println("changed background")
+//        }
         
         var vlr = self.verseLinesForTable[indexPath.row]
         
@@ -622,20 +665,34 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             return nil
         }
         
-        // if every player has voted, don't allow selection
-        if self.verseRec?.votes.count == self.verseRec?.participantCount{
-            self.dispatch_alert("Whoops!", message: "Voting is closed!", controller_title: "Ok!")
-            return nil
-        }
-        
-        // check to see if this player has already voted
-        if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
-            self.dispatch_alert("Whoops!", message: "You've already voted!", controller_title: "Ok!")
-            return nil
-        }
+//        // if every player has voted, don't allow selection
+//        if self.verseRec?.votes.count == self.verseRec?.participantCount{
+//            self.dispatch_alert("Whoops!", message: "Voting is closed!", controller_title: "Ok!")
+//            return nil
+//        }
+//        
+//        // check to see if this player has already voted
+//        if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
+//            self.dispatch_alert("Whoops!", message: "You've already voted!", controller_title: "Ok!")
+//            return nil
+//        }
         
         return indexPath
         
+    }
+    
+    func tableView(tableView: UITableView, didHighlightRowAtIndexPath indexPath: NSIndexPath) {
+        println("didHighlightRowAtIndexPath called")
+//        var cell = tableView.cellForRowAtIndexPath(indexPath)
+//        cell?.contentView.backgroundColor = GameStateColors.LighBlue
+//        cell?.backgroundColor = GameStateColors.LighBlue
+    }
+    
+    func tableView(tableView: UITableView, didUnHighlightRowAtIndexPath indexPath: NSIndexPath) {
+        println("didUnHighlightRowAtIndexPath called")
+//        var cell = tableView.cellForRowAtIndexPath(indexPath)
+//        cell?.contentView.backgroundColor = UIColor.whiteColor()
+//        cell?.backgroundColor = UIColor.whiteColor()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {

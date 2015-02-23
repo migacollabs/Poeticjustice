@@ -48,6 +48,14 @@ class GameStateColors{
         return UIColor(red:0.67, green:0.93, blue:0.94, alpha:1.0)
     }
     
+    class var LightBlue: UIColor {
+        return UIColor(red:84/256, green:199/256, blue:252/256, alpha:1.0)
+    }
+    
+    class var Green: UIColor {
+        return UIColor(red:68/256, green:216/256, blue:94/256, alpha:1.0)
+    }
+    
 }
 
 

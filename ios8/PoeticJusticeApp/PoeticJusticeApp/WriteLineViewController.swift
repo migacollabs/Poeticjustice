@@ -546,7 +546,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
             var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
             var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
             controller.verseId = verseId
-            
+            controller.topic = self.topic
             var viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
             
             viewControllers.removeAtIndex(viewControllers.count-1)
