@@ -57,8 +57,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var currentUserName: UILabel!
     @IBOutlet weak var currentUserLevel: UIImageView!
     @IBOutlet weak var currentUserPoints: UILabel!
+    @IBOutlet weak var currentUserCoinsImg: UIImageView!
     @IBOutlet weak var winnerUserName: UILabel!
     @IBOutlet weak var winnerIcon: UIImageView!
+    
     
     var selectedRow:Int?
     var currentPlayerVotedFor:NSIndexPath?
@@ -467,8 +469,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             println("updateCurrentUser \(x)")
             x.image = UIImage(named: "lvl_" + String(player!.level) + ".png")
         }
+        if let x = self.currentUserCoinsImg{
+            x.image = UIImage(named: "gold-coin.png")
+        }
         if let x = self.currentUserPoints{
-            x.text = String(player!.user_score) + "pnts"
+            x.text = String(format: "x%03d", player!.user_score)
+            //x.text = String(player!.user_score) + "pnts"
         }
     }
     
