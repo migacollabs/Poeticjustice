@@ -28,7 +28,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZHF-TP-xd9" id="9BQ-sx-cyx">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="SPD-UD-gy6">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="SPD-UD-gy6">
                                                     <rect key="frame" x="8" y="10" width="150" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="JKU-BU-cp6"/>
@@ -84,7 +84,7 @@
                                                 <constraint firstItem="Jxu-vD-bH5" firstAttribute="leading" secondItem="9BQ-sx-cyx" secondAttribute="leadingMargin" constant="429" id="bb4-8m-491"/>
                                                 <constraint firstItem="wbM-Fz-GrY" firstAttribute="trailing" secondItem="9BQ-sx-cyx" secondAttribute="trailingMargin" id="hEk-ws-PHb"/>
                                                 <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="SPD-UD-gy6" secondAttribute="trailing" constant="434" id="nE8-nd-i9U"/>
-                                                <constraint firstItem="SPD-UD-gy6" firstAttribute="top" secondItem="9BQ-sx-cyx" secondAttribute="topMargin" constant="1" id="vDg-Gh-meY"/>
+                                                <constraint firstItem="SPD-UD-gy6" firstAttribute="top" secondItem="9BQ-sx-cyx" secondAttribute="topMargin" constant="2" id="vDg-Gh-meY"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">

@@ -9,6 +9,7 @@
                 <outlet property="friendsOnly" destination="K6e-HB-zNq" id="1qo-0K-bCh"/>
                 <outlet property="startButton" destination="DR7-QI-ZtV" id="hRH-R4-bvm"/>
                 <outlet property="topicButton" destination="DEl-6Z-Nux" id="cYs-cC-SZQ"/>
+                <outlet property="topicTitle" destination="Dhc-VV-Ega" id="bvS-Ll-vM9"/>
                 <outlet property="verseTitle" destination="B0b-AV-HFa" id="fxv-uu-OuR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -18,14 +19,14 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DEl-6Z-Nux">
-                    <rect key="frame" x="276" y="81" width="48" height="48"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DEl-6Z-Nux">
+                    <rect key="frame" x="276" y="94" width="48" height="48"/>
                     <state key="normal" image="Init.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DR7-QI-ZtV">
-                    <rect key="frame" x="264" y="321" width="72" height="72"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DR7-QI-ZtV">
+                    <rect key="frame" x="264" y="384" width="72" height="72"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="72" id="Gsf-Fy-Txm"/>
                         <constraint firstAttribute="height" constant="72" id="PMY-oS-whv"/>
@@ -37,22 +38,22 @@
                         <action selector="onStart:" destination="-1" eventType="touchUpInside" id="4XI-tp-Cis"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give it a Title!" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B0b-AV-HFa">
-                    <rect key="frame" x="173" y="143" width="255" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give it a Title!" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="B0b-AV-HFa">
+                    <rect key="frame" x="173" y="206" width="255" height="30"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="255" id="Tc0-yz-EFZ"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done"/>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Number of Players" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DG2-7a-AMu">
-                    <rect key="frame" x="229" y="189" width="143" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number of Players" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DG2-7a-AMu">
+                    <rect key="frame" x="229" y="252" width="143" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oUG-Mn-fv9">
-                    <rect key="frame" x="116" y="254" width="369" height="53"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oUG-Mn-fv9">
+                    <rect key="frame" x="116" y="317" width="369" height="53"/>
                     <subviews>
                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K6e-HB-zNq">
                             <rect key="frame" x="154" y="11" width="51" height="31"/>
@@ -82,8 +83,8 @@
                         <constraint firstItem="QBK-rt-vZe" firstAttribute="leading" secondItem="oUG-Mn-fv9" secondAttribute="leading" constant="33" id="vFq-k8-Egd"/>
                     </constraints>
                 </view>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="87b-hi-OAG">
-                    <rect key="frame" x="255" y="218" width="91" height="29"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="87b-hi-OAG">
+                    <rect key="frame" x="255" y="281" width="91" height="29"/>
                     <segments>
                         <segment title="2"/>
                         <segment title="3"/>
@@ -97,6 +98,12 @@
                         <action selector="setNumberPlayers:" destination="-1" eventType="valueChanged" id="qVL-eL-h40"/>
                     </connections>
                 </segmentedControl>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dhc-VV-Ega">
+                    <rect key="frame" x="284" y="150" width="33" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -106,21 +113,23 @@
                 <constraint firstItem="87b-hi-OAG" firstAttribute="centerX" secondItem="DG2-7a-AMu" secondAttribute="centerX" id="F5N-Ic-KGM"/>
                 <constraint firstItem="DR7-QI-ZtV" firstAttribute="top" secondItem="oUG-Mn-fv9" secondAttribute="bottom" constant="14" id="GHW-Oz-DaU"/>
                 <constraint firstItem="B0b-AV-HFa" firstAttribute="leading" secondItem="DG2-7a-AMu" secondAttribute="leading" id="IKT-p4-J22"/>
+                <constraint firstItem="B0b-AV-HFa" firstAttribute="top" secondItem="Dhc-VV-Ega" secondAttribute="bottom" constant="35" id="LE5-tp-1fn"/>
                 <constraint firstItem="oUG-Mn-fv9" firstAttribute="centerX" secondItem="87b-hi-OAG" secondAttribute="centerX" id="OO7-rq-nr2"/>
                 <constraint firstItem="B0b-AV-HFa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RBd-r4-9GE"/>
                 <constraint firstItem="DEl-6Z-Nux" firstAttribute="centerX" secondItem="B0b-AV-HFa" secondAttribute="centerX" id="SUm-a3-AWe"/>
                 <constraint firstItem="DG2-7a-AMu" firstAttribute="top" secondItem="B0b-AV-HFa" secondAttribute="bottom" constant="16" id="T36-oR-ns5"/>
                 <constraint firstItem="oUG-Mn-fv9" firstAttribute="top" secondItem="87b-hi-OAG" secondAttribute="bottom" constant="8" symbolic="YES" id="WA1-0f-wxf"/>
-                <constraint firstItem="B0b-AV-HFa" firstAttribute="top" secondItem="DEl-6Z-Nux" secondAttribute="bottom" constant="14" id="eOD-co-hRG"/>
                 <constraint firstItem="87b-hi-OAG" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fek-ts-A3h"/>
                 <constraint firstItem="B0b-AV-HFa" firstAttribute="centerX" secondItem="DR7-QI-ZtV" secondAttribute="centerX" id="g5m-IH-nDY"/>
                 <constraint firstItem="B0b-AV-HFa" firstAttribute="trailing" secondItem="87b-hi-OAG" secondAttribute="trailing" id="ltR-e2-hJl"/>
                 <constraint firstItem="DR7-QI-ZtV" firstAttribute="centerX" secondItem="oUG-Mn-fv9" secondAttribute="centerX" id="m2Q-FZ-fwM"/>
-                <constraint firstItem="DEl-6Z-Nux" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="81" id="mTo-Rk-IN0"/>
+                <constraint firstItem="DEl-6Z-Nux" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="94" id="mTo-Rk-IN0"/>
                 <constraint firstItem="87b-hi-OAG" firstAttribute="top" secondItem="DG2-7a-AMu" secondAttribute="bottom" constant="8" symbolic="YES" id="o3p-DY-09c"/>
                 <constraint firstItem="DEl-6Z-Nux" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="82" id="oV4-wG-3qc"/>
+                <constraint firstItem="Dhc-VV-Ega" firstAttribute="top" secondItem="DEl-6Z-Nux" secondAttribute="bottom" constant="8" id="rX3-Me-Jsr"/>
                 <constraint firstItem="DG2-7a-AMu" firstAttribute="bottom" secondItem="87b-hi-OAG" secondAttribute="bottom" id="sH9-Uy-Q3j"/>
                 <constraint firstItem="B0b-AV-HFa" firstAttribute="top" secondItem="DEl-6Z-Nux" secondAttribute="bottom" constant="24" id="wBn-fS-rjp"/>
+                <constraint firstAttribute="centerX" secondItem="Dhc-VV-Ega" secondAttribute="centerX" id="yMQ-yD-C5a"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">

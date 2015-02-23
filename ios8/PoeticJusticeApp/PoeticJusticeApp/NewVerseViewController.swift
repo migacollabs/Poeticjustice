@@ -12,6 +12,7 @@ import AVFoundation
 
 class NewVerseViewController: UIViewController, UITextFieldDelegate {
     
+    @IBOutlet weak var topicTitle: UILabel!
     @IBOutlet weak var verseTitle: UITextField!
     @IBOutlet weak var friendsOnly: UISwitch!
     @IBOutlet weak var topicButton: UIButton!
@@ -91,9 +92,12 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
         if let t_btn = self.topicButton{
             if let t = self.topic{
                 t_btn.setImage(UIImage(named: t.main_icon_name as String), forState: .Normal)
+                
+                if let t_title = self.topicTitle{
+                    t_title.text = t.name as? String
+                }
             }
         }
-    
     }
     
     func showAlert(title:String, message:String, controller_title:String){
