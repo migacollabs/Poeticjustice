@@ -70,6 +70,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var topicButton: UIButton!
+    @IBOutlet weak var verseTitle: UILabel!
     
     var maxNumPlayers : Int = 2
     
