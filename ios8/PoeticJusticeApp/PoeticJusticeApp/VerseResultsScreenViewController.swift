@@ -495,7 +495,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         if let pc = cell as? PlayerLineTableViewCell{
             
-            pc.yourPickLabel.text = "" // clear it
+            //pc.yourPickLabel.text = "" // clear it
+            pc.votedStar.image = nil
             
             // get the line
             var vlr = verseLinesForTable[indexPath.row]
@@ -515,16 +516,18 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         
                         if self.currentPlayerVotedFor != nil && self.currentPlayerVotedFor!.row == indexPath.row{
                             // this is the line the current player voted for
-                            pc.yourPickLabel.text = "Your Pick!"
+                            //pc.yourPickLabel.text = "Your Pick!"
+                            pc.votedStar.image = UIImage(named: "star_gold_256.png")
                         }
                         
                         break
                     }
                 }
-                if (found==false) {
-                    pc.avatarImage.image = UIImage(named: "man_24.png")
-                    pc.userName.text = ""
-                }
+                
+//                if (found==false) {
+//                    pc.avatarImage.image = UIImage(named: "man_24.png")
+//                    pc.userName.text = ""
+//                }
             }
             
             // set the line text

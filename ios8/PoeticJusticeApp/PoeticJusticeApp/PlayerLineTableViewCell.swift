@@ -15,8 +15,8 @@ class PlayerLineTableViewCell: UITableViewCell {
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var levelBadgeImage: UIImageView!
-    @IBOutlet weak var yourPickLabel: UILabel!
     
+    @IBOutlet weak var votedStar: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
