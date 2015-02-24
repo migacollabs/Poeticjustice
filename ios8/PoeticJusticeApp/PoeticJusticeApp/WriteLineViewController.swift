@@ -57,6 +57,7 @@ struct VerseRec {
     var is_complete : Bool = false
     var user_ids : [Int] = []
     var has_all_lines: Bool = false
+    var verse_title : String = ""
     
     // int is user id
     var players = Dictionary<Int,PlayerRec >()
@@ -70,10 +71,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var topicButton: UIButton!
-    @IBOutlet weak var verseTitle: UILabel!
     
     var maxNumPlayers : Int = 2
-    
     
     @IBOutlet weak var player1Avatar: UIImageView!
     @IBOutlet weak var player2Avatar: UIImageView!
@@ -116,8 +115,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         verseView.text = ""
         setLine.text = ""
         
-        title = "Your Line"
-        
         self.setLine.placeholder  = "Your turn is coming up soon!"
         
         self.setLine.delegate = self
@@ -125,7 +122,6 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         tapRec.addTarget(self, action: "tappedView")
         self.verseView.addGestureRecognizer(tapRec)
 //        self.view.addGestureRecognizer(tapRec)
-        
         
         self.configureView()
         
@@ -281,6 +277,9 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                             self.verse.is_complete = ic
                         }
                         
+                        if let t = results["title"] as? String {
+                            self.verse.verse_title = t
+                        }
                         
                         if let ui = results["user_ids"] as? [Int] {
                             self.verse.user_ids = ui
@@ -744,6 +743,14 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         } else {
             leave()
         }
+    }
+    
+    
+    @IBAction func showVerseInfo(sender: AnyObject) {
+        // TODO: parse HTML link and provide another controller title button to "Open in Safari" in addition to "Ok"
+        show_alert("Verse Title",
+            message: self.verse.verse_title,
+            controller_title: "Ok")
     }
     
     func show_alert(title:String, message:String, controller_title:String){
