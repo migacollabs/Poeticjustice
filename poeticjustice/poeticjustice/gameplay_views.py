@@ -334,7 +334,7 @@ def remove_user_friend(request):
                     session.delete(friend)
                     session.commit()
 
-                return get_friends(user)
+                return get_friends(user.id)
 
         raise HTTPUnauthorized
 
@@ -407,7 +407,7 @@ def add_user_friend(request):
                     uxu = UserXUser(entity=session.merge(uxu))
                     uxu.save(session=session)
 
-                return get_friends(user)
+                return get_friends(user.id)
 
         raise HTTPUnauthorized
 
@@ -443,29 +443,59 @@ def get_leaderboard(request):
     print 'get_leaderboard called', request
     try:
         user_id = None
+
         if 'user_id' in request.params:
             user_id = request.params['user_id']
+
+        leaderboard_type = request.params["type"]
 
         users = []
         U = ~User
 
         with SQLAlchemySessionFactory() as session:
-            if user_id:
-                has_user = False
-                for r in session.query(U).filter(U.is_active==true).order_by(desc(U.user_score)).limit(24):
-                    if (r.id==user_id):
-                        has_user = True
-                    users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
-                        "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level})
 
-                if has_user==False:
-                    for r in session.query(U).filter(U.id==user_id):
+            if leaderboard_type=="Friends":
+                # friends
+                if user_id:
+                    friend_ids = [user_id]
+                    for f in get_friends(user_id)["results"]:
+                        if (f["approved"]==True):
+                            friend_ids.append(f["friend_id"])
+
+                    for r in session.query(U).filter(U.is_active==True).\
+                        filter(U.id.in_(friend_ids)).\
+                        order_by(desc(U.user_score)):
                         users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
-                        "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level})
+                            "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level, 
+                            "num_of_favorited_lines":r.num_of_favorited_lines})
+                else:
+                    # this won't happen but just in case...
+                    for r in session.query(U).filter(U.is_active==True).\
+                        order_by(desc(U.user_score)).limit(25):
+                        users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
+                            "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level,
+                            "num_of_favorited_lines":r.num_of_favorited_lines})
             else:
-                for r in session.query(U).filter(U.is_active==True).order_by(desc(U.user_score)).limit(25):
-                    users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
-                        "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level})
+                # global
+                if user_id:
+                    has_user = False
+                    for r in session.query(U).filter(U.is_active==True).order_by(desc(U.user_score)).limit(24):
+                        if (r.id==user_id):
+                            has_user = True
+                        users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
+                            "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level,
+                            "num_of_favorited_lines":r.num_of_favorited_lines})
+
+                    if has_user==False:
+                        for r in session.query(U).filter(U.id==user_id):
+                            users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
+                            "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level,
+                            "num_of_favorited_lines":r.num_of_favorited_lines})
+                else:
+                    for r in session.query(U).filter(U.is_active==True).order_by(desc(U.user_score)).limit(25):
+                        users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
+                            "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level,
+                            "num_of_favorited_lines":r.num_of_favorited_lines})
 
         return {"results":users}
 
@@ -506,7 +536,7 @@ def get_user_friends(request):
         )
 
         if user and user.is_active and user.email_address==auth_usrid:
-            return get_friends(user)
+            return get_friends(user.id)
 
         raise HTTPUnauthorized
 
@@ -524,17 +554,16 @@ def get_user_friends(request):
         except:
             pass
 
-def get_friends(user):
+def get_friends(user_id):
     friends = []
 
     # my friends that i explicitly invited
     with SQLAlchemySessionFactory() as session:
-        user = User(entity=session.merge(user))
         U, UxU = ~User, ~UserXUser
         MyFriend = aliased(U, name="friend")
         for u, uxu, friend in session.query(U, UxU, MyFriend).\
             filter(U.id==UxU.friend_id).\
-            filter(UxU.user_id==user.id).\
+            filter(UxU.user_id==user_id).\
             filter(MyFriend.id==U.id):
             friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
                 'email_address':u.email_address, 'user_name':u.user_name, 'src':'me',
@@ -544,7 +573,7 @@ def get_friends(user):
         # others who have invited me
         for u, uxu, friend in session.query(U, UxU, MyFriend).\
             filter(UxU.user_id==U.id).\
-            filter(UxU.friend_id==user.id).\
+            filter(UxU.friend_id==user_id).\
             filter(MyFriend.id==U.id):
             friends.append({'friend_id':uxu.user_id, 'approved':uxu.approved,
                 'email_address':u.email_address, 'user_name':u.user_name, 'src':'them',
@@ -552,7 +581,6 @@ def get_friends(user):
                 })
 
     res = {"results":friends}
-    print 'RESULTS', res
     return res
 
 
@@ -571,6 +599,7 @@ def get_verse(verse_id, user_id):
     verse = None
     current_user_has_voted = False
     votes_d = {}
+    title = ""
 
     if verse_id:
         verse_id = int(verse_id)
@@ -603,6 +632,7 @@ def get_verse(verse_id, user_id):
             is_complete = verse.complete
             user_ids = verse.user_ids
             has_all_lines = len(lines) == verse.participant_count * 4
+            title = verse.title
 
             votes_d = json.loads(verse.votes) if verse.votes else {}
             current_user_has_voted = user_id in votes_d
@@ -635,7 +665,8 @@ def get_verse(verse_id, user_id):
             has_all_lines=has_all_lines,
             current_user_has_voted=current_user_has_voted,
             verse_id=verse_id,
-            owner_id=owner_id
+            owner_id=owner_id,
+            title=title
             )
         )
     print "returning from get_verse", res
@@ -686,7 +717,7 @@ def get_active_topics(request):
             print 'loading active topics for user', user.id
 
             friend_ids = []
-            for f in get_friends(user)["results"]:
+            for f in get_friends(user.id)["results"]:
                 if (f["approved"]==True):
                     friend_ids.append(f["friend_id"])
 

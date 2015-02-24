@@ -14,6 +14,7 @@ struct LeaderboardUserRec {
     var level : Int = 1
     var avatar_name : String = "avatar_default.png"
     var user_id : Int = -1
+    var num_favorited_lines : Int = 0
 }
 
 class LeaderboardTableViewCell: UITableViewCell {
@@ -41,45 +42,64 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     var leaderboard_users : [LeaderboardUserRec] = []
     @IBOutlet var myTableView: UITableView!
     
+    private var refreshButton : UIBarButtonItem?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Global Leaderboard"
+        
         // register our custom cell
         self.myTableView.registerNib(UINib(nibName: "LeaderboardTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
-        
-        var refreshButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
-        self.navigationItem.rightBarButtonItem = refreshButton
-        
-        title = "Leaderboard"
 
         // Do any additional setup after loading the view.
         self.myTableView.dataSource = self
         self.myTableView.delegate = self
     }
     
-    var lastTabbed : NSDate?
+    private var filterByFriends : Bool = false
     
     override func viewWillAppear(animated : Bool) {
         
-        var refresh : Bool = false
-        
-        if (lastTabbed==nil) {
-            refresh = true
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
+            if (filterByFriends) {
+                refreshButton = UIBarButtonItem(title: "Global", style: UIBarButtonItemStyle.Plain, target: self, action: "refresh")
+            } else {
+                refreshButton = UIBarButtonItem(title: "Friends", style: UIBarButtonItemStyle.Plain, target: self, action: "refresh")
+            }
         } else {
-            var elapsedTime = NSDate().timeIntervalSinceDate(lastTabbed!)
-            refresh = (elapsedTime>NSTimeInterval(10.0))
+            refreshButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
         }
         
-        if (refresh) {
-            println("hitting leaderboard")
-            NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/leaderboard", loadLeaderboard)
-            lastTabbed = NSDate()
+        self.navigationItem.rightBarButtonItem = refreshButton
+        
+        var params : String = ""
+        
+        if (filterByFriends) {
+            params = "?type=Friends&user_id=" + String(NetOpers.sharedInstance.user.id)
+        } else {
+            params = "?type=Global"
         }
         
+        println("hitting leaderboard at \(params)")
+        
+        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/leaderboard" + params, loadLeaderboard)
     
     }
     
     func refresh() {
+        
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
+            filterByFriends = !filterByFriends
+            
+            if (filterByFriends) {
+                refreshButton?.title = "Global"
+                title = "Friends Leaderboard"
+            } else {
+                title = "Global Leaderboard"
+            }
+        }
+        
         viewWillAppear(true)
     }
     
@@ -118,6 +138,10 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                             
                             if let l = lu["level"] as? Int {
                                 lr.level = l
+                            }
+                            
+                            if let n = lu["num_of_favorited_lines"] as? Int {
+                                lr.num_favorited_lines = n
                             }
                             
                             self.leaderboard_users.append(lr)
@@ -173,14 +197,14 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         if let lc = cell as? LeaderboardTableViewCell{
             if let lur = self.leaderboard_users[indexPath.row] as LeaderboardUserRec? {
                 
-                lc.desc.text = String(indexPath.row+1) + ". " + String(lur.user_score) + " points";
+                lc.desc.text = String(indexPath.row+1) + ". " + String(lur.user_score) + " points, " + String(lur.num_favorited_lines) + " fav'd lines";
                 lc.levelImage.image = UIImage(named: "lvl_" + String(lur.level) + ".png")
                 lc.avatarImage.image = UIImage(named: lur.avatar_name)
                 lc.userName.text = lur.user_name
                 
                 if (lur.user_id==NetOpers.sharedInstance.user.id) {
                     // lc.userName.font = UIFont.boldSystemFontOfSize(13.0)
-                    lc.backgroundColor = UIColor.lightGrayColor()
+                    lc.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.10)
                 } else {
                     lc.backgroundColor = UIColor.whiteColor()
                 }
@@ -188,6 +212,10 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return 60.0
     }
     
     func show_alert(title:String, message:String, controller_title:String){
