@@ -9,32 +9,9 @@
 import UIKit
 
 
-struct VerseHistoryRec{
-    var id = -1
-    var title = ""
-    var owner_id = -1
-    var user_ids:[Int] = []
-    var lines_recs = Dictionary<Int,VerseLineRec>()
-    var players = Dictionary<Int,VersePlayerRec>()
-}
-
-struct VerseLineRec{
-    var position = -1
-    var text = ""
-    var player_id = -1
-}
-
-struct VersePlayerRec{
-    var user_id = -1
-    var user_name = ""
-    var user_score = -1
-    var level = 1
-    var avatar_name = "avatar_default.png"
-}
-
 class VerseHistoryMasterViewController: UITableViewController {
     
-    var verses:[VerseHistoryRec] = []
+    var verses:[VerseResultScreenRec] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -83,11 +60,11 @@ class VerseHistoryMasterViewController: UITableViewController {
                     
                     if let results = jsonResult["results"] as? NSArray{
                         
-                        var verses:[VerseHistoryRec] = []
+                        var verses:[VerseResultScreenRec] = []
                         
                         for v in results {
                             
-                            var vh = VerseHistoryRec()
+                            var vh = VerseResultScreenRec()
                             
                             if let x = v["id"] as? Int{
                                 vh.id = x
@@ -119,7 +96,7 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     
                                     var p:Int? = (line_position as? String)!.toInt()
                                     if let lp = p{
-                                        var vlr = VerseLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
+                                        var vlr = VerseResultScreenLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
                                         vh.lines_recs[vlr.position] = vlr
                                         
                                     }else{
@@ -158,7 +135,7 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     var score = player[3] as Int
                                     var level = player[4] as Int
                                     
-                                    vh.players[pid] = VersePlayerRec(
+                                    vh.players[pid] = VerseResultScreenPlayerRec(
                                                         user_id: pid,
                                                         user_name: usrnm,
                                                         user_score:score,

@@ -25,7 +25,7 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, U
     
     var playerData: [PlayerLines] = []
     
-    var detailItem: VerseHistoryRec? {
+    var detailItem: VerseResultScreenRec? {
         didSet {
             // Might not have to do anything here
             ()
@@ -35,7 +35,7 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, U
     func configureView() {
         println("configureView called")
         // Update the user interface for the detail item.
-        if let vhr: VerseHistoryRec = self.detailItem {
+        if let vhr: VerseResultScreenRec = self.detailItem {
             if let title = self.verseTitle{
                 title.text = vhr.title
             }
@@ -63,6 +63,8 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, U
                     userName: user_name, line: lineRec.text, avatar: avatar, level:level)
                 
                 self.playerData.append(pl)
+                
+                println("set data \(self.playerData)")
                 
             }
             
@@ -104,12 +106,17 @@ class VerseHistoryDetailViewController: UIViewController, UITextFieldDelegate, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell : PlayerLineTableViewCell = self.playersTable.dequeueReusableCellWithIdentifier("PlayerCell") as PlayerLineTableViewCell
-        var playerLine = playerData[indexPath.row]
-        cell.avatarImage.image = UIImage(named:playerLine.avatar)
-        cell.userName.text = playerLine.userName
-        cell.verseLine.text = playerLine.line
-        cell.levelBadgeImage.image = UIImage(named: "lvl_" + String(playerLine.level) + ".png")
+        println("cell for row called ")
+        
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        if let pc = cell as? PlayerLineTableViewCell{
+            println("we have a cell")
+            var playerLine = playerData[indexPath.row]
+            pc.userName.text = playerLine.userName
+            pc.verseLabel.text = playerLine.line
+        }
+
         return cell
     }
     

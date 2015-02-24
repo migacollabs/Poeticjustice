@@ -12,37 +12,6 @@ import UIKit
 let HOSTNAME = NetOpers.sharedInstance.appserver_hostname!
 
 
-struct VerseResultScreenRec{
-    var id = -1
-    var title = ""
-    var owner_id = -1
-    var user_ids:[Int] = []
-    var participantCount = -1
-    
-    // int is pk and position
-    var lines_recs = Dictionary<Int,VerseResultScreenLineRec>()
-    
-    // int is user id
-    var players = Dictionary<Int,VerseResultScreenPlayerRec >()
-    
-    // int is user_id and val is line position
-    var votes = Dictionary<Int,Int>()
-}
-
-struct VerseResultScreenLineRec{
-    var position = -1
-    var text = ""
-    var player_id = -1
-}
-
-struct VerseResultScreenPlayerRec{
-    var user_id = -1
-    var user_name = ""
-    var user_score = -1
-    var level = 1
-    var avatar_name = "avatar_default.png"
-}
-
 class VerseResultsScreenViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var verseTitle: UILabel!
@@ -140,8 +109,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: nil) as NSDictionary
                     
-                    println(jsonResult)
-                    
                     if let results = jsonResult["results"] as? NSDictionary{
                         
                         var vrsr = VerseResultScreenRec()
@@ -155,8 +122,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         }
                         
                         if let verse = verseDict{
-                            
-                            println(verse)
                             
                             if let x = verse["id"] as? Int{
                                 vrsr.id = x
@@ -328,30 +293,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 self.tableView.reloadData()
                 
-                // check if this user has voted on this verse and select the row
-                if let player_id = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
-                    
-                    self.voteMsgLabel.text = "You've voted!"
-
-                    var i = 0
-                    var foundMatch = false
-                    for vlft in self.verseLinesForTable{
-                        if vlft.position == self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
-                            foundMatch = true
-                            break
-                        }else{
-                            i++
-                        }
-                    }
-                    
-                    if foundMatch{
-                        let indexPath = NSIndexPath(forRow:i,inSection:0)
-                        self.currentPlayerVotedFor = indexPath
-                        self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
-                    }
-                    
-                }
-                
                 if let vr = self.verseRec{
                     
                     self.voteMsgLabel.text = "\(vr.votes.count)\\\(vr.user_ids.count)"
@@ -359,7 +300,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     // if all the votes are in
                     if vr.votes.count == vr.user_ids.count{
                         
-                        self.voteMsgLabel.text = "All votes are in!"
+                        self.voteMsgLabel.text = "All votes are in! \(vr.votes.count)\\\(vr.user_ids.count)"
                         
                         var linesForPlayer = [Int:Int]()
                         
@@ -399,6 +340,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         
                     }
                 }
+                
+                println("VR HERE \(vr)")
                                 
                 var i = 0
                 for user_id in vr.players.keys {
@@ -420,6 +363,35 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     
                     i++
                 }
+                
+                // check if this user has voted on this verse and select the row
+                if let player_vote = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
+                    
+                    self.voteMsgLabel.text = "You've voted! \(vr.votes.count)\\\(vr.user_ids.count)"
+                    
+                    var i = 0
+                    var foundMatch = false
+                    for vlft in self.verseLinesForTable{
+                        if vlft.position == self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
+                            foundMatch = true
+                            break
+                        }else{
+                            i++
+                        }
+                    }
+                    
+                    if foundMatch{
+                        let indexPath = NSIndexPath(forRow:i,inSection:0)
+                        self.currentPlayerVotedFor = indexPath
+                        self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+                        self.highlightAvatar(NetOpers.sharedInstance.user.id)
+                        self.updateCurrentUser(NetOpers.sharedInstance.user.id)
+                    }
+                    
+                }else{
+                    self.voteMsgLabel.text = "Time to pick your favorite line! \(vr.votes.count)\\\(vr.user_ids.count)"
+                }
+                
             }
         }
     }
@@ -440,15 +412,15 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 switch idx{
                 case 0:
-                    self.avatarPlayerOne.backgroundColor = GameStateColors.GreenD
+                    self.avatarPlayerOne.backgroundColor = GameStateColors.LightBlueD
                 case 1:
-                    self.avatarPlayerTwo.backgroundColor = GameStateColors.GreenD
+                    self.avatarPlayerTwo.backgroundColor = GameStateColors.LightBlueD
                 case 2:
-                    self.avatarPlayerThree.backgroundColor = GameStateColors.GreenD
+                    self.avatarPlayerThree.backgroundColor = GameStateColors.LightBlueD
                 case 3:
-                    self.avatarPlayerFour.backgroundColor = GameStateColors.GreenD
+                    self.avatarPlayerFour.backgroundColor = GameStateColors.LightBlueD
                 case 4:
-                    self.avatarPlayerFive.backgroundColor = GameStateColors.GreenD
+                    self.avatarPlayerFive.backgroundColor = GameStateColors.LightBlueD
                 default:
                     ()
                 }
@@ -459,6 +431,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func updateCurrentUser(userId:Int){
+        println(self.verseRec)
         var player = self.verseRec!.players[userId]
         println("updateCurrentUser \(player)")
         if let x = self.currentUserName{
@@ -476,6 +449,11 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             x.text = String(format: "x%03d", player!.user_score)
             //x.text = String(player!.user_score) + "pnts"
         }
+    }
+    
+    func setStarOnRow(indexPath:NSIndexPath){
+        var cell = tableView.cellForRowAtIndexPath(indexPath) as PlayerLineTableViewCell
+        cell.votedStar.image = UIImage(named: "star_gold_256.png")
     }
     
     
@@ -537,7 +515,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         }
         
         var customView = UIView()
-        customView.backgroundColor = GameStateColors.GreenD
+        customView.backgroundColor = GameStateColors.LightBlueD
         cell.selectedBackgroundView = customView
         return cell
     }
@@ -607,6 +585,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                             // update label for some feedback
                                             dispatch_async(dispatch_get_main_queue(), {
                                                 self.voteMsgLabel.text = "Vote confirmed!"
+                                                self.setStarOnRow(indexPath)
                                             })
                                             
                                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
