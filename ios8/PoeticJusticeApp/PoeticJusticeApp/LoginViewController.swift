@@ -305,6 +305,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func show_version_history(){
         var sb = UIStoryboard(name: "VerseHistoryStoryboard", bundle: nil)
         var controller = sb.instantiateViewControllerWithIdentifier("VerseHistoryMasterViewController") as UIViewController
+        //self.navigationController?.pushViewController(controller, animated: true)
         self.presentViewController(controller, animated: true, completion: nil)
     }
 
