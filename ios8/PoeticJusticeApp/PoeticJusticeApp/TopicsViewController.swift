@@ -455,87 +455,95 @@ class TopicsViewController: UIViewController, UserDelegate {
         
         var topicButton = (sender as TopicButton)
         
-        if (is_initialized && (NetOpers.sharedInstance.user.is_logged_in()) && isTopicButtonUnlocked(topicButton)) {
+        if (is_initialized) {
             
-            if (!is_busy) {
-                is_busy = true
-                
-                playButtonSound()
-                
-                
-                var tag = topicButton.tag
-                var tid = self.topic_order[tag-1]
-                var topic = self.topics[tid] as Topic
-                
-                // stop the ads on this view
-                self.should_begin_banner = false
-                
-                var verseId : Int?
-                var isOpen = false // could be open friend or world
-                var activeTopic: ActiveTopicRec? = nil
-                
-                for (topicId, at) in self.activeTopics {
-                    
-                    let activeTopicRec = at.activeTopicRec
-                    
-                    if (activeTopicRec.topic_id==tid) {
+            if (NetOpers.sharedInstance.user.is_logged_in()) {
+                if (isTopicButtonUnlocked(topicButton)) {
+                    if (!is_busy) {
+                        is_busy = true
                         
-                        // println("button press topic_id \(tid) activeTopicRec.verse_user_ids \(activeTopicRec.verse_user_ids) src \(activeTopicRec.src)")
+                        playButtonSound()
+            
+                        var tag = topicButton.tag
+                        var tid = self.topic_order[tag-1]
+                        var topic = self.topics[tid] as Topic
                         
-                        // i've either joined or created these verses
-                        if (at.isUserParticipating() || activeTopicRec.owner_id==NetOpers.sharedInstance.user.id){
-                            verseId = activeTopicRec.verse_id
-                            activeTopic = activeTopicRec
-                            break
-                        }else{
-                            // just some open verses with available user slots available
-                            if activeTopicRec.src == "world" || activeTopicRec.src=="friend" {
-                                verseId = activeTopicRec.verse_id
-                                isOpen = true
-                                activeTopic = activeTopicRec
-                                break
+                        // stop the ads on this view
+                        self.should_begin_banner = false
+                        
+                        var verseId : Int?
+                        var isOpen = false // could be open friend or world
+                        var activeTopic: ActiveTopicRec? = nil
+                        
+                        for (topicId, at) in self.activeTopics {
+                            
+                            let activeTopicRec = at.activeTopicRec
+                            
+                            if (activeTopicRec.topic_id==tid) {
+                                
+                                // println("button press topic_id \(tid) activeTopicRec.verse_user_ids \(activeTopicRec.verse_user_ids) src \(activeTopicRec.src)")
+                                
+                                // i've either joined or created these verses
+                                if (at.isUserParticipating() || activeTopicRec.owner_id==NetOpers.sharedInstance.user.id){
+                                    verseId = activeTopicRec.verse_id
+                                    activeTopic = activeTopicRec
+                                    break
+                                }else{
+                                    // just some open verses with available user slots available
+                                    if activeTopicRec.src == "world" || activeTopicRec.src=="friend" {
+                                        verseId = activeTopicRec.verse_id
+                                        isOpen = true
+                                        activeTopic = activeTopicRec
+                                        break
+                                    }
+                                }
+                                
                             }
                         }
                         
+                        if let vid = verseId {
+                            
+                            // TODO: Check to see if a verse for this topic and level is complete or
+                            // all the players have added their lines.. and if so
+                            // show the VerseResultsScreenViewController
+                            
+                            if isOpen{
+                                let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
+                                vc.topic = topic
+                                vc.activeTopic = activeTopic
+                                navigationController?.pushViewController(vc, animated: true)
+                                
+                            }else{
+                                
+                                var params = Dictionary<String,AnyObject>()
+                                params["verse_id"]=vid
+                                params["user_id"]=NetOpers.sharedInstance.user.id
+                                
+                                self.navigatingActiveTopics[vid] = topic
+                                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, openNextView)
+                                
+                                //                        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
+                                //                        vc.verseId = vid
+                                //                        vc.topic = topic
+                                //                        navigationController?.pushViewController(vc, animated: true)
+                            }
+                            
+                        } else {
+                            let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
+                            vc.topic = topic
+                            navigationController?.pushViewController(vc, animated: true)
+                            
+                        }
+                        
                     }
-                }
-                
-                if let vid = verseId {
-                    
-                    // TODO: Check to see if a verse for this topic and level is complete or
-                    // all the players have added their lines.. and if so
-                    // show the VerseResultsScreenViewController
-                    
-                    if isOpen{
-                        let vc = WorldVerseViewController(nibName: "WorldVerseViewController", bundle:nil)
-                        vc.topic = topic
-                        vc.activeTopic = activeTopic
-                        navigationController?.pushViewController(vc, animated: true)
-                        
-                    }else{
-                        
-                        var params = Dictionary<String,AnyObject>()
-                        params["verse_id"]=vid
-                        params["user_id"]=NetOpers.sharedInstance.user.id
-                        
-                        self.navigatingActiveTopics[vid] = topic
-                        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, openNextView)
-                        
-//                        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
-//                        vc.verseId = vid
-//                        vc.topic = topic
-//                        navigationController?.pushViewController(vc, animated: true)
-                    }
-                    
                 } else {
-                    let vc = NewVerseViewController(nibName: "NewVerseViewController", bundle:nil)
-                    vc.topic = topic
-                    navigationController?.pushViewController(vc, animated: true)
-                    
+                    // have not leveled up
+                    self.show_alert("Oops", message: "You'll need to level up to unlock this topic!", controller_title: "Ok")
                 }
-                
+            } else {
+                // have not leveled up
+                self.show_alert("Oops", message: "You'll need to sign in to play!", controller_title: "Ok")
             }
-            
         }
         
     }
