@@ -342,7 +342,7 @@ AFTER_CREATE_SQL:
             )
         VALUES
             ('larry@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, False,'1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210727', 'me', 1, ARRAY[1,4,5]),
-            ('larry+friend1@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210728', 'friend 1 open', 1, ARRAY[3]),
+            ('larry+friend1@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210728', 'friend 1 open', 1, ARRAY[1,3]),
             ('larry+friend2@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210728', 'friend 2 joined', 1, ARRAY[4]),
             ('larry+world1@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 'world 1 open', 1, ARRAY[2]),
             ('larry+world2@miga.me', 'USA', '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 0, 0, 0, True, True, '1751aa189503994bd6c6d6ed3118e33c2981d2587980ab223750f52b509abd3a9efccf51eed53905c424424d1f5fdbf17316d2d4b5f30d8063be4f315c210729', 'world 2 joined', 1, ARRAY[5]);
@@ -457,7 +457,7 @@ AFTER_CREATE_SQL:
                 user_ids, participant_count, max_participants, max_lines, owner_id, verse_category_topic_id, friends_only, complete, next_index_user_ids, title
             )
         VALUES
-            (ARRAY[11111, -1], 1, 2, 8, 11111, 1, True, False, 0, 'My Verse'), -- my verse
+            (ARRAY[11111, 11112], 2, 2, 8, 11111, 1, True, False, 1, 'My Verse'), -- my verse
             (ARRAY[11114, -1, -1], 1, 3, 12, 11114, 2, False, False, 0, 'Open W 3 People'), -- open world verse
             (ARRAY[11112, -1, -1, -1], 1, 4, 16, 11112, 3, True, False, 0, 'Open F 4 People'), -- open friend verse
             (ARRAY[11113, 11111, -1, -1, -1], 2, 5, 20, 11113, 4, True, False, 1, 'Joined F 5 People'), -- joined friend verse
@@ -469,5 +469,13 @@ AFTER_CREATE_SQL:
             user_id, verse_id, line_text, line_score, added, user_level
         )
         VALUES
-            (11113, 4, 'Im the friend owner, now you joined, so write a line', 0, false, 1);
+            (11113, 4, 'Im the friend owner, now you joined, so write a line', 0, false, 1),
+            (11111, 1, 'The first line is long, thats how it should be', 0, false, 1),
+            (11112, 1, 'The second line is long, appropriately', 0, false, 1),
+            (11111, 1, 'The third line is long, but no one will notice', 0, false, 1),
+            (11112, 1, 'The fourth line is long and I feel a little hopeless', 0, false, 1),
+            (11111, 1, 'The fifth line is long cause we need to test the app', 0, false, 1),
+            (11112, 1, 'The sixth line is long, so hey, thats that', 0, false, 1),
+            (11111, 1, 'The seventh line is long, almost at the end', 0, false, 1);
+
 
