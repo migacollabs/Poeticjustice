@@ -75,6 +75,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         self.tableView.allowsMultipleSelection = false
         self.tableView.allowsSelection = true
+        self.tableView.backgroundColor = UIColor.clearColor()
         
         self.tableView.separatorColor = GameStateColors.VeryLightGreyD
         
@@ -414,15 +415,15 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 switch idx{
                 case 0:
-                    self.avatarPlayerOne.backgroundColor = GameStateColors.LightBlueD
+                    self.avatarPlayerOne.backgroundColor = GameStateColors.LightBlueT
                 case 1:
-                    self.avatarPlayerTwo.backgroundColor = GameStateColors.LightBlueD
+                    self.avatarPlayerTwo.backgroundColor = GameStateColors.LightBlueT
                 case 2:
-                    self.avatarPlayerThree.backgroundColor = GameStateColors.LightBlueD
+                    self.avatarPlayerThree.backgroundColor = GameStateColors.LightBlueT
                 case 3:
-                    self.avatarPlayerFour.backgroundColor = GameStateColors.LightBlueD
+                    self.avatarPlayerFour.backgroundColor = GameStateColors.LightBlueT
                 case 4:
-                    self.avatarPlayerFive.backgroundColor = GameStateColors.LightBlueD
+                    self.avatarPlayerFive.backgroundColor = GameStateColors.LightBlueT
                 default:
                     ()
                 }
@@ -517,7 +518,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         }
         
         var customView = UIView()
-        customView.backgroundColor = GameStateColors.LightBlueD
+        customView.backgroundColor = GameStateColors.LightBlueT
         cell.selectedBackgroundView = customView
         return cell
     }

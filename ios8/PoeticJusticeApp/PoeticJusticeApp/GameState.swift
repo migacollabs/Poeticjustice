@@ -147,6 +147,10 @@ class GameStateColors{
         return UIColor(red:250/255, green:250/255, blue:250/255, alpha:0.9)
     }
     
+    class var LightBlueT: UIColor {
+        return UIColor(red:63/255, green:149/255, blue:188/255, alpha:0.25)
+    }
+    
 }
 
 
