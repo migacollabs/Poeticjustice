@@ -294,7 +294,7 @@ PYAELLAC:
                     Sequence('line_id_seq', start=1),  
                     server_default=text("nextval('line_id_seq')"), 
                     primary_key=True)
-        line_text: Column(String(144))
+        line_text: Column(String(65))
         line_score: Column(Integer, nullable=False, default=0)
         added: Column(Boolean, default=False, nullable=False)
         user_level: Column(Integer, default=1, nullable=False)
@@ -470,12 +470,12 @@ AFTER_CREATE_SQL:
         )
         VALUES
             (11113, 4, 'Im the friend owner, now you joined, so write a line', 0, false, 1),
-            (11111, 1, 'This is a long label that is quite wide and as far as we know it should wrap all text within, but apparently there is no guarantee.  Howdy!!', 0, false, 1),
-            (11112, 1, 'That is a long label that is quite wide and as far as we know it should wrap all text within, but apparently there is no guarantee.  Howdy!!', 0, false, 1),
-            (11111, 1, 'This is a long label that is quite wide and as far as we know it should wrap all text within, but apparently there is no guarantee.  Howdy!!', 0, false, 1),
-            (11112, 1, 'That is a long label that is quite wide and as far as we know it should wrap all text within, but apparently there is no guarantee.  Howdy!!', 0, false, 1),
-            (11111, 1, 'This is a long label that is quite wide and as far as we know it should wrap all text within, but apparently there is no guarantee.  Howdy!!', 0, false, 1),
-            (11112, 1, 'That is a long label that is quite wide and as far as we know it should wrap all text within, but apparently there is no guarantee.  Howdy!!', 0, false, 1),
-            (11111, 1, 'This is a long label that is quite wide and as far as we know it should wrap all text within, but apparently there is no guarantee.  Howdy!!', 0, false, 1);
+            (11111, 1, 'Short line to start.', 0, false, 1),
+            (11112, 1, 'That is a long label that is quite wide and as far as we know it!', 0, false, 1),
+            (11111, 1, 'Another short line, not shabby.', 0, false, 1),
+            (11112, 1, 'This is a long label that is quite wide and as far as we know it!', 0, false, 1),
+            (11111, 1, 'That is a long label that is quite wide and as far as we know it!', 0, false, 1),
+            (11112, 1, 'This is a long label that is quite wide and as far as we know it!', 0, false, 1),
+            (11111, 1, 'That is a long label that is quite wide and as far as we know it!', 0, false, 1);
 
 

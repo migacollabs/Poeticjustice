@@ -103,12 +103,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         var user = NetOpers.sharedInstance.user
         if (user.is_logged_in()) {
-            self.userLabel.text = "You're signed in!"
+            self.userLabel.text = "You are signed in as:"
             
             title = user.user_name
             self.navigationController?.navigationBar.topItem?.title = ""
         } else {
-            self.userLabel.text = "You are not signed in!"
+            self.userLabel.text = "Sign In"
             
             title = "Home"
             self.navigationController?.navigationBar.topItem?.title = ""
