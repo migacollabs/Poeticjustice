@@ -18,56 +18,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0DR-KU-NfP">
+                            <imageView userInteractionEnabled="NO" alpha="0.79999999999999982" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="results-tree.png" translatesAutoresizingMaskIntoConstraints="NO" id="cjK-W8-BML" userLabel="Background Image">
+                                <rect key="frame" x="1" y="65" width="599" height="490"/>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0DR-KU-NfP">
                                 <rect key="frame" x="0.0" y="155" width="600" height="285"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="60" id="ZHF-TP-xd9" customClass="PlayerLineTableViewCell" customModule="PoeticJusticeApp" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="35" id="ZHF-TP-xd9" customClass="PlayerLineTableViewCell" customModule="PoeticJusticeApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZHF-TP-xd9" id="9BQ-sx-cyx">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234567890123456" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jxu-vD-bH5">
-                                                    <rect key="frame" x="485" y="39" width="107" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="4r5-nx-SEG"/>
-                                                        <constraint firstAttribute="height" constant="21" id="DQk-7m-eZc"/>
-                                                        <constraint firstAttribute="width" constant="148" id="MOR-eL-xqO"/>
-                                                        <constraint firstAttribute="width" constant="148" id="Oli-Wn-VeJ"/>
-                                                        <constraint firstAttribute="width" constant="107" id="VV1-Pc-DNA"/>
-                                                        <constraint firstAttribute="width" secondItem="Jxu-vD-bH5" secondAttribute="height" multiplier="148:21" id="wYb-pB-cPr"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="4r5-nx-SEG"/>
-                                                            <exclude reference="MOR-eL-xqO"/>
-                                                            <exclude reference="Oli-Wn-VeJ"/>
-                                                            <exclude reference="wYb-pB-cPr"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
-                                                        <rect key="frame" x="285" y="39" width="107" height="21"/>
-                                                    </variation>
-                                                </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yUw-XZ-cny">
-                                                    <rect key="frame" x="568" y="11" width="24" height="24"/>
+                                                    <rect key="frame" x="568" y="6" width="24" height="24"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="height" constant="24" id="3ez-LQ-FgZ"/>
                                                         <constraint firstAttribute="width" constant="24" id="Ycp-Ka-qjd"/>
+                                                        <constraint firstAttribute="width" secondItem="yUw-XZ-cny" secondAttribute="height" multiplier="1:1" id="qBO-Y9-d5A"/>
                                                     </constraints>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
                                                         <rect key="frame" x="368" y="11" width="24" height="24"/>
                                                     </variation>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SPD-UD-gy6">
-                                                    <rect key="frame" x="8" y="1" width="542" height="36"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the verse line" lineBreakMode="wordWrap" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SPD-UD-gy6">
+                                                    <rect key="frame" x="8" y="8" width="542" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="342" id="2dg-K2-00j"/>
                                                     </constraints>
-                                                    <string key="text">This is a long label that is quite wide and as far as we know it should wrap all text within, but apparently there is no guarantee.  How interesting!</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -78,32 +57,20 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="yUw-XZ-cny" firstAttribute="leading" secondItem="SPD-UD-gy6" secondAttribute="trailing" constant="18" id="10a-eo-yhZ"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Jxu-vD-bH5" secondAttribute="trailing" constant="15" id="JSd-wK-gks">
-                                                    <variation key="heightClass=compact-widthClass=regular" constant="12"/>
-                                                </constraint>
                                                 <constraint firstItem="SPD-UD-gy6" firstAttribute="leading" secondItem="9BQ-sx-cyx" secondAttribute="leadingMargin" id="M0X-Lq-ltk"/>
-                                                <constraint firstItem="Jxu-vD-bH5" firstAttribute="leading" relation="lessThanOrEqual" secondItem="9BQ-sx-cyx" secondAttribute="leadingMargin" constant="429" id="bQ3-pP-i0Z">
-                                                    <variation key="heightClass=compact-widthClass=regular" constant="626"/>
-                                                </constraint>
-                                                <constraint firstItem="Jxu-vD-bH5" firstAttribute="leading" secondItem="9BQ-sx-cyx" secondAttribute="leadingMargin" constant="429" id="bb4-8m-491"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Jxu-vD-bH5" secondAttribute="bottom" constant="-9" id="eBb-a5-sZU"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="SPD-UD-gy6" secondAttribute="bottom" constant="1" id="QCo-Qx-Glp"/>
                                                 <constraint firstItem="yUw-XZ-cny" firstAttribute="trailing" secondItem="9BQ-sx-cyx" secondAttribute="trailingMargin" id="hIe-Ue-OKP"/>
-                                                <constraint firstItem="Jxu-vD-bH5" firstAttribute="top" secondItem="SPD-UD-gy6" secondAttribute="bottom" constant="2" id="hJz-Xr-WqB"/>
-                                                <constraint firstItem="yUw-XZ-cny" firstAttribute="trailing" secondItem="Jxu-vD-bH5" secondAttribute="trailing" id="hSA-DB-vqn"/>
-                                                <constraint firstItem="Jxu-vD-bH5" firstAttribute="top" secondItem="yUw-XZ-cny" secondAttribute="bottom" constant="4" id="lCJ-ML-tdE"/>
+                                                <constraint firstAttribute="centerY" secondItem="yUw-XZ-cny" secondAttribute="centerY" constant="-1" id="iKr-Zc-8ZU"/>
                                                 <constraint firstItem="yUw-XZ-cny" firstAttribute="top" secondItem="9BQ-sx-cyx" secondAttribute="topMargin" constant="3" id="qTE-lz-xMs"/>
-                                                <constraint firstItem="SPD-UD-gy6" firstAttribute="top" secondItem="9BQ-sx-cyx" secondAttribute="topMargin" constant="-7" id="uue-N3-CoU"/>
+                                                <constraint firstItem="SPD-UD-gy6" firstAttribute="top" secondItem="9BQ-sx-cyx" secondAttribute="topMargin" id="uue-N3-CoU"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="JSd-wK-gks"/>
-                                                    <exclude reference="bQ3-pP-i0Z"/>
-                                                    <exclude reference="bb4-8m-491"/>
+                                                    <exclude reference="qTE-lz-xMs"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="userName" destination="Jxu-vD-bH5" id="M9a-zp-rjL"/>
                                             <outlet property="verseLabel" destination="SPD-UD-gy6" id="HqR-1i-gEg"/>
                                             <outlet property="votedStar" destination="yUw-XZ-cny" id="WMl-1x-ysV"/>
                                         </connections>
@@ -140,7 +107,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67h-87-etI" userLabel="CurrentPlayerView">
+                            <view alpha="0.89999999999999991" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67h-87-etI" userLabel="CurrentPlayerView">
                                 <rect key="frame" x="0.0" y="455" width="600" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTE-mZ-jc8">
@@ -327,6 +294,7 @@
                             <constraint firstItem="5wv-f1-r5d" firstAttribute="top" secondItem="Y5r-tP-dw9" secondAttribute="bottom" constant="48" id="9gy-jD-dA7"/>
                             <constraint firstItem="hnh-XD-aKr" firstAttribute="top" secondItem="Q1o-Fb-ueg" secondAttribute="bottom" constant="21" id="Ama-hO-vUf"/>
                             <constraint firstItem="dfC-Zh-KNc" firstAttribute="bottom" secondItem="Mgf-cC-hpq" secondAttribute="bottom" id="COV-Ly-t5X"/>
+                            <constraint firstItem="cjK-W8-BML" firstAttribute="trailing" secondItem="67h-87-etI" secondAttribute="trailing" id="Ced-Ie-CNg"/>
                             <constraint firstItem="hnE-Z7-Bt5" firstAttribute="leading" secondItem="g3w-LE-8EA" secondAttribute="leading" id="DIz-ZA-NPL"/>
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="leading" secondItem="67h-87-etI" secondAttribute="leading" id="DXn-H3-9tP"/>
                             <constraint firstItem="Mgf-cC-hpq" firstAttribute="bottom" secondItem="caO-rZ-GhL" secondAttribute="bottom" id="EBf-Dm-D4d"/>
@@ -348,8 +316,10 @@
                             <constraint firstItem="caO-rZ-GhL" firstAttribute="leading" secondItem="Y5r-tP-dw9" secondAttribute="trailing" constant="8" symbolic="YES" id="aUX-v7-PHV"/>
                             <constraint firstItem="ZFQ-nJ-sGi" firstAttribute="leading" secondItem="dfC-Zh-KNc" secondAttribute="trailing" constant="8" symbolic="YES" id="cTa-ZT-sdN"/>
                             <constraint firstItem="ZFQ-nJ-sGi" firstAttribute="bottom" secondItem="dfC-Zh-KNc" secondAttribute="bottom" id="cmg-6o-UQD"/>
+                            <constraint firstItem="cjK-W8-BML" firstAttribute="top" secondItem="jQ5-e5-6Uw" secondAttribute="top" constant="65" id="cqL-IS-oz3"/>
                             <constraint firstItem="5wv-f1-r5d" firstAttribute="top" secondItem="67h-87-etI" secondAttribute="bottom" constant="1" id="d0n-gO-KmB"/>
                             <constraint firstItem="67h-87-etI" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="15" id="dab-4t-Cj7"/>
+                            <constraint firstAttribute="bottom" secondItem="cjK-W8-BML" secondAttribute="bottom" constant="45" id="e6d-Nb-JGF"/>
                             <constraint firstItem="caO-rZ-GhL" firstAttribute="leading" secondItem="Y5r-tP-dw9" secondAttribute="trailing" constant="8" id="eaR-Fq-ZRm"/>
                             <constraint firstItem="caO-rZ-GhL" firstAttribute="top" secondItem="Y5r-tP-dw9" secondAttribute="top" id="ege-9g-NaN"/>
                             <constraint firstItem="dfC-Zh-KNc" firstAttribute="leading" secondItem="Mgf-cC-hpq" secondAttribute="trailing" constant="8" symbolic="YES" id="fLX-tJ-qFV"/>
@@ -364,6 +334,7 @@
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="leading" secondItem="g3w-LE-8EA" secondAttribute="trailing" constant="-64" id="oxR-if-Ukp"/>
                             <constraint firstAttribute="trailing" secondItem="0DR-KU-NfP" secondAttribute="trailing" id="q6v-Mn-hbh"/>
                             <constraint firstItem="Y5r-tP-dw9" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="28" id="tTc-8i-vch"/>
+                            <constraint firstItem="cjK-W8-BML" firstAttribute="centerX" secondItem="0DR-KU-NfP" secondAttribute="centerX" id="teZ-hg-BER"/>
                             <constraint firstItem="hnh-XD-aKr" firstAttribute="leading" secondItem="g3w-LE-8EA" secondAttribute="trailing" constant="8" symbolic="YES" id="ukM-HQ-hrh"/>
                             <constraint firstItem="Mgf-cC-hpq" firstAttribute="top" secondItem="caO-rZ-GhL" secondAttribute="top" id="ytl-1K-szs"/>
                         </constraints>
@@ -418,4 +389,7 @@
             <point key="canvasLocation" x="672" y="556"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="results-tree.png" width="518" height="518"/>
+    </resources>
 </document>

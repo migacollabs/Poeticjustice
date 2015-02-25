@@ -76,6 +76,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         self.tableView.allowsMultipleSelection = false
         self.tableView.allowsSelection = true
         
+        self.tableView.separatorColor = GameStateColors.VeryLightGreyD
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -490,7 +492,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         let playerRec : VerseResultScreenPlayerRec = vr.players[vlr.player_id]!
                         //pc.avatarImage.image = UIImage(named: playerRec.avatar_name)
                         //pc.levelBadgeImage.image = UIImage(named: "lvl_" + String(playerRec.level) + ".png")
-                        pc.userName.text = playerRec.user_name
+                        if pc.userName != nil{
+                            pc.userName.text = playerRec.user_name
+                        }
                         
                         if self.currentPlayerVotedFor != nil && self.currentPlayerVotedFor!.row == indexPath.row{
                             // this is the line the current player voted for
@@ -502,15 +506,13 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     }
                 }
                 
-//                if (found==false) {
-//                    pc.avatarImage.image = UIImage(named: "man_24.png")
-//                    pc.userName.text = ""
-//                }
             }
             
             // set the line text
             //pc.verseLine.text = vlr.text
             pc.verseLabel.text = vlr.text
+            pc.verseLabel.font.fontName
+            
             
         }
         
@@ -684,7 +686,31 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        return 60.0
+        
+        var vlr = self.verseLinesForTable[indexPath.row]
+        
+        if let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell{
+            if let pc = cell as? PlayerLineTableViewCell{
+                
+                var h = self.heightForLabel(vlr.text, font:pc.verseLabel.font, width:pc.verseLabel.frame.width)
+                
+                if h > 17.0{
+                    return 35.0 + 17.0
+                }
+            }
+        }
+        
+        return 35.0
+    }
+    
+    func heightForLabel(text:String, font:UIFont, width:CGFloat) -> CGFloat{
+        var label:UILabel = UILabel(frame: CGRectMake(0, 0, width, CGFloat.max))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.font = font
+        label.text = text
+        label.sizeToFit()
+        return label.frame.height
     }
 
     /*
