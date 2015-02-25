@@ -54,7 +54,6 @@ class NetOpers {
     func _load_topics(on_topics_loaded:((NSData?, NSURLResponse?, NSError?)->Void)?) -> Bool{
         if self.appserver_hostname != nil{
             var url:String = self.appserver_hostname! + "/u/get-topics"
-            println(url)
             self.get(url, completion_handler: on_topics_loaded)
             return true
         }else{

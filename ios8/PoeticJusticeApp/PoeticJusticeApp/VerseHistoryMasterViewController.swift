@@ -11,6 +11,8 @@ import UIKit
 
 class VerseHistoryMasterViewController: UITableViewController {
     
+    var topics = Dictionary<Int, AnyObject>()
+
     var verses:[VerseResultScreenRec] = []
     
     override func awakeFromNib() {
@@ -22,6 +24,8 @@ class VerseHistoryMasterViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         //self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
+        NetOpers.sharedInstance._load_topics(loadTopicData)
+        
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/verse-history", load_verses)
         
     }
@@ -32,14 +36,76 @@ class VerseHistoryMasterViewController: UITableViewController {
     }
     
     
+    // MARK: - Loading topics
+    
+    func fetchTopics(){
+        // get all the available topics (has nothing to do with active / world
+        NetOpers.sharedInstance._load_topics(loadTopicData)
+    }
+    
+    func loadTopicData(data:NSData?, response:NSURLResponse?, error:NSError?){
+        
+        println("loadTopicData called")
+        
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                
+                var user = NetOpers.sharedInstance.user
+                
+                if data != nil {
+                    
+                    if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as? NSDictionary{
+                            
+                            if let results = jsonResult["results"] as? NSArray {
+                                
+                                self.topics.removeAll(keepCapacity: false)
+                                
+                                for topic in results {
+                                    var t = Topic(rec:topic as NSDictionary)
+                                    var tid = t.id! as Int
+                                    self.topics[tid] = t
+                                }
+                            }
+                        
+                            
+                    }else{
+                        self.show_alert("Error", message: "No topics found", controller_title: "Ok")
+                    }
+                    
+                }
+                
+            }else{
+                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the topics.  Please try again.", controller_title:"Ok")
+                
+            }
+        }
+        
+        if (error != nil) {
+            if let e = error?.localizedDescription {
+                self.show_alert("Unable to load topics", message: e, controller_title:"Ok")
+            } else {
+                self.show_alert("Network error", message: "Unable to load topics", controller_title:"Ok")
+            }
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        }
+        
+    }
+    
+    
+    
     // MARK: - Segues
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow() {
-                println("indexPath \(indexPath)")
                 let vhr = self.verses[indexPath.row]
-                println("vhr \(vhr)")
+                
+                if var topic = self.topics[vhr.topicId] as? Topic{
+                    (segue.destinationViewController as VerseHistoryDetailViewController).topic = topic
+                }
+                
                 (segue.destinationViewController as VerseHistoryDetailViewController).detailItem = vhr
             }
         }
@@ -72,6 +138,10 @@ class VerseHistoryMasterViewController: UITableViewController {
                             
                             if let x = v["title"] as? String{
                                 vh.title = x
+                            }
+                            
+                            if let x = v["topic_id"] as? Int{
+                                vh.topicId = x
                             }
                             
                             if let x = v["owner_id"] as? Int{

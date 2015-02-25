@@ -646,14 +646,15 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
 //            println("changed background")
 //        }
         
+        if self.stillVoting{
+            return nil
+        }
+        
         var vlr = self.verseLinesForTable[indexPath.row]
         
         self.highlightAvatar(vlr.player_id)
         self.updateCurrentUser(vlr.player_id)
-        
-        if self.stillVoting{
-            return nil
-        }
+
         
 //        // if every player has voted, don't allow selection
 //        if self.verseRec?.votes.count == self.verseRec?.participantCount{
