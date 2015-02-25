@@ -748,9 +748,35 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     @IBAction func showVerseInfo(sender: AnyObject) {
         // TODO: parse HTML link and provide another controller title button to "Open in Safari" in addition to "Ok"
-        show_alert("Verse Title",
+        show_verse_title("Verse Title",
             message: self.verse.verse_title,
             controller_title: "Ok")
+    }
+    
+    func textField(textField: UITextField!, shouldChangeCharactersInRange range: NSRange, replacementString string: String!) -> Bool {
+        
+        let newLength = countElements(textField.text!) + countElements(string!) - range.length
+        return newLength <= 65
+        
+    }
+    
+    
+    func show_verse_title(title:String, message:String, controller_title:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default, handler: nil))
+            
+            if let url = NSURL(string:self.verse.verse_title) {
+                let open: ((UIAlertAction!) -> Void)! = { action in
+                    UIApplication.sharedApplication().openURL(url)
+                    return
+                }
+                
+                alertController.addAction(UIAlertAction(title: "Open in Safari", style: UIAlertActionStyle.Default, handler: open ))
+            }
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     func show_alert(title:String, message:String, controller_title:String){
