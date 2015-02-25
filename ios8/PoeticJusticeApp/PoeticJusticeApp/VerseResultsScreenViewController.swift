@@ -445,7 +445,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             x.image = UIImage(named: "lvl_" + String(player!.level) + ".png")
         }
         if let x = self.currentUserCoinsImg{
-            x.image = UIImage(named: "gold-coin.png")
+            x.image = UIImage(named: "tea-plant-leaf-icon.png")
         }
         if let x = self.currentUserPoints{
             x.text = String(format: "x%03d", player!.user_score)

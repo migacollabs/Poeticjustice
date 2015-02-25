@@ -107,7 +107,7 @@
                                     </mask>
                                 </variation>
                             </label>
-                            <view alpha="0.89999999999999991" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67h-87-etI" userLabel="CurrentPlayerView">
+                            <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="67h-87-etI" userLabel="CurrentPlayerView">
                                 <rect key="frame" x="0.0" y="455" width="600" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aTE-mZ-jc8">
