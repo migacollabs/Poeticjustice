@@ -14,7 +14,7 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
     
     var avatar = Avatar()
     
-    var selectedColour = UIColor(red:0.67, green:0.93, blue:0.94, alpha:1.0)
+    var selectedColour = GameStateColors.LightBlueD
     
     var selectedIndexPathRow: Int = -1
 
