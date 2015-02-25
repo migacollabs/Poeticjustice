@@ -18,11 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.79999999999999982" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="results-tree.png" translatesAutoresizingMaskIntoConstraints="NO" id="cjK-W8-BML" userLabel="Background Image">
+                            <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="results-tree.png" translatesAutoresizingMaskIntoConstraints="NO" id="cjK-W8-BML" userLabel="Background Image">
                                 <rect key="frame" x="1" y="65" width="599" height="490"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0DR-KU-NfP">
-                                <rect key="frame" x="0.0" y="155" width="600" height="285"/>
+                            <tableView clipsSubviews="YES" alpha="0.75" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0DR-KU-NfP">
+                                <rect key="frame" x="0.0" y="155" width="600" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="35" id="ZHF-TP-xd9" customClass="PlayerLineTableViewCell" customModule="PoeticJusticeApp" customModuleProvider="target">
@@ -318,7 +318,7 @@
                             <constraint firstItem="ZFQ-nJ-sGi" firstAttribute="bottom" secondItem="dfC-Zh-KNc" secondAttribute="bottom" id="cmg-6o-UQD"/>
                             <constraint firstItem="cjK-W8-BML" firstAttribute="top" secondItem="jQ5-e5-6Uw" secondAttribute="top" constant="65" id="cqL-IS-oz3"/>
                             <constraint firstItem="5wv-f1-r5d" firstAttribute="top" secondItem="67h-87-etI" secondAttribute="bottom" constant="1" id="d0n-gO-KmB"/>
-                            <constraint firstItem="67h-87-etI" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="15" id="dab-4t-Cj7"/>
+                            <constraint firstItem="67h-87-etI" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" id="dab-4t-Cj7"/>
                             <constraint firstAttribute="bottom" secondItem="cjK-W8-BML" secondAttribute="bottom" constant="45" id="e6d-Nb-JGF"/>
                             <constraint firstItem="caO-rZ-GhL" firstAttribute="leading" secondItem="Y5r-tP-dw9" secondAttribute="trailing" constant="8" id="eaR-Fq-ZRm"/>
                             <constraint firstItem="caO-rZ-GhL" firstAttribute="top" secondItem="Y5r-tP-dw9" secondAttribute="top" id="ege-9g-NaN"/>
@@ -333,7 +333,7 @@
                             <constraint firstAttribute="trailing" secondItem="0DR-KU-NfP" secondAttribute="trailing" id="nET-Xf-9Rz"/>
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="leading" secondItem="g3w-LE-8EA" secondAttribute="trailing" constant="-64" id="oxR-if-Ukp"/>
                             <constraint firstAttribute="trailing" secondItem="0DR-KU-NfP" secondAttribute="trailing" id="q6v-Mn-hbh"/>
-                            <constraint firstItem="Y5r-tP-dw9" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="28" id="tTc-8i-vch"/>
+                            <constraint firstItem="Y5r-tP-dw9" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="13" id="tTc-8i-vch"/>
                             <constraint firstItem="cjK-W8-BML" firstAttribute="centerX" secondItem="0DR-KU-NfP" secondAttribute="centerX" id="teZ-hg-BER"/>
                             <constraint firstItem="hnh-XD-aKr" firstAttribute="leading" secondItem="g3w-LE-8EA" secondAttribute="trailing" constant="8" symbolic="YES" id="ukM-HQ-hrh"/>
                             <constraint firstItem="Mgf-cC-hpq" firstAttribute="top" secondItem="caO-rZ-GhL" secondAttribute="top" id="ytl-1K-szs"/>
