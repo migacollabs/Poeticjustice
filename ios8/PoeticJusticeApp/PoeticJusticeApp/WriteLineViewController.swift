@@ -324,13 +324,13 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                 // setting this here because it looks like the paragraph
                                 // stuff below messes with the label properties
                                 var fontSizeMap : Dictionary<Int, CGFloat> = Dictionary<Int, CGFloat>()
-                                fontSizeMap[0]=19
-                                fontSizeMap[1]=18
-                                fontSizeMap[2]=17
-                                fontSizeMap[3]=16
-                                fontSizeMap[4]=15
+                                fontSizeMap[0]=14
+                                fontSizeMap[1]=14
+                                fontSizeMap[2]=14
+                                fontSizeMap[3]=13
+                                fontSizeMap[4]=13
                                 fontSizeMap[5]=12
-                                fontSizeMap[6]=10
+                                fontSizeMap[6]=12
                                 
                                 // TODO: probably should map font by device height too along with the label?
                                     

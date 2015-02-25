@@ -22,12 +22,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var is_busy : Bool = false
     private var timer : NSTimer?
     private var audioPlayer : AVAudioPlayer?
+    
+    var progressContainer: UIView = UIView()
+    var progressLoadingView: UIView = UIView()
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
 
     let tapRec = UITapGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.userLabel.text = "Sign In"
         
         tapRec.addTarget(self, action: "tappedView")
         self.view.addGestureRecognizer(tapRec)
@@ -47,6 +53,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.goButton.titleLabel?.text = "Go!"
         updateUserLabel()
         is_busy = false
     }
@@ -61,16 +68,47 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return false;
     }
     
+    func showActivityIndicator(uiView: UIView) {
+        
+        goButton.setTitle("", forState: UIControlState.Normal)
+        
+        progressContainer.frame = uiView.frame
+        progressContainer.center = uiView.center
+        progressContainer.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.00)
+        
+        progressLoadingView.frame = CGRectMake(0, 0, 80, 80)
+        progressLoadingView.center = uiView.center
+        progressLoadingView.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.00)
+        progressLoadingView.clipsToBounds = true
+        progressLoadingView.layer.cornerRadius = 10
+        
+        activityIndicator.frame = CGRectMake(0.0, 0.0, 40, 40);
+        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        activityIndicator.center = CGPointMake(progressLoadingView.frame.size.width / 2, progressLoadingView.frame.size.height / 2);
+        
+        progressLoadingView.addSubview(activityIndicator)
+        progressContainer.addSubview(progressLoadingView)
+        uiView.addSubview(progressContainer)
+        activityIndicator.startAnimating()
+    }
+    
+    func hideActivityIndicator() {
+        goButton.setTitle("Go!", forState: UIControlState.Normal)
+        
+        activityIndicator.stopAnimating()
+        progressContainer.removeFromSuperview()
+    }
+    
     func updateUserLabel() {
         
         var user = NetOpers.sharedInstance.user
         if (user.is_logged_in()) {
-            self.userLabel.text = "Level " + String(user.level) + " / " + String(user.user_score) + " points"
+            self.userLabel.text = "You're signed in!"
             
             title = user.user_name
             self.navigationController?.navigationBar.topItem?.title = ""
         } else {
-            self.userLabel.text = "You are not signed in"
+            self.userLabel.text = "You are not signed in!"
             
             title = "Home"
             self.navigationController?.navigationBar.topItem?.title = ""
@@ -104,12 +142,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 println("login verified, stopping timer")
                 t.invalidate()
             } else {
-                if loginTimerCount>3 {
+                if loginTimerCount>8 {
                     println("server was probably down, unlocking the go button to try again")
                     is_busy = false
+                    
                     t.invalidate()
-                    self.userLabel.text = "Network error. Please try again!"
+                    
+                    self.show_alert("Oops", message: "Looks like there was a network issue.  Please try again!", controller_title: "Ok")
+                    
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    self.hideActivityIndicator()
                 }
             }
         }
@@ -122,7 +164,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if (!is_busy) {
             is_busy = true
             
-            self.userLabel.text = "Signing in..."
+            self.showActivityIndicator(self.view)
             
             println("attempting login...")
             
@@ -159,7 +201,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         if (!isValidEmail(em)) {
                             self.show_alert("Invalid email address", message: "Please enter a valid email address", controller_title: "Ok")
                             
-                            self.userLabel.text = "You are not signed in"
+                            self.hideActivityIndicator()
+                            self.updateUserLabel()
                             
                             is_busy = false
                             
@@ -178,7 +221,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         if (unl>15 || unl==0) {
                             self.show_alert("Invalid user name", message: "User name must be between 1 and 15 characters long", controller_title: "Ok")
                             
-                            self.userLabel.text = "You are not signed in"
+                            self.hideActivityIndicator()
+                            self.updateUserLabel()
                             
                             is_busy = false
                             
@@ -203,7 +247,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         })
                         
                     }else{
-                        self.show_alert("Login", message: "No Email Found", controller_title: "Try again") // do no user email address msg
+                        self.show_alert("Login", message: "Sorry, that email was not found.", controller_title: "Ok") // do no user email address msg
                     }
                 }else{
                     () // do no app server error msg
@@ -216,11 +260,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func on_email_notification() {
-        self.userLabel.text = "Email notification sent!"
         is_busy = false
     }
     
     func on_login(){
+        
         println("on_login called")
         // TODO: open up a clickable topics view
         NetOpers.sharedInstance.get_player_game_state( { (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
@@ -249,6 +293,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     }
                     
                 } else {
+                    self.hideActivityIndicator()
                     self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the game.  Please try again.", controller_title:"Ok")
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                 }
@@ -279,6 +324,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func on_start(){
         println("on_start called")
         
+        self.hideActivityIndicator()
+        
         //self.goButton.enabled = true
         //self.goButton.highlighted = false
         
@@ -293,11 +340,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func show_alert(title:String, message:String, controller_title:String){
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
     
     // MARK - present Version History storyboard

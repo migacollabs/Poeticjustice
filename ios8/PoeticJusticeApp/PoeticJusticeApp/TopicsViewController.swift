@@ -367,6 +367,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                 is_busy = false
             }
         } else {
+            
             is_busy = false
         }
         
