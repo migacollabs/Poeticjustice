@@ -26,6 +26,39 @@ class GameState{
     }
 }
 
+
+struct VerseResultScreenRec{
+    var id = -1
+    var title = ""
+    var owner_id = -1
+    var user_ids:[Int] = []
+    var participantCount = -1
+    
+    // int is pk and position
+    var lines_recs = Dictionary<Int,VerseResultScreenLineRec>()
+    
+    // int is user id
+    var players = Dictionary<Int,VerseResultScreenPlayerRec >()
+    
+    // int is user_id and val is line position
+    var votes = Dictionary<Int,Int>()
+}
+
+struct VerseResultScreenLineRec{
+    var position = -1
+    var text = ""
+    var player_id = -1
+}
+
+struct VerseResultScreenPlayerRec{
+    var user_id = -1
+    var user_name = ""
+    var user_score = -1
+    var level = 1
+    var avatar_name = "avatar_default.png"
+}
+
+
 struct PlayerLineRec{
     var position = -1
     var text = ""
