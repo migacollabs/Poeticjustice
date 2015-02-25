@@ -428,6 +428,7 @@
                         <outlet property="currentUserLevel" destination="ezM-3d-t3T" id="3C5-sy-jig"/>
                         <outlet property="currentUserName" destination="pFM-4M-NXv" id="Py9-vh-Iyf"/>
                         <outlet property="currentUserPoints" destination="8Ce-XP-P90" id="SNm-GS-hNT"/>
+                        <outlet property="playerDataView" destination="kLd-Vm-1Cf" id="SKc-NS-EfZ"/>
                         <outlet property="tableView" destination="0DR-KU-NfP" id="2GX-Sk-UbH"/>
                         <outlet property="topicImage" destination="g3w-LE-8EA" id="u8a-1p-QdT"/>
                         <outlet property="verseTitle" destination="hnh-XD-aKr" id="nJl-zu-o3N"/>

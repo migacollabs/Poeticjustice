@@ -30,6 +30,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var winnerUserName: UILabel!
     @IBOutlet weak var winnerIcon: UIImageView!
     
+    @IBOutlet weak var playerDataView: UIView!
     
     var selectedRow:Int?
     var currentPlayerVotedFor:NSIndexPath?
@@ -78,6 +79,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         self.tableView.backgroundColor = UIColor.clearColor()
         
         self.tableView.separatorColor = GameStateColors.VeryLightGreyD
+        
+        println(self.playerDataView.frame)
+        //self.playerDataView.hidden = true
         
     }
 
@@ -411,22 +415,32 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         if let idx = find(arr, userId){
             
-            for uid in self.verseRec!.players.keys {
+            var avatarPlayer: UIImageView?
+            
+            //for uid in self.verseRec!.players.keys {
                 
-                switch idx{
-                case 0:
-                    self.avatarPlayerOne.backgroundColor = GameStateColors.LightBlueT
-                case 1:
-                    self.avatarPlayerTwo.backgroundColor = GameStateColors.LightBlueT
-                case 2:
-                    self.avatarPlayerThree.backgroundColor = GameStateColors.LightBlueT
-                case 3:
-                    self.avatarPlayerFour.backgroundColor = GameStateColors.LightBlueT
-                case 4:
-                    self.avatarPlayerFive.backgroundColor = GameStateColors.LightBlueT
-                default:
-                    ()
-                }
+            switch idx{
+            case 0:
+                avatarPlayer = self.avatarPlayerOne
+            case 1:
+                avatarPlayer = self.avatarPlayerTwo
+            case 2:
+                avatarPlayer = self.avatarPlayerThree
+            case 3:
+                avatarPlayer = self.avatarPlayerFour
+            case 4:
+                avatarPlayer = self.avatarPlayerFive
+            default:
+                ()
+            }
+            //}
+            
+            if avatarPlayer != nil{
+                avatarPlayer!.backgroundColor = GameStateColors.LightBlueT
+                var offset = avatarPlayer!.frame.origin.x - self.playerDataView!.frame.origin.x + 40
+                self.playerDataView!.frame = CGRectOffset( self.playerDataView!.frame, offset, 0 )
+                self.playerDataView.backgroundColor = GameStateColors.LightBlueT
+                
             }
             
         }
