@@ -148,10 +148,10 @@ class ActiveTopic {
             
             println("refresh active topic_id \(activeTopicRec.topic_id) - turns left for player \(counts)")
             
-            topicStateAnimDuration = NSTimeInterval(counts) * 1.5
-            
-            if topicStateAnimDuration==0 {
+            if (counts==0) {
                 topicStateAnimDuration = 1.0
+            } else {
+                topicStateAnimDuration = 4.0
             }
             
         } else {
@@ -367,6 +367,9 @@ class TopicsViewController: UIViewController, UserDelegate {
                 is_busy = false
             }
         } else {
+            
+            self.show_alert("You are not signed in", message: "Please sign in before playing.", controller_title: "Ok")
+            
             is_busy = false
         }
         

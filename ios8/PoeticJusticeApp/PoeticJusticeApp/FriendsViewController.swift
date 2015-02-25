@@ -84,6 +84,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 lastTabbed = NSDate()
             }
             
+        } else {
+            self.show_alert("You are not signed in", message: "Please sign in before playing with friends.", controller_title: "Ok")
         }
         
         is_busy = false

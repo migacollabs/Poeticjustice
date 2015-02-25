@@ -209,7 +209,7 @@ class NetOpers {
                     println("Forbidden")
                     dispatch_async(dispatch_get_main_queue(),{
                         if self.alertHandler != nil{
-                            self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok!")
+                            self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok")
                         }
                         
                         if self.loginHandler != nil{
