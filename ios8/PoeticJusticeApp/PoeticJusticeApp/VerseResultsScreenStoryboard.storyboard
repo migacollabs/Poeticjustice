@@ -81,7 +81,7 @@
                                 </variation>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZF-VJ-uTc" userLabel="PlayerInfoView">
-                                <rect key="frame" x="0.0" y="455" width="600" height="80"/>
+                                <rect key="frame" x="0.0" y="426" width="600" height="80"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y5r-tP-dw9" userLabel="avatarPlayerOne">
                                         <rect key="frame" x="8" y="8" width="20" height="20"/>
@@ -134,7 +134,7 @@
                                                     <constraint firstAttribute="height" constant="17" id="HaE-PH-gnp"/>
                                                     <constraint firstAttribute="height" constant="17" id="nOC-7d-H57"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
                                                 <nil key="highlightedColor"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
@@ -277,7 +277,7 @@
                                 </variation>
                             </view>
                             <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="0DR-KU-NfP">
-                                <rect key="frame" x="0.0" y="148" width="600" height="299"/>
+                                <rect key="frame" x="0.0" y="148" width="600" height="270"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -373,7 +373,7 @@
                             <constraint firstItem="cjK-W8-BML" firstAttribute="top" secondItem="jQ5-e5-6Uw" secondAttribute="top" id="cqL-IS-oz3"/>
                             <constraint firstItem="GZF-VJ-uTc" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="8" id="dJV-V2-lGs"/>
                             <constraint firstAttribute="bottom" secondItem="cjK-W8-BML" secondAttribute="bottom" constant="45" id="e6d-Nb-JGF"/>
-                            <constraint firstItem="5wv-f1-r5d" firstAttribute="top" secondItem="GZF-VJ-uTc" secondAttribute="bottom" constant="21" id="ftu-3L-SMp"/>
+                            <constraint firstItem="5wv-f1-r5d" firstAttribute="top" secondItem="GZF-VJ-uTc" secondAttribute="bottom" constant="50" id="ftu-3L-SMp"/>
                             <constraint firstItem="hnE-Z7-Bt5" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" id="g2E-uK-Dr9"/>
                             <constraint firstItem="hnh-XD-aKr" firstAttribute="top" secondItem="Q1o-Fb-ueg" secondAttribute="bottom" constant="8" id="kvD-hX-Hy8"/>
                             <constraint firstItem="5wv-f1-r5d" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="130" id="me6-jS-dTR">
