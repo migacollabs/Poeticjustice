@@ -67,7 +67,7 @@ struct VerseRec {
     }
 }
 
-class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFieldDelegate {
+class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextViewDelegate {
     
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var topicButton: UIButton!
@@ -79,6 +79,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     @IBOutlet weak var player3Avatar: UIImageView!
     @IBOutlet weak var player4Avatar: UIImageView!
     @IBOutlet weak var player5Avatar: UIImageView!
+    
+    private var textViewBlock : UIView = UIView()
     
     
     @IBOutlet var cancelButton: UIButton!
@@ -113,9 +115,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         self.sendButton.hidden = true
         
         verseView.text = ""
-        setLine.text = ""
         
-        self.setLine.placeholder  = "Your turn is coming up soon!"
+        self.setPlaceholderText("Your turn is coming up soon!")
         
         self.setLine.delegate = self
         
@@ -125,6 +126,18 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
         
         self.configureView()
         
+    }
+    
+    func setPlaceholderText(text : String) {
+        self.setLine.text = text;
+        self.setLine.textColor = UIColor.lightGrayColor()
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.textColor == UIColor.lightGrayColor() {
+            textView.text = nil
+            textView.textColor = UIColor.blackColor()
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField!) -> Bool {
@@ -152,16 +165,23 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     override func viewWillAppear(animated: Bool) {
         
+        textViewBlock = UIView()
+        textViewBlock.frame = self.setLine.frame
+        textViewBlock.center = self.setLine.center
+        textViewBlock.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.0)
+        
+        self.view.addSubview(textViewBlock)
+        
         var screen_height = UIScreen.mainScreen().bounds.height
         self.canDisplayBannerAds = true
         self.iAdBanner = self.appdelegate().iAdBanner
         //self.iAdBanner?.delegate = self
         self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
         if let adb = self.iAdBanner{
-            println("adding ad banner subview ")
+            // println("adding ad banner subview ")
             self.view.addSubview(adb)
         }else{
-            println("WriteLineViewController iAdBanner is nil")
+            // println("WriteLineViewController iAdBanner is nil")
         }
         
         updateNavigationTitle()
@@ -190,8 +210,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                 params["verse_id"]=verseId
                 params["user_id"]=NetOpers.sharedInstance.user.id
                 
-                println("hitting active-verse url")
-                println(params)
+                // println("hitting active-verse url")
+                // println(params)
                 
                 NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, loadVerse)
                 
@@ -231,7 +251,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
             if httpResponse.statusCode == 200 {
                 if data != nil {
                     
-                    println("loading data...")
+                    // println("loading data...")
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
@@ -239,7 +259,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                     
                     if let results = jsonResult["results"] as? NSDictionary {
                         
-                        println(results)
+                        // println(results)
                         
                         /*
                         var id : Int = -1
@@ -288,7 +308,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                         if let playersArray = results["user_data"] as? NSArray{
                             for player in playersArray as NSArray{
                                 
-                                println(player)
+                                // println(player)
                                 
                                 var pid = player[0] as Int
                                 var usrnm = player[1] as String
@@ -314,7 +334,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                             }
                             
                         }else{
-                            println("corrupt user_data")
+                            // println("corrupt user_data")
                         }
                         
                         
@@ -380,6 +400,10 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                         
                                         self.is_my_turn = find(self.verse.user_ids, NetOpers.sharedInstance.user.id)==self.verse.next_index_user_ids
                                         
+                                        if (self.is_my_turn) {
+                                            self.textViewBlock.removeFromSuperview()
+                                        }
+                                        
                                         self.updateSendPlaceholder()
                                     }
                                     
@@ -416,7 +440,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                             })
                         })
                     } else {
-                        println("unable to get results")
+                        // println("unable to get results")
                     }
                     
                 }
@@ -457,10 +481,10 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                 sound.prepareToPlay()
                 
                 sound.play()
-                println("play sound")
+                // println("play sound")
             }
         }
-        println(error)
+        // println(error)
     }
     
     func getCountTurnsLeft() -> Int {
@@ -476,28 +500,28 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     func updateSendPlaceholder() {
         if (is_my_turn) {
-            self.setLine.enabled = true
+            // self.setLine.enabled = true
             self.sendButton.hidden = false
-            self.setLine.placeholder = "It's your turn!"
+            self.setPlaceholderText("It's your turn!")
         } else {
             self.sendButton.hidden = true
-            self.setLine.enabled = false
+            // self.setLine.enabled = false
             if (NetOpers.sharedInstance.user.is_logged_in()) {
                 var turnsLeft : Int = self.getCountTurnsLeft()
                 if (turnsLeft==1) {
-                    self.setLine.placeholder = "You're up in \(turnsLeft) turn!"
+                    self.setPlaceholderText("You're up in \(turnsLeft) turn!")
                 } else {
-                    self.setLine.placeholder = "You're up in \(turnsLeft) turns!"
+                    self.setPlaceholderText("You're up in \(turnsLeft) turns!")
                 }
             } else {
-                self.setLine.placeholder = "Your turn is coming up soon!"
+                self.setPlaceholderText("Your turn is coming up soon!")
             }
         }
     }
 
     @IBOutlet var sendButton: UIButton!
     
-    @IBOutlet var setLine: UITextField!
+    @IBOutlet var setLine: UITextView!
     
     var is_busy : Bool = false
     
@@ -510,7 +534,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
             
             updateSendPlaceholder()
             
-            println("Clicked send " + setLine.text)
+            // println("Clicked send " + setLine.text)
             
             playButtonSound()
             
@@ -519,8 +543,8 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
             params["line"]=setLine.text
             params["verse_id"]=verseId
             
-            println("hitting saveline url")
-            println(params)
+            // println("hitting saveline url")
+            // println(params)
             
             NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
             
@@ -564,11 +588,11 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     }
     
     func bannerViewWillLoadAd(banner: ADBannerView!) {
-        println("bannerViewWillLoadAd called")
+        // println("bannerViewWillLoadAd called")
     }
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
-        println("bannerViewDidLoadAd called")
+        // println("bannerViewDidLoadAd called")
         //UIView.beginAnimations(nil, context:nil)
         //UIView.setAnimationDuration(1)
         //self.iAdBanner?.alpha = 1
@@ -578,7 +602,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
-        println("bannerViewACtionDidFinish called")
+        // println("bannerViewACtionDidFinish called")
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
@@ -586,7 +610,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        println("bannerView didFailToReceiveAdWithError called")
+        // println("bannerView didFailToReceiveAdWithError called")
         self.iAdBanner?.hidden = true
     }
     
@@ -625,11 +649,11 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                 error: nil) as NSDictionary
                             
                             // this should be the verse that we just left
-                            println(jsonResult)
+                            // println(jsonResult)
                             
                             dispatch_async(dispatch_get_main_queue(),{
                                 
-                                println("leaving verse")
+                                // println("leaving verse")
                                 
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                 
@@ -670,7 +694,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
                                 error: nil) as NSDictionary
                             
                             // this should be the verse that we just deleted
-                            println(jsonResult)
+                            // println(jsonResult)
                             
                             dispatch_async(dispatch_get_main_queue(),{
                                 
@@ -737,7 +761,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
     
     // cancel if the owner, leave if a participant
     @IBAction func onCancel(sender: AnyObject) {
-        println("onCancel/leave called")
+        // println("onCancel/leave called")
         if self.verse.owner_id==NetOpers.sharedInstance.user.id {
             cancel()
         } else {
@@ -753,11 +777,17 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextFie
             controller_title: "Ok")
     }
     
-    func textField(textField: UITextField!, shouldChangeCharactersInRange range: NSRange, replacementString string: String!) -> Bool {
+    func textView(textView: UITextView,
+        shouldChangeTextInRange range: NSRange,
+        replacementText text: String) -> Bool {
+            
+        if (is_my_turn) {
+            let newLength = countElements(textView.text!) + countElements(text) - range.length
+            return newLength <= 65
+        }
         
-        let newLength = countElements(textField.text!) + countElements(string!) - range.length
-        return newLength <= 65
-        
+        // disable keyboard?
+        return false
     }
     
     
