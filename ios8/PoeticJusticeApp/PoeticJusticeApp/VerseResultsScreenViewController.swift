@@ -26,6 +26,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var currentUserName: UILabel!
     @IBOutlet weak var currentUserLevel: UIImageView!
     @IBOutlet weak var currentUserPoints: UILabel!
+    @IBOutlet weak var currentUserAvatarImage: UIImageView!
     @IBOutlet weak var currentUserCoinsImg: UIImageView!
     @IBOutlet weak var winnerUserName: UILabel!
     @IBOutlet weak var winnerIcon: UIImageView!
@@ -437,26 +438,20 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             
             if avatarPlayer != nil{
                 avatarPlayer!.backgroundColor = GameStateColors.LightBlueT
-                var offset = avatarPlayer!.frame.origin.x - self.playerDataView!.frame.origin.x + 40
-                self.playerDataView!.frame = CGRectOffset( self.playerDataView!.frame, offset, 0 )
+                //var offset = avatarPlayer!.frame.origin.x - self.playerDataView!.frame.origin.x + 40
+                //self.playerDataView!.frame = CGRectOffset( self.playerDataView!.frame, offset, 0 )
                 self.playerDataView.backgroundColor = GameStateColors.LightBlueT
-                
             }
-            
         }
         
     }
     
     func updateCurrentUser(userId:Int){
-        println(self.verseRec)
         var player = self.verseRec!.players[userId]
-        println("updateCurrentUser \(player)")
         if let x = self.currentUserName{
-            println("updateCurrentUser \(x)")
             x.text = player!.user_name
         }
         if let x = self.currentUserLevel{
-            println("updateCurrentUser \(x)")
             x.image = UIImage(named: "lvl_" + String(player!.level) + ".png")
         }
         if let x = self.currentUserCoinsImg{
@@ -464,7 +459,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         }
         if let x = self.currentUserPoints{
             x.text = String(format: "x%03d", player!.user_score)
-            //x.text = String(player!.user_score) + "pnts"
+        }
+        
+        if let x = self.currentUserAvatarImage{
+            x.image = self.getPlayerAvatarImageName(userId)
         }
     }
     
