@@ -26,10 +26,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var currentUserName: UILabel!
     @IBOutlet weak var currentUserLevel: UIImageView!
     @IBOutlet weak var currentUserPoints: UILabel!
+    @IBOutlet weak var currentUserAvatarImage: UIImageView!
     @IBOutlet weak var currentUserCoinsImg: UIImageView!
     @IBOutlet weak var winnerUserName: UILabel!
     @IBOutlet weak var winnerIcon: UIImageView!
     
+    @IBOutlet weak var playerDataView: UIView!
     
     var selectedRow:Int?
     var currentPlayerVotedFor:NSIndexPath?
@@ -75,8 +77,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         self.tableView.allowsMultipleSelection = false
         self.tableView.allowsSelection = true
+        self.tableView.backgroundColor = UIColor.clearColor()
         
         self.tableView.separatorColor = GameStateColors.VeryLightGreyD
+        
+        println(self.playerDataView.frame)
+        //self.playerDataView.hidden = true
         
     }
 
@@ -410,38 +416,42 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         if let idx = find(arr, userId){
             
-            for uid in self.verseRec!.players.keys {
-                
-                switch idx{
-                case 0:
-                    self.avatarPlayerOne.backgroundColor = GameStateColors.LightBlueD
-                case 1:
-                    self.avatarPlayerTwo.backgroundColor = GameStateColors.LightBlueD
-                case 2:
-                    self.avatarPlayerThree.backgroundColor = GameStateColors.LightBlueD
-                case 3:
-                    self.avatarPlayerFour.backgroundColor = GameStateColors.LightBlueD
-                case 4:
-                    self.avatarPlayerFive.backgroundColor = GameStateColors.LightBlueD
-                default:
-                    ()
-                }
-            }
+            var avatarPlayer: UIImageView?
             
+            //for uid in self.verseRec!.players.keys {
+                
+            switch idx{
+            case 0:
+                avatarPlayer = self.avatarPlayerOne
+            case 1:
+                avatarPlayer = self.avatarPlayerTwo
+            case 2:
+                avatarPlayer = self.avatarPlayerThree
+            case 3:
+                avatarPlayer = self.avatarPlayerFour
+            case 4:
+                avatarPlayer = self.avatarPlayerFive
+            default:
+                ()
+            }
+            //}
+            
+            if avatarPlayer != nil{
+                avatarPlayer!.backgroundColor = GameStateColors.LightBlueT
+                //var offset = avatarPlayer!.frame.origin.x - self.playerDataView!.frame.origin.x + 40
+                //self.playerDataView!.frame = CGRectOffset( self.playerDataView!.frame, offset, 0 )
+                self.playerDataView.backgroundColor = GameStateColors.LightBlueT
+            }
         }
         
     }
     
     func updateCurrentUser(userId:Int){
-        println(self.verseRec)
         var player = self.verseRec!.players[userId]
-        println("updateCurrentUser \(player)")
         if let x = self.currentUserName{
-            println("updateCurrentUser \(x)")
             x.text = player!.user_name
         }
         if let x = self.currentUserLevel{
-            println("updateCurrentUser \(x)")
             x.image = UIImage(named: "lvl_" + String(player!.level) + ".png")
         }
         if let x = self.currentUserCoinsImg{
@@ -449,7 +459,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         }
         if let x = self.currentUserPoints{
             x.text = String(format: "x%03d", player!.user_score)
-            //x.text = String(player!.user_score) + "pnts"
+        }
+        
+        if let x = self.currentUserAvatarImage{
+            x.image = self.getPlayerAvatarImageName(userId)
         }
     }
     
@@ -517,7 +530,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         }
         
         var customView = UIView()
-        customView.backgroundColor = GameStateColors.LightBlueD
+        customView.backgroundColor = GameStateColors.LightBlueT
         cell.selectedBackgroundView = customView
         return cell
     }
