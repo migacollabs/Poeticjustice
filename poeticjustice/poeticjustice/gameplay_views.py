@@ -567,7 +567,8 @@ def get_friends(user_id):
             filter(MyFriend.id==U.id):
             friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
                 'email_address':u.email_address, 'user_name':u.user_name, 'src':'me',
-                'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs
+                'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs,
+                'num_of_favorited_lines':u.num_of_favorited_lines
                 })
 
         # others who have invited me
@@ -577,7 +578,8 @@ def get_friends(user_id):
             filter(MyFriend.id==U.id):
             friends.append({'friend_id':uxu.user_id, 'approved':uxu.approved,
                 'email_address':u.email_address, 'user_name':u.user_name, 'src':'them',
-                'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs
+                'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs,
+                'num_of_favorited_lines':u.num_of_favorited_lines
                 })
 
     res = {"results":friends}

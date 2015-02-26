@@ -17,6 +17,7 @@ struct FriendRec {
     var approved : Bool = false
     var user_score: Int = -1
     var level: Int = -1
+    var num_favs : Int = 0
     var user_prefs: String = ""
     var avatar_name: String = "avatar_default.png"
 }
@@ -177,6 +178,10 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 fr.user_score = score
                             }
                             
+                            if let nf = f["num_of_favorited_lines"] as? Int {
+                                fr.num_favs = nf
+                            }
+                            
                             if let up = f["user_prefs"] as? String {
                                 fr.user_prefs = up
                                 
@@ -313,19 +318,29 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         var cell : FriendsTableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("FriendCell") as FriendsTableViewCell
         if let fr = self.friends[indexPath.row] as FriendRec? {
-            cell.emailAddress.text = get_display_name(fr)
+            
+            if (isIncoming(fr)) {
+                cell.requestStatus.image = UIImage(named: "inbox_24.png")
+            } else if (isOutgoing(fr)) {
+                cell.requestStatus.image = UIImage(named: "outbox_24.png")
+            } else {
+                cell.requestStatus.image = nil
+            }
+            
+            cell.emailAddress.text = fr.email_address
+            cell.username.text = fr.user_name
             cell.points.text = String(fr.user_score)
-            cell.level.text = String(fr.level)
+            cell.favs.text = String(fr.num_favs)
+            cell.level.image = UIImage(named: "lvl_" + String(fr.level) + ".png")
             cell.avatar.image = UIImage(named: fr.avatar_name)
         }
-        
         
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        return 100.0
-    }
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+//        return 100.0
+//    }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -355,22 +370,22 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     
-    
-    func get_display_name(fr : FriendRec) -> String {
+    func isOutgoing(fr : FriendRec) -> Bool {
         if fr.src=="me" {
-            if fr.approved {
-                return fr.email_address
-            } else {
-                return "* " + fr.email_address
-            }
-        } else if fr.src=="them" {
-            if fr.approved {
-                return fr.email_address
-            } else {
-                return "? " + fr.email_address
+            if !fr.approved {
+                return true
             }
         }
-        return fr.user_name
+        return false
+    }
+    
+    func isIncoming(fr : FriendRec) -> Bool {
+        if fr.src=="them" {
+            if !fr.approved {
+                return true
+            }
+        }
+        return false
     }
 
     var removeFriend : FriendRec?

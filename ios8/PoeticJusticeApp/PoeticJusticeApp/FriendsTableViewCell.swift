@@ -10,9 +10,12 @@ import UIKit
 
 class FriendsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var requestStatus : UIImageView!
     @IBOutlet weak var emailAddress: UILabel!
+    @IBOutlet weak var username: UILabel!
     @IBOutlet weak var points: UILabel!
-    @IBOutlet weak var level: UILabel!
+    @IBOutlet weak var favs: UILabel!
+    @IBOutlet weak var level: UIImageView!
     @IBOutlet weak var avatar: UIImageView!
     
     override func awakeFromNib() {
