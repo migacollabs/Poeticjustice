@@ -19,10 +19,13 @@ struct LeaderboardUserRec {
 
 class LeaderboardTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var desc: UILabel!
+    
+    @IBOutlet var lineNum: UILabel!
+    @IBOutlet var userScore: UILabel!
+    @IBOutlet var numFavs: UILabel!
+    @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var avatarImage: UIImageView!
     @IBOutlet weak var levelImage : UIImageView!
-    @IBOutlet weak var userName: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -197,7 +200,9 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         if let lc = cell as? LeaderboardTableViewCell{
             if let lur = self.leaderboard_users[indexPath.row] as LeaderboardUserRec? {
                 
-                lc.desc.text = String(indexPath.row+1) + ". " + String(lur.user_score) + " points, " + String(lur.num_favorited_lines) + " fav'd lines";
+                lc.lineNum.text = String(indexPath.row+1)
+                lc.userScore.text = String(lur.user_score)
+                lc.numFavs.text = String(lur.num_favorited_lines)
                 lc.levelImage.image = UIImage(named: "lvl_" + String(lur.level) + ".png")
                 lc.avatarImage.image = UIImage(named: lur.avatar_name)
                 lc.userName.text = lur.user_name
