@@ -63,6 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             
             if let tbc : UITabBarController = tabBarController {
+                
+                // update the topics view
                 if let nc = tbc.viewControllers?[1] as? UINavigationController {
                     if nc.topViewController is TopicsViewController {
                         println("Automatically refreshing through TopicsViewController")
@@ -71,6 +73,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
                     } else {
                         println("Refreshing topic navigation badge for user")
                         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", updateActiveTopics)
+                    }
+                }
+                
+                // update the friends view
+                if let nc = tbc.viewControllers?[2] as? UINavigationController {
+                    if nc.topViewController is FriendsViewController {
+                        println("Automatically refreshing through FriendsViewController")
+                        var fvc = nc.topViewController as FriendsViewController
+                        fvc.refresh()
+                    } else {
+                        println("Refreshing friend navigation badge for user")
+                        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends", updateFriends)
                     }
                 }
                 
@@ -127,10 +141,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
                     
                 }
             } else {
-                println("Unable to refresh navigation badges: \(httpResponse.statusCode)")
+                println("Unable to refresh navigation badge: \(httpResponse.statusCode)")
             }
         }
     }
+    
+    
+    func updateFriends(data: NSData?, response: NSURLResponse?, error: NSError?) {
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                if data != nil {
+                    
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
+                    
+                    var badgeCount : Int = 0
+                    
+                    if let results = jsonResult["results"] as? NSArray {
+                        var friends : [FriendRec] = FriendsHelper.sharedInstance.convertToFriendRecs(results)
+                        
+                        for f : FriendRec in friends {
+                            if (!f.approved && f.src=="them") {
+                                badgeCount += 1
+                            }
+                        }
+                    }
+                    
+                    if let tbc : UITabBarController = tabBarController {
+                    
+                        dispatch_async(dispatch_get_main_queue(),{
+                            
+                            var tabArray = tbc.tabBar.items as NSArray!
+                            var tabItem = tabArray.objectAtIndex(2) as UITabBarItem
+                            
+                            if (badgeCount > 0) {
+                                tabItem.badgeValue = String(badgeCount)
+                            } else {
+                                tabItem.badgeValue = nil
+                            }
+                            
+                            println("Updating friend badge to \(badgeCount)")
+                            
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        })
+                    }
+                    
+                }
+            } else {
+                println("Unable to refresh friends badge: \(httpResponse.statusCode)")
+            }
+        }
+
+    }
+
     
     
     // MARK: - Ad Banner

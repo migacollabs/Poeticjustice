@@ -8,6 +8,7 @@
 
 import Foundation
 import iAd
+import UIKit
 
 struct FriendRec {
     var src : String = ""
@@ -22,7 +23,74 @@ struct FriendRec {
     var avatar_name: String = "avatar_default.png"
 }
 
-import UIKit
+class FriendsHelper {
+    
+    class var sharedInstance: FriendsHelper {
+        struct Static {
+            static let instance = FriendsHelper();
+        }
+        return Static.instance
+    }
+    
+    func convertToFriendRecs(results : NSArray) -> [FriendRec] {
+        var friends : [FriendRec] = []
+        for f in results {
+            
+            var fr = FriendRec()
+            
+            if let src = f["src"] as? String {
+                fr.src = src
+            }
+            
+            if let fid = f["friend_id"] as? Int {
+                fr.friend_id = fid
+            }
+            
+            if let ea = f["email_address"] as? String {
+                fr.email_address = ea
+            }
+            
+            if let un = f["user_name"] as? String {
+                fr.user_name = un
+            }
+            
+            if let ap = f["approved"] as? Bool {
+                fr.approved = ap
+            }
+            
+            if let score = f["user_score"] as? Int {
+                fr.user_score = score
+            }
+            
+            if let nf = f["num_of_favorited_lines"] as? Int {
+                fr.num_favs = nf
+            }
+            
+            if let up = f["user_prefs"] as? String {
+                fr.user_prefs = up
+                
+                if !up.isEmpty{
+                    let upData = (up as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                    let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        upData!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
+                    if let avn = userPrefs["avatar_name"] as? String{
+                        fr.avatar_name = avn
+                    }
+                }
+                
+            }
+            
+            if let lvl = f["level"] as? Int{
+                fr.level = lvl
+            }
+            
+            friends.append(fr)
+        }
+        
+        return friends
+    }
+}
 
 class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
@@ -135,107 +203,34 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
                         error: nil) as NSDictionary
+                    if let results = jsonResult["results"] as? NSArray {
+                            friends = FriendsHelper.sharedInstance.convertToFriendRecs(results)
+                    }
                     
-                    if let results = jsonResult["results"] as? NSArray{
+                    dispatch_async(dispatch_get_main_queue(),{
                         
-                        println("updating friends")
+                        self.friendEmailAddress.text = ""
+                        self.friendEmailAddress.resignFirstResponder()
                         
-                        self.friends.removeAll()
+                        self.myTableView.reloadData()
                         
-                        for f in results {
-                            
-                            /*
-                            var src : String = ""
-                            var friend_id : Int = -1
-                            var email_address : String = ""
-                            var user_name : String = ""
-                            var approved : String = ""
-                            */
-                            
-                            var fr = FriendRec()
-                            
-                            if let src = f["src"] as? String {
-                                fr.src = src
+                        var badgeCount : Int = 0
+                        for fr : FriendRec in self.friends {
+                            if (!fr.approved && fr.src=="them") {
+                                badgeCount += 1
                             }
-                            
-                            if let fid = f["friend_id"] as? Int {
-                                fr.friend_id = fid
-                            }
-                            
-                            if let ea = f["email_address"] as? String {
-                                fr.email_address = ea
-                            }
-                            
-                            if let un = f["user_name"] as? String {
-                                fr.user_name = un
-                            }
-                            
-                            if let ap = f["approved"] as? Bool {
-                                fr.approved = ap
-                            }
-                            
-                            if let score = f["user_score"] as? Int {
-                                fr.user_score = score
-                            }
-                            
-                            if let nf = f["num_of_favorited_lines"] as? Int {
-                                fr.num_favs = nf
-                            }
-                            
-                            if let up = f["user_prefs"] as? String {
-                                fr.user_prefs = up
-                                
-                                if !up.isEmpty{
-                                    let upData = (up as NSString).dataUsingEncoding(NSUTF8StringEncoding)
-                                    let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
-                                        upData!, options: NSJSONReadingOptions.MutableContainers,
-                                        error: nil) as NSDictionary
-                                    if let avn = userPrefs["avatar_name"] as? String{
-                                        fr.avatar_name = avn
-                                    }
-                                }
-                                
-                            }
-                            
-                            if let lvl = f["level"] as? Int{
-                                fr.level = lvl
-                            }
-                            
-                            self.friends.append(fr)
-                            
                         }
                         
-                        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                            dispatch_async(dispatch_get_main_queue(),{
-                                
-                                self.friendEmailAddress.text = ""
-                                self.friendEmailAddress.resignFirstResponder()
-                                
-                                self.myTableView.reloadData()
-                                
-                                var badgeCount : Int = 0
-                                for fr : FriendRec in self.friends {
-                                    if (!fr.approved && fr.src=="them") {
-                                        badgeCount += 1
-                                    }
-                                }
-                                
-                                // TODO: maybe make the badge value friend request counts and update
-                                // the name of the badge to the total count.  for example the
-                                // the name could '7 Friends' with a badge of '2' to show
-                                // the user has 7 friends and 2 friend requests
-                                if (badgeCount>0) {
-                                    self.navigationController?.tabBarItem.badgeValue = String(badgeCount)
-                                } else {
-                                    self.navigationController?.tabBarItem.badgeValue = nil
-                                }
-                                
-                                self.is_busy = false
-                                
-                                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                            })
-                        })
-                    }
+                        if (badgeCount>0) {
+                            self.navigationController?.tabBarItem.badgeValue = String(badgeCount)
+                        } else {
+                            self.navigationController?.tabBarItem.badgeValue = nil
+                        }
+                        
+                        self.is_busy = false
+                        
+                        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    })
                     
                 }
             } else {
