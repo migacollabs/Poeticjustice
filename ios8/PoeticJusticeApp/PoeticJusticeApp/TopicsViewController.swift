@@ -204,8 +204,18 @@ class ActiveTopic {
             
             }, completion: nil)
     }
+}
+
+class TopicsHelper {
+    // Singleton
+    class var sharedInstance: TopicsHelper {
+        struct Static {
+            static let instance = TopicsHelper();
+        }
+        return Static.instance
+    }
     
-    func isUserUpNext(userId : Int) -> Bool {
+    func isUserUpNext(activeTopicRec : ActiveTopicRec, userId : Int) -> Bool {
         if (activeTopicRec.next_index_user_ids > -1) {
             if let i : Int = find(activeTopicRec.verse_user_ids, userId) {
                 return i==activeTopicRec.next_index_user_ids
@@ -213,9 +223,65 @@ class ActiveTopic {
         }
         return false
     }
+    
+    func convertToActiveTopicRecs(results : NSArray) -> [ActiveTopicRec] {
+        
+        var recs : [ActiveTopicRec] = []
+        
+        for r in results {
+            var atr = ActiveTopicRec()
+            
+            if let id = r["topic_id"] as? Int {
+                atr.topic_id = id
+            }
+            
+            if let src = r["src"] as? String {
+                atr.src = src
+            }
+            
+            if let vid = r["verse_id"] as? Int {
+                atr.verse_id = vid
+            }
+            
+            if let nid = r["next_index_user_ids"] as? Int {
+                atr.next_index_user_ids = nid
+            }
+            
+            if let vids = r["user_ids"] as? [Int] {
+                atr.verse_user_ids = vids
+            }
+            
+            if let ea = r["email_address"] as? String {
+                atr.email_address = ea
+            }
+            
+            if let un = r["user_name"] as? String {
+                atr.user_name = un
+            }
+            
+            if let oid = r["owner_id"] as? Int {
+                atr.owner_id = oid
+            }
+            
+            if let ti = r["title"] as? String {
+                atr.verse_title = ti
+            }
+            
+            if let cuhv = r["current_user_has_voted"] as? Bool {
+                atr.current_user_has_voted = cuhv
+            }
+            
+            recs.append(atr)
+        }
+        
+        return recs
+        
+    }
+
 }
 
 class TopicsViewController: UIViewController, UserDelegate {
+    
 
     @IBOutlet weak var topicButton: TopicButton!
     @IBOutlet var topicScrollView: UIScrollView!
@@ -779,6 +845,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         
     }
     
+    
     func loadActiveTopicData(data:NSData?, response:NSURLResponse?, error:NSError?){
         
         var activeTopicRecs : [ActiveTopicRec] = []
@@ -801,55 +868,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                     }
                     
                     if let results = jsonResult["results"] as? NSArray {
-                        
-                        for r in results {
-                            
-                            var atr = ActiveTopicRec()
-                            
-                            if let id = r["topic_id"] as? Int {
-                                atr.topic_id = id
-                            }
-                            
-                            if let src = r["src"] as? String {
-                                atr.src = src
-                            }
-                            
-                            if let vid = r["verse_id"] as? Int {
-                                atr.verse_id = vid
-                            }
-                            
-                            if let nid = r["next_index_user_ids"] as? Int {
-                                atr.next_index_user_ids = nid
-                            }
-                            
-                            if let vids = r["user_ids"] as? [Int] {
-                                atr.verse_user_ids = vids
-                            }
-                            
-                            if let ea = r["email_address"] as? String {
-                                atr.email_address = ea
-                            }
-                            
-                            if let un = r["user_name"] as? String {
-                                atr.user_name = un
-                            }
-                            
-                            if let oid = r["owner_id"] as? Int {
-                                atr.owner_id = oid
-                            }
-                            
-                            if let ti = r["title"] as? String {
-                                atr.verse_title = ti
-                            }
-                            
-                            if let cuhv = r["current_user_has_voted"] as? Bool {
-                                atr.current_user_has_voted = cuhv
-                            }
-                            
-                            activeTopicRecs.append(atr)
-                            
-                        }
-                        
+                        activeTopicRecs = TopicsHelper.sharedInstance.convertToActiveTopicRecs(results)
                     }
                     
                 }
@@ -911,7 +930,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                 
                 if let at : ActiveTopic = self.getActiveTopic(atr) as? ActiveTopic {
                     
-                    if (at.isUserUpNext(NetOpers.sharedInstance.user.id) && !at.activeTopicRec.current_user_has_voted) {
+                    if (TopicsHelper.sharedInstance.isUserUpNext(at.activeTopicRec, userId: NetOpers.sharedInstance.user.id) && !at.activeTopicRec.current_user_has_voted) {
                         upNextCount += 1;
                     }
                     

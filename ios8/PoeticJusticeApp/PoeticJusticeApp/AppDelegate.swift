@@ -8,16 +8,22 @@
 
 import UIKit
 import iAd
+import Foundation
+import AVFoundation
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
 
     var window: UIWindow?
     var iAdBanner: ADBannerView = ADBannerView()
-
+    var timer : NSTimer?
+    var tabBarController : UITabBarController?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        tabBarController = application.windows[0].rootViewController as UITabBarController
         
         self.iAdBanner.delegate = self
         
@@ -32,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        if let t = timer {
+            println("Stopping timer from refreshing navigation badges")
+            t.invalidate()
+        }
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -40,12 +50,87 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        println("Starting timer to refresh navigation badges")
+        timer = NSTimer.scheduledTimerWithTimeInterval(45.0, target: self, selector: Selector("refreshNavigationBadges"), userInfo: nil, repeats: true)
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
+    func refreshNavigationBadges() {
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
+            
+            if let tbc : UITabBarController = tabBarController {
+                if let nc = tbc.viewControllers?[1] as? UINavigationController {
+                    if nc.topViewController is TopicsViewController {
+                        println("Automatically refreshing through TopicsViewController")
+                        var tvc = nc.topViewController as TopicsViewController
+                        tvc.refresh()
+                    } else {
+                        println("Refreshing topic navigation badge for user")
+                        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", updateActiveTopics)
+                    }
+                }
+                
+            }
+            
+        } else {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            println("Not refreshing navigation badges as no user is logged in")
+        }
+    }
+    
+    func updateActiveTopics(data:NSData?, response:NSURLResponse?, error:NSError?){
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                if data != nil {
+                    let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as NSDictionary
+                    
+                    var upNextCount : Int = 0
+                    
+                    if let results = jsonResult["results"] as? NSArray {
+                        var recs : [ActiveTopicRec] = TopicsHelper.sharedInstance.convertToActiveTopicRecs(results)
+                        
+                        for atr : ActiveTopicRec in recs {
+                            
+                            if (TopicsHelper.sharedInstance.isUserUpNext(atr, userId: NetOpers.sharedInstance.user.id) && !atr.current_user_has_voted) {
+                                upNextCount += 1;
+                            }
+                            
+                        }
+                    }
+                    
+                    if let tbc : UITabBarController = tabBarController {
+                        
+                        dispatch_async(dispatch_get_main_queue(), {
+                        
+                            var tabArray = tbc.tabBar.items as NSArray!
+                            var tabItem = tabArray.objectAtIndex(1) as UITabBarItem
+                            
+                            if (upNextCount > 0) {
+                                tabItem.badgeValue = String(upNextCount)
+                            } else {
+                                tabItem.badgeValue = nil
+                            }
+                            
+                            println("Updating navigation badge to \(upNextCount)")
+                        
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                            
+                        })
+                        
+                    }
+                    
+                }
+            } else {
+                println("Unable to refresh navigation badges: \(httpResponse.statusCode)")
+            }
+        }
+    }
     
     
     // MARK: - Ad Banner
