@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Layout Help View Controller-->
@@ -105,24 +106,22 @@
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eHq-gQ-M0c">
-                                            <rect key="frame" x="10" y="10" width="180" height="180"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="180" id="okq-LV-5eu"/>
-                                                <constraint firstAttribute="width" constant="180" id="zVo-K3-U4k"/>
-                                            </constraints>
+                                            <rect key="frame" x="11" y="11" width="128" height="128"/>
                                         </imageView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="eHq-gQ-M0c" secondAttribute="centerX" id="49c-vk-iNi"/>
-                                    <constraint firstAttribute="centerY" secondItem="eHq-gQ-M0c" secondAttribute="centerY" id="ELl-84-LID"/>
+                                    <constraint firstItem="eHq-gQ-M0c" firstAttribute="top" secondItem="7oP-Hx-eMo" secondAttribute="topMargin" constant="3" id="GE0-IE-Nrk"/>
+                                    <constraint firstItem="eHq-gQ-M0c" firstAttribute="leading" secondItem="7oP-Hx-eMo" secondAttribute="leadingMargin" constant="3" id="KSP-sX-i0I"/>
+                                    <constraint firstItem="eHq-gQ-M0c" firstAttribute="centerY" secondItem="7oP-Hx-eMo" secondAttribute="centerY" id="QWf-gQ-E36"/>
+                                    <constraint firstItem="eHq-gQ-M0c" firstAttribute="centerX" secondItem="7oP-Hx-eMo" secondAttribute="centerX" id="bkc-Fs-8Uu"/>
                                 </constraints>
-                                <size key="customSize" width="200" height="200"/>
+                                <size key="customSize" width="150" height="150"/>
                                 <connections>
                                     <outlet property="imageView" destination="eHq-gQ-M0c" id="BM9-j5-jbS"/>
                                 </connections>

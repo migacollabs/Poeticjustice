@@ -32,6 +32,12 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
         self.collectionView?.allowsSelection = true
         self.collectionView?.allowsMultipleSelection = false
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        if (!NetOpers.sharedInstance.user.is_logged_in()) {
+            self.show_alert("You are not signed in", message: "Please sign in before selecting an avatar.", controller_title: "Ok")
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -69,7 +75,10 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
         // Configure the cell
         
         if let avatarCell = cell as? AvatarPicCollectionViewCell{
+            avatarCell.imageView.contentMode = .ScaleAspectFill
             avatarCell.imageView.image = UIImage(named: self.avatar.get_avatar_file_name(indexPath.row)!)
+//            
+//            let rect = AVMakeRectWithAspectRatioInsideRect(avatarCell.imageView.image.size, avatarCell.imageView.bounds)
             
         }else{
             cell.backgroundColor = UIColor.blackColor()
@@ -139,28 +148,16 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
         layout collectionViewLayout: UICollectionViewLayout!,
         sizeForItemAtIndexPath indexPath: NSIndexPath!) -> CGSize {
             
-            return CGSize(width:200, height:200)
+            return CGSize(width:150, height:150)
+    }
+    
+    func show_alert(title:String, message:String, controller_title:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
