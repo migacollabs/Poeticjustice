@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerDataViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
+            <connections>
+                <outlet property="avatarImage" destination="HGb-3d-IP0" id="Nlx-Mu-Sac"/>
+                <outlet property="leafIconImageView" destination="vhd-fW-B8u" id="loT-Tw-QiL"/>
+                <outlet property="levelImageView" destination="Jsw-MN-jCM" id="FFd-cl-xm5"/>
+                <outlet property="pointsLabel" destination="Y84-1G-4Ch" id="cHm-Ns-fyB"/>
+                <outlet property="userNameLabel" destination="5be-pw-2vA" id="nKl-k6-Ig0"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="128"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HGb-3d-IP0">
+                    <rect key="frame" x="8" y="8" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="HGb-3d-IP0" secondAttribute="height" multiplier="1:1" id="ICM-8F-Wfa"/>
+                        <constraint firstAttribute="height" constant="48" id="Ite-KD-iNv"/>
+                        <constraint firstAttribute="height" constant="48" id="PUe-Kw-OP4"/>
+                        <constraint firstAttribute="width" constant="48" id="Vkw-f0-6Cg"/>
+                        <constraint firstAttribute="width" constant="48" id="Wx2-fE-xWC"/>
+                        <constraint firstAttribute="width" secondItem="HGb-3d-IP0" secondAttribute="height" multiplier="1:1" id="Zou-VP-zXi"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ICM-8F-Wfa"/>
+                            <exclude reference="PUe-Kw-OP4"/>
+                            <exclude reference="Vkw-f0-6Cg"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vhd-fW-B8u" userLabel="leaf icon">
+                    <rect key="frame" x="64" y="32" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="ETF-dq-1fw"/>
+                        <constraint firstAttribute="height" constant="24" id="Ew2-72-qGx"/>
+                        <constraint firstAttribute="height" constant="24" id="HZW-Bh-1gO"/>
+                        <constraint firstAttribute="width" secondItem="vhd-fW-B8u" secondAttribute="height" multiplier="1:1" id="J1w-uv-XDf"/>
+                        <constraint firstAttribute="width" constant="24" id="MNE-n2-c25"/>
+                        <constraint firstAttribute="width" constant="24" id="Y4S-CZ-vzh"/>
+                        <constraint firstAttribute="width" secondItem="vhd-fW-B8u" secondAttribute="height" multiplier="1:1" id="ZDv-DD-RRC"/>
+                        <constraint firstAttribute="width" secondItem="vhd-fW-B8u" secondAttribute="height" multiplier="1:1" id="t5r-F1-AMX"/>
+                        <constraint firstAttribute="width" constant="24" id="xdK-0P-XbF"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="ETF-dq-1fw"/>
+                            <exclude reference="HZW-Bh-1gO"/>
+                            <exclude reference="MNE-n2-c25"/>
+                            <exclude reference="Y4S-CZ-vzh"/>
+                            <exclude reference="ZDv-DD-RRC"/>
+                            <exclude reference="t5r-F1-AMX"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact" ambiguous="YES">
+                        <rect key="frame" x="300" y="65" width="24" height="24"/>
+                    </variation>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="x000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y84-1G-4Ch">
+                    <rect key="frame" x="90" y="37" width="39" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="39" id="3nc-O2-Qb0"/>
+                        <constraint firstAttribute="height" constant="17" id="Avk-qu-frt"/>
+                        <constraint firstAttribute="height" constant="17" id="FvN-Xg-7ib"/>
+                        <constraint firstAttribute="height" constant="17" id="IRh-1L-V1v"/>
+                        <constraint firstAttribute="width" constant="39" id="Rse-TY-e8C"/>
+                        <constraint firstAttribute="width" secondItem="Y84-1G-4Ch" secondAttribute="height" multiplier="39:17" id="Um7-Pb-ssb"/>
+                        <constraint firstAttribute="width" constant="39" id="aRc-xc-zru"/>
+                        <constraint firstAttribute="width" constant="39" id="mq2-wG-ZgA"/>
+                        <constraint firstAttribute="height" constant="17" id="uks-0S-BBL"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="14"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="3nc-O2-Qb0"/>
+                            <exclude reference="Avk-qu-frt"/>
+                            <exclude reference="FvN-Xg-7ib"/>
+                            <exclude reference="IRh-1L-V1v"/>
+                            <exclude reference="Rse-TY-e8C"/>
+                            <exclude reference="Um7-Pb-ssb"/>
+                            <exclude reference="aRc-xc-zru"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="321" y="66" width="39" height="21"/>
+                    </variation>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jsw-MN-jCM" userLabel="level icon">
+                    <rect key="frame" x="137" y="32" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="57O-ya-T3t"/>
+                        <constraint firstAttribute="width" constant="24" id="5Ll-aT-Vxu"/>
+                        <constraint firstAttribute="height" constant="24" id="B7H-ty-0Ho"/>
+                        <constraint firstAttribute="width" constant="24" id="Pdi-ln-DPI"/>
+                        <constraint firstAttribute="width" secondItem="Jsw-MN-jCM" secondAttribute="height" multiplier="1:1" id="Vhz-w8-JJB"/>
+                        <constraint firstAttribute="width" constant="24" id="dWy-EK-PKU"/>
+                        <constraint firstAttribute="width" secondItem="Jsw-MN-jCM" secondAttribute="height" multiplier="1:1" id="lhp-hZ-vgh"/>
+                        <constraint firstAttribute="width" secondItem="Jsw-MN-jCM" secondAttribute="height" multiplier="1:1" id="tMB-KE-zaV"/>
+                        <constraint firstAttribute="height" constant="24" id="wRd-AV-uaI"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="57O-ya-T3t"/>
+                            <exclude reference="5Ll-aT-Vxu"/>
+                            <exclude reference="B7H-ty-0Ho"/>
+                            <exclude reference="Pdi-ln-DPI"/>
+                            <exclude reference="lhp-hZ-vgh"/>
+                            <exclude reference="tMB-KE-zaV"/>
+                        </mask>
+                    </variation>
+                    <variation key="widthClass=compact" ambiguous="YES">
+                        <rect key="frame" x="368" y="65" width="24" height="24"/>
+                    </variation>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAAAAAAAAAAAA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5be-pw-2vA">
+                    <rect key="frame" x="64" y="8" width="132" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="CZ6-on-oEK"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="K0L-g0-TNp"/>
+                        <constraint firstAttribute="width" constant="140" id="KDl-QI-P2I"/>
+                        <constraint firstAttribute="height" constant="21" id="OaD-bZ-dOf"/>
+                        <constraint firstAttribute="width" constant="100" id="gUn-VS-uMl"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="nCp-It-lPg"/>
+                        <constraint firstAttribute="height" constant="21" id="sfT-zt-a7F"/>
+                        <constraint firstAttribute="width" constant="132" id="wTj-Cg-isv"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="CZ6-on-oEK"/>
+                            <exclude reference="K0L-g0-TNp"/>
+                            <exclude reference="KDl-QI-P2I"/>
+                            <exclude reference="gUn-VS-uMl"/>
+                            <exclude reference="nCp-It-lPg"/>
+                            <exclude reference="sfT-zt-a7F"/>
+                        </mask>
+                    </variation>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QUq-ZI-HBn">
+                    <rect key="frame" x="85" y="70" width="30" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <state key="normal" title="Ok">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onGo:" destination="-1" eventType="touchUpInside" id="eAJ-xm-fJ5"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="vhd-fW-B8u" firstAttribute="leading" secondItem="HGb-3d-IP0" secondAttribute="trailing" constant="8" id="1F7-IK-IjL"/>
+                <constraint firstItem="HGb-3d-IP0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="8dI-BI-asU"/>
+                <constraint firstItem="HGb-3d-IP0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="EAT-Al-pGS"/>
+                <constraint firstItem="5be-pw-2vA" firstAttribute="leading" secondItem="HGb-3d-IP0" secondAttribute="trailing" constant="8" id="GXd-gC-bj0"/>
+                <constraint firstItem="vhd-fW-B8u" firstAttribute="top" secondItem="5be-pw-2vA" secondAttribute="bottom" constant="3" id="LlK-24-eaD"/>
+                <constraint firstItem="Jsw-MN-jCM" firstAttribute="top" secondItem="5be-pw-2vA" secondAttribute="bottom" constant="3" id="RC3-lT-n2H"/>
+                <constraint firstItem="5be-pw-2vA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="RPM-I2-a3v"/>
+                <constraint firstItem="Y84-1G-4Ch" firstAttribute="leading" secondItem="vhd-fW-B8u" secondAttribute="trailing" constant="2" id="fGF-Sz-ghw"/>
+                <constraint firstItem="Jsw-MN-jCM" firstAttribute="leading" secondItem="Y84-1G-4Ch" secondAttribute="trailing" constant="8" id="mh5-85-gdB"/>
+                <constraint firstItem="Y84-1G-4Ch" firstAttribute="top" secondItem="5be-pw-2vA" secondAttribute="bottom" constant="8" id="p9x-tF-iSF"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="423" y="461"/>
+        </view>
+    </objects>
+</document>

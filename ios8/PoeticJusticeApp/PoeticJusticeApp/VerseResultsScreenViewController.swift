@@ -12,26 +12,37 @@ import UIKit
 let HOSTNAME = NetOpers.sharedInstance.appserver_hostname!
 
 
-class VerseResultsScreenViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
+    UITableViewDelegate, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var verseTitle: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var voteMsgLabel: UILabel!
+    
     @IBOutlet weak var topicImage: UIImageView!
+    @IBOutlet weak var topicButton: UIButton!
+    
+    
     @IBOutlet weak var avatarPlayerOne: UIImageView!
     @IBOutlet weak var avatarPlayerTwo: UIImageView!
     @IBOutlet weak var avatarPlayerThree: UIImageView!
     @IBOutlet weak var avatarPlayerFour: UIImageView!
     @IBOutlet weak var avatarPlayerFive: UIImageView!
+    
     @IBOutlet weak var currentUserName: UILabel!
+    @IBOutlet weak var currentUserNameLeadingConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var currentUserLevel: UIImageView!
     @IBOutlet weak var currentUserPoints: UILabel!
     @IBOutlet weak var currentUserAvatarImage: UIImageView!
     @IBOutlet weak var currentUserCoinsImg: UIImageView!
+    
     @IBOutlet weak var winnerUserName: UILabel!
     @IBOutlet weak var winnerIcon: UIImageView!
     
     @IBOutlet weak var playerDataView: UIView!
+    
+    var currentPlayerModal: PlayerDataViewController?
+    var blurFrame:UIVisualEffectView?
     
     var selectedRow:Int?
     var currentPlayerVotedFor:NSIndexPath?
@@ -65,9 +76,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         // Do any additional setup after loading the view.
         
         // clear the labels
-        self.currentUserName.text = ""
-        self.currentUserPoints.text = ""
-        self.winnerUserName.text = ""
+//        self.currentUserName.text = ""
+//        self.currentUserPoints.text = ""
+//        self.winnerUserName.text = ""
         
         self.viewLoaded = true
         
@@ -79,10 +90,30 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         self.tableView.allowsSelection = true
         self.tableView.backgroundColor = UIColor.clearColor()
         
-        self.tableView.separatorColor = GameStateColors.VeryLightGreyD
+        self.tableView.separatorColor = UIColor.clearColor()
         
-        println(self.playerDataView.frame)
+        //println(self.playerDataView.frame)
         //self.playerDataView.hidden = true
+        
+        let tap1 = UITapGestureRecognizer(target: self, action:Selector("onAvatarTap:"))
+        tap1.delegate = self
+        self.avatarPlayerOne.addGestureRecognizer(tap1)
+        
+        let tap2 = UITapGestureRecognizer(target: self, action:Selector("onAvatarTap:"))
+        tap2.delegate = self
+        self.avatarPlayerTwo.addGestureRecognizer(tap2)
+        
+        let tap3 = UITapGestureRecognizer(target: self, action:Selector("onAvatarTap:"))
+        tap3.delegate = self
+        self.avatarPlayerThree.addGestureRecognizer(tap3)
+        
+        let tap4 = UITapGestureRecognizer(target: self, action:Selector("onAvatarTap:"))
+        tap4.delegate = self
+        self.avatarPlayerFour.addGestureRecognizer(tap4)
+        
+        let tap5 = UITapGestureRecognizer(target: self, action:Selector("onAvatarTap:"))
+        tap5.delegate = self
+        self.avatarPlayerFive.addGestureRecognizer(tap5)
         
     }
 
@@ -276,15 +307,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         if self.viewLoaded{
             if let vr = self.verseRec{
                 
-                // set the title
-                if let title = self.verseTitle{
-                    title.text = vr.title
-                }
-                
-                println(self.topic)
                 if let topic = self.topic{
-                    println(topic.main_icon_name)
-                    self.topicImage.image = UIImage(named: topic.main_icon_name as String)
+                    if let t_btn = self.topicButton{
+                        t_btn.setImage(UIImage(named: topic.main_icon_name as String), forState: .Normal)
+                    }
                 }
                 
                 if let lineRecs = self.verseRec?.lines_recs{
@@ -303,12 +329,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 if let vr = self.verseRec{
                     
-                    self.voteMsgLabel.text = "\(vr.votes.count)\\\(vr.user_ids.count)"
+                    //self.voteMsgLabel.text = "\(vr.votes.count)\\\(vr.user_ids.count)"
                     
                     // if all the votes are in
                     if vr.votes.count == vr.user_ids.count{
                         
-                        self.voteMsgLabel.text = "All votes are in! \(vr.votes.count)\\\(vr.user_ids.count)"
+                        //self.voteMsgLabel.text = "All votes are in! \(vr.votes.count)\\\(vr.user_ids.count)"
                         
                         var linesForPlayer = [Int:Int]()
                         
@@ -349,8 +375,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     }
                 }
                 
-                println("VR HERE \(vr)")
-                                
                 var i = 0
                 for user_id in vr.players.keys {
                     
@@ -375,7 +399,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 // check if this user has voted on this verse and select the row
                 if let player_vote = self.verseRec?.votes[NetOpers.sharedInstance.user.id]{
                     
-                    self.voteMsgLabel.text = "You've voted! \(vr.votes.count)\\\(vr.user_ids.count)"
+                    //self.voteMsgLabel.text = "You've voted! \(vr.votes.count)\\\(vr.user_ids.count)"
                     
                     var i = 0
                     var foundMatch = false
@@ -397,7 +421,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     }
                     
                 }else{
-                    self.voteMsgLabel.text = "Time to pick your favorite line! \(vr.votes.count)\\\(vr.user_ids.count)"
+                    //self.voteMsgLabel.text = "Time to pick your favorite line! \(vr.votes.count)\\\(vr.user_ids.count)"
+                    self.show_alert("Complete", message: "Time to pick your favorite line!", controller_title: "Ok")
                 }
                 
             }
@@ -438,9 +463,23 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             
             if avatarPlayer != nil{
                 avatarPlayer!.backgroundColor = GameStateColors.LightBlueT
-                //var offset = avatarPlayer!.frame.origin.x - self.playerDataView!.frame.origin.x + 40
-                //self.playerDataView!.frame = CGRectOffset( self.playerDataView!.frame, offset, 0 )
-                self.playerDataView.backgroundColor = GameStateColors.LightBlueT
+                
+                if avatarPlayer!.frame.origin.x != self.currentUserName!.frame.origin.x{
+                    
+                    self.currentUserName.frame.origin.x = avatarPlayer!.frame.origin.x
+                    
+                    UIView.animateWithDuration(0.5, delay: 0.25, options: .CurveEaseOut, animations: {
+                        var offset = avatarPlayer!.frame.origin.x
+                        self.currentUserName!.frame = CGRectOffset( self.currentUserName!.frame, offset, 0 )
+                        self.currentUserNameLeadingConstraint.constant = offset
+                        }, nil
+                    )
+                }
+                
+
+                
+                
+                
             }
         }
         
@@ -599,7 +638,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                             
                                             // update label for some feedback
                                             dispatch_async(dispatch_get_main_queue(), {
-                                                self.voteMsgLabel.text = "Vote confirmed!"
+                                                //self.voteMsgLabel.text = "Vote confirmed!"
                                                 self.setStarOnRow(indexPath)
                                             })
                                             
@@ -665,8 +704,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         var vlr = self.verseLinesForTable[indexPath.row]
         
-        self.highlightAvatar(vlr.player_id)
         self.updateCurrentUser(vlr.player_id)
+        self.highlightAvatar(vlr.player_id)
+        
 
         
 //        // if every player has voted, don't allow selection
@@ -769,6 +809,80 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         }
         return UIImage(named: "man_48.png")!
     }
+    
+    @IBAction func onTopicButtonClick(sender: AnyObject) {
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            let alertController = UIAlertController(title: "Title", message: self.verseRec?.title, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+            
+            if let v = self.verseRec{
+                
+                if let url = NSURL(string:v.title) {
+                    let open: ((UIAlertAction!) -> Void)! = { action in
+                        UIApplication.sharedApplication().openURL(url)
+                        return
+                    }
+                    
+                    alertController.addAction(UIAlertAction(title: "Open in Safari", style: UIAlertActionStyle.Default, handler: open ))
+                }
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            }
+            
+        }
+    }
+    
+    func onAvatarTap(recognizer: UITapGestureRecognizer){
+        if let imageView = recognizer.view as? UIImageView{
+            if imageView.image != nil{
+                
+                var selectedPlayerRec:VerseResultScreenPlayerRec?
+                
+                if let vr = self.verseRec{
+                    var uid = vr.user_ids[imageView.tag-1]
+                    println("uid \(uid)")
+                    selectedPlayerRec = vr.players[uid]
+                    println("selectedPlayerRec \(selectedPlayerRec) ")
+                }
+
+                
+                let presentingViewController = PlayerDataViewController(nibName: "PlayerDataViewController", bundle:nil)
+                
+                var presentationStyle = UIModalPresentationStyle.PageSheet
+                
+                presentingViewController.providesPresentationContextTransitionStyle = true
+                presentingViewController.definesPresentationContext = true
+                presentingViewController.modalPresentationStyle = presentationStyle
+                presentingViewController.view.backgroundColor = UIColor.clearColor()
+                presentingViewController.parentView = self
+                presentingViewController.dataRecord = selectedPlayerRec!
+                presentingViewController.view.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+                
+                self.currentPlayerModal = presentingViewController
+                
+                let blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
+                blur.frame = view.frame
+                self.blurFrame = blur
+                view.addSubview(blur)
+                blur.contentView.addSubview(presentingViewController.view)
+                
+            }
+        }
+    }
+    
+    func dismissModal(){
+        if let cpm = self.currentPlayerModal{
+            cpm.view.removeFromSuperview()
+        }
+        if let blur = self.blurFrame{
+            blur.removeFromSuperview()
+        }
+    }
+    
+
     
 }
 
