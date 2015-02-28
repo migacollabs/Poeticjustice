@@ -140,7 +140,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
         }
     }
     
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+    func textFieldShouldReturn(textView: UITextView!) -> Bool {
         self.view.endEditing(true);
         return false;
     }
@@ -530,9 +530,11 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
         if (!is_busy) {
             is_busy = true
             
-            is_my_turn = false
+            self.setLine.resignFirstResponder()
             
-            updateSendPlaceholder()
+            animateButtonTapped();
+            
+            is_my_turn = false
             
             // println("Clicked send " + setLine.text)
             
@@ -788,6 +790,79 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
         
         // disable keyboard?
         return false
+    }
+    
+    func animateButtonTapped() {
+        
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
+        for i in 0...3 {
+            
+            let leaf = UIImageView(image: UIImage(named: "leaf-button.png"))
+            leaf.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+            self.view.addSubview(leaf)
+            
+            let path = UIBezierPath()
+            
+            // start here
+            let offset = CGFloat(5 + i)
+            path.moveToPoint(CGPoint(x: self.sendButton.frame.origin.x + offset, y: self.sendButton.frame.origin.y + 5))
+            
+            let randomYOffset = CGFloat( arc4random_uniform(UInt32(screenSize.height * 0.27)))
+            let randomXOffset = CGFloat( arc4random_uniform(UInt32(screenSize.width * 0.27)))
+            
+            // add some curves points from top right to bottom left
+            path.addCurveToPoint(
+                CGPoint(x: 0, y: screenSize.height),
+                controlPoint1: CGPoint(x: screenSize.width * 0.5 - randomXOffset, y: screenSize.height * 0.5 - randomYOffset),
+                controlPoint2: CGPoint(x: screenSize.width * 0.5 + randomXOffset, y: screenSize.height * 0.5 + randomYOffset))
+            
+            // create the animation
+            let anim = CAKeyframeAnimation(keyPath: "position")
+            anim.path = path.CGPath
+            anim.rotationMode = kCAAnimationRotateAuto
+            
+            // allow enough time for the leaves to fall about half way down
+            // the view
+            anim.duration = 6 + Double(arc4random_uniform(10))
+            
+            // add the animation 
+            leaf.layer.addAnimation(anim, forKey: "animate position along path")
+            
+            // fade out the leaves after awhile
+            UIView.animateWithDuration(4.5, animations: {
+                leaf.alpha = 0.0
+            })
+            
+            // the leaves are spinning
+            let duration = NSTimeInterval(5 + i)
+            let delay = 0.0
+            let options = UIViewKeyframeAnimationOptions.CalculationModePaced
+            let fullRotation = CGFloat(M_PI * 2)
+            
+            UIView.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: {
+                
+                // note that we've set relativeStartTime and relativeDuration to zero.
+                // Because we're using `CalculationModePaced` these values are ignored
+                // and iOS figures out values that are needed to create a smooth constant transition
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
+                    leaf.transform = CGAffineTransformMakeRotation(1/3 * fullRotation)
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
+                    leaf.transform = CGAffineTransformMakeRotation(2/3 * fullRotation)
+                })
+                
+                UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
+                    leaf.transform = CGAffineTransformMakeRotation(3/3 * fullRotation)
+                })
+                
+                }, completion: {(Bool) in
+                    leaf.removeFromSuperview() // free up resources
+                    return
+            })
+            
+        }
     }
     
     
