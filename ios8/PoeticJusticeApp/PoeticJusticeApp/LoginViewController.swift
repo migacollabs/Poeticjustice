@@ -218,8 +218,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         
                         var unl = countElements(un)
                         
-                        if (unl>15 || unl==0) {
-                            self.show_alert("Invalid user name", message: "User name must be between 1 and 15 characters long", controller_title: "Ok")
+                        if (unl>12 || unl==0) {
+                            self.show_alert("Invalid user name", message: "User name must be between 1 and 12 characters long", controller_title: "Ok")
                             
                             self.hideActivityIndicator()
                             self.updateUserLabel()

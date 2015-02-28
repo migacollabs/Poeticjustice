@@ -163,7 +163,7 @@ PYAELLAC:
                 CheckConstraint('id<111111111111'), 
                 server_default=text("nextval('users_id_seq')"), 
                 primary_key=True)
-        user_name: Column(String(15), nullable=False)
+        user_name: Column(String(12), nullable=False)
         email_address: Column(String(255), nullable=False, unique=True)
         twitter_name: Column(String(255))
         facebook_name: Column(String(255))
