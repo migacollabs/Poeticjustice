@@ -13,7 +13,7 @@ let HOSTNAME = NetOpers.sharedInstance.appserver_hostname!
 
 
 class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
-    UITableViewDelegate, UIGestureRecognizerDelegate {
+    UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var voteMsgLabel: UILabel!
@@ -76,9 +76,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         // Do any additional setup after loading the view.
         
         // clear the labels
-//        self.currentUserName.text = ""
-//        self.currentUserPoints.text = ""
-//        self.winnerUserName.text = ""
+        self.currentUserName.text = ""
+        self.winnerUserName.text = ""
         
         self.viewLoaded = true
         
@@ -416,8 +415,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         let indexPath = NSIndexPath(forRow:i,inSection:0)
                         self.currentPlayerVotedFor = indexPath
                         self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
-                        self.highlightAvatar(NetOpers.sharedInstance.user.id)
-                        self.updateCurrentUser(NetOpers.sharedInstance.user.id)
+                        //self.highlightAvatar(NetOpers.sharedInstance.user.id)
+                        //self.updateCurrentUser(NetOpers.sharedInstance.user.id)
                     }
                     
                 }else{

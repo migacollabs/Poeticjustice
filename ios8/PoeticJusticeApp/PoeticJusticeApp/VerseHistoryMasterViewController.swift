@@ -45,8 +45,6 @@ class VerseHistoryMasterViewController: UITableViewController {
     
     func loadTopicData(data:NSData?, response:NSURLResponse?, error:NSError?){
         
-        println("loadTopicData called")
-        
         if let httpResponse = response as? NSHTTPURLResponse {
             if httpResponse.statusCode == 200 {
                 
@@ -77,8 +75,9 @@ class VerseHistoryMasterViewController: UITableViewController {
                 }
                 
             }else{
-                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the topics.  Please try again.", controller_title:"Ok")
-                
+                self.show_alert("\(httpResponse.statusCode) Oops",
+                    message: "There was a problem loading the topics.  Please try again.",
+                    controller_title:"Ok")
             }
         }
         
@@ -103,10 +102,12 @@ class VerseHistoryMasterViewController: UITableViewController {
                 let vhr = self.verses[indexPath.row]
                 
                 if var topic = self.topics[vhr.topicId] as? Topic{
+                    
+                    (segue.destinationViewController as VerseHistoryDetailViewController).verseId = vhr.id
+                    (segue.destinationViewController as VerseHistoryDetailViewController).verseRec = vhr
                     (segue.destinationViewController as VerseHistoryDetailViewController).topic = topic
                 }
                 
-                (segue.destinationViewController as VerseHistoryDetailViewController).detailItem = vhr
             }
         }
     }
@@ -114,7 +115,6 @@ class VerseHistoryMasterViewController: UITableViewController {
     // MARK: - verses 
     
     func load_verses(data: NSData?, response: NSURLResponse?, error: NSError?){
-        println("load_verses called")
         
         if let httpResponse = response as? NSHTTPURLResponse {
             if httpResponse.statusCode == 200 {
@@ -160,10 +160,6 @@ class VerseHistoryMasterViewController: UITableViewController {
                                 
                                 for (line_position, line_tuple) in linesDict{
                                     
-                                    if let lp = line_position as? String{
-                                        
-                                    }
-                                    
                                     var p:Int? = (line_position as? String)!.toInt()
                                     if let lp = p{
                                         var vlr = VerseResultScreenLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
@@ -173,6 +169,19 @@ class VerseHistoryMasterViewController: UITableViewController {
                                         println("corrupt data")
                                     }
                                     
+                                }
+                            }
+                            
+                            if let x = v["votes_record"] as? String{
+                                let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                                let votesDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                                    data!, options: NSJSONReadingOptions.MutableContainers,
+                                    error: nil) as NSDictionary
+                                for(voterId, linePos) in votesDict{
+                                    var k:Int? = (voterId as? String)!.toInt()
+                                    if k != nil{
+                                        vh.votes[k!] = linePos as? Int
+                                    }
                                 }
                             }
                             
@@ -223,15 +232,18 @@ class VerseHistoryMasterViewController: UITableViewController {
                             dispatch_async(dispatch_get_main_queue(),{
                                 
                                 self.tableView.reloadData()
-                                
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                 
                             })
                         })
+                        
                     }
                 }
             } else {
-                self.show_alert("\(httpResponse.statusCode) Oops", message: "There was a problem loading the verse history.  Please try again.", controller_title:"Ok")
+                self.show_alert(
+                    "\(httpResponse.statusCode) Oops",
+                    message: "There was a problem loading the verse history.  Please try again.",
+                    controller_title:"Ok")
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             }
         }

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PlayerDataViewDelegate : class {
+    func dismissModal()
+}
+
 class PlayerDataViewController: UIViewController, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var avatarImage: UIImageView!
@@ -18,7 +22,7 @@ class PlayerDataViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var viewLoaded = false
     
-    var parentView: VerseResultsScreenViewController?
+    var parentView: PlayerDataViewDelegate?
     
     var dataRecord: VerseResultScreenPlayerRec? {
         didSet{
