@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerDataViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
             <connections>
                 <outlet property="avatarImage" destination="HGb-3d-IP0" id="Nlx-Mu-Sac"/>
+                <outlet property="flagImageView" destination="xAc-UH-Tre" id="muX-Mg-itU"/>
                 <outlet property="leafIconImageView" destination="vhd-fW-B8u" id="loT-Tw-QiL"/>
                 <outlet property="levelImageView" destination="Jsw-MN-jCM" id="FFd-cl-xm5"/>
                 <outlet property="pointsLabel" destination="Y84-1G-4Ch" id="cHm-Ns-fyB"/>
@@ -17,7 +18,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="200" height="128"/>
+            <rect key="frame" x="0.0" y="0.0" width="200" height="157"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HGb-3d-IP0">
@@ -149,7 +150,7 @@
                     </variation>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QUq-ZI-HBn">
-                    <rect key="frame" x="85" y="70" width="30" height="30"/>
+                    <rect key="frame" x="85" y="120" width="30" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="Ok">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -158,9 +159,18 @@
                         <action selector="onGo:" destination="-1" eventType="touchUpInside" id="eAJ-xm-fJ5"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xAc-UH-Tre">
+                    <rect key="frame" x="76" y="67" width="48" height="48"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="48" id="2SX-Wj-LV6"/>
+                        <constraint firstAttribute="width" secondItem="xAc-UH-Tre" secondAttribute="height" multiplier="1:1" id="Q8q-2m-Y9K"/>
+                        <constraint firstAttribute="width" constant="48" id="T1a-Rn-VVc"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="xAc-UH-Tre" secondAttribute="trailing" constant="76" id="0bW-Xd-20x"/>
                 <constraint firstItem="vhd-fW-B8u" firstAttribute="leading" secondItem="HGb-3d-IP0" secondAttribute="trailing" constant="8" id="1F7-IK-IjL"/>
                 <constraint firstItem="HGb-3d-IP0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="8dI-BI-asU"/>
                 <constraint firstItem="HGb-3d-IP0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="EAT-Al-pGS"/>
@@ -168,12 +178,15 @@
                 <constraint firstItem="vhd-fW-B8u" firstAttribute="top" secondItem="5be-pw-2vA" secondAttribute="bottom" constant="3" id="LlK-24-eaD"/>
                 <constraint firstItem="Jsw-MN-jCM" firstAttribute="top" secondItem="5be-pw-2vA" secondAttribute="bottom" constant="3" id="RC3-lT-n2H"/>
                 <constraint firstItem="5be-pw-2vA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="RPM-I2-a3v"/>
+                <constraint firstAttribute="centerX" secondItem="xAc-UH-Tre" secondAttribute="centerX" id="e0B-LE-ta6"/>
                 <constraint firstItem="Y84-1G-4Ch" firstAttribute="leading" secondItem="vhd-fW-B8u" secondAttribute="trailing" constant="2" id="fGF-Sz-ghw"/>
+                <constraint firstItem="xAc-UH-Tre" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="76" id="gnF-dc-L6m"/>
+                <constraint firstItem="xAc-UH-Tre" firstAttribute="top" secondItem="HGb-3d-IP0" secondAttribute="bottom" constant="11" id="jo3-Kb-54j"/>
                 <constraint firstItem="Jsw-MN-jCM" firstAttribute="leading" secondItem="Y84-1G-4Ch" secondAttribute="trailing" constant="8" id="mh5-85-gdB"/>
                 <constraint firstItem="Y84-1G-4Ch" firstAttribute="top" secondItem="5be-pw-2vA" secondAttribute="bottom" constant="8" id="p9x-tF-iSF"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="423" y="461"/>
+            <point key="canvasLocation" x="423" y="475.5"/>
         </view>
     </objects>
 </document>

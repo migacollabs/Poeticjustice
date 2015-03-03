@@ -192,6 +192,8 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     error: nil) as NSArray
                                 for player in playersArray as NSArray{
                                     
+                                    println("PLAYER \(player)")
+                                    
                                     // U.id, U.user_name, U.user_prefs, U.user_score, U.level
                                     var pid = player[0] as Int
                                     var usrnm = player[1] as String
@@ -213,12 +215,14 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     
                                     var score = player[3] as Int
                                     var level = player[4] as Int
+                                    var flag = player[5] as String
                                     
                                     vh.players[pid] = VerseResultScreenPlayerRec(
                                                         user_id: pid,
                                                         user_name: usrnm,
                                                         user_score:score,
                                                         level:level,
+                                                        flag_icon:flag,
                                                         avatar_name:avnStr!)
                                 }
                                 

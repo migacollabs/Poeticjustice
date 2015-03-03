@@ -234,7 +234,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         if let playersArray = results["user_data"] as? NSArray{
                             for player in playersArray as NSArray{
                                 
-                                println(player)
+                                println("THE PLAYER \(player)")
                                 
                                 var pid = player[0] as Int
                                 var usrnm = player[1] as String
@@ -256,9 +256,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                 
                                 var pnts = player[3] as Int
                                 var lvl = player[4] as Int
+                                var flag = player[5] as String
                                 
                                 vrsr.players[pid] = VerseResultScreenPlayerRec(
-                                    user_id: pid, user_name: usrnm, user_score:pnts, level:lvl,
+                                    user_id: pid, user_name: usrnm, user_score:pnts, level:lvl, flag_icon:flag,
                                     avatar_name:avnStr!)
                                 
                             }

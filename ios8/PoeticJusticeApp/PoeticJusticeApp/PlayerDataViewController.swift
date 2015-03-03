@@ -18,6 +18,7 @@ class PlayerDataViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var leafIconImageView: UIImageView!
     @IBOutlet weak var pointsLabel: UILabel!
     @IBOutlet weak var levelImageView: UIImageView!
+    @IBOutlet weak var flagImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     
     var viewLoaded = false
@@ -40,6 +41,11 @@ class PlayerDataViewController: UIViewController, UIGestureRecognizerDelegate {
                 }
                 if let lvi = self.levelImageView{
                     lvi.image = UIImage(named: "lvl_" + String(dr.level) + ".png")
+                }
+                if let fvi = self.flagImageView{
+                    var flag_img_name = dr.flag_icon.lowercaseString
+                    println("FLAG NAME \(flag_img_name)")
+                    fvi.image = UIImage(named:"\(flag_img_name).png")
                 }
                 if let usr = self.userNameLabel{
                     usr.text = dr.user_name

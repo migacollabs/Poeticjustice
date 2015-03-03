@@ -1527,11 +1527,29 @@ def join_verse(request):
             pass
 
 
+def get_verse_user_data(verse, session):
+    U = ~User
+    sq = (session.query(U.id)
+            .filter(U.id.in_(verse.user_ids))
+            ).subquery()
+    rp = (session.query(U.id, U.user_name, U.user_prefs, U.user_score, U.level, U.country_code)
+            .filter(U.id.in_(sq))
+            ).all()
+
+    # users [(id, email_address)]
+    users = [(row[0], row[1], 
+                row[2] if row[0] else "", row[3], row[4], 
+                row[5] if row[5] else 'earth_flag') for row in rp]
+
+    print 'USERS DATA', users
+
+    return users
+
+
 def get_verse_to_view(verse_id, session):
     lines = OrderedDict()
     verse = None
     users = {}
-    owner_id = -1
     if verse_id > 0:
 
         U, V, LxV = ~User, ~Verse, ~LineXVerse
@@ -1545,20 +1563,19 @@ def get_verse_to_view(verse_id, session):
 
         # TODO: what about player's that join a verse, write a line, then leave?
         if verse: # maybe no lines at all?
-            sq = (session.query(U.id)
-                    .filter(U.id.in_(verse.user_ids))
-                    ).subquery()
-            rp = (session.query(U.id, U.user_name, U.user_prefs, U.user_score, U.level)
-                    .filter(U.id.in_(sq))
-                    ).all()
-
-            # users [(id, email_address)]
-            users = [(row[0], row[1], row[2] if row[0] else "", row[3], row[4]) for row in rp]
+            users = get_verse_user_data(verse, session)
             verse = Verse(entity=verse)
 
         else:
-            verse = Verse.load(int(verse_id), session)    
-            owner_id = verse.owner_id        
+            verse = Verse.load(int(verse_id), session) 
+            if not verse.user_ids:
+                ud = (session.query(U.id, U.user_name, U.user_prefs, U.user_score, U.level, U.country_code)
+                        .filter(U.id==verse.owner_id)
+                        ).first()
+                if ud:
+                    users = ud
+            else:
+                users = get_verse_user_data(verse, session)
 
     return \
         verse, dict(
@@ -1567,7 +1584,7 @@ def get_verse_to_view(verse_id, session):
                     lines=lines,
                     verse_id=verse_id,
                     user_data=users,
-                    owner_id=owner_id)
+                    owner_id=verse.owner_id)
                 )
 
 
@@ -1671,7 +1688,7 @@ def close_verse_add_to_history(verse_id, user, session):
             print user_data
             # U.id, U.user_name, U.user_prefs, U.user_score, U.level
 
-            user_id, user_name, user_prefs, score, level = user_data
+            user_id, user_name, user_prefs, score, level, country_code = user_data
 
             lines_json = json.dumps(jsonable['results']['lines'])
 

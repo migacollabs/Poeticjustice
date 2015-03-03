@@ -398,7 +398,7 @@ def login_post(request):
         device_token = request.params['device_token'] if 'device_token' in request.params else None
         device_type = request.params['device_type'] if 'device_type' in request.params else None
 
-        user_country = "AAA"
+        user_country = "earth_flag"
         try:
             if request.remote_addr:
                 geo_match = geolite2.lookup("97.124.28.77")
@@ -666,6 +666,7 @@ def upsert_pref(request):
                 ]
             )
         )
+        status = 'Ok'
         if user and user.is_active:
             with SQLAlchemySessionFactory() as session:
                 user = session.merge(user)
@@ -679,10 +680,21 @@ def upsert_pref(request):
                 setattr(user, 'user_prefs', user_prefs)
                 
                 session.add(user)
-                session.commit()
+                try:
+                    session.commit()
+                except:
+                    try:
+                        session.rollback()
+                    except:pass
+                    try:
+                        session.add(user)
+                        session.commit()
+                    except:
+                        print 'Cannot save user prefs', traceback.format_exc()
+                        status = 'Err'
 
                 return {
-                    'status':'Ok',
+                    'status':status,
                     'logged_in': auth_usrid,
                 }
 

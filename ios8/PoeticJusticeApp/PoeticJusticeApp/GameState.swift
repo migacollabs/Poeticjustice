@@ -56,6 +56,7 @@ struct VerseResultScreenPlayerRec{
     var user_name = ""
     var user_score = -1
     var level = 1
+    var flag_icon = "earth_flag.png"
     var avatar_name = "avatar_default.png"
 }
 
