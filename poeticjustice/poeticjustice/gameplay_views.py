@@ -588,7 +588,7 @@ def get_friends(user_id, session):
 
 
 
-def get_verse(verse_id, user_id):
+def get_verse(verse_id, user_id, session):
 
     print 'get_verse called', verse_id, user_id
 
@@ -608,50 +608,48 @@ def get_verse(verse_id, user_id):
     if verse_id:
         verse_id = int(verse_id)
 
-        with SQLAlchemySessionFactory() as session:
+        # V, LxV = ~Verse, ~LineXVerse
+        # for l in session.query(LxV).filter(LxV.verse_id==verse_id).order_by(LxV.id):
+        #     lines.append(l.line_text)
+        #     last_user_id = l.user_id
 
-            # V, LxV = ~Verse, ~LineXVerse
-            # for l in session.query(LxV).filter(LxV.verse_id==verse_id).order_by(LxV.id):
-            #     lines.append(l.line_text)
-            #     last_user_id = l.user_id
-
-            U, V, LxV = ~User, ~Verse, ~LineXVerse
-            for row in session.query(V, LxV) \
-                    .filter(V.id==verse_id) \
-                    .filter(LxV.verse_id==verse_id) \
-                    .order_by(LxV.id):
-                lines.append(row.LineXVerse.line_text)
-                lines_d[row.LineXVerse.id] = (row.LineXVerse.user_id, row.LineXVerse.line_text)
-                if not verse:
-                    verse = row.Verse
-
+        U, V, LxV = ~User, ~Verse, ~LineXVerse
+        for row in session.query(V, LxV) \
+                .filter(V.id==verse_id) \
+                .filter(LxV.verse_id==verse_id) \
+                .order_by(LxV.id):
+            lines.append(row.LineXVerse.line_text)
+            lines_d[row.LineXVerse.id] = (row.LineXVerse.user_id, row.LineXVerse.line_text)
             if not verse:
-                # no verse obj yet, because there are no lines yet
-                verse = session.query(V).filter(V.id==verse_id).first()
+                verse = row.Verse
 
-            owner_id = verse.owner_id
-            next_index_user_ids = verse.next_index_user_ids
+        if not verse:
+            # no verse obj yet, because there are no lines yet
+            verse = session.query(V).filter(V.id==verse_id).first()
 
-            # TODO: should check and set complete here?
-            is_complete = verse.complete
-            user_ids = verse.user_ids
-            has_all_lines = len(lines) == verse.participant_count * 4
-            title = verse.title
+        owner_id = verse.owner_id
+        next_index_user_ids = verse.next_index_user_ids
 
-            votes_d = json.loads(verse.votes) if verse.votes else {}
-            current_user_has_voted = user_id in votes_d
+        # TODO: should check and set complete here?
+        is_complete = verse.complete
+        user_ids = verse.user_ids
+        has_all_lines = len(lines) == verse.participant_count * 4
+        title = verse.title
 
-            # get user data
-            sq = (session.query(U.id)
-                    .filter(U.id.in_(verse.user_ids))
-                    ).subquery()
-            rp = (session.query(U.id, U.user_name, U.user_prefs)
-                    .filter(U.id.in_(sq))
-                    ).all()
+        votes_d = json.loads(verse.votes) if verse.votes else {}
+        current_user_has_voted = user_id in votes_d
 
-            # users [(id, email_address, user_prefs jsonable str)]
-            # let the client unserialize the json if they need it
-            users = [(row[0], row[1], row[2] if row[0] else "") for row in rp]
+        # get user data
+        sq = (session.query(U.id)
+                .filter(U.id.in_(verse.user_ids))
+                ).subquery()
+        rp = (session.query(U.id, U.user_name, U.user_prefs)
+                .filter(U.id.in_(sq))
+                ).all()
+
+        # users [(id, email_address, user_prefs jsonable str)]
+        # let the client unserialize the json if they need it
+        users = [(row[0], row[1], row[2] if row[0] else "") for row in rp]
 
     else:
         verse_id = -1
@@ -921,8 +919,9 @@ def get_user_active_verses(request):
         if user and user.is_active and user.email_address==auth_usrid:
 
             verseId = request.params['verse_id']
-            
-            return get_verse(verseId, user.id)
+
+            with SQLAlchemySessionFactory() as session:
+                return get_verse(verseId, user.id, session)
 
         raise HTTPUnauthorized
 
@@ -1010,8 +1009,8 @@ def verse_using_get_for_testing(request):
             )
         )
         if user and user.is_active and user.email_address==auth_usrid:
-            
-            return get_verse(kwds['id'], user.id)
+            with SQLAlchemySessionFactory() as session:
+                return get_verse(kwds['id'], user.id, session)
 
         raise HTTPUnauthorized
 
@@ -1049,8 +1048,8 @@ def verse(request):
         if user and user.is_active and user.email_address==auth_usrid:
 
             verseId = request.params['id']
-            
-            return get_verse(verseId, user.id)
+            with SQLAlchemySessionFactory() as session:
+                return get_verse(verseId, user.id, session)
 
         raise HTTPUnauthorized
 
@@ -1194,7 +1193,7 @@ def save_verse_line(request):
 
                 user.save(session=session)
 
-                res = get_verse(verse.id, user.id)
+                res = get_verse(verse.id, user.id, session)
 
                 if len(res['results']['votes']) == len(res['results']['user_ids']):
                     # everyone's voted
