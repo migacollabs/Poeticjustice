@@ -334,7 +334,7 @@ def remove_user_friend(request):
                     session.delete(friend)
                     session.commit()
 
-                return get_friends(user.id)
+                return get_friends(user.id, session)
 
         raise HTTPUnauthorized
 
@@ -407,7 +407,7 @@ def add_user_friend(request):
                     uxu = UserXUser(entity=session.merge(uxu))
                     uxu.save(session=session)
 
-                return get_friends(user.id)
+                return get_friends(user.id, session)
 
         raise HTTPUnauthorized
 
@@ -458,7 +458,7 @@ def get_leaderboard(request):
                 # friends
                 if user_id:
                     friend_ids = [user_id]
-                    for f in get_friends(user_id)["results"]:
+                    for f in get_friends(user_id, session)["results"]:
                         if (f["approved"]==True):
                             friend_ids.append(f["friend_id"])
 
@@ -536,7 +536,8 @@ def get_user_friends(request):
         )
 
         if user and user.is_active and user.email_address==auth_usrid:
-            return get_friends(user.id)
+            with SQLAlchemySessionFactory() as session:
+                return get_friends(user.id, session)
 
         raise HTTPUnauthorized
 
@@ -554,36 +555,37 @@ def get_user_friends(request):
         except:
             pass
 
-def get_friends(user_id):
+def get_friends(user_id, session):
+
     friends = []
 
     # my friends that i explicitly invited
-    with SQLAlchemySessionFactory() as session:
-        U, UxU = ~User, ~UserXUser
-        MyFriend = aliased(U, name="friend")
-        for u, uxu, friend in session.query(U, UxU, MyFriend).\
-            filter(U.id==UxU.friend_id).\
-            filter(UxU.user_id==user_id).\
-            filter(MyFriend.id==U.id):
-            friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
-                'email_address':u.email_address, 'user_name':u.user_name, 'src':'me',
-                'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs,
-                'num_of_favorited_lines':u.num_of_favorited_lines
-                })
+    U, UxU = ~User, ~UserXUser
+    MyFriend = aliased(U, name="friend")
+    for u, uxu, friend in session.query(U, UxU, MyFriend).\
+        filter(U.id==UxU.friend_id).\
+        filter(UxU.user_id==user_id).\
+        filter(MyFriend.id==U.id):
+        friends.append({'friend_id':uxu.friend_id, 'approved':uxu.approved,
+            'email_address':u.email_address, 'user_name':u.user_name, 'src':'me',
+            'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs,
+            'num_of_favorited_lines':u.num_of_favorited_lines
+            })
 
-        # others who have invited me
-        for u, uxu, friend in session.query(U, UxU, MyFriend).\
-            filter(UxU.user_id==U.id).\
-            filter(UxU.friend_id==user_id).\
-            filter(MyFriend.id==U.id):
-            friends.append({'friend_id':uxu.user_id, 'approved':uxu.approved,
-                'email_address':u.email_address, 'user_name':u.user_name, 'src':'them',
-                'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs,
-                'num_of_favorited_lines':u.num_of_favorited_lines
-                })
+    # others who have invited me
+    for u, uxu, friend in session.query(U, UxU, MyFriend).\
+        filter(UxU.user_id==U.id).\
+        filter(UxU.friend_id==user_id).\
+        filter(MyFriend.id==U.id):
+        friends.append({'friend_id':uxu.user_id, 'approved':uxu.approved,
+            'email_address':u.email_address, 'user_name':u.user_name, 'src':'them',
+            'user_score': friend.user_score, 'level':friend.level, 'user_prefs':friend.user_prefs,
+            'num_of_favorited_lines':u.num_of_favorited_lines
+            })
 
     res = {"results":friends}
     return res
+
 
 
 def get_verse(verse_id, user_id):
@@ -719,11 +721,13 @@ def get_active_topics(request):
             print 'loading active topics for user', user.id
 
             friend_ids = []
-            for f in get_friends(user.id)["results"]:
-                if (f["approved"]==True):
-                    friend_ids.append(f["friend_id"])
 
             with SQLAlchemySessionFactory() as session:
+
+                for f in get_friends(user.id, session)["results"]:
+                    if (f["approved"]==True):
+                        friend_ids.append(f["friend_id"])
+            
                 topics = {}
 
                 current_lvl = 16
@@ -1551,7 +1555,6 @@ def get_verse_to_view(verse_id, session):
 
             # users [(id, email_address)]
             users = [(row[0], row[1], row[2] if row[0] else "", row[3], row[4]) for row in rp]
-            print 'users', users
             verse = Verse(entity=verse)
 
         else:
@@ -1672,8 +1675,10 @@ def close_verse_add_to_history(verse_id, user, session):
             user_id, user_name, user_prefs, score, level = user_data
 
             lines_json = json.dumps(jsonable['results']['lines'])
-
+            
             players_json = json.dumps(jsonable['results']['user_data'])
+
+            print 'players_json', players_json
 
             user_version_history = UserVerseHistory(
                     verse_id=verse.id,
@@ -1683,6 +1688,8 @@ def close_verse_add_to_history(verse_id, user, session):
                     title=verse.title,
                     lines_record=lines_json,
                     players_record=players_json,
+                    votes_record=verse.votes,
+                    user_ids=verse.user_ids,
                     level=level
                     ).save(session)
 
