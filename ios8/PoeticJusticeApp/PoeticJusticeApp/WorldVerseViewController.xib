@@ -22,6 +22,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="w6c-Qy-h40">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="CpR-k2-onq">
                     <rect key="frame" x="0.0" y="158" width="600" height="221"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -89,19 +92,24 @@
                 <constraint firstItem="iTI-ob-VOF" firstAttribute="top" secondItem="bZt-Bz-lq7" secondAttribute="top" id="DHu-iY-Cz7"/>
                 <constraint firstItem="peu-Iq-tNk" firstAttribute="leading" secondItem="iTI-ob-VOF" secondAttribute="trailing" constant="8" symbolic="YES" id="Eqf-EE-Op1"/>
                 <constraint firstItem="IO3-i6-GWv" firstAttribute="leading" secondItem="dyA-jk-ccd" secondAttribute="trailing" constant="8" symbolic="YES" id="G9m-Ea-rfQ"/>
+                <constraint firstItem="w6c-Qy-h40" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="KUT-Ni-xX5"/>
                 <constraint firstAttribute="trailing" secondItem="CpR-k2-onq" secondAttribute="trailing" id="MeY-rA-WFQ"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="top" relation="lessThanOrEqual" secondItem="IO3-i6-GWv" secondAttribute="bottom" constant="29" id="XKB-F8-Op1"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="centerX" secondItem="peu-Iq-tNk" secondAttribute="centerX" id="aSP-Ev-ZYs"/>
                 <constraint firstItem="dyA-jk-ccd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="95" id="dA9-aM-XWr"/>
                 <constraint firstItem="iTI-ob-VOF" firstAttribute="baseline" secondItem="bZt-Bz-lq7" secondAttribute="firstBaseline" id="dF9-VU-9lc"/>
                 <constraint firstItem="bZt-Bz-lq7" firstAttribute="leading" secondItem="peu-Iq-tNk" secondAttribute="trailing" constant="8" symbolic="YES" id="gUf-ps-9Zs"/>
+                <constraint firstAttribute="bottom" secondItem="w6c-Qy-h40" secondAttribute="bottom" id="jH1-o8-pXs"/>
                 <constraint firstItem="IO3-i6-GWv" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="l4T-EG-OaS"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="top" secondItem="dyA-jk-ccd" secondAttribute="bottom" constant="15" id="mQD-OE-ehD"/>
+                <constraint firstItem="w6c-Qy-h40" firstAttribute="trailing" secondItem="CpR-k2-onq" secondAttribute="trailing" id="pS7-Ab-dwl"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sT1-xD-nsn"/>
+                <constraint firstItem="w6c-Qy-h40" firstAttribute="leading" secondItem="CpR-k2-onq" secondAttribute="leading" id="vwH-gU-1JH"/>
             </constraints>
         </view>
     </objects>
     <resources>
         <image name="Init.png" width="48" height="48"/>
+        <image name="title_background.jpg" width="768" height="768"/>
     </resources>
 </document>

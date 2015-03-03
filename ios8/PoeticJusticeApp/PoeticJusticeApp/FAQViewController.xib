@@ -15,6 +15,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="2sU-9y-gzP">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How do I invite my friends?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEJ-Nc-4Ql">
                     <rect key="frame" x="8" y="66" width="209" height="21"/>
                     <constraints>
@@ -119,6 +122,7 @@
                 <constraint firstItem="JqM-tR-riC" firstAttribute="top" secondItem="cv8-7S-QuS" secondAttribute="bottom" constant="8" symbolic="YES" id="CTr-7J-eWb"/>
                 <constraint firstItem="qDk-h1-niB" firstAttribute="top" secondItem="Jh9-aW-Tdo" secondAttribute="bottom" constant="8" symbolic="YES" id="GOI-aU-5GH"/>
                 <constraint firstItem="dEJ-Nc-4Ql" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="66" id="HE2-gF-qPu"/>
+                <constraint firstItem="2sU-9y-gzP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HwD-pl-bQg"/>
                 <constraint firstItem="R9S-c2-eao" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="LU9-6p-PpG"/>
                 <constraint firstItem="ePO-IH-7tb" firstAttribute="centerX" secondItem="dEJ-Nc-4Ql" secondAttribute="centerX" id="OSG-s6-zm1"/>
                 <constraint firstItem="JqM-tR-riC" firstAttribute="trailing" secondItem="YMg-HH-9cn" secondAttribute="trailing" id="SA2-5k-3vi"/>
@@ -133,11 +137,17 @@
                 <constraint firstItem="YMg-HH-9cn" firstAttribute="top" secondItem="ePO-IH-7tb" secondAttribute="bottom" constant="8" symbolic="YES" id="blR-de-5AC"/>
                 <constraint firstItem="LO8-M7-a2c" firstAttribute="top" secondItem="YMg-HH-9cn" secondAttribute="bottom" constant="8" symbolic="YES" id="ca6-cG-foD"/>
                 <constraint firstItem="qDk-h1-niB" firstAttribute="leading" secondItem="Jh9-aW-Tdo" secondAttribute="leading" id="eDM-4H-Mrx"/>
+                <constraint firstItem="2sU-9y-gzP" firstAttribute="centerX" secondItem="YMg-HH-9cn" secondAttribute="centerX" id="f9e-lu-pmI"/>
                 <constraint firstItem="YMg-HH-9cn" firstAttribute="trailing" secondItem="R9S-c2-eao" secondAttribute="trailing" id="k7l-79-zeh"/>
+                <constraint firstItem="2sU-9y-gzP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="lUd-hC-MkK"/>
+                <constraint firstAttribute="bottom" secondItem="2sU-9y-gzP" secondAttribute="bottom" id="mI4-SB-RfQ"/>
                 <constraint firstItem="cv8-7S-QuS" firstAttribute="leading" secondItem="qDk-h1-niB" secondAttribute="leading" id="tfa-b9-OYS"/>
                 <constraint firstItem="JqM-tR-riC" firstAttribute="trailing" secondItem="qDk-h1-niB" secondAttribute="trailing" id="u9o-1d-EDA"/>
                 <constraint firstItem="R9S-c2-eao" firstAttribute="top" secondItem="LO8-M7-a2c" secondAttribute="bottom" constant="8" symbolic="YES" id="vH3-oY-Lx0"/>
             </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="title_background.jpg" width="768" height="768"/>
+    </resources>
 </document>
