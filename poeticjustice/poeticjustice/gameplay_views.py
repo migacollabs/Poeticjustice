@@ -687,15 +687,14 @@ def get_open_topic_keys(topics):
     return keys
 
 
-def get_verse_history_ids(user, min_level):
+def get_verse_history_ids(user, min_level, session):
     # return all completed verse ids that have been completed
     # for the current level and below
     completed = []
-    with SQLAlchemySessionFactory() as session:
-        UVH = ~UserVerseHistory
-        for r in session.query(UVH).filter(UVH.player_id==user.id).\
-            filter(UVH.level<=min_level):
-            completed.append(r.verse_id)
+    UVH = ~UserVerseHistory
+    for r in session.query(UVH).filter(UVH.player_id==user.id).\
+        filter(UVH.level<=min_level):
+        completed.append(r.verse_id)
     return completed
 
 
@@ -742,7 +741,7 @@ def get_active_topics(request):
                 # TODO: need to figure out a way to return fresh new topic/verses when the user
                 # levels up - check for verses not in UserVerseHistory
                 # only for lower levels...
-                verse_history_ids = get_verse_history_ids(user, (user.level-1))
+                verse_history_ids = get_verse_history_ids(user, (user.level-1), session)
 
                 V, T, U, UxU= ~Verse, ~VerseCategoryTopic, ~User, ~UserXUser
 
@@ -1675,7 +1674,7 @@ def close_verse_add_to_history(verse_id, user, session):
             user_id, user_name, user_prefs, score, level = user_data
 
             lines_json = json.dumps(jsonable['results']['lines'])
-            
+
             players_json = json.dumps(jsonable['results']['user_data'])
 
             print 'players_json', players_json
