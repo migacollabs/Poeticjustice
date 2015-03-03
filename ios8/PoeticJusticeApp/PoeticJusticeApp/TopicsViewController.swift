@@ -298,6 +298,10 @@ class TopicsViewController: UIViewController, UserDelegate {
     
     private var avatarView : UIImageView = UIImageView()
     private var badgeView : UIImageView = UIImageView()
+    private var scoreView : UIImageView = UIImageView();
+    private var favView : UIImageView = UIImageView();
+    private var scoreLabel : UILabel = UILabel();
+    private var favLabel : UILabel = UILabel();
     
     var is_busy : Bool = false
     var has_topics : Bool = false
@@ -320,7 +324,13 @@ class TopicsViewController: UIViewController, UserDelegate {
             }
         }
         
+        self.scoreView.addSubview(scoreLabel);
+        self.favView.addSubview(favLabel);
+        
         self.avatarView.addSubview(badgeView)
+        self.avatarView.addSubview(scoreView)
+        self.avatarView.addSubview(favView)
+        
         self.view.addSubview(avatarView)
         
         lastUserEmailAddress = NetOpers.sharedInstance.user.email_address
@@ -371,9 +381,44 @@ class TopicsViewController: UIViewController, UserDelegate {
             height: 24
         )
         
-        avatarView.image = UIImage(named: NetOpers.sharedInstance.user.avatarName)
+        scoreView.frame = CGRect(
+            x: 30,
+            y: 125,
+            width: 24,
+            height: 24
+        )
         
+        scoreLabel.frame = CGRect(
+            x: 28,
+            y: 0,
+            width: 50,
+            height: 24
+        )
+        
+        favView.frame = CGRect(
+            x: 30,
+            y: 153,
+            width: 24,
+            height: 24
+        )
+        
+        favLabel.frame = CGRect(
+            x: 28,
+            y: 0,
+            width: 50,
+            height: 24
+        )
+        
+        avatarView.image = UIImage(named: NetOpers.sharedInstance.user.avatarName)
         badgeView.image = UIImage(named: "lvl_" + String(NetOpers.sharedInstance.user.level) + ".png")
+        scoreView.image = UIImage(named: "tea-plant-leaf-icon.png")
+        favView.image = UIImage(named: "star_gold_256.png")
+        
+        scoreLabel.text = String(format: "x%03d", NetOpers.sharedInstance.user.user_score)
+        favLabel.text = String(format: "x%03d", NetOpers.sharedInstance.user.num_favorited_lines)
+        
+        scoreLabel.font = UIFont(name: "Courier", size: 14)!
+        favLabel.font = UIFont(name: "Courier", size: 14)!
     }
     
     private var viewedGameComplete : Bool = false;

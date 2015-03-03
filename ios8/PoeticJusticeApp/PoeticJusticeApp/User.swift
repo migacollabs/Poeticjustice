@@ -29,6 +29,7 @@ class User{
     var device_token: String = ""
     var user_prefs: String = ""
     var user_score : Int = 0
+    var num_favorited_lines : Int = 0
     var level : Int = 0 {
         didSet{
             for ul : UserDelegate in userDelegates {
@@ -95,6 +96,9 @@ class User{
         }
         if let dt = user_data["device_token"] as? String {
             self.device_token = dt
+        }
+        if let nf = user_data["num_of_favorited_lines"] as? Int {
+            self.num_favorited_lines = nf
         }
         if let up = user_data["user_prefs"] as? String {
             self.user_prefs = up
