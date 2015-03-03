@@ -261,6 +261,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func on_email_notification() {
         is_busy = false
+        hideActivityIndicator();
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
     func on_login(){

@@ -149,7 +149,16 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
         if (!is_busy) {
             is_busy = true
             
+            // remove the existing blocking view
+            self.textViewBlock.removeFromSuperview()
+            
+            // blocking view gets added back
             viewWillAppear(true)
+            
+            if (self.is_my_turn) {
+                // remove it if it's my turn, otherwise leave it
+                self.textViewBlock.removeFromSuperview()
+            }
         }
     }
     
