@@ -47,6 +47,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     var verseRec: VerseResultScreenRec?
     var verseLinesForTable:[VerseResultScreenLineRec] = []
     var verseLinesForVoting = [Int:VerseResultScreenLineRec]()
+    var sortedLineIndexes = [Int]()
     var avatar = Avatar()
     var stillVoting = false
     
@@ -107,9 +108,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
             if let vr = self.verseRec{
                 
                 if let topic = self.topic{
-                    println("theres a topic \(topic.main_icon_name)")
                     if let t_btn = self.topicButton{
-                        println("theres a topic button \(t_btn)")
                         t_btn.setImage(UIImage(named: topic.main_icon_name as String), forState: .Normal)
                     }
                 }
@@ -117,9 +116,9 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                 if let lineRecs = self.verseRec?.lines_recs{
                     
                     // sort asc because lines have pks that asc
-                    let sortedLinePos = Array(lineRecs.keys).sorted(<)
+                    self.sortedLineIndexes = Array(lineRecs.keys).sorted(<)
                     
-                    for linePos in sortedLinePos{
+                    for linePos in self.sortedLineIndexes{
                         self.verseLinesForTable.append(lineRecs[linePos]!)
                         self.verseLinesForVoting[linePos] = self.verseRec!.lines_recs[linePos]
                     }
@@ -128,54 +127,68 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                 
                 self.tableView.reloadData()
                 
-                if let vr = self.verseRec{
  
-                    // if all the votes are in
-                    if vr.votes.count == vr.user_ids.count{
-                        
-                        //self.voteMsgLabel.text = "All votes are in! \(vr.votes.count)\\\(vr.user_ids.count)"
-                        
-                        var linesForPlayer = [Int:Int]()
-                        
-                        for pid in vr.user_ids{
-                            linesForPlayer[pid as Int] = 0 as Int
-                        }
-                        // tally votes for each player's line
-                        for (voter, line_id) in vr.votes{
-                            if let vlfv = self.verseLinesForVoting[line_id as Int]{
-                                if (contains(linesForPlayer.keys, vlfv.player_id)) {
-                                    linesForPlayer[vlfv.player_id]! += 1
-                                }
+                // if all the votes are in
+                if vr.votes.count == vr.user_ids.count{
+                    
+                    //self.voteMsgLabel.text = "All votes are in! \(vr.votes.count)\\\(vr.user_ids.count)"
+                    
+                    var linesForPlayer = [Int:Int]()
+                    var starsForLines = [Int:Int]()
+                    
+                    for pid in vr.user_ids{
+                        linesForPlayer[pid as Int] = 0 as Int
+                    }
+                    // tally votes for each player's line
+                    for (voter, line_id) in vr.votes{
+                        if var vlfv = self.verseLinesForVoting[line_id as Int]{
+                            if (contains(linesForPlayer.keys, vlfv.player_id)) {
+                                linesForPlayer[vlfv.player_id]! += 1
+                            }
+                            
+                            vlfv.line_score += 1
+                            
+                            if(contains(starsForLines.keys, line_id)){
+                                starsForLines[line_id]! += 1
+                            }else{
+                                starsForLines[line_id] = 1
                             }
                         }
-                        
-                        var winners:[Int] = []
-                        var highestScore = 0
-                        for (player_id, tally) in linesForPlayer{
-                            if tally > highestScore{
-                                highestScore = tally
-                                winners = [player_id]
-                            }else if tally == highestScore{
-                                winners.append(player_id)
-                            }
+                    }
+                    
+                    var winners:[Int] = []
+                    var highestScore = 0
+                    for (player_id, tally) in linesForPlayer{
+                        if tally > highestScore{
+                            highestScore = tally
+                            winners = [player_id]
+                        }else if tally == highestScore{
+                            winners.append(player_id)
                         }
+                    }
+                    
+                    if winners.count == 1{
+                        var userName = self.verseRec?.players[winners[0]]?.user_name
+                        // there is a winner
+                        self.winnerUserName.text = userName
+                        self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
+                    }
+                    
+                    for(lineId, starCount) in starsForLines{
+                        var rowNumber = find(self.sortedLineIndexes, lineId)
+                        self.verseLinesForTable[rowNumber!].line_score += 1
                         
-                        if winners.count == 1{
-                            var userName = self.verseRec?.players[winners[0]]?.user_name
-                            // there is a winner
-                            self.winnerUserName.text = userName
-                            self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
-                            //self.dispatch_alert("We have a winner!", message: userName!, controller_title: "Ok")
-                        }else{
-                            // we have a tie
-                            self.dispatch_alert("Winner", message: "We have a tie", controller_title: "Ok")
+                        if rowNumber != nil{
+                            self.setVoteStarOnRow(NSIndexPath(forRow:rowNumber!, inSection:0), numOfStars: starCount)
                         }
                         
                     }
+                    
                 }
                 
+                
                 var i = 0
-                for user_id in vr.players.keys {
+                for user_id in vr.user_ids {
                     
                     switch i{
                     case 0:
@@ -235,6 +248,8 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         var arr:[Int] = Array(self.verseRec!.players.keys)
         
         if let idx = find(arr, userId){
+            
+            println("arr \(arr) - userId \(userId) - idx \(idx)")
             
             var avatarPlayer: UIImageView?
             
@@ -296,6 +311,30 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         cell.votedStar.image = UIImage(named: "star_gold_256.png")
     }
     
+    func setVoteStarOnRow(indexPath:NSIndexPath, numOfStars:Int){
+        println("setVoteStarOnRow - \(indexPath) - stars \(numOfStars)")
+        if self.tableView != nil{
+            if var cell = self.tableView.cellForRowAtIndexPath(indexPath) as? PlayerLineTableViewCell{
+                if numOfStars >= 1{
+                    cell.votedStar.image = UIImage(named: "star_gold_256.png")
+                    cell.votedStar.alpha = 0.25
+                }
+                if numOfStars >= 2{
+                    cell.starTwo.image = UIImage(named: "star_gold_256.png")
+                    cell.starTwo.alpha = 0.25
+                }
+                if numOfStars >= 3{
+                    cell.starThree.image = UIImage(named: "star_gold_256.png")
+                    cell.starThree.alpha = 0.25
+                }
+                if numOfStars >= 4{
+                    cell.starFour.image = UIImage(named: "star_gold_256.png")
+                    cell.starFour.alpha = 0.25
+                }
+            }
+        }
+    }
+    
     
     // MARK: - Table View
     
@@ -332,8 +371,27 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                             pc.userName.text = playerRec.user_name
                         }
                         
-                        if self.currentPlayerVotedFor != nil && self.currentPlayerVotedFor!.row == indexPath.row{
+//                        if self.currentPlayerVotedFor != nil && self.currentPlayerVotedFor!.row == indexPath.row{
+//                            pc.votedStar.image = UIImage(named: "star_gold_256.png")
+//                        }
+                        
+                        var numOfStars = vlr.line_score
+                        
+                        if numOfStars >= 1{
                             pc.votedStar.image = UIImage(named: "star_gold_256.png")
+                            pc.votedStar.alpha = 0.25
+                        }
+                        if numOfStars >= 2{
+                            pc.starTwo.image = UIImage(named: "star_gold_256.png")
+                            pc.starTwo.alpha = 0.25
+                        }
+                        if numOfStars >= 3{
+                            pc.starThree.image = UIImage(named: "star_gold_256.png")
+                            pc.starThree.alpha = 0.25
+                        }
+                        if numOfStars >= 4{
+                            pc.starFour.image = UIImage(named: "star_gold_256.png")
+                            pc.starFour.alpha = 0.25
                         }
                         
                         break
@@ -499,6 +557,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                 if let vr = self.verseRec{
                     var uid = vr.user_ids[imageView.tag-1]
                     selectedPlayerRec = vr.players[uid]
+                    println("uid \(uid) - selected name \(selectedPlayerRec?.user_name) ")
                 }
                 
                 

@@ -49,6 +49,7 @@ struct VerseResultScreenLineRec{
     var position = -1
     var text = ""
     var player_id = -1
+    var line_score = 0
 }
 
 struct VerseResultScreenPlayerRec{

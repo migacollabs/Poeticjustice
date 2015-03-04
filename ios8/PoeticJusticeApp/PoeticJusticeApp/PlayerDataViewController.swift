@@ -48,6 +48,7 @@ class PlayerDataViewController: UIViewController, UIGestureRecognizerDelegate {
                     fvi.image = UIImage(named:"\(flag_img_name).png")
                 }
                 if let usr = self.userNameLabel{
+                    println("USER NAME \(dr.user_name)")
                     usr.text = dr.user_name
                 }
             }
