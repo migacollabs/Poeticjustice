@@ -59,13 +59,13 @@
                     </attributedString>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YRm-xm-AAV">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YRm-xm-AAV">
                     <rect key="frame" x="8" y="429" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="aw4-lD-mNM"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="glD-PP-aSL">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="glD-PP-aSL">
                     <rect key="frame" x="56" y="429" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="nL8-DL-HXO"/>
@@ -74,7 +74,7 @@
                         <rect key="frame" x="64" y="414" width="48" height="48"/>
                     </variation>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kIV-lE-03q">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kIV-lE-03q">
                     <rect key="frame" x="104" y="429" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="zPH-uv-wWT"/>
@@ -83,7 +83,7 @@
                         <rect key="frame" x="120" y="414" width="48" height="48"/>
                     </variation>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rzQ-1X-Nl5">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rzQ-1X-Nl5">
                     <rect key="frame" x="152" y="429" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="lJ4-EM-HWj"/>
@@ -107,7 +107,7 @@
                         <action selector="onCancel:" destination="-1" eventType="touchUpInside" id="H3Q-Yq-2Rp"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ukL-33-D9t">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ukL-33-D9t">
                     <rect key="frame" x="200" y="429" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="40" id="i34-kC-1tF"/>

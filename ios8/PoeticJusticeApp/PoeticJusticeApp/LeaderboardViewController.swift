@@ -200,9 +200,9 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         if let lc = cell as? LeaderboardTableViewCell{
             if let lur = self.leaderboard_users[indexPath.row] as LeaderboardUserRec? {
                 
-                lc.lineNum.text = String(indexPath.row+1)
-                lc.userScore.text = String(lur.user_score)
-                lc.numFavs.text = String(lur.num_favorited_lines)
+                lc.lineNum.text = String(indexPath.row+1) + "."
+                lc.userScore.text = String(format: "x%03d", lur.user_score)
+                lc.numFavs.text = String(format: "x%03d", lur.num_favorited_lines)
                 lc.levelImage.image = UIImage(named: "lvl_" + String(lur.level) + ".png")
                 lc.avatarImage.image = UIImage(named: lur.avatar_name)
                 lc.userName.text = lur.user_name
@@ -220,7 +220,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
-        return 60.0
+        return 78.0
     }
     
     func show_alert(title:String, message:String, controller_title:String){

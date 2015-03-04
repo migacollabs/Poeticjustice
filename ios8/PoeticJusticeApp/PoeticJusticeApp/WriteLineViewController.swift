@@ -232,6 +232,41 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
         is_busy = false
     }
     
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        
+        super.touchesBegan(touches, withEvent: event)
+        
+        var touch : UITouch = touches.anyObject() as UITouch
+        
+        var userCount : Int = countElements(self.verse.user_ids)
+        
+        var showAlert : Bool = false
+        
+        // two player minimum, these always show
+        if (touch.view == player1Avatar ||
+            touch.view == player2Avatar) {
+            showAlert = true
+        }
+        
+        // these may not be visible, but are still clickable
+        if (touch.view == player3Avatar && userCount>2) {
+            showAlert = true
+        }
+        
+        if (touch.view == player4Avatar && userCount>3) {
+            showAlert = true
+        }
+        
+        if (touch.view == player5Avatar && userCount>4) {
+            showAlert = true
+        }
+        
+        if (showAlert) {
+            self.show_alert("Player Info", message: "You'll need to finish the verse to see this player's info.", controller_title:"Ok")
+        }
+    
+    }
+    
     
     override func viewWillDisappear(animated: Bool){
 //        self.iAdBanner?.delegate = nil
