@@ -21,7 +21,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var topicImage: UIImageView!
     @IBOutlet weak var topicButton: UIButton!
     
-    
     @IBOutlet weak var avatarPlayerOne: UIImageView!
     @IBOutlet weak var avatarPlayerTwo: UIImageView!
     @IBOutlet weak var avatarPlayerThree: UIImageView!
@@ -51,6 +50,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     var verseRec: VerseResultScreenRec?
     var verseLinesForTable:[VerseResultScreenLineRec] = []
     var verseLinesForVoting = [Int:VerseResultScreenLineRec]()
+    var sortedLineIndexes = [Int]()
     var avatar = Avatar()
     var stillVoting = false
     
@@ -216,7 +216,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                 
                                 if let lp = p{
                                     var vlr = VerseResultScreenLineRec(
-                                        position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
+                                        position:p!,
+                                        text:line_tuple[1] as String,
+                                        player_id:line_tuple[0] as Int,
+                                        line_score:0)
                                     
                                     vrsr.lines_recs[p!] = vlr
                                     
@@ -233,8 +236,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         
                         if let playersArray = results["user_data"] as? NSArray{
                             for player in playersArray as NSArray{
-                                
-                                println("THE PLAYER \(player)")
                                 
                                 var pid = player[0] as Int
                                 var usrnm = player[1] as String
@@ -316,67 +317,76 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 if let lineRecs = self.verseRec?.lines_recs{
                     
                     // sort asc because lines have pks that asc
-                    let sortedLinePos = Array(lineRecs.keys).sorted(<)
+                    self.sortedLineIndexes = Array(lineRecs.keys).sorted(<)
                     
-                    for linePos in sortedLinePos{
-                        
+                    for linePos in self.sortedLineIndexes{
                         self.verseLinesForTable.append(lineRecs[linePos]!)
-                        
                     }
+                    
                 }
                 
                 self.tableView.reloadData()
                 
-                if let vr = self.verseRec{
+                // if all the votes are in
+                if vr.votes.count == vr.user_ids.count{
                     
-                    //self.voteMsgLabel.text = "\(vr.votes.count)\\\(vr.user_ids.count)"
+                    var linesForPlayer = [Int:Int]()
+                    var starsForLines = [Int:Int]()
                     
-                    // if all the votes are in
-                    if vr.votes.count == vr.user_ids.count{
+                    for pid in vr.user_ids{
+                        linesForPlayer[pid as Int] = 0 as Int
+                    }
+                    
+                    // tally votes for each player's line
+                    for (voter, line_id) in vr.votes{
                         
-                        //self.voteMsgLabel.text = "All votes are in! \(vr.votes.count)\\\(vr.user_ids.count)"
-                        
-                        var linesForPlayer = [Int:Int]()
-                        
-                        for pid in vr.user_ids{
-                            linesForPlayer[pid as Int] = 0 as Int
-                        }
-                        
-                        // tally votes for each player's line
-                        for (voter, line_id) in vr.votes{
-                            if let vlfv = self.verseLinesForVoting[line_id as Int]{
-                                if (contains(linesForPlayer.keys, vlfv.player_id)) {
-                                    linesForPlayer[vlfv.player_id]! += 1
-                                }
+                        if var vlfv = self.verseLinesForVoting[line_id as Int]{
+                            if (contains(linesForPlayer.keys, vlfv.player_id)) {
+                                linesForPlayer[vlfv.player_id]! += 1
                             }
-                        }
-                        
-                        var winners:[Int] = []
-                        var highestScore = 0
-                        for (player_id, tally) in linesForPlayer{
-                            if tally > highestScore{
-                                highestScore = tally
-                                winners = [player_id]
-                            }else if tally == highestScore{
-                                winners.append(player_id)
+                            
+                            vlfv.line_score += 1
+                            
+                            if(contains(starsForLines.keys, line_id)){
+                                starsForLines[line_id]! += 1
+                            }else{
+                                starsForLines[line_id] = 1
                             }
+                            
                         }
-                        if winners.count == 1{
-                            var userName = self.verseRec?.players[winners[0]]?.user_name
-                            // there is a winner
-                            self.winnerUserName.text = userName
-                            self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
-                            //self.dispatch_alert("We have a winner!", message: userName!, controller_title: "Ok")
-                        }else{
-                            // we have a tie
-                            self.dispatch_alert("Winner", message: "We have a tie", controller_title: "Ok")
+                    }
+                    
+                    var winners:[Int] = []
+                    var highestScore = 0
+                    for (player_id, tally) in linesForPlayer{
+                        if tally > highestScore{
+                            highestScore = tally
+                            winners = [player_id]
+                        }else if tally == highestScore{
+                            winners.append(player_id)
+                        }
+                    }
+                    if winners.count == 1{
+                        var userName = self.verseRec?.players[winners[0]]?.user_name
+                        // there is a winner
+                        self.winnerUserName.text = userName
+                        self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
+                    }
+                    
+                    for(lineId, starCount) in starsForLines{
+                        var rowNumber = find(self.sortedLineIndexes, lineId)
+                        self.verseLinesForTable[rowNumber!].line_score += 1
+                        
+                        if rowNumber != nil{
+                            self.setVoteStarOnRow(NSIndexPath(forRow:rowNumber!, inSection:0), numOfStars: starCount)
                         }
                         
                     }
+
                 }
                 
                 var i = 0
-                for user_id in vr.players.keys {
+                for user_id in vr.user_ids {
                     
                     switch i{
                     case 0:
@@ -392,8 +402,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     default:
                         ()
                     }
-                    
                     i++
+                    
                 }
                 
                 // check if this user has voted on this verse and select the row
@@ -427,6 +437,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
             }
         }
+        
+        //self.tableView.reloadData()
+        
     }
     
     func highlightAvatar(userId:Int){
@@ -476,10 +489,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     )
                 }
                 
-
-                
-                
-                
             }
         }
         
@@ -508,6 +517,30 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     func setStarOnRow(indexPath:NSIndexPath){
         var cell = tableView.cellForRowAtIndexPath(indexPath) as PlayerLineTableViewCell
         cell.votedStar.image = UIImage(named: "star_gold_256.png")
+    }
+    
+    func setVoteStarOnRow(indexPath:NSIndexPath, numOfStars:Int){
+        println("setVoteStarOnRow - \(indexPath) - stars \(numOfStars)")
+        if self.tableView != nil{
+            if var cell = self.tableView.cellForRowAtIndexPath(indexPath) as? PlayerLineTableViewCell{
+                if numOfStars >= 1{
+                    cell.votedStar.image = UIImage(named: "star_gold_256.png")
+                    cell.votedStar.alpha = 0.25
+                }
+                if numOfStars >= 2{
+                    cell.starTwo.image = UIImage(named: "star_gold_256.png")
+                    cell.starTwo.alpha = 0.25
+                }
+                if numOfStars >= 3{
+                    cell.starThree.image = UIImage(named: "star_gold_256.png")
+                    cell.starThree.alpha = 0.25
+                }
+                if numOfStars >= 4{
+                    cell.starFour.image = UIImage(named: "star_gold_256.png")
+                    cell.starFour.alpha = 0.25
+                }
+            }
+        }
     }
     
     
@@ -542,17 +575,35 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     if (id==vlr.player_id) {
                         found = true
                         let playerRec : VerseResultScreenPlayerRec = vr.players[vlr.player_id]!
-                        //pc.avatarImage.image = UIImage(named: playerRec.avatar_name)
-                        //pc.levelBadgeImage.image = UIImage(named: "lvl_" + String(playerRec.level) + ".png")
+                        
+                        
                         if pc.userName != nil{
                             pc.userName.text = playerRec.user_name
                         }
                         
-                        if self.currentPlayerVotedFor != nil && self.currentPlayerVotedFor!.row == indexPath.row{
-                            // this is the line the current player voted for
-                            //pc.yourPickLabel.text = "Your Pick!"
+                        var numOfStars = vlr.line_score
+                        
+                        if numOfStars >= 1{
                             pc.votedStar.image = UIImage(named: "star_gold_256.png")
+                            pc.votedStar.alpha = 0.25
                         }
+                        if numOfStars >= 2{
+                            pc.starTwo.image = UIImage(named: "star_gold_256.png")
+                            pc.starTwo.alpha = 0.25
+                        }
+                        if numOfStars >= 3{
+                            pc.starThree.image = UIImage(named: "star_gold_256.png")
+                            pc.starThree.alpha = 0.25
+                        }
+                        if numOfStars >= 4{
+                            pc.starFour.image = UIImage(named: "star_gold_256.png")
+                            pc.starFour.alpha = 0.25
+                        }
+                        
+//                        if self.currentPlayerVotedFor != nil && self.currentPlayerVotedFor!.row == indexPath.row{
+//                            // this is the line the current player voted for
+//                            pc.votedStar.image = UIImage(named: "star_gold_256.png")
+//                        }
                         
                         break
                     }

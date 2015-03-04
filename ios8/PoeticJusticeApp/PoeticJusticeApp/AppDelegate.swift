@@ -19,11 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
     var iAdBanner: ADBannerView = ADBannerView()
     var timer : NSTimer?
     var tabBarController : UITabBarController?
+    
+    var isPaused = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        tabBarController = application.windows[0].rootViewController as UITabBarController
+        tabBarController = application.windows[0].rootViewController as? UITabBarController
         
         self.iAdBanner.delegate = self
         
@@ -38,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        self.isPaused = true
         if let t = timer {
             println("Stopping timer from refreshing navigation badges")
             t.invalidate()
@@ -53,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
         
         println("Starting timer to refresh navigation badges")
         timer = NSTimer.scheduledTimerWithTimeInterval(45.0, target: self, selector: Selector("refreshNavigationBadges"), userInfo: nil, repeats: true)
+        self.isPaused = false
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -218,7 +223,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
-        return true
+        return !self.isPaused
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {

@@ -162,7 +162,7 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     
                                     var p:Int? = (line_position as? String)!.toInt()
                                     if let lp = p{
-                                        var vlr = VerseResultScreenLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
+                                        var vlr = VerseResultScreenLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int, line_score:0)
                                         vh.lines_recs[vlr.position] = vlr
                                         
                                     }else{
@@ -191,8 +191,6 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     data!, options: NSJSONReadingOptions.MutableContainers,
                                     error: nil) as NSArray
                                 for player in playersArray as NSArray{
-                                    
-                                    println("PLAYER \(player)")
                                     
                                     // U.id, U.user_name, U.user_prefs, U.user_score, U.level
                                     var pid = player[0] as Int
