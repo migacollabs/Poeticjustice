@@ -29,17 +29,20 @@
                             <constraint firstAttribute="width" secondItem="fFT-am-NHh" secondAttribute="height" multiplier="1:1" id="g61-yW-lNn"/>
                         </constraints>
                     </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cSu-ee-c1T">
+                        <rect key="frame" x="535" y="8" width="64" height="64"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="64" id="hRV-Jz-3vT"/>
+                            <constraint firstAttribute="width" constant="64" id="oBV-qA-4wb"/>
+                            <constraint firstAttribute="width" secondItem="cSu-ee-c1T" secondAttribute="height" multiplier="1:1" id="qPw-KK-Xgk"/>
+                        </constraints>
+                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G1d-H6-bRJ">
-                        <rect key="frame" x="535" y="50" width="24" height="24"/>
+                        <rect key="frame" x="535" y="48" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="Buv-cl-kjc"/>
                             <constraint firstAttribute="width" secondItem="G1d-H6-bRJ" secondAttribute="height" multiplier="1:1" id="VJp-Q4-3gF"/>
-                        </constraints>
-                    </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cSu-ee-c1T">
-                        <rect key="frame" x="535" y="10" width="64" height="64"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="cSu-ee-c1T" secondAttribute="height" multiplier="1:1" id="qPw-KK-Xgk"/>
+                            <constraint firstAttribute="height" constant="24" id="v8s-3D-Yww"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="someone.neat@yahoo.com" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WLO-4t-zbm">
@@ -87,7 +90,7 @@
                     <constraint firstItem="WLO-4t-zbm" firstAttribute="leading" secondItem="fFT-am-NHh" secondAttribute="trailing" constant="6" id="GWb-Hm-AEA"/>
                     <constraint firstItem="pcA-Lx-ZMx" firstAttribute="trailing" secondItem="WLO-4t-zbm" secondAttribute="trailing" id="Gze-fl-PC9"/>
                     <constraint firstItem="G1d-H6-bRJ" firstAttribute="leading" secondItem="mH7-bq-1h0" secondAttribute="trailing" constant="8" symbolic="YES" id="IDl-UY-fmV"/>
-                    <constraint firstItem="cSu-ee-c1T" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="JxT-Pe-Qdb"/>
+                    <constraint firstItem="cSu-ee-c1T" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="JxT-Pe-Qdb"/>
                     <constraint firstAttribute="bottomMargin" secondItem="amD-pq-qtq" secondAttribute="bottom" constant="34" id="KyK-KB-013"/>
                     <constraint firstItem="cSu-ee-c1T" firstAttribute="leading" secondItem="amD-pq-qtq" secondAttribute="trailing" constant="8" symbolic="YES" id="MMM-9J-NXt"/>
                     <constraint firstItem="WLO-4t-zbm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="Ntf-S6-9XQ"/>
@@ -108,16 +111,18 @@
                     <constraint firstItem="cSu-ee-c1T" firstAttribute="bottom" secondItem="G1d-H6-bRJ" secondAttribute="bottom" id="qFN-AF-v0U"/>
                     <constraint firstItem="amD-pq-qtq" firstAttribute="leading" secondItem="fAF-Qy-LCI" secondAttribute="trailing" constant="8" symbolic="YES" id="rjs-c5-9y6"/>
                     <constraint firstItem="mH7-bq-1h0" firstAttribute="leading" secondItem="amD-pq-qtq" secondAttribute="leading" id="v7H-r0-wlw"/>
-                    <constraint firstItem="G1d-H6-bRJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="42" id="wP1-yH-sz0"/>
+                    <constraint firstItem="G1d-H6-bRJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="40" id="wP1-yH-sz0"/>
                     <constraint firstAttribute="bottomMargin" secondItem="fFT-am-NHh" secondAttribute="bottom" constant="23" id="wWe-h2-nJ6"/>
                     <constraint firstAttribute="bottomMargin" secondItem="fAF-Qy-LCI" secondAttribute="bottom" constant="13" id="zuc-Qo-aR7"/>
                     <constraint firstAttribute="bottomMargin" secondItem="G1d-H6-bRJ" secondAttribute="bottom" constant="1" id="zyU-1Y-Skt"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="bas-tB-6hw"/>
                         <exclude reference="kmO-Gu-JUd"/>
                         <exclude reference="qFN-AF-v0U"/>
                         <exclude reference="IDl-UY-fmV"/>
+                        <exclude reference="zyU-1Y-Skt"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

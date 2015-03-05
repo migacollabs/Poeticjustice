@@ -106,6 +106,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.myTableView.backgroundColor = UIColor.clearColor()
+        
         var refreshButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Refresh, target: self, action: "refresh")
         self.navigationItem.rightBarButtonItem = refreshButton
         
@@ -311,26 +313,35 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell : FriendsTableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("FriendCell") as FriendsTableViewCell
-        if let fr = self.friends[indexPath.row] as FriendRec? {
-            
-            if (isIncoming(fr)) {
-                cell.requestStatus.image = UIImage(named: "inbox_24.png")
-            } else if (isOutgoing(fr)) {
-                cell.requestStatus.image = UIImage(named: "outbox_24.png")
-            } else {
-                cell.requestStatus.image = nil
+        let dqd = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as UITableViewCell
+        
+        if let cell = dqd as? FriendsTableViewCell{
+            if let fr = self.friends[indexPath.row] as FriendRec? {
+                
+                if (isIncoming(fr)) {
+                    cell.requestStatus.image = UIImage(named: "inbox_24.png")
+                } else if (isOutgoing(fr)) {
+                    cell.requestStatus.image = UIImage(named: "outbox_24.png")
+                } else {
+                    cell.requestStatus.image = nil
+                }
+                
+                cell.emailAddress.text = fr.email_address
+                cell.username.text = fr.user_name
+                cell.points.text = String(format: "x%03d", fr.user_score)
+                cell.favs.text = String(format: "x%03d", fr.num_favs)
+                cell.level.image = UIImage(named: "lvl_" + String(fr.level) + ".png")
+                cell.avatar.image = UIImage(named: fr.avatar_name)
             }
-            
-            cell.emailAddress.text = fr.email_address
-            cell.username.text = fr.user_name
-            cell.points.text = String(format: "x%03d", fr.user_score)
-            cell.favs.text = String(format: "x%03d", fr.num_favs)
-            cell.level.image = UIImage(named: "lvl_" + String(fr.level) + ".png")
-            cell.avatar.image = UIImage(named: fr.avatar_name)
         }
         
-        return cell
+        dqd.backgroundColor = UIColor.clearColor()
+        
+        var customView = UIView()
+        customView.backgroundColor = GameStateColors.LightBlueT
+        dqd.selectedBackgroundView = customView
+        
+        return dqd
     }
     
 //    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
