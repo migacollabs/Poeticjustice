@@ -324,8 +324,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             
             cell.emailAddress.text = fr.email_address
             cell.username.text = fr.user_name
-            cell.points.text = String(fr.user_score)
-            cell.favs.text = String(fr.num_favs)
+            cell.points.text = String(format: "x%03d", fr.user_score)
+            cell.favs.text = String(format: "x%03d", fr.num_favs)
             cell.level.image = UIImage(named: "lvl_" + String(fr.level) + ".png")
             cell.avatar.image = UIImage(named: fr.avatar_name)
         }
@@ -429,6 +429,10 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func refresh() {
         viewWillAppear(true)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return 78.0
     }
     
     // MARK: - Ad Banner
