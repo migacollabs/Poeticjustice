@@ -843,7 +843,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
         for i in 0...3 {
             
             let leaf = UIImageView(image: UIImage(named: "leaf-button.png"))
-            leaf.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+            leaf.frame = CGRect(x: 0, y: 0, width: 24, height: 12)
             self.view.addSubview(leaf)
             
             let path = UIBezierPath()
