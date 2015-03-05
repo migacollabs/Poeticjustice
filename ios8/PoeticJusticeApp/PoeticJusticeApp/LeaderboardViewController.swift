@@ -30,6 +30,9 @@ class LeaderboardTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.contentView.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clearColor()
+
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -236,15 +239,12 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 if (lur.user_id==NetOpers.sharedInstance.user.id) {
                     // lc.userName.font = UIFont.boldSystemFontOfSize(13.0)
-                    lc.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.10)
-                } else {
-                    lc.backgroundColor = UIColor.whiteColor()
+                    lc.backgroundColor = GameStateColors.LightBlueT
                 }
             }
         }
         
         cell.contentView.backgroundColor = UIColor.clearColor()
-        cell.contentView.alpha = 0.0
         return cell
     }
     
