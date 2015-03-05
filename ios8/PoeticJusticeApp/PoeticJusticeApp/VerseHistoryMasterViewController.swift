@@ -35,7 +35,7 @@ class VerseHistoryMasterViewController: UITableViewController {
         var screen_height = UIScreen.mainScreen().bounds.height
         self.iAdBanner = self.appdelegate().iAdBanner
         //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-100, 0, 0)
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-50, 0, 0)
         if let adb = self.iAdBanner{
             // println("adding ad banner subview ")
             self.view.addSubview(adb)
@@ -199,6 +199,7 @@ class VerseHistoryMasterViewController: UITableViewController {
                             }
                             
                             if let x = v["players_record"] as? String{
+                                
                                 let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                                 let playersArray: NSArray = NSJSONSerialization.JSONObjectWithData(
                                     data!, options: NSJSONReadingOptions.MutableContainers,
@@ -210,6 +211,7 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     var usrnm = player[1] as String
                                     
                                     var avnStr:String? = player[2] as? String
+                                    
                                     if avnStr == nil{
                                         avnStr = ""
                                     }

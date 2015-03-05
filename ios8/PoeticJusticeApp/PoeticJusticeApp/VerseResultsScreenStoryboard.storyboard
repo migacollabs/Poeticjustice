@@ -73,7 +73,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAAAAAAAAAAAA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bj8-PN-Ujs" userLabel="UserName">
-                                        <rect key="frame" x="8" y="65" width="145" height="21"/>
+                                        <rect key="frame" x="8" y="58" width="145" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="X7g-YR-Io2"/>
                                             <constraint firstAttribute="width" constant="145" id="zgf-Jf-yEO"/>
@@ -106,7 +106,7 @@
                                     <constraint firstItem="6fu-vm-0a2" firstAttribute="leading" secondItem="Y5r-tP-dw9" secondAttribute="trailing" id="pCC-VF-60y"/>
                                     <constraint firstItem="6fu-vm-0a2" firstAttribute="top" secondItem="GZF-VJ-uTc" secondAttribute="top" constant="8" id="rMQ-PL-bIT"/>
                                     <constraint firstItem="ejW-fC-1Aj" firstAttribute="top" secondItem="GZF-VJ-uTc" secondAttribute="top" constant="8" id="rN4-c1-klx"/>
-                                    <constraint firstItem="Bj8-PN-Ujs" firstAttribute="top" secondItem="Y5r-tP-dw9" secondAttribute="bottom" constant="9" id="tgR-xt-Vis"/>
+                                    <constraint firstItem="Bj8-PN-Ujs" firstAttribute="top" secondItem="Y5r-tP-dw9" secondAttribute="bottom" constant="2" id="tgR-xt-Vis"/>
                                     <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Bj8-PN-Ujs" secondAttribute="trailing" constant="550" id="yhU-XZ-4lD"/>
                                 </constraints>
                                 <variation key="default">

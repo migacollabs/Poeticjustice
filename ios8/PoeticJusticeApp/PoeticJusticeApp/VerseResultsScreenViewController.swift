@@ -204,11 +204,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                         }
                                 }
                                 
-                            }else{
-                                println("no votes yet")
                             }
-                            
-                            println(vrsr.votes)
                             
                         }else{
                             println("corrupt verse data")
@@ -310,7 +306,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
 
     
     func configureView() {
-        println("configureView called")
         
         if self.viewLoaded{
             if let vr = self.verseRec{
@@ -399,10 +394,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     switch i{
                     case 0:
                         self.avatarPlayerOne.image = self.getPlayerAvatarImageName(user_id)
-                        println("setting avatar one \(user_id)")
                     case 1:
                         self.avatarPlayerTwo.image = self.getPlayerAvatarImageName(user_id)
-                        println("setting avatar two \(user_id)")
                     case 2:
                         self.avatarPlayerThree.image = self.getPlayerAvatarImageName(user_id)
                     case 3:
