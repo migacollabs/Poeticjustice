@@ -154,7 +154,8 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                         
                         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                             dispatch_async(dispatch_get_main_queue(),{
-                                self.myTableView.reloadData()
+                                self.animateTable()
+                                //self.myTableView.reloadData()
                                 
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                             })
@@ -183,6 +184,30 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func animateTable() {
+        self.myTableView.reloadData()
+        
+        let cells = self.myTableView.visibleCells()
+        let tableHeight: CGFloat = self.myTableView.bounds.size.height
+        
+        for i in cells {
+            let cell: UITableViewCell = i as UITableViewCell
+            cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
+        }
+        
+        var index = 0
+        
+        for a in cells {
+            let cell: UITableViewCell = a as UITableViewCell
+            UIView.animateWithDuration(1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: {
+                cell.transform = CGAffineTransformMakeTranslation(0, 0);
+                }, completion: nil)
+            
+            index += 1
+        }
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
