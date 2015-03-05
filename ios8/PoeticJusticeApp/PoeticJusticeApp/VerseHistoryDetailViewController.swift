@@ -245,11 +245,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         self.avatarPlayerFour.backgroundColor = UIColor.clearColor()
         self.avatarPlayerFive.backgroundColor = UIColor.clearColor()
         
-        var arr:[Int] = Array(self.verseRec!.players.keys)
-        
-        if let idx = find(arr, userId){
-            
-            println("arr \(arr) - userId \(userId) - idx \(idx)")
+        if let idx = find(self.verseRec!.user_ids, userId){
             
             var avatarPlayer: UIImageView?
             

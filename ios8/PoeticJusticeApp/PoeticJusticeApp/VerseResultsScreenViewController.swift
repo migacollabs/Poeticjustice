@@ -81,8 +81,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         self.viewLoaded = true
         
-        println("VerseResultsScreenViewController loaded")
-        
         self.loadVerseData()
         
         self.tableView.allowsMultipleSelection = false
@@ -91,8 +89,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         self.tableView.separatorColor = UIColor.clearColor()
         
-        //println(self.playerDataView.frame)
-        //self.playerDataView.hidden = true
         
         let tap1 = UITapGestureRecognizer(target: self, action:Selector("onAvatarTap:"))
         tap1.delegate = self
@@ -136,8 +132,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     
     
     func loadVerse(data: NSData?, response: NSURLResponse?, error: NSError?){
-        
-        println("loadVerse called")
         
         if let httpResponse = response as? NSHTTPURLResponse {
             if httpResponse.statusCode == 200 {
@@ -391,8 +385,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     switch i{
                     case 0:
                         self.avatarPlayerOne.image = self.getPlayerAvatarImageName(user_id)
+                        println("setting avatar one \(user_id)")
                     case 1:
                         self.avatarPlayerTwo.image = self.getPlayerAvatarImageName(user_id)
+                        println("setting avatar two \(user_id)")
                     case 2:
                         self.avatarPlayerThree.image = self.getPlayerAvatarImageName(user_id)
                     case 3:
@@ -443,21 +439,16 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func highlightAvatar(userId:Int){
-
+        
         self.avatarPlayerOne.backgroundColor = UIColor.clearColor()
         self.avatarPlayerTwo.backgroundColor = UIColor.clearColor()
         self.avatarPlayerThree.backgroundColor = UIColor.clearColor()
         self.avatarPlayerFour.backgroundColor = UIColor.clearColor()
         self.avatarPlayerFive.backgroundColor = UIColor.clearColor()
         
-        var arr:[Int] = Array(self.verseRec!.players.keys)
+        var avatarPlayer: UIImageView?
         
-        if let idx = find(arr, userId){
-            
-            var avatarPlayer: UIImageView?
-            
-            //for uid in self.verseRec!.players.keys {
-                
+        if let idx = find(self.verseRec!.user_ids, userId){
             switch idx{
             case 0:
                 avatarPlayer = self.avatarPlayerOne
@@ -471,26 +462,27 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 avatarPlayer = self.avatarPlayerFive
             default:
                 ()
-            }
-            //}
-            
-            if avatarPlayer != nil{
-                avatarPlayer!.backgroundColor = GameStateColors.LightBlueT
-                
-                if avatarPlayer!.frame.origin.x != self.currentUserName!.frame.origin.x{
-                    
-                    self.currentUserName.frame.origin.x = avatarPlayer!.frame.origin.x
-                    
-                    UIView.animateWithDuration(0.5, delay: 0.25, options: .CurveEaseOut, animations: {
-                        var offset = avatarPlayer!.frame.origin.x
-                        self.currentUserName!.frame = CGRectOffset( self.currentUserName!.frame, offset, 0 )
-                        self.currentUserNameLeadingConstraint.constant = offset
-                        }, nil
-                    )
-                }
                 
             }
         }
+            
+        if avatarPlayer != nil{
+            avatarPlayer!.backgroundColor = GameStateColors.LightBlueT
+            
+            if avatarPlayer!.frame.origin.x != self.currentUserName!.frame.origin.x{
+                
+                self.currentUserName.frame.origin.x = avatarPlayer!.frame.origin.x
+                
+                UIView.animateWithDuration(0.5, delay: 0.25, options: .CurveEaseOut, animations: {
+                    var offset = avatarPlayer!.frame.origin.x
+                    self.currentUserName!.frame = CGRectOffset( self.currentUserName!.frame, offset, 0 )
+                    self.currentUserNameLeadingConstraint.constant = offset
+                    }, nil
+                )
+            }
+            
+        }
+        
         
     }
     
@@ -498,19 +490,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         var player = self.verseRec!.players[userId]
         if let x = self.currentUserName{
             x.text = player!.user_name
-        }
-        if let x = self.currentUserLevel{
-            x.image = UIImage(named: "lvl_" + String(player!.level) + ".png")
-        }
-        if let x = self.currentUserCoinsImg{
-            x.image = UIImage(named: "tea-plant-leaf-icon.png")
-        }
-        if let x = self.currentUserPoints{
-            x.text = String(format: "x%03d", player!.user_score)
-        }
-        
-        if let x = self.currentUserAvatarImage{
-            x.image = self.getPlayerAvatarImageName(userId)
         }
     }
     
@@ -520,7 +499,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func setVoteStarOnRow(indexPath:NSIndexPath, numOfStars:Int){
-        println("setVoteStarOnRow - \(indexPath) - stars \(numOfStars)")
         if self.tableView != nil{
             if var cell = self.tableView.cellForRowAtIndexPath(indexPath) as? PlayerLineTableViewCell{
                 if numOfStars >= 1{
@@ -551,7 +529,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        println("numOfRowsinSection called")
         return self.verseLinesForTable.count
     }
     
@@ -600,11 +577,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                             pc.starFour.alpha = 0.25
                         }
                         
-//                        if self.currentPlayerVotedFor != nil && self.currentPlayerVotedFor!.row == indexPath.row{
-//                            // this is the line the current player voted for
-//                            pc.votedStar.image = UIImage(named: "star_gold_256.png")
-//                        }
-                        
                         break
                     }
                 }
@@ -639,8 +611,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        println("clicked " + String(indexPath.row))
-        
         self.selectedRow = indexPath.row
         
         if self.verseRec?.votes.count != self.verseRec?.participantCount{
@@ -652,8 +622,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 if let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell{
                     if let pc = cell as? PlayerLineTableViewCell{
                         var vlr = self.verseLinesForTable[indexPath.row]
-                        
-                        // TODO: set the player's vote at the server
                         
                         // pid is the user to vote for
                         var pid = vlr.player_id
@@ -682,8 +650,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                             // add the vote here for immediacy, the votes will be refreshed
                                             // later, but the table has to respond correctly
                                             self.verseRec?.votes[NetOpers.sharedInstance.user.id] = lid
-                                            
-                                            println("supposedly voted \(self.verseRec)")
                                             
                                             self.stillVoting = false
                                             
@@ -894,12 +860,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 if let vr = self.verseRec{
                     var uid = vr.user_ids[imageView.tag-1]
-                    println("uid \(uid)")
                     selectedPlayerRec = vr.players[uid]
-                    println("selectedPlayerRec \(selectedPlayerRec) ")
                 }
 
-                
                 let presentingViewController = PlayerDataViewController(nibName: "PlayerDataViewController", bundle:nil)
                 
                 var presentationStyle = UIModalPresentationStyle.PageSheet
