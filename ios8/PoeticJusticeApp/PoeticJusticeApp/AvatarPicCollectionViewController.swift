@@ -98,9 +98,9 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         var cell = collectionView.cellForItemAtIndexPath(indexPath)
         if self.selectedIndexPathRow == indexPath.row{
-            cell!.backgroundColor = self.selectedColour
+            cell!.backgroundColor = GameStateColors.LightBlueT
         }else{
-            cell!.backgroundColor = UIColor.whiteColor()
+            cell!.backgroundColor = UIColor.clearColor()
         }
         NetOpers.sharedInstance.user.avatarName = self.avatar.get_avatar_file_name(indexPath.row)!
     }
