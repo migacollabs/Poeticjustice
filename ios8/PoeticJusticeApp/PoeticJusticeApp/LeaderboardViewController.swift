@@ -58,6 +58,8 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         // Do any additional setup after loading the view.
         self.myTableView.dataSource = self
         self.myTableView.delegate = self
+        
+        self.myTableView.backgroundColor = UIColor.clearColor()
     }
     
     private var filterByFriends : Bool = false
@@ -216,6 +218,8 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
             }
         }
         
+        cell.contentView.backgroundColor = UIColor.clearColor()
+        cell.contentView.alpha = 0.0
         return cell
     }
     

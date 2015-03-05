@@ -65,8 +65,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="tree_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Or0-ZK-uyb" userLabel="Background Image">
-                                <rect key="frame" x="0.0" y="-1" width="599" height="703"/>
+                            <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tree_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Or0-ZK-uyb" userLabel="Background Image">
+                                <rect key="frame" x="-85" y="-84" width="769" height="768"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="unh-F7-RXC">
                                 <rect key="frame" x="0.0" y="138" width="600" height="280"/>
@@ -210,13 +210,13 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnU-ax-bsX">
-                                <rect key="frame" x="16" y="72" width="48" height="48"/>
+                                <rect key="frame" x="8" y="72" width="48" height="48"/>
                                 <state key="normal" image="Acoustic-Guitar.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kpg-2q-800">
-                                <rect key="frame" x="567" y="106" width="24" height="24"/>
+                                <rect key="frame" x="568" y="106" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="44G-UC-YoQ"/>
                                     <constraint firstAttribute="width" secondItem="Kpg-2q-800" secondAttribute="height" multiplier="1:1" id="A5k-Id-KFx"/>
@@ -224,7 +224,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t1h-qj-Edf">
-                                <rect key="frame" x="520" y="109" width="42" height="21"/>
+                                <rect key="frame" x="518" y="109" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -235,10 +235,10 @@
                             <constraint firstItem="unh-F7-RXC" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-16" id="64i-HW-l2N"/>
                             <constraint firstItem="W4j-2B-cVi" firstAttribute="top" secondItem="unh-F7-RXC" secondAttribute="bottom" constant="8" id="BGl-7P-PZ9"/>
                             <constraint firstItem="t1h-qj-Edf" firstAttribute="leading" relation="lessThanOrEqual" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="504" id="EKV-Hq-qkZ"/>
-                            <constraint firstItem="Kpg-2q-800" firstAttribute="leading" secondItem="t1h-qj-Edf" secondAttribute="trailing" constant="5" id="EeI-bO-jgJ"/>
+                            <constraint firstItem="Kpg-2q-800" firstAttribute="leading" secondItem="t1h-qj-Edf" secondAttribute="trailing" constant="8" id="EeI-bO-jgJ"/>
                             <constraint firstItem="unh-F7-RXC" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="74" id="Ejd-Hx-Wvk"/>
-                            <constraint firstItem="VnU-ax-bsX" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" id="K49-Tq-44I"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Kpg-2q-800" secondAttribute="trailing" constant="-7" id="PmZ-4V-mLt"/>
+                            <constraint firstItem="VnU-ax-bsX" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-8" id="K49-Tq-44I"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Kpg-2q-800" secondAttribute="trailing" constant="-8" id="PmZ-4V-mLt"/>
                             <constraint firstAttribute="centerY" secondItem="Or0-ZK-uyb" secondAttribute="centerY" id="UIE-m8-QVK"/>
                             <constraint firstItem="VnU-ax-bsX" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="8" id="WYW-I5-Gjc"/>
                             <constraint firstItem="Kpg-2q-800" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="42" id="axd-Cu-Vtw"/>

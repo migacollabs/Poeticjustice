@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iAd
 
 
 class VerseHistoryMasterViewController: UITableViewController {
@@ -14,6 +15,8 @@ class VerseHistoryMasterViewController: UITableViewController {
     var topics = Dictionary<Int, AnyObject>()
 
     var verses:[VerseResultScreenRec] = []
+    
+    var iAdBanner: ADBannerView?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,9 +27,19 @@ class VerseHistoryMasterViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         //self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
+        
         NetOpers.sharedInstance._load_topics(loadTopicData)
         
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/verse-history", load_verses)
+        
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        //self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-100, 0, 0)
+        if let adb = self.iAdBanner{
+            // println("adding ad banner subview ")
+            self.view.addSubview(adb)
+        }
         
     }
     
@@ -233,7 +246,8 @@ class VerseHistoryMasterViewController: UITableViewController {
                         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
                             dispatch_async(dispatch_get_main_queue(),{
                                 
-                                self.tableView.reloadData()
+                                //self.tableView.reloadData()
+                                self.animateTable()
                                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                                 
                             })
@@ -261,6 +275,31 @@ class VerseHistoryMasterViewController: UITableViewController {
     }
     
     // MARK: - Table View
+    
+
+    func animateTable() {
+        tableView.reloadData()
+        
+        let cells = tableView.visibleCells()
+        let tableHeight: CGFloat = tableView.bounds.size.height
+        
+        for i in cells {
+            let cell: UITableViewCell = i as UITableViewCell
+            cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
+        }
+        
+        var index = 0
+        
+        for a in cells {
+            let cell: UITableViewCell = a as UITableViewCell
+            UIView.animateWithDuration(1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: {
+                cell.transform = CGAffineTransformMakeTranslation(0, 0);
+                }, completion: nil)
+            
+            index += 1
+        }
+    }
+
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -296,6 +335,14 @@ class VerseHistoryMasterViewController: UITableViewController {
             
             self.presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+    
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    func hide_adbanner(){
+        self.iAdBanner?.hidden = true
     }
     
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iAd
 
 enum PoetryType: String {
     case Acrostic="Acrostic",
@@ -72,8 +73,19 @@ class PoetryTypeViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet var poetryTypePicker: UIPickerView!
     @IBOutlet var definitionLabel: UILabel!
     
+    var iAdBanner: ADBannerView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        //self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            // println("adding ad banner subview ")
+            self.view.addSubview(adb)
+        }
         
         title = "Poetry Types"
         
@@ -90,6 +102,8 @@ class PoetryTypeViewController: UIViewController, UIPickerViewDelegate, UIPicker
         
         // Do any additional setup after loading the view.
     }
+    
+
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
@@ -179,5 +193,13 @@ class PoetryTypeViewController: UIViewController, UIPickerViewDelegate, UIPicker
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    func hide_adbanner(){
+        self.iAdBanner?.hidden = true
+    }
 
 }

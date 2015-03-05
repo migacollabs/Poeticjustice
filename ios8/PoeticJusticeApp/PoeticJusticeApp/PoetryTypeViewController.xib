@@ -21,7 +21,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </imageView>
                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sfe-xq-DEk">
-                    <rect key="frame" x="0.0" y="378" width="600" height="162"/>
+                    <rect key="frame" x="0.0" y="303" width="600" height="162"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="162" id="7RD-ik-gMw"/>
                     </constraints>
@@ -33,7 +33,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Definitions borrowed from Wikipedia" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPE-2e-fxa">
-                    <rect key="frame" x="161" y="528" width="279" height="12"/>
+                    <rect key="frame" x="161" y="478" width="279" height="12"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="279" id="FB3-i4-Kcw"/>
                     </constraints>
@@ -52,11 +52,11 @@
                 <constraint firstItem="yOC-oo-Qp3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bUy-eF-SyY"/>
                 <constraint firstItem="BPE-2e-fxa" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Sfe-xq-DEk" secondAttribute="bottom" constant="31" id="cw3-R4-V3Z"/>
                 <constraint firstAttribute="trailing" secondItem="yOC-oo-Qp3" secondAttribute="trailing" id="dRI-j1-uUo"/>
-                <constraint firstAttribute="bottom" secondItem="Sfe-xq-DEk" secondAttribute="bottom" constant="60" id="dda-TB-XrX"/>
+                <constraint firstAttribute="bottom" secondItem="Sfe-xq-DEk" secondAttribute="bottom" constant="135" id="dda-TB-XrX"/>
                 <constraint firstItem="Sfe-xq-DEk" firstAttribute="centerX" secondItem="Ecf-ds-YZp" secondAttribute="centerX" id="inG-Fz-iqU"/>
                 <constraint firstItem="Sfe-xq-DEk" firstAttribute="leading" secondItem="yOC-oo-Qp3" secondAttribute="leading" id="lQv-kM-sda"/>
                 <constraint firstItem="BPE-2e-fxa" firstAttribute="centerX" secondItem="Sfe-xq-DEk" secondAttribute="centerX" id="mjU-gB-e13"/>
-                <constraint firstItem="BPE-2e-fxa" firstAttribute="bottom" secondItem="Sfe-xq-DEk" secondAttribute="bottom" id="uyi-u5-y3x"/>
+                <constraint firstItem="BPE-2e-fxa" firstAttribute="bottom" secondItem="Sfe-xq-DEk" secondAttribute="bottom" constant="25" id="uyi-u5-y3x"/>
                 <constraint firstAttribute="bottom" secondItem="yOC-oo-Qp3" secondAttribute="bottom" id="vgq-iA-7s1"/>
             </constraints>
             <variation key="default">

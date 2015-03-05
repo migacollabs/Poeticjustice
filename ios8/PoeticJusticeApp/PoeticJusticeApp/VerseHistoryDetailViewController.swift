@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import iAd
 
 
 class VerseHistoryDetailViewController: UIViewController, UITableViewDataSource,
@@ -51,6 +52,8 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     var avatar = Avatar()
     var stillVoting = false
     
+    var iAdBanner: ADBannerView?
+    
     var verseId: Int?
     var topic: Topic?
     
@@ -63,6 +66,15 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         // clear the labels
         self.currentUserName.text = ""
         self.winnerUserName.text = ""
+        
+        var screen_height = UIScreen.mainScreen().bounds.height
+        self.iAdBanner = self.appdelegate().iAdBanner
+        //self.iAdBanner?.delegate = self
+        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        if let adb = self.iAdBanner{
+            // println("adding ad banner subview ")
+            self.view.addSubview(adb)
+        }
         
         self.viewLoaded = true
         
@@ -125,7 +137,8 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                 }
                 
                 
-                self.tableView.reloadData()
+                //self.tableView.reloadData()
+                self.animateTable()
                 
  
                 // if all the votes are in
@@ -333,6 +346,30 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     
     
     // MARK: - Table View
+    
+    func animateTable() {
+        tableView.reloadData()
+        
+        let cells = tableView.visibleCells()
+        let tableHeight: CGFloat = tableView.bounds.size.height
+        
+        for i in cells {
+            let cell: UITableViewCell = i as UITableViewCell
+            cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
+        }
+        
+        var index = 0
+        
+        for a in cells {
+            let cell: UITableViewCell = a as UITableViewCell
+            UIView.animateWithDuration(1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: {
+                cell.transform = CGAffineTransformMakeTranslation(0, 0);
+                }, completion: nil)
+            
+            index += 1
+        }
+    }
+
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -588,6 +625,15 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         if let blur = self.blurFrame{
             blur.removeFromSuperview()
         }
+    }
+    
+    
+    func appdelegate () -> AppDelegate{
+        return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    func hide_adbanner(){
+        self.iAdBanner?.hidden = true
     }
     
 }
