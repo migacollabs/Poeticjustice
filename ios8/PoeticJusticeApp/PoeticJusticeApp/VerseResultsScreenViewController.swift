@@ -261,9 +261,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                 var pnts = player[3] as Int
                                 var lvl = player[4] as Int
                                 var flag = player[5] as String
+                                var numFavs = player[6] as Int
                                 
                                 vrsr.players[pid] = VerseResultScreenPlayerRec(
-                                    user_id: pid, user_name: usrnm, user_score:pnts, level:lvl, flag_icon:flag,
+                                    user_id: pid, user_name: usrnm, user_score:pnts,
+                                    num_of_favorited_lines: numFavs,
+                                    level:lvl, flag_icon:flag,
                                     avatar_name:avnStr!)
                                 
                             }

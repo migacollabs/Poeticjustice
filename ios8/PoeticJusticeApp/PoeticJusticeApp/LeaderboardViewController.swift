@@ -191,6 +191,9 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     
     
     func animateTable() {
+        
+        selectedRowImage.removeFromSuperview()
+        
         self.myTableView.reloadData()
         
         let cells = self.myTableView.visibleCells()
@@ -221,7 +224,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         return leaderboard_users.count
     }
     
-    
+    private var selectedRowImage : UIImageView = UIImageView(image: UIImage(named: "Init.png"));
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -238,8 +241,17 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                 lc.userName.text = lur.user_name
                 
                 if (lur.user_id==NetOpers.sharedInstance.user.id) {
-                    // lc.userName.font = UIFont.boldSystemFontOfSize(13.0)
-                    lc.backgroundColor = GameStateColors.LightBlueT
+                    // this is a small circle around the line number.  a bit too close to the edge
+                    // selectedRowImage.frame = CGRect(x: 1, y: 29.5, width: 24, height: 24)
+                    
+                    // this is a larger half circle around the line number that stands out a bit more and has more space all around
+                    // selectedRowImage.frame = CGRect(x: -27, y: 15.0, width: 56, height: 56)
+                    
+                    // large circle behind the avatar
+                    selectedRowImage.frame = CGRect(x: cell.frame.size.width - 60, y: 12, width: 56, height: 56)
+                 
+                    cell.addSubview(selectedRowImage);
+                    cell.sendSubviewToBack(selectedRowImage);
                 }
             }
         }

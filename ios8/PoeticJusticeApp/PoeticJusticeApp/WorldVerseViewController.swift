@@ -47,6 +47,8 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         self.playerTable.dataSource = self
         self.playerTable.delegate = self
         
+        self.playerTable.backgroundColor = UIColor.clearColor()
+        
         self.configureView()
         // Do any additional setup after loading the view.
     }
@@ -274,6 +276,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 cell.textLabel?.text = u.user_name
             }
         }
+        cell.contentView.backgroundColor = UIColor.clearColor()
         return cell
     }
     

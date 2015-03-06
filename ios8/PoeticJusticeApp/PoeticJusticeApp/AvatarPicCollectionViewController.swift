@@ -31,6 +31,8 @@ class AvatarPicCollectionViewController: UICollectionViewController, UICollectio
         
         self.collectionView?.allowsSelection = true
         self.collectionView?.allowsMultipleSelection = false
+        
+        title = "Select Your Avatar"
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -21,6 +21,8 @@ class PlayerDataViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var flagImageView: UIImageView!
     @IBOutlet weak var userNameLabel: UILabel!
     
+    @IBOutlet var numFavsLabel: UILabel!
+    
     var viewLoaded = false
     
     var parentView: PlayerDataViewDelegate?
@@ -39,6 +41,11 @@ class PlayerDataViewController: UIViewController, UIGestureRecognizerDelegate {
                 if let pl = self.pointsLabel{
                     pl.text = String(format: "x%03d", dr.user_score)
                 }
+                
+                if let nf = self.numFavsLabel{
+                    nf.text = String(format: "x%03d", dr.num_of_favorited_lines)
+                }
+                
                 if let lvi = self.levelImageView{
                     lvi.image = UIImage(named: "lvl_" + String(dr.level) + ".png")
                 }

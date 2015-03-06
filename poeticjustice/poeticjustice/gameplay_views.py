@@ -1531,14 +1531,15 @@ def get_verse_user_data(verse, session):
     sq = (session.query(U.id)
             .filter(U.id.in_(verse.user_ids))
             ).subquery()
-    rp = (session.query(U.id, U.user_name, U.user_prefs, U.user_score, U.level, U.country_code)
+    rp = (session.query(U.id, U.user_name, U.user_prefs, U.user_score, U.level, U.country_code, U.num_of_favorited_lines)
             .filter(U.id.in_(sq))
             ).all()
 
     # users [(id, email_address)]
     users = [(row[0], row[1], 
                 row[2] if row[0] else "", row[3], row[4], 
-                row[5] if row[5] else 'earth_flag') for row in rp]
+                row[5] if row[5] else 'earth_flag',
+                row[6]) for row in rp]
 
     print 'USERS DATA', users
 

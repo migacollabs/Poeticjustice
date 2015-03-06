@@ -242,7 +242,7 @@
                                     <constraint firstAttribute="height" constant="48" id="TGA-Fu-ga9"/>
                                     <constraint firstAttribute="width" secondItem="lSY-Qk-8Ee" secondAttribute="height" multiplier="1:1" id="jE3-HP-pDf"/>
                                 </constraints>
-                                <state key="normal" image="Headphones.png">
+                                <state key="normal" image="Init.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -333,7 +333,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Headphones.png" width="48" height="48"/>
+        <image name="Init.png" width="48" height="48"/>
         <image name="tree_background.jpg" width="768" height="768"/>
     </resources>
 </document>

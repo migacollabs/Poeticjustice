@@ -47,31 +47,6 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTI-ob-VOF">
-                    <rect key="frame" x="179" y="396" width="72" height="72"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="72" id="Q3o-3P-cML"/>
-                        <constraint firstAttribute="width" constant="72" id="lQi-aA-rC4"/>
-                    </constraints>
-                    <state key="normal" title="Join" backgroundImage="Init.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="onJoin:" destination="-1" eventType="touchUpInside" id="HXX-zI-1Zv"/>
-                    </connections>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZt-Bz-lq7">
-                    <rect key="frame" x="349" y="396" width="72" height="72"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="72" id="qrK-Lv-qfQ"/>
-                    </constraints>
-                    <state key="normal" title="New" backgroundImage="Init.png">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="onStart:" destination="-1" eventType="touchUpInside" id="tWt-7D-stk"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="peu-Iq-tNk">
                     <rect key="frame" x="259" y="429" width="82" height="21"/>
                     <constraints>
@@ -82,27 +57,52 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iTI-ob-VOF">
+                    <rect key="frame" x="179" y="387" width="72" height="72"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="72" id="kS6-6O-Ufu"/>
+                        <constraint firstAttribute="width" constant="72" id="ogO-cC-PXU"/>
+                    </constraints>
+                    <state key="normal" title="Join" backgroundImage="Init.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onJoin:" destination="-1" eventType="touchUpInside" id="HXX-zI-1Zv"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZt-Bz-lq7">
+                    <rect key="frame" x="349" y="387" width="72" height="72"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="72" id="zlK-xB-bVR"/>
+                    </constraints>
+                    <state key="normal" title="New" backgroundImage="Init.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="onStart:" destination="-1" eventType="touchUpInside" id="tWt-7D-stk"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="peu-Iq-tNk" firstAttribute="top" secondItem="CpR-k2-onq" secondAttribute="bottom" constant="50" id="0In-7e-r5m"/>
                 <constraint firstItem="dyA-jk-ccd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="11Y-RF-cAk"/>
-                <constraint firstItem="bZt-Bz-lq7" firstAttribute="baseline" secondItem="iTI-ob-VOF" secondAttribute="firstBaseline" id="77f-YR-Tl5"/>
-                <constraint firstItem="iTI-ob-VOF" firstAttribute="top" secondItem="CpR-k2-onq" secondAttribute="bottom" constant="17" id="DFo-xe-xwk"/>
-                <constraint firstItem="iTI-ob-VOF" firstAttribute="top" secondItem="bZt-Bz-lq7" secondAttribute="top" id="DHu-iY-Cz7"/>
-                <constraint firstItem="peu-Iq-tNk" firstAttribute="leading" secondItem="iTI-ob-VOF" secondAttribute="trailing" constant="8" symbolic="YES" id="Eqf-EE-Op1"/>
+                <constraint firstItem="iTI-ob-VOF" firstAttribute="baseline" secondItem="bZt-Bz-lq7" secondAttribute="firstBaseline" id="761-KI-lhE"/>
                 <constraint firstItem="IO3-i6-GWv" firstAttribute="leading" secondItem="dyA-jk-ccd" secondAttribute="trailing" constant="8" symbolic="YES" id="G9m-Ea-rfQ"/>
+                <constraint firstItem="bZt-Bz-lq7" firstAttribute="leading" secondItem="peu-Iq-tNk" secondAttribute="trailing" constant="8" symbolic="YES" id="Hlj-Va-86E"/>
                 <constraint firstItem="w6c-Qy-h40" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="KUT-Ni-xX5"/>
                 <constraint firstAttribute="trailing" secondItem="CpR-k2-onq" secondAttribute="trailing" id="MeY-rA-WFQ"/>
+                <constraint firstItem="iTI-ob-VOF" firstAttribute="top" secondItem="CpR-k2-onq" secondAttribute="bottom" constant="8" symbolic="YES" id="RZS-oc-6Ee"/>
+                <constraint firstItem="bZt-Bz-lq7" firstAttribute="baseline" secondItem="iTI-ob-VOF" secondAttribute="firstBaseline" id="Ut5-1e-iUK"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="top" relation="lessThanOrEqual" secondItem="IO3-i6-GWv" secondAttribute="bottom" constant="29" id="XKB-F8-Op1"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="centerX" secondItem="peu-Iq-tNk" secondAttribute="centerX" id="aSP-Ev-ZYs"/>
                 <constraint firstItem="dyA-jk-ccd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="95" id="dA9-aM-XWr"/>
-                <constraint firstItem="iTI-ob-VOF" firstAttribute="baseline" secondItem="bZt-Bz-lq7" secondAttribute="firstBaseline" id="dF9-VU-9lc"/>
-                <constraint firstItem="bZt-Bz-lq7" firstAttribute="leading" secondItem="peu-Iq-tNk" secondAttribute="trailing" constant="8" symbolic="YES" id="gUf-ps-9Zs"/>
+                <constraint firstItem="peu-Iq-tNk" firstAttribute="leading" secondItem="iTI-ob-VOF" secondAttribute="trailing" constant="8" symbolic="YES" id="h0e-hK-bia"/>
                 <constraint firstAttribute="bottom" secondItem="w6c-Qy-h40" secondAttribute="bottom" id="jH1-o8-pXs"/>
                 <constraint firstItem="IO3-i6-GWv" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="l4T-EG-OaS"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="top" secondItem="dyA-jk-ccd" secondAttribute="bottom" constant="15" id="mQD-OE-ehD"/>
                 <constraint firstItem="w6c-Qy-h40" firstAttribute="trailing" secondItem="CpR-k2-onq" secondAttribute="trailing" id="pS7-Ab-dwl"/>
+                <constraint firstItem="bZt-Bz-lq7" firstAttribute="top" secondItem="iTI-ob-VOF" secondAttribute="top" id="plW-0q-zaZ"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sT1-xD-nsn"/>
                 <constraint firstItem="w6c-Qy-h40" firstAttribute="leading" secondItem="CpR-k2-onq" secondAttribute="leading" id="vwH-gU-1JH"/>
             </constraints>

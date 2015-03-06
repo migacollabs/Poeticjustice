@@ -229,11 +229,13 @@ class VerseHistoryMasterViewController: UITableViewController {
                                     var score = player[3] as Int
                                     var level = player[4] as Int
                                     var flag = player[5] as String
+                                    var numFavs = player[6] as Int
                                     
                                     vh.players[pid] = VerseResultScreenPlayerRec(
                                                         user_id: pid,
                                                         user_name: usrnm,
                                                         user_score:score,
+                                                        num_of_favorited_lines:numFavs,
                                                         level:level,
                                                         flag_icon:flag,
                                                         avatar_name:avnStr!)
