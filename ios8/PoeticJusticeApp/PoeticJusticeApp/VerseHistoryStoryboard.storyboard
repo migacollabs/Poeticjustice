@@ -253,6 +253,9 @@
                                 <state key="normal" image="Acoustic-Guitar.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onTopicButtonClick:" destination="pd3-xg-W7Y" eventType="touchUpInside" id="g8A-Vs-XSp"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kpg-2q-800">
                                 <rect key="frame" x="568" y="106" width="24" height="24"/>
