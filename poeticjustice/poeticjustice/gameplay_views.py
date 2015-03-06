@@ -1688,7 +1688,7 @@ def close_verse_add_to_history(verse_id, user, session):
             print user_data
             # U.id, U.user_name, U.user_prefs, U.user_score, U.level
 
-            user_id, user_name, user_prefs, score, level, country_code = user_data
+            user_id, user_name, user_prefs, score, level, country_code, num_favs = user_data
 
             lines_json = json.dumps(jsonable['results']['lines'])
 
