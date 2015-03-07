@@ -16,44 +16,50 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="LtZ-RG-9n8">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <rect key="frame" x="0.0" y="0.0" width="814" height="600"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="814" id="92p-oq-SG6"/>
+                    </constraints>
+                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="0.0" y="0.0" width="814" height="800"/>
+                    </variation>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gameplay" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ev5-6N-OwT">
                     <rect key="frame" x="8" y="72" width="106" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="106" id="lfF-ge-LXT"/>
-                        <constraint firstAttribute="height" constant="21" id="o0r-QX-XVq"/>
+                        <constraint firstAttribute="width" constant="106" id="ZUQ-dz-HjO"/>
+                        <constraint firstAttribute="height" constant="21" id="sc4-qT-0Nl"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                     <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="106" width="110" height="21"/>
+                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="72" width="106" height="21"/>
                     </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Types of Poetry" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4f-bt-pRC">
-                    <rect key="frame" x="8" y="264" width="111" height="21"/>
+                    <rect key="frame" x="8" y="253" width="111" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="odZ-aH-8QR"/>
+                        <constraint firstAttribute="height" constant="21" id="VAp-Ar-3am"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                     <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="520" width="94" height="21"/>
+                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="248" width="111" height="21"/>
                     </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Earn Points" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5yS-pG-0x9">
-                    <rect key="frame" x="8" y="331" width="106" height="21"/>
+                    <rect key="frame" x="8" y="320" width="106" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="qQf-9H-kK0"/>
+                        <constraint firstAttribute="height" constant="21" id="cGa-ZQ-5xu"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                     <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="520" width="94" height="21"/>
+                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="315" width="106" height="21"/>
                     </variation>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DQZ-xT-xPq">
-                    <rect key="frame" x="8" y="293" width="281" height="30"/>
+                    <rect key="frame" x="8" y="282" width="281" height="30"/>
                     <state key="normal" title="Read about various forms of poetry here.">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -62,71 +68,90 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Topics, Verses and Lines" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1m8-bd-KJH">
-                    <rect key="frame" x="8" y="155" width="176" height="21"/>
+                    <rect key="frame" x="8" y="165" width="176" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="uvC-Fx-igW"/>
+                        <constraint firstAttribute="height" constant="21" id="nXx-wB-FgR"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="15"/>
                     <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" fixedFrame="YES">
-                        <rect key="frame" x="49" y="164" width="166" height="21"/>
+                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="155" width="176" height="21"/>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0b-AC-diX">
+                    <rect key="frame" x="8" y="101" width="592" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="7vj-uU-3t7"/>
+                    </constraints>
+                    <string key="text">Choose a topic, start a verse, and write a line!  Blue dots are for verses with friends.  Green dots are for verses with anyone.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="101" width="816" height="56"/>
+                    </variation>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="101" width="816" height="56"/>
                     </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVa-Pf-6KI">
-                    <rect key="frame" x="8" y="191" width="584" height="65"/>
+                    <rect key="frame" x="8" y="194" width="592" height="56"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="65" id="JNs-68-ZJt"/>
+                        <constraint firstAttribute="height" constant="56" id="jga-eN-aNq"/>
                     </constraints>
-                    <string key="text">Topics are used as a guideline to provide a subject for all players to write about.  Verses can be thought of as a collection of lines for a chosen Topic.  A Line can be thought of as a single line within a poem, lyric, or rap.</string>
+                    <string key="text">Topics provide a subject for all players to write about.  Verses are a collection of lines.  A Line is a single line within a poem, lyric, or rap.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="184" width="816" height="56"/>
+                    </variation>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="184" width="816" height="56"/>
+                    </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t0b-AC-diX">
-                    <rect key="frame" x="8" y="101" width="584" height="56"/>
-                    <string key="text">Choose a topic, start a verse, and start writing a line.  Others can join your verse for some turn-based goodness!  Join other open verses to earn more points and wax poetic!</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kho-qW-80u">
-                    <rect key="frame" x="8" y="360" width="584" height="65"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kho-qW-80u">
+                    <rect key="frame" x="8" y="349" width="592" height="56"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="65" id="Cqw-eb-wc9"/>
+                        <constraint firstAttribute="height" constant="56" id="Bca-hB-sbu"/>
                     </constraints>
-                    <string key="text">Every player earns a point for submitting a line.  When a verse is completed, each player can select their favorite line which gives the author of that line a very nice point boost!</string>
+                    <string key="text">Every player earns a point for each line.  When a verse is completed, each player can select their favorite line for a nice point boost!</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="344" width="816" height="56"/>
+                    </variation>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="344" width="816" height="56"/>
+                    </variation>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="kho-qW-80u" firstAttribute="trailing" secondItem="bVa-Pf-6KI" secondAttribute="trailing" id="1t6-c2-en5"/>
-                <constraint firstItem="t0b-AC-diX" firstAttribute="leading" secondItem="ev5-6N-OwT" secondAttribute="leading" id="5AN-lh-bmg"/>
-                <constraint firstItem="LtZ-RG-9n8" firstAttribute="centerX" secondItem="bVa-Pf-6KI" secondAttribute="centerX" id="6ec-xD-GX7"/>
-                <constraint firstItem="kho-qW-80u" firstAttribute="top" secondItem="5yS-pG-0x9" secondAttribute="bottom" constant="8" symbolic="YES" id="Ai3-Tq-lmh"/>
-                <constraint firstItem="DQZ-xT-xPq" firstAttribute="top" secondItem="b4f-bt-pRC" secondAttribute="bottom" constant="8" symbolic="YES" id="C9C-lm-GUZ"/>
-                <constraint firstItem="bVa-Pf-6KI" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="bottom" constant="15" id="DGO-BK-e6b"/>
-                <constraint firstItem="bVa-Pf-6KI" firstAttribute="top" secondItem="t0b-AC-diX" secondAttribute="bottom" constant="34" id="FeE-tT-0G8"/>
-                <constraint firstItem="t0b-AC-diX" firstAttribute="trailing" secondItem="bVa-Pf-6KI" secondAttribute="trailing" id="Mp6-RE-iZW"/>
-                <constraint firstItem="bVa-Pf-6KI" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="NrJ-JL-BRm"/>
-                <constraint firstItem="bVa-Pf-6KI" firstAttribute="leading" secondItem="b4f-bt-pRC" secondAttribute="leading" id="SQZ-yp-6cf"/>
-                <constraint firstItem="DQZ-xT-xPq" firstAttribute="leading" secondItem="b4f-bt-pRC" secondAttribute="leading" id="U88-en-71e"/>
-                <constraint firstItem="t0b-AC-diX" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="8" symbolic="YES" id="WYt-o7-njY"/>
-                <constraint firstItem="LtZ-RG-9n8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bAK-Yk-s2l"/>
-                <constraint firstItem="kho-qW-80u" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="dS7-mt-Y6g"/>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="trailing" secondItem="5yS-pG-0x9" secondAttribute="trailing" id="dnR-6E-VNk"/>
-                <constraint firstItem="LtZ-RG-9n8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dpW-Ew-sOW"/>
-                <constraint firstItem="ev5-6N-OwT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="fwD-bJ-Gfp"/>
-                <constraint firstItem="t0b-AC-diX" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="hZ0-eS-RGO"/>
-                <constraint firstItem="DQZ-xT-xPq" firstAttribute="leading" secondItem="5yS-pG-0x9" secondAttribute="leading" id="kI6-Pt-4fn"/>
-                <constraint firstItem="1m8-bd-KJH" firstAttribute="leading" secondItem="bVa-Pf-6KI" secondAttribute="leading" id="l6P-7I-hdb"/>
-                <constraint firstAttribute="bottom" secondItem="LtZ-RG-9n8" secondAttribute="bottom" id="lKs-hZ-ze2"/>
-                <constraint firstItem="5yS-pG-0x9" firstAttribute="top" secondItem="DQZ-xT-xPq" secondAttribute="bottom" constant="8" symbolic="YES" id="pBP-DC-AGW"/>
-                <constraint firstItem="kho-qW-80u" firstAttribute="leading" secondItem="5yS-pG-0x9" secondAttribute="leading" id="q6g-oI-XKJ"/>
-                <constraint firstItem="b4f-bt-pRC" firstAttribute="top" secondItem="bVa-Pf-6KI" secondAttribute="bottom" constant="8" symbolic="YES" id="ta7-lF-WNG"/>
-                <constraint firstItem="1m8-bd-KJH" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="62" id="tmx-Xb-igX"/>
+                <constraint firstItem="bVa-Pf-6KI" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="0ba-T9-yhR"/>
+                <constraint firstItem="ev5-6N-OwT" firstAttribute="leading" secondItem="t0b-AC-diX" secondAttribute="leading" id="581-mx-aCT"/>
+                <constraint firstItem="b4f-bt-pRC" firstAttribute="leading" secondItem="bVa-Pf-6KI" secondAttribute="leading" id="7ar-Jv-lmb"/>
+                <constraint firstItem="1m8-bd-KJH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="BXb-lX-JP6"/>
+                <constraint firstItem="LtZ-RG-9n8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="DXy-cF-7mD"/>
+                <constraint firstItem="DQZ-xT-xPq" firstAttribute="leading" secondItem="b4f-bt-pRC" secondAttribute="leading" id="Dfm-WZ-Q6h"/>
+                <constraint firstItem="kho-qW-80u" firstAttribute="leading" secondItem="5yS-pG-0x9" secondAttribute="leading" id="Fq4-OT-Caw"/>
+                <constraint firstItem="b4f-bt-pRC" firstAttribute="top" secondItem="bVa-Pf-6KI" secondAttribute="bottom" constant="3" id="HSW-3a-KSK"/>
+                <constraint firstItem="bVa-Pf-6KI" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="bottom" constant="8" symbolic="YES" id="Il9-Z5-l7y"/>
+                <constraint firstAttribute="bottom" secondItem="LtZ-RG-9n8" secondAttribute="bottom" id="L1a-Vt-If1"/>
+                <constraint firstItem="t0b-AC-diX" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="8" symbolic="YES" id="O6H-Og-5Pb"/>
+                <constraint firstItem="5yS-pG-0x9" firstAttribute="top" secondItem="DQZ-xT-xPq" secondAttribute="bottom" constant="8" symbolic="YES" id="Ufc-86-24X"/>
+                <constraint firstItem="LtZ-RG-9n8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aG3-rN-0Y9"/>
+                <constraint firstAttribute="trailing" secondItem="t0b-AC-diX" secondAttribute="trailing" id="bgd-Sv-Wbl"/>
+                <constraint firstItem="t0b-AC-diX" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="foy-EL-ou9"/>
+                <constraint firstItem="kho-qW-80u" firstAttribute="top" secondItem="5yS-pG-0x9" secondAttribute="bottom" constant="8" symbolic="YES" id="haO-GT-wTy"/>
+                <constraint firstItem="DQZ-xT-xPq" firstAttribute="top" secondItem="b4f-bt-pRC" secondAttribute="bottom" constant="8" symbolic="YES" id="ieD-HN-DtW"/>
+                <constraint firstItem="5yS-pG-0x9" firstAttribute="trailing" secondItem="ev5-6N-OwT" secondAttribute="trailing" id="qNC-9S-FKn"/>
+                <constraint firstItem="ev5-6N-OwT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="tE4-jo-A3q"/>
+                <constraint firstItem="bVa-Pf-6KI" firstAttribute="trailing" secondItem="kho-qW-80u" secondAttribute="trailing" id="v6D-f4-wGY"/>
+                <constraint firstItem="5yS-pG-0x9" firstAttribute="leading" secondItem="DQZ-xT-xPq" secondAttribute="leading" id="ycn-TH-133"/>
+                <constraint firstItem="bVa-Pf-6KI" firstAttribute="trailing" secondItem="t0b-AC-diX" secondAttribute="trailing" id="yfp-yv-n4h"/>
+                <constraint firstItem="1m8-bd-KJH" firstAttribute="top" secondItem="t0b-AC-diX" secondAttribute="bottom" constant="8" symbolic="YES" id="z69-SY-3SV"/>
             </constraints>
             <point key="canvasLocation" x="83" y="-87"/>
         </view>
