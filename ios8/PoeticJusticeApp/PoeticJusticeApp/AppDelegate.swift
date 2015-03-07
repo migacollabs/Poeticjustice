@@ -35,8 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
             iAdBanner.frame = CGRectMake(0,screen_height-98, 0, 0)
             tbc.originalContentView.addSubview(iAdBanner)
             
-            // TODO: been having issues with ads in the simulator but they show
-            // up fine on my phone, hmmm...
             iAdBanner.hidden = true;
         }
         

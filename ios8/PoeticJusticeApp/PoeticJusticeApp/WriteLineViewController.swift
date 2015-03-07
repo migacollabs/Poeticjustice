@@ -114,6 +114,8 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
         
         self.sendButton.hidden = true
         
+        self.canDisplayBannerAds = true
+        
         verseView.text = ""
         
         self.setPlaceholderText("Your turn is coming up soon!")
