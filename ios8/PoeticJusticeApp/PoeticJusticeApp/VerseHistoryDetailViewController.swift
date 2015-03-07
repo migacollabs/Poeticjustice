@@ -52,8 +52,6 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     var avatar = Avatar()
     var stillVoting = false
     
-    var iAdBanner: ADBannerView?
-    
     var verseId: Int?
     var topic: Topic?
     
@@ -68,13 +66,6 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         self.winnerUserName.text = ""
         
         var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-50, 0, 0)
-        if let adb = self.iAdBanner{
-            // println("adding ad banner subview ")
-            // self.view.addSubview(adb)
-        }
         
         self.viewLoaded = true
         
@@ -629,10 +620,6 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     
     func appdelegate () -> AppDelegate{
         return UIApplication.sharedApplication().delegate as AppDelegate
-    }
-    
-    func hide_adbanner(){
-        self.iAdBanner?.hidden = true
     }
     
 }
