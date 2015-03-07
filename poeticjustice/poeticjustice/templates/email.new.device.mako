@@ -62,6 +62,16 @@ h {
                     <tr>
                         <td width="300">
                             <h4 class="subheader">
+
+                                <br>
+
+                                <b>New device - ${device_type}</b>
+
+                                <br>
+                                <br>
+
+                                You can verify your new device and account by clicking 
+                                <a href="http://${site_hostname}/u/verify/hash=${auth_hash}/dhash=${device_auth_hash}">VERIFY</a>
                                 
                                 <br>
                                 <br>

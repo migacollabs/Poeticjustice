@@ -53,7 +53,7 @@ h {
                 <tbody>
                     <tr>
                         <td width="300">
-                            <b class="size-21">Verify your Email</b>
+                            <b class="size-21">Verify new account</b>
                         </td>
                         <td width="300">
                             
@@ -62,8 +62,14 @@ h {
                     <tr>
                         <td width="300">
                             <h4 class="subheader">
-                            You can validate this email address and have your account verified by clicking <a 
-                                href="http://${site_hostname}/u//verify/hash=${auth_hash}">VERIFY</a>
+
+                                <b>Device - ${device_type}</b>
+
+                                <br>
+                                <br>
+
+                                You can validate this email address and device by clicking 
+                                <a href="http://${site_hostname}/u/verify/hash=${auth_hash}/dhash=${device_auth_hash}">VERIFY</a>
 
                                 <br>
                                 <br>
