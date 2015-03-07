@@ -109,7 +109,7 @@ def _save_user(user, session):
     user.password = sha512("NOPASSWORD").hexdigest()
     user.is_active = True
 
-    user.save(session=session)
+    user.save(session=session, upsert=True)
 
     grp_lut = LutValues(model=Group)
     utl_lut = LutValues(model=UserTypeLookup)
@@ -221,8 +221,10 @@ def create_new_user_post(request):
 
 
 def _send_notification(user_obj, 
-        auth_hash, email_tmpl_file, 
-        subject='Poetic Justice', logo_name=None):
+        auth_hash, device_auth_hash, device_type, email_tmpl_file, 
+        subject='Iambic, Are You?', logo_name=None):
+
+    print '_send_notification called', auth_hash, device_auth_hash, device_type
 
     ac = get_app_config()
     dconfig = get_dinj_config(ac)
@@ -236,7 +238,10 @@ def _send_notification(user_obj,
         'site_id': 'mividio',
         'site_hostname': site_addr,
         'site_display_name': 'Mividio',
-        'auth_hash': auth_hash
+        'auth_hash': auth_hash,
+        'device_auth_hash': device_auth_hash,
+        'device_type': device_type
+
     }
     tmpl_vars.update(user_obj.to_dict(ignore_fields=['id', 'key']))
 
@@ -257,6 +262,8 @@ def _send_notification(user_obj,
         'subject': subject,
         'message_body': message_body},
         attached_logo=os.path.join(ASSETS_DIR, logo_name) if logo_name else None)
+
+    print 'sent email'
 
 
 @view_config(
@@ -364,6 +371,7 @@ def invite_new_user_post(request):
     context='poeticjustice:contexts.AppRoot',
     renderer='login.mako')
 def login_get(request):
+    print 'login get called'
     args = list(request.subpath)
     kwds = _process_subpath(args)
     return {
@@ -395,8 +403,31 @@ def login_post(request):
         ac = get_app_config()
         dconfig = get_dinj_config(ac)
 
+
+        def do_notification(user, auth_hash, device_auth_hash, device_type, notification_type='user', retry=0):
+            try:
+                tmpl = "email.verification.mako" if notification_type == 'user' else 'email.new.device.mako'
+                if retry < 1:
+                    _send_notification(
+                        user, 
+                        auth_hash, 
+                        device_auth_hash,
+                        device_type,
+                        tmpl, 
+                        subject='Iambic, Are You? - Verify!',
+                        logo_name="Conversation.png")
+                    return True
+                else:
+                    return False
+            except:
+                time.sleep(1)
+                do_notification(user, auth_hash, device_auth_hash, device_type, retry+1)
+
+
         device_token = request.params['device_token'] if 'device_token' in request.params else None
         device_type = request.params['device_type'] if 'device_type' in request.params else None
+        device_auth_hash = sha512(device_token + default_hashkey).hexdigest()
+
 
         user_country = "earth_flag"
         try:
@@ -407,10 +438,10 @@ def login_post(request):
         except:
             pass
 
-        print 'USER_COUNTRY', user_country
 
         if not device_token and device_type != "DEVICETYPEBROWSER":
             raise HTTPForbidden
+
 
         if 'form.submitted' in request.params:
             login = request.params['login']
@@ -429,28 +460,23 @@ def login_post(request):
                         # update to the latest user
                         user = User(entity=user_obj)
 
+                        ### FIRST CHECK
                         if user.access_token == None:
+
+                            #only invite them once
                             if not user.is_invited:
+
                                 user.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
 
-                                try:
-                                    _send_notification(user, user.auth_hash, 
-                                        "email.verification.mako", 
-                                        subject='Poetic Justice - Verify your email!',
-                                        logo_name="Conversation.png")
-                                except:
-                                    print traceback.format_exc()
-                                    time.sleep(1)
-                                    print 'Trying to send email again'
-                                    _send_notification(user, user.auth_hash, 
-                                        "email.verification.mako", 
-                                        subject='Poetic Justice - Verify your email!',
-                                        logo_name="Conversation.png")
+                                if do_notification(user, user.auth_hash, device_auth_hash, device_type):
 
+                                    user.device_rec = json.dumps({'device_token':None})
+                                    user.is_invited = True
+                                    user.save(session=session)
 
-                                user.is_invited = True
-                                user.save(session=session)
-                                
+                                else:
+                                    raise HTTPConflict
+
                             return dict(
                                 status='Ok',
                                 verification_req=True,
@@ -458,107 +484,99 @@ def login_post(request):
                                 logged_in=None
                                 )
 
+
+                        ### SECOND CHECK
+                        # else, there is a access_token
+                        # refresh 
                         user.user_name = request.params['user_name']
 
                         device_rec = json.loads(user.device_rec) if user.device_rec else {}
 
-                        if device_token and (len(device_rec) > 0 and device_token not in device_rec):
+                        if device_token and (device_token not in device_rec or device_rec[device_token] != True):
 
-                            # send email if more than one device ?
+                            # new device, unauthorised device, or unverified device
 
-                            device_rec[device_token] = True
+                            # is the device been unauthorised?
+                            if device_token in device_rec and device_rec[device_token] == False:
+                                raise HTTPUnauthorized
 
                             # new device
-                            auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
-                            user.auth_hash = auth_hash
-                            try:
-                                _send_notification(user, auth_hash, 
-                                    "email.new.device.mako", 
-                                    subject='Poetic Justice - Verify new device!',
-                                    logo_name="Conversation.png")
-                            except:
-                                print traceback.format_exc()
-                                time.sleep(1)
-                                print 'Trying to send email again'
-                                _send_notification(user, user.auth_hash, 
-                                    "email.verification.mako", 
-                                    subject='Poetic Justice - Verify new device!',
-                                    logo_name="Conversation.png")
+                            user.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
+
+                            if do_notification(user, user.auth_hash, device_auth_hash, device_type, notification_type="device"):
+                                # new device, set state to None for unknown
+                                device_rec[device_token] = None
+                                user.device_rec = json.dumps(device_rec)
+                                user.save(session=session)
+
+                                return dict(
+                                    status='Ok',
+                                    verification_req=True,
+                                    user=user.to_dict(),
+                                    logged_in=None
+                                    )
+                            else:
+                                raise HTTPConflict
 
 
-                            user.device_rec = json.dumps(device_rec)
+                        elif device_token in device_rec and device_rec[device_token] == True:
 
-                        elif device_token not in device_rec:
-                            device_rec[device_token] = True
-                            user.device_rec = json.dumps(device_rec)
+                            user.save(session=session)
 
+                            headers = remember(request, login)
+                            request.response.headerlist.extend(headers)
 
-                        user.save(session=session)
-
-                        headers = remember(request, login)
-                        request.response.headerlist.extend(headers)
-
-                        return dict(
-                            status='Ok',
-                            verification_req=False,
-                            user=User(entity=user_obj).to_dict(),
-                            logged_in=authenticated_userid(request)
-                            )
+                            return dict(
+                                status='Ok',
+                                verification_req=False,
+                                user=user.to_dict(),
+                                logged_in=authenticated_userid(request)
+                                )
+                        else:
+                            raise HTTPUnauthorized
 
                 else:
+
                     user_obj = session.query(~User).filter((~User).email_address==login).first()
+                    if user_obj:
+                        user_obj = User(entity=user_obj)
 
-                    if user_obj is None:
-                        user_obj = User(
-                            email_address=login,
-                            password=sha512("NOPASSWORD").hexdigest(),
-                            user_name=request.params['user_name'] if 'user_name' in request.params else None,
-                            country_code=user_country)
+                    if user_obj is None or user_obj.device_rec == None:
 
-                        user_obj.save(session=session)
+                        if not user_obj:
+                            user_obj = User(
+                                email_address=login,
+                                password=sha512("NOPASSWORD").hexdigest(),
+                                user_name=request.params['user_name'] if 'user_name' in request.params else None,
+                                country_code=user_country)
 
-                        device_rec_json = json.dumps(user_obj.device_rec) if user_obj.device_rec else None
+                        
+                        device_rec_json = json.dumps(user_obj.device_rec) if user_obj.device_rec else {}
+                        device_rec_json[device_token] = None
+                        user_obj.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
+                        user_obj.device_rec = json.dumps(device_rec_json)
 
-                        print device_rec_json
-                        print user_obj.country_code
-
-                        auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
-
-                        user_obj.auth_hash = auth_hash
+                        user_obj.save(session=session, upsert=True)
 
 
-                        # send email
-                        email_tmpl = os.path.join(
-                            dconfig.Web.TemplateDir, 'email.verification.mako')
-
-                        site_addr = get_site_addr()
-
-                        tmpl_vars = {
-                            'site_id': 'mividio',
-                            'site_hostname': site_addr,
-                            'site_display_name': 'Mividio',
-                            'auth_hash': auth_hash
-                        }
-                        tmpl_vars.update(user_obj.to_dict(ignore_fields=['id', 'key']))
-
-                        message_body = Template(filename=email_tmpl).render(**tmpl_vars)
-
-                        # email the new user
-                        smtp_psswd = os.environ['POETIC_JUSTICE_SMTP_PASSWORD']
-                        smtp_user = os.environ['POETIC_JUSTICE_SMTP_USER']
-                        smtp_server = os.environ['POETIC_JUSTICE_SMTP_SERVER']
-
-                        emailer = Emailer(
-                            smtp_user, 
-                            smtp_psswd, 
-                            smtp_server) \
-                        .send_html_email({
-                            'to': user_obj.email_address,
-                            'from': smtp_user,
-                            'subject': 'Poetic Justice - Verify your email!',
-                            'message_body': message_body},
-                            attached_logo=os.path.join(ASSETS_DIR, "Conversation.png"))
-
+                        try:
+                            _send_notification(user_obj, 
+                                user_obj.auth_hash, 
+                                device_auth_hash,
+                                device_type,
+                                "email.verification.mako", 
+                                subject='Iambic, Are You? - Verify your email!',
+                                logo_name="Conversation.png")
+                        except:
+                            print traceback.format_exc()
+                            time.sleep(1)
+                            _send_notification(user_obj, 
+                                user_obj.auth_hash, 
+                                device_auth_hash,
+                                device_type,
+                                "email.verification.mako", 
+                                subject='Iambic, Are You? - Verify your email!',
+                                logo_name="Conversation.png")
 
                         # save new user
                         user_obj = _save_user(user_obj, session)
@@ -595,6 +613,56 @@ def login_post(request):
             pass
 
 
+# @view_config(
+#     name='verify',
+#     request_method='GET',
+#     context='poeticjustice:contexts.Users',
+#     renderer='user.verified.mako')
+# def verify_new_user(request):
+#     try:
+#         args = list(request.subpath)
+#         kwds = _process_subpath(args)
+#         with SQLAlchemySessionFactory() as session:
+#             U = ~User
+#             user = session.query(U).filter((U).auth_hash == kwds['hash']).first()
+#             if user:
+#                 h = sha512(user.email_address + default_hashkey).hexdigest()
+#                 if h == kwds['hash']:
+
+#                     user.access_token = sha512(
+#                         str(user.id) + str(user.initial_entry_date) + default_hashkey).hexdigest()
+
+#                     session.add(user)
+#                     session.commit()
+#                     user = User(entity=user)
+
+#                     print 'VERIFIED NEW USER'
+                    
+#                 else:
+#                     raise HTTPForbidden()
+#             else:
+#                 raise HTTPUnauthorized()
+
+#             return {
+#                 'verified': True,
+#                 'email_address': user.email_address,
+#                 'logged_in': authenticated_userid(request),
+#                 'user': user
+#             }
+
+#     except HTTPGone: raise
+#     except HTTPFound: raise
+#     except HTTPUnauthorized: raise
+#     except:
+#         log.exception(traceback.format_exc())
+#         raise HTTPBadRequest(explanation='Invalid query parameters')
+#     finally:
+#         try:
+#             session.close()
+#         except:
+#             pass
+
+
 @view_config(
     name='verify',
     request_method='GET',
@@ -602,6 +670,7 @@ def login_post(request):
     renderer='user.verified.mako')
 def verify_new_user(request):
     try:
+        print 'verify_new_user called', request
         args = list(request.subpath)
         kwds = _process_subpath(args)
         with SQLAlchemySessionFactory() as session:
@@ -610,6 +679,19 @@ def verify_new_user(request):
             if user:
                 h = sha512(user.email_address + default_hashkey).hexdigest()
                 if h == kwds['hash']:
+                    print 'h hash matches'
+                    matching_device = None
+                    device_rec = json.loads(user.device_rec) if user.device_rec else {}
+                    print 'device_rec', device_rec
+                    for d,s in device_rec.items():
+                        if sha512(d + default_hashkey).hexdigest() == kwds['dhash']:
+                            # found matching device token
+                            print 'found matching device'
+                            matching_device = d
+                            break
+                    if matching_device:
+                        device_rec[matching_device] = True
+                        user.device_rec = json.dumps(device_rec)
 
                     user.access_token = sha512(
                         str(user.id) + str(user.initial_entry_date) + default_hashkey).hexdigest()
