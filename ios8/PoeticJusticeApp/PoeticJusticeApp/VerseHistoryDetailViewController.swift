@@ -73,7 +73,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         self.iAdBanner?.frame = CGRectMake(0,screen_height-50, 0, 0)
         if let adb = self.iAdBanner{
             // println("adding ad banner subview ")
-            self.view.addSubview(adb)
+            // self.view.addSubview(adb)
         }
         
         self.viewLoaded = true

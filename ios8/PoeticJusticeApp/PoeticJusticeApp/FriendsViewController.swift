@@ -98,7 +98,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var friends : [FriendRec] = []
     var lastTabbed : NSDate?
-    var iAdBanner: ADBannerView?
+    // var iAdBanner: ADBannerView?
     
     @IBOutlet var addButton: UIButton!
     @IBOutlet var removeButton: UIButton!
@@ -129,13 +129,13 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewWillAppear(animated : Bool) {
         
         // set up adbanner
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
-        if let adb = self.iAdBanner{
-            self.view.addSubview(adb)
-        }
+//        var screen_height = UIScreen.mainScreen().bounds.height
+//        self.iAdBanner = self.appdelegate().iAdBanner
+//        //self.iAdBanner?.delegate = self
+//        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+//        if let adb = self.iAdBanner{
+//            // self.view.addSubview(adb)
+//        }
         
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             

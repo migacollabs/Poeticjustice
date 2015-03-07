@@ -73,19 +73,19 @@ class PoetryTypeViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet var poetryTypePicker: UIPickerView!
     @IBOutlet var definitionLabel: UILabel!
     
-    var iAdBanner: ADBannerView?
+    // var iAdBanner: ADBannerView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
-        if let adb = self.iAdBanner{
-            // println("adding ad banner subview ")
-            self.view.addSubview(adb)
-        }
+//        var screen_height = UIScreen.mainScreen().bounds.height
+//        self.iAdBanner = self.appdelegate().iAdBanner
+//        //self.iAdBanner?.delegate = self
+//        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+//        if let adb = self.iAdBanner{
+//            // println("adding ad banner subview ")
+//            // self.view.addSubview(adb)
+//        }
         
         title = "Poetry Types"
         
@@ -198,8 +198,8 @@ class PoetryTypeViewController: UIViewController, UIPickerViewDelegate, UIPicker
         return UIApplication.sharedApplication().delegate as AppDelegate
     }
     
-    func hide_adbanner(){
-        self.iAdBanner?.hidden = true
-    }
+//    func hide_adbanner(){
+//        self.iAdBanner?.hidden = true
+//    }
 
 }

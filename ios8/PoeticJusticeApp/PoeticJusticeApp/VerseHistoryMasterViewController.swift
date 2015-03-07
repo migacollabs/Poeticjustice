@@ -16,7 +16,7 @@ class VerseHistoryMasterViewController: UITableViewController {
 
     var verses:[VerseResultScreenRec] = []
     
-    var iAdBanner: ADBannerView?
+    // var iAdBanner: ADBannerView?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,14 +32,14 @@ class VerseHistoryMasterViewController: UITableViewController {
         
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/verse-history", load_verses)
         
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-50, 0, 0)
-        if let adb = self.iAdBanner{
-            // println("adding ad banner subview ")
-            self.view.addSubview(adb)
-        }
+//        var screen_height = UIScreen.mainScreen().bounds.height
+//        self.iAdBanner = self.appdelegate().iAdBanner
+//        //self.iAdBanner?.delegate = self
+//        self.iAdBanner?.frame = CGRectMake(0,screen_height-50, 0, 0)
+//        if let adb = self.iAdBanner{
+//            // println("adding ad banner subview ")
+//            // self.view.addSubview(adb)
+//        }
         
     }
     
@@ -345,9 +345,9 @@ class VerseHistoryMasterViewController: UITableViewController {
         return UIApplication.sharedApplication().delegate as AppDelegate
     }
     
-    func hide_adbanner(){
-        self.iAdBanner?.hidden = true
-    }
+//    func hide_adbanner(){
+//        self.iAdBanner?.hidden = true
+//    }
     
 }
 

@@ -208,13 +208,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
         println("bannerViewWillLoadAd called")
     }
     
+    private var adBannerCreated : Bool = false;
+    
     func bannerViewDidLoadAd(banner: ADBannerView!) {
-        println("bannerViewDidLoadAd called")
         //UIView.beginAnimations(nil, context:nil)
         //UIView.setAnimationDuration(1)
         //self.iAdBanner?.alpha = 1
-        self.iAdBanner.hidden = false
+       
         //UIView.commitAnimations()
+        
+        if (!adBannerCreated) {
+            // add this once for the app if we're able to
+            // this may affect views and push things up
+            println("bannerViewDidLoadAd called, attaching banner to parent view")
+            adBannerCreated = true
+            var screen_height = UIScreen.mainScreen().bounds.height
+            iAdBanner.frame = CGRectMake(0,screen_height-98, 0, 0)
+            tabBarController?.navigationController?.parentViewController?.originalContentView.addSubview(iAdBanner)
+        } else {
+            println("bannerViewDidLoadAd called")
+        }
+        
+        self.iAdBanner.hidden = false
         
     }
     
@@ -223,11 +238,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
+        println("bannerView should begin? \(!self.isPaused)")
         return !self.isPaused
     }
     
     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        println("bannerView didFailToReceiveAdWithError called")
+        /*
+        ADErrorUnknown = 0,
+        ADErrorServerFailure = 1,
+        ADErrorLoadingThrottled = 2,
+        ADErrorInventoryUnavailable = 3,
+        ADErrorConfigurationError = 4,
+        ADErrorBannerVisibleWithoutContent = 5,
+        ADErrorApplicationInactive = 6
+        */
+        println("bannerView didFailToReceiveAdWithError called: \(error)")
         self.iAdBanner.hidden = true
         println("bannerView didFailToReceiveAdWithError set banner to hidden")
 

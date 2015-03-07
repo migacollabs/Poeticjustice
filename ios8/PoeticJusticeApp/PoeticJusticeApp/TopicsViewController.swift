@@ -286,7 +286,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     @IBOutlet weak var topicButton: TopicButton!
     @IBOutlet var topicScrollView: UIScrollView!
     
-    var iAdBanner: ADBannerView?
+    // var iAdBanner: ADBannerView?
     var topics = Dictionary<Int, AnyObject>()
     var topic_order:[Int] = []
     var activeTopics : Dictionary<Int, ActiveTopic> = Dictionary<Int, ActiveTopic>() // key = topic_id
@@ -342,8 +342,8 @@ class TopicsViewController: UIViewController, UserDelegate {
         
         updateAvatar(size);
         
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+        // var screen_height = UIScreen.mainScreen().bounds.height
+        // self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
         
     }
     
@@ -449,15 +449,15 @@ class TopicsViewController: UIViewController, UserDelegate {
             // do this here to handle the leveling up as well as init
             self.fetchTopics()
         }
-        
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
-        if let adb = self.iAdBanner{
-            // println("adding ad banner subview ")
-            self.view.addSubview(adb)
-        }
+//        
+//        var screen_height = UIScreen.mainScreen().bounds.height
+//        self.iAdBanner = self.appdelegate().iAdBanner
+//        //self.iAdBanner?.delegate = self
+//        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+//        if let adb = self.iAdBanner{
+//            // println("adding ad banner subview ")
+//            // self.view.addSubview(adb)
+//        }
         
         // click on the tab, so refresh
         if (NetOpers.sharedInstance.user.is_logged_in()) {
@@ -1083,9 +1083,9 @@ class TopicsViewController: UIViewController, UserDelegate {
         return UIApplication.sharedApplication().delegate as AppDelegate
     }
     
-    func hide_adbanner(){
-        self.iAdBanner?.hidden = true
-    }
+//    func hide_adbanner(){
+//        // self.iAdBanner?.hidden = true
+//    }
     
     /*
     // MARK: - Navigation

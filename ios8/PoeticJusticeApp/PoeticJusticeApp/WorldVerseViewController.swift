@@ -22,7 +22,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     var topic : Topic?
     var user_ids:[Int] = []
     var players: [User] = []
-    var iAdBanner: ADBannerView?
+    // var iAdBanner: ADBannerView?
     
     var activeTopic:ActiveTopicRec? {
         // TODO: not necessary?
@@ -55,15 +55,15 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     
     override func viewWillAppear(animated: Bool) {
         
-        println("TopicsViewController.viewWillAppear called")
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
-        if let adb = self.iAdBanner{
-            println("adding ad banner subview ")
-            self.view.addSubview(adb)
-        }
+//        println("TopicsViewController.viewWillAppear called")
+//        var screen_height = UIScreen.mainScreen().bounds.height
+//        self.iAdBanner = self.appdelegate().iAdBanner
+//        //self.iAdBanner?.delegate = self
+//        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+//        if let adb = self.iAdBanner{
+//            // println("adding ad banner subview ")
+//            // self.view.addSubview(adb)
+//        }
         
         is_busy = false
         

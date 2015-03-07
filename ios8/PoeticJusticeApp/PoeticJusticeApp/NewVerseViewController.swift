@@ -25,7 +25,7 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
     
     let tapRec = UITapGestureRecognizer()
     
-    var iAdBanner: ADBannerView?
+    // var iAdBanner: ADBannerView?
     
     var topic: Topic?{
         didSet{
@@ -66,14 +66,14 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(animated: Bool) {
         
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
-        if let adb = self.iAdBanner{
-            println("adding ad banner subview ")
-            self.view.addSubview(adb)
-        }
+//        var screen_height = UIScreen.mainScreen().bounds.height
+//        self.iAdBanner = self.appdelegate().iAdBanner
+//        //self.iAdBanner?.delegate = self
+//        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+//        if let adb = self.iAdBanner{
+//            // println("adding ad banner subview ")
+//            // self.view.addSubview(adb)
+//        }
         
         isBusy = false
     }

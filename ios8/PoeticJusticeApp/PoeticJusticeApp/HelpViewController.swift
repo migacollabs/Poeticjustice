@@ -12,7 +12,7 @@ import AVFoundation
 
 class HelpViewController: UIViewController {
     
-    var iAdBanner: ADBannerView?
+    // var iAdBanner: ADBannerView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,13 +28,13 @@ class HelpViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
-        if let adb = self.iAdBanner{
-            self.view.addSubview(adb)
-        }
+//        var screen_height = UIScreen.mainScreen().bounds.height
+//        self.iAdBanner = self.appdelegate().iAdBanner
+//        //self.iAdBanner?.delegate = self
+//        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+//        if let adb = self.iAdBanner{
+//            // self.view.addSubview(adb)
+//        }
     }
     
     override func viewWillDisappear(animated: Bool){

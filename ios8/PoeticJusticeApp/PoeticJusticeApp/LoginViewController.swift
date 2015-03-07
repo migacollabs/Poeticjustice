@@ -30,20 +30,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     let tapRec = UITapGestureRecognizer()
     
-    var iAdBanner: ADBannerView?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         var screen_height = UIScreen.mainScreen().bounds.height
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
-        if let adb = self.iAdBanner{
-            // println("adding ad banner subview ")
-            self.view.addSubview(adb)
-        }
         
         self.userLabel.text = "Sign In"
         
@@ -396,9 +387,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return UIApplication.sharedApplication().delegate as AppDelegate
     }
     
-    func hide_adbanner(){
-        self.iAdBanner?.hidden = true
-    }
     
 }
 

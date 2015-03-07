@@ -44,7 +44,7 @@ struct VerseWriteLineScreenRec{
 
 
 class NewWriteLineViewController:
-    UIViewController, ADBannerViewDelegate, UITextFieldDelegate, UITableViewDelegate{
+    UIViewController, UITextFieldDelegate, UITableViewDelegate{
     
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var topicButton: UIButton!
@@ -71,7 +71,7 @@ class NewWriteLineViewController:
         }
     }
     
-    var iAdBanner: ADBannerView?
+    // var iAdBanner: ADBannerView?
     var audioPlayer : AVAudioPlayer?
     // for now, this is just to help clean up nav once this view is reached
     var newVerseViewController : NewVerseViewController?
@@ -129,17 +129,17 @@ class NewWriteLineViewController:
     
     override func viewWillAppear(animated: Bool) {
         
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.canDisplayBannerAds = true
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
-        if let adb = self.iAdBanner{
-            println("adding ad banner subview ")
-            self.view.addSubview(adb)
-        }else{
-            println("WriteLineViewController iAdBanner is nil")
-        }
+//        var screen_height = UIScreen.mainScreen().bounds.height
+//        self.canDisplayBannerAds = true
+//        self.iAdBanner = self.appdelegate().iAdBanner
+//        //self.iAdBanner?.delegate = self
+//        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+//        if let adb = self.iAdBanner{
+//            // println("adding ad banner subview ")
+//            // self.view.addSubview(adb)
+//        }else{
+//            println("WriteLineViewController iAdBanner is nil")
+//        }
         
         updateNavigationTitle()
         
@@ -183,7 +183,7 @@ class NewWriteLineViewController:
     
     override func viewWillDisappear(animated: Bool){
         //        self.iAdBanner?.delegate = nil
-        self.iAdBanner?.removeFromSuperview()
+        // self.iAdBanner?.removeFromSuperview()
     }
     
     
@@ -463,43 +463,43 @@ class NewWriteLineViewController:
     func appdelegate () -> AppDelegate{
         return UIApplication.sharedApplication().delegate as AppDelegate
     }
-    
-    
-    func bannerViewWillLoadAd(banner: ADBannerView!) {
-        println("bannerViewWillLoadAd called")
-    }
-    
-    
-    func bannerViewDidLoadAd(banner: ADBannerView!) {
-        println("bannerViewDidLoadAd called")
-        //UIView.beginAnimations(nil, context:nil)
-        //UIView.setAnimationDuration(1)
-        //self.iAdBanner?.alpha = 1
-        self.iAdBanner?.hidden = false
-        //UIView.commitAnimations()
-        
-    }
-    
-    
-    func bannerViewActionDidFinish(banner: ADBannerView!) {
-        println("bannerViewACtionDidFinish called")
-    }
-    
-    
-    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
-        return true
-    }
-    
-    
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        println("bannerView didFailToReceiveAdWithError called")
-        self.iAdBanner?.hidden = true
-    }
-    
-    
-    func hide_adbanner(){
-        self.iAdBanner?.hidden = true
-    }
+//    
+//    
+//    func bannerViewWillLoadAd(banner: ADBannerView!) {
+//        println("bannerViewWillLoadAd called")
+//    }
+//    
+//    
+//    func bannerViewDidLoadAd(banner: ADBannerView!) {
+//        println("bannerViewDidLoadAd called")
+//        //UIView.beginAnimations(nil, context:nil)
+//        //UIView.setAnimationDuration(1)
+//        //self.iAdBanner?.alpha = 1
+//        self.iAdBanner?.hidden = false
+//        //UIView.commitAnimations()
+//        
+//    }
+//    
+//    
+//    func bannerViewActionDidFinish(banner: ADBannerView!) {
+//        println("bannerViewACtionDidFinish called")
+//    }
+//    
+//    
+//    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
+//        return true
+//    }
+//    
+//    
+//    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+//        println("bannerView didFailToReceiveAdWithError called")
+//        self.iAdBanner?.hidden = true
+//    }
+//    
+//    
+//    func hide_adbanner(){
+//        self.iAdBanner?.hidden = true
+//    }
     
     func leaveVerse() {
         var params = Dictionary<String,AnyObject>()

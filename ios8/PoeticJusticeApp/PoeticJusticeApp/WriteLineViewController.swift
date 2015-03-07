@@ -67,7 +67,7 @@ struct VerseRec {
     }
 }
 
-class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextViewDelegate {
+class WriteLineViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var topicLabel: UILabel!
     @IBOutlet weak var topicButton: UIButton!
@@ -84,7 +84,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
     
     
     @IBOutlet var cancelButton: UIButton!
-    var iAdBanner: ADBannerView?
+    // var iAdBanner: ADBannerView?
     
     @IBOutlet var verseView: UILabel!
     
@@ -181,17 +181,18 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
         
         self.view.addSubview(textViewBlock)
         
-        var screen_height = UIScreen.mainScreen().bounds.height
-        self.canDisplayBannerAds = true
-        self.iAdBanner = self.appdelegate().iAdBanner
-        //self.iAdBanner?.delegate = self
-        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
-        if let adb = self.iAdBanner{
-            // println("adding ad banner subview ")
-            self.view.addSubview(adb)
-        }else{
-            // println("WriteLineViewController iAdBanner is nil")
-        }
+//        var screen_height = UIScreen.mainScreen().bounds.height
+//        self.canDisplayBannerAds = true
+//        self.iAdBanner = self.appdelegate().iAdBanner
+//        //self.iAdBanner?.delegate = self
+//        self.iAdBanner?.frame = CGRectMake(0,screen_height-98, 0, 0)
+//        if let adb = self.iAdBanner{
+//            // println("adding ad banner subview ")
+//            // self.view.addSubview(adb)
+//            
+//        }else{
+//            // println("WriteLineViewController iAdBanner is nil")
+//        }
         
         updateNavigationTitle()
         
@@ -270,7 +271,7 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
     
     override func viewWillDisappear(animated: Bool){
 //        self.iAdBanner?.delegate = nil
-        self.iAdBanner?.removeFromSuperview()
+        // self.iAdBanner?.removeFromSuperview()
     }
     
     
@@ -389,15 +390,24 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
                                 // stuff below messes with the label properties
                                 var fontSizeMap : Dictionary<Int, CGFloat> = Dictionary<Int, CGFloat>()
                                 fontSizeMap[0]=14
-                                fontSizeMap[1]=14
-                                fontSizeMap[2]=14
-                                fontSizeMap[3]=13
-                                fontSizeMap[4]=13
-                                fontSizeMap[5]=12
-                                fontSizeMap[6]=12
+                                fontSizeMap[1]=15
+                                fontSizeMap[2]=15
+                                fontSizeMap[3]=15
                                 
-                                // TODO: probably should map font by device height too along with the label?
-                                    
+                                let screenSize: CGRect = UIScreen.mainScreen().bounds
+                                
+                                println("Screen height: \(screenSize.height)")
+                                
+                                if (screenSize.height>600) { // 568 iphone 5s, 667 iphone6
+                                    fontSizeMap[4]=15
+                                    fontSizeMap[5]=15
+                                    fontSizeMap[6]=15
+                                } else {
+                                    fontSizeMap[4]=13
+                                    fontSizeMap[5]=12
+                                    fontSizeMap[6]=12
+                                }
+                                
                                 let fontSize : CGFloat = fontSizeMap[self.verse.user_ids.count]!
                                 
                                 let font : UIFont = UIFont(name: "Helvetica Neue", size: fontSize)!
@@ -633,36 +643,36 @@ class WriteLineViewController: UIViewController, ADBannerViewDelegate, UITextVie
         return UIApplication.sharedApplication().delegate as AppDelegate
     }
     
-    func bannerViewWillLoadAd(banner: ADBannerView!) {
-        // println("bannerViewWillLoadAd called")
-    }
+//    func bannerViewWillLoadAd(banner: ADBannerView!) {
+//        // println("bannerViewWillLoadAd called")
+//    }
     
-    func bannerViewDidLoadAd(banner: ADBannerView!) {
-        // println("bannerViewDidLoadAd called")
-        //UIView.beginAnimations(nil, context:nil)
-        //UIView.setAnimationDuration(1)
-        //self.iAdBanner?.alpha = 1
-        self.iAdBanner?.hidden = false
-        //UIView.commitAnimations()
-        
-    }
+//    func bannerViewDidLoadAd(banner: ADBannerView!) {
+//        // println("bannerViewDidLoadAd called")
+//        //UIView.beginAnimations(nil, context:nil)
+//        //UIView.setAnimationDuration(1)
+//        //self.iAdBanner?.alpha = 1
+//        // self.iAdBanner?.hidden = false
+//        //UIView.commitAnimations()
+//        
+//    }
     
-    func bannerViewActionDidFinish(banner: ADBannerView!) {
-        // println("bannerViewACtionDidFinish called")
-    }
+//    func bannerViewActionDidFinish(banner: ADBannerView!) {
+//        // println("bannerViewACtionDidFinish called")
+//    }
     
-    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
-        return true
-    }
+//    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
+//        return true
+//    }
     
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        // println("bannerView didFailToReceiveAdWithError called")
-        self.iAdBanner?.hidden = true
-    }
-    
-    func hide_adbanner(){
-        self.iAdBanner?.hidden = true
-    }
+//    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+//        // println("bannerView didFailToReceiveAdWithError called")
+//        self.iAdBanner?.hidden = true
+//    }
+//    
+//    func hide_adbanner(){
+//        self.iAdBanner?.hidden = true
+//    }
     
     func updateCancelButton() {
         if (self.verse.is_loaded()) {
