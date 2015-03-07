@@ -193,7 +193,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Friends"
+        return ""
     }
     
     func loadFriends(data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -338,7 +338,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         dqd.backgroundColor = UIColor.clearColor()
         
         var customView = UIView()
-        customView.backgroundColor = GameStateColors.LightBlueT
+        // customView.backgroundColor = GameStateColors.LightBlueT
+        customView.backgroundColor = UIColor.clearColor()
         dqd.selectedBackgroundView = customView
         
         return dqd
