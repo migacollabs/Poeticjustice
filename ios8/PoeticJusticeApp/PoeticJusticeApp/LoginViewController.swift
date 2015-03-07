@@ -34,8 +34,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        var screen_height = UIScreen.mainScreen().bounds.height
-        
         self.userLabel.text = "Sign In"
         
         tapRec.addTarget(self, action: "tappedView")
@@ -386,7 +384,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func appdelegate () -> AppDelegate{
         return UIApplication.sharedApplication().delegate as AppDelegate
     }
-    
     
 }
 

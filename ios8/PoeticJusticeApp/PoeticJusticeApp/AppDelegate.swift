@@ -16,7 +16,7 @@ import AVFoundation
 class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
 
     var window: UIWindow?
-    var iAdBanner: ADBannerView = ADBannerView()
+    var iAdBanner: ADBannerView = ADBannerView(adType: ADAdType.Banner)
     var timer : NSTimer?
     var tabBarController : UITabBarController?
     
@@ -28,6 +28,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
         tabBarController = application.windows[0].rootViewController as? UITabBarController
         
         self.iAdBanner.delegate = self
+        
+        if let tbc : UITabBarController = tabBarController {
+            println("** bannerView adding iAdBanner to originalContentView")
+            var screen_height = UIScreen.mainScreen().bounds.height
+            iAdBanner.frame = CGRectMake(0,screen_height-98, 0, 0)
+            tbc.originalContentView.addSubview(iAdBanner)
+            
+            // TODO: been having issues with ads in the simulator but they show
+            // up fine on my phone, hmmm...
+            iAdBanner.hidden = true;
+        }
         
         return true
     }
@@ -205,10 +216,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
     // MARK: - Ad Banner
     
     func bannerViewWillLoadAd(banner: ADBannerView!) {
-        println("bannerViewWillLoadAd called")
+        println("** bannerView bannerViewWillLoadAd called")
     }
-    
-    private var adBannerCreated : Bool = false;
     
     func bannerViewDidLoadAd(banner: ADBannerView!) {
         //UIView.beginAnimations(nil, context:nil)
@@ -217,28 +226,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
        
         //UIView.commitAnimations()
         
-        if (!adBannerCreated) {
-            // add this once for the app if we're able to
-            // this may affect views and push things up
-            println("bannerViewDidLoadAd called, attaching banner to parent view")
-            adBannerCreated = true
-            var screen_height = UIScreen.mainScreen().bounds.height
-            iAdBanner.frame = CGRectMake(0,screen_height-98, 0, 0)
-            tabBarController?.navigationController?.parentViewController?.originalContentView.addSubview(iAdBanner)
-        } else {
-            println("bannerViewDidLoadAd called")
-        }
+        println("** bannerView bannerViewDidLoadAd called")
         
         self.iAdBanner.hidden = false
         
     }
     
     func bannerViewActionDidFinish(banner: ADBannerView!) {
-        println("bannerViewACtionDidFinish called")
+        println("** bannerView bannerViewActionDidFinish called")
     }
     
     func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool{
-        println("bannerView should begin? \(!self.isPaused)")
+        println("** bannerView bannerViewActionShouldBegin? \(!self.isPaused)")
         return !self.isPaused
     }
     
@@ -252,9 +251,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
         ADErrorBannerVisibleWithoutContent = 5,
         ADErrorApplicationInactive = 6
         */
-        println("bannerView didFailToReceiveAdWithError called: \(error)")
+        println("** bannerView didFailToReceiveAdWithError called: \(error)")
         self.iAdBanner.hidden = true
-        println("bannerView didFailToReceiveAdWithError set banner to hidden")
 
     }
 
