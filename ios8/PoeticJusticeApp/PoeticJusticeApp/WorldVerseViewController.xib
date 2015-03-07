@@ -31,8 +31,8 @@
                         <constraint firstAttribute="height" constant="221" id="8xg-dF-ssO"/>
                     </constraints>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Join this verse or start a new one!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IO3-i6-GWv">
-                    <rect key="frame" x="64" y="108" width="528" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join this verse or start a new one!" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IO3-i6-GWv">
+                    <rect key="frame" x="64" y="95" width="528" height="48"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -90,19 +90,20 @@
                 <constraint firstItem="peu-Iq-tNk" firstAttribute="top" secondItem="CpR-k2-onq" secondAttribute="bottom" constant="50" id="0In-7e-r5m"/>
                 <constraint firstItem="dyA-jk-ccd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="11Y-RF-cAk"/>
                 <constraint firstItem="iTI-ob-VOF" firstAttribute="baseline" secondItem="bZt-Bz-lq7" secondAttribute="firstBaseline" id="761-KI-lhE"/>
-                <constraint firstItem="IO3-i6-GWv" firstAttribute="leading" secondItem="dyA-jk-ccd" secondAttribute="trailing" constant="8" symbolic="YES" id="G9m-Ea-rfQ"/>
+                <constraint firstItem="IO3-i6-GWv" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="Gm1-BV-f6F"/>
                 <constraint firstItem="bZt-Bz-lq7" firstAttribute="leading" secondItem="peu-Iq-tNk" secondAttribute="trailing" constant="8" symbolic="YES" id="Hlj-Va-86E"/>
                 <constraint firstItem="w6c-Qy-h40" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="KUT-Ni-xX5"/>
                 <constraint firstAttribute="trailing" secondItem="CpR-k2-onq" secondAttribute="trailing" id="MeY-rA-WFQ"/>
                 <constraint firstItem="iTI-ob-VOF" firstAttribute="top" secondItem="CpR-k2-onq" secondAttribute="bottom" constant="8" symbolic="YES" id="RZS-oc-6Ee"/>
                 <constraint firstItem="bZt-Bz-lq7" firstAttribute="baseline" secondItem="iTI-ob-VOF" secondAttribute="firstBaseline" id="Ut5-1e-iUK"/>
-                <constraint firstItem="CpR-k2-onq" firstAttribute="top" relation="lessThanOrEqual" secondItem="IO3-i6-GWv" secondAttribute="bottom" constant="29" id="XKB-F8-Op1"/>
+                <constraint firstItem="IO3-i6-GWv" firstAttribute="leading" secondItem="dyA-jk-ccd" secondAttribute="trailing" constant="8" symbolic="YES" id="Yhs-xh-4QT"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="centerX" secondItem="peu-Iq-tNk" secondAttribute="centerX" id="aSP-Ev-ZYs"/>
                 <constraint firstItem="dyA-jk-ccd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="95" id="dA9-aM-XWr"/>
+                <constraint firstItem="IO3-i6-GWv" firstAttribute="top" secondItem="dyA-jk-ccd" secondAttribute="top" id="gif-bf-c0f"/>
                 <constraint firstItem="peu-Iq-tNk" firstAttribute="leading" secondItem="iTI-ob-VOF" secondAttribute="trailing" constant="8" symbolic="YES" id="h0e-hK-bia"/>
                 <constraint firstAttribute="bottom" secondItem="w6c-Qy-h40" secondAttribute="bottom" id="jH1-o8-pXs"/>
-                <constraint firstItem="IO3-i6-GWv" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" id="l4T-EG-OaS"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="top" secondItem="dyA-jk-ccd" secondAttribute="bottom" constant="15" id="mQD-OE-ehD"/>
+                <constraint firstItem="IO3-i6-GWv" firstAttribute="bottom" secondItem="dyA-jk-ccd" secondAttribute="bottom" id="oAf-BR-Otk"/>
                 <constraint firstItem="w6c-Qy-h40" firstAttribute="trailing" secondItem="CpR-k2-onq" secondAttribute="trailing" id="pS7-Ab-dwl"/>
                 <constraint firstItem="bZt-Bz-lq7" firstAttribute="top" secondItem="iTI-ob-VOF" secondAttribute="top" id="plW-0q-zaZ"/>
                 <constraint firstItem="CpR-k2-onq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sT1-xD-nsn"/>
