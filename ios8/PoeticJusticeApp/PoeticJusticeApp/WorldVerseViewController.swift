@@ -13,7 +13,6 @@ import AVFoundation
 class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var playerTable: UITableView!
-    @IBOutlet weak var verseTitle: UILabel!
     
     @IBOutlet var topicButton: UIButton!
     @IBOutlet var joinButton: UIButton!
@@ -79,6 +78,8 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
+    private var verseTitle : String = ""
+    
     func configureView(){
         if let at = self.activeTopic{
             self.user_ids = at.verse_user_ids
@@ -87,13 +88,15 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                     NetOpers.sharedInstance.appserver_hostname! + "/v/users/id=\(at.verse_id)", load_players)
             }
             
-            self.verseTitle.text = at.verse_title
+            
+            verseTitle = at.verse_title
             
         }
         
         if let t_btn = self.topicButton{
             if let t = self.topic{
                 t_btn.setImage(UIImage(named: t.main_icon_name as String), forState: .Normal)
+                self.title = t.name as? String
             }
         }
     }
@@ -284,6 +287,13 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         println(indexPath)
     }
     
+    @IBAction func showVerseInfo(sender: AnyObject) {
+        // TODO: parse HTML link and provide another controller title button to "Open in Safari" in addition to "Ok"
+        show_verse_title("Verse Title",
+            message: verseTitle,
+            controller_title: "Ok")
+    }
+    
     
     func dispatch_alert(title:String, message:String, controller_title:String, goBackToTopics:Bool){
         
@@ -347,6 +357,24 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         dispatch_async(dispatch_get_main_queue()) {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default,handler: nil))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func show_verse_title(title:String, message:String, controller_title:String){
+        dispatch_async(dispatch_get_main_queue()) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default, handler: nil))
+            
+            if let url = NSURL(string:self.verseTitle) {
+                let open: ((UIAlertAction!) -> Void)! = { action in
+                    UIApplication.sharedApplication().openURL(url)
+                    return
+                }
+                
+                alertController.addAction(UIAlertAction(title: "Open in Safari", style: UIAlertActionStyle.Default, handler: open ))
+            }
             
             self.presentViewController(alertController, animated: true, completion: nil)
         }

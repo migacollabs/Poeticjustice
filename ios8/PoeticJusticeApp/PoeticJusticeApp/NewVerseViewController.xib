@@ -10,7 +10,6 @@
                 <outlet property="friendsOnly" destination="K6e-HB-zNq" id="1qo-0K-bCh"/>
                 <outlet property="startButton" destination="DR7-QI-ZtV" id="hRH-R4-bvm"/>
                 <outlet property="topicButton" destination="DEl-6Z-Nux" id="cYs-cC-SZQ"/>
-                <outlet property="topicTitle" destination="Dhc-VV-Ega" id="bvS-Ll-vM9"/>
                 <outlet property="verseTitle" destination="B0b-AV-HFa" id="fxv-uu-OuR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -179,8 +178,11 @@
                     <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="102" y="112" width="48" height="48"/>
                     </variation>
+                    <connections>
+                        <action selector="pressTopicButton:" destination="-1" eventType="touchUpInside" id="dyo-nK-mMy"/>
+                    </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Topic Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dhc-VV-Ega">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Start a new verse!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dhc-VV-Ega">
                     <rect key="frame" x="225" y="121" width="179" height="21"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="179" id="LFj-m3-B7b"/>

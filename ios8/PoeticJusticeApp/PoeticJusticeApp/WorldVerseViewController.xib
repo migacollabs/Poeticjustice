@@ -13,7 +13,6 @@
                 <outlet property="newButton" destination="bZt-Bz-lq7" id="9B9-5I-phs"/>
                 <outlet property="playerTable" destination="CpR-k2-onq" id="zGh-ME-kXe"/>
                 <outlet property="topicButton" destination="dyA-jk-ccd" id="sBi-BJ-wz6"/>
-                <outlet property="verseTitle" destination="IO3-i6-GWv" id="mmp-ix-R38"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -32,7 +31,7 @@
                         <constraint firstAttribute="height" constant="221" id="8xg-dF-ssO"/>
                     </constraints>
                 </tableView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IO3-i6-GWv">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Join this verse or start a new one!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IO3-i6-GWv">
                     <rect key="frame" x="64" y="108" width="528" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -46,6 +45,9 @@
                     <state key="normal" image="Init.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="showVerseInfo:" destination="-1" eventType="touchUpInside" id="6Xw-RL-MpK"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="peu-Iq-tNk">
                     <rect key="frame" x="259" y="429" width="82" height="21"/>
