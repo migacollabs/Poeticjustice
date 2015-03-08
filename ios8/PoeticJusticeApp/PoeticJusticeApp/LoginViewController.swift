@@ -107,12 +107,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.userLabel.text = "You're Signed In"
             
             title = user.user_name
-            self.navigationController?.navigationBar.topItem?.title = ""
+            self.navigationController?.navigationBar.topItem?.title = "Home"
         } else {
             self.userLabel.text = "Sign In"
             
             title = "Home"
-            self.navigationController?.navigationBar.topItem?.title = ""
+            self.navigationController?.navigationBar.topItem?.title = "Home"
         }
     }
     
