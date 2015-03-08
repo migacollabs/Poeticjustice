@@ -629,7 +629,9 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     func showActivityPanel(){
         
         if self.verseLinesForTable.count > 0{
-            var verseText:String = ""
+            var verseText:String = "A Verse from Iambic, Are You?\n----\n\n\n"
+            
+            verseText += self.verseRec!.title + "\n\n"
             
             for line in self.verseLinesForTable{
                 verseText += line.text + "\n"
