@@ -319,9 +319,9 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             if let fr = self.friends[indexPath.row] as FriendRec? {
                 
                 if (isIncoming(fr)) {
-                    cell.requestStatus.image = UIImage(named: "inbox_24.png")
+                    cell.requestStatus.image = UIImage(named: "incoming.png")
                 } else if (isOutgoing(fr)) {
-                    cell.requestStatus.image = UIImage(named: "outbox_24.png")
+                    cell.requestStatus.image = UIImage(named: "outgoing.png")
                 } else {
                     cell.requestStatus.image = nil
                 }

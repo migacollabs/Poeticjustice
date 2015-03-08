@@ -110,7 +110,7 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dLD-ke-7vj">
                             <rect key="frame" x="8" y="0.0" width="24" height="24"/>
-                            <state key="normal" image="Clock.png">
+                            <state key="normal" image="history.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
@@ -232,9 +232,9 @@
         </view>
     </objects>
     <resources>
-        <image name="Clock.png" width="48" height="48"/>
         <image name="Init.png" width="48" height="48"/>
         <image name="avatar_default.png" width="256" height="256"/>
+        <image name="history.png" width="48" height="48"/>
         <image name="medal-ribbon.png" width="128" height="128"/>
         <image name="title_background.jpg" width="768" height="768"/>
     </resources>
