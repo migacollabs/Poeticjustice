@@ -113,10 +113,13 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
 
             if let vr = self.verseRec{
                 
+                self.navigationController?.title = self.topic?.name as? String
+                
                 if let topic = self.topic{
                     if let t_btn = self.topicButton{
                         t_btn.setImage(UIImage(named: topic.main_icon_name as String), forState: .Normal)
                     }
+                    self.title = topic.name as? String
                 }
                 
                 if let lineRecs = self.verseRec?.lines_recs{
