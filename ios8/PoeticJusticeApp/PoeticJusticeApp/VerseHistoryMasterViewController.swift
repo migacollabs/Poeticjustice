@@ -315,8 +315,12 @@ class VerseHistoryMasterViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
-        var verse = self.verses[indexPath.row]
-        cell.textLabel?.text = verse.title
+        if let tc = cell as? VerseHistoryTableViewCell{
+            var verse = self.verses[indexPath.row]
+            var topic = self.topics[verse.topicId] as Topic
+            tc.verseTitle?.text = verse.title
+            tc.topicImage?.image = UIImage(named: topic.main_icon_name as String)
+        }
         return cell
     }
     
@@ -330,6 +334,11 @@ class VerseHistoryMasterViewController: UITableViewController {
 //            PropertyStore.sharedInstance.removePropertyAtIndex(indexPath.row)
 //            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
+    }
+    
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 65.0
     }
     
     func show_alert(title:String, message:String, controller_title:String){

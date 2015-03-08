@@ -180,6 +180,11 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="2dg-K2-00j"/>
+                                                        </mask>
+                                                    </variation>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
                                                         <rect key="frame" x="8" y="1" width="342" height="36"/>
                                                     </variation>
@@ -278,6 +283,7 @@
                             <constraint firstItem="cjK-W8-BML" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="-15" id="UYd-6n-LQp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cjK-W8-BML" secondAttribute="trailing" constant="-16" id="Wza-Yn-EUm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GZF-VJ-uTc" secondAttribute="trailing" constant="-16" id="Zfi-PA-X36"/>
+                            <constraint firstItem="lSY-Qk-8Ee" firstAttribute="top" secondItem="Q1o-Fb-ueg" secondAttribute="bottom" constant="8" id="a2U-rs-7Mr"/>
                             <constraint firstItem="cjK-W8-BML" firstAttribute="top" secondItem="lSY-Qk-8Ee" secondAttribute="bottom" constant="-120" id="aUh-JE-6gV"/>
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="-16" id="bxo-MO-e5S"/>
                             <constraint firstItem="cjK-W8-BML" firstAttribute="top" secondItem="jQ5-e5-6Uw" secondAttribute="top" id="cqL-IS-oz3"/>
@@ -289,11 +295,15 @@
                                 <variation key="heightClass=compact-widthClass=regular" constant="46"/>
                             </constraint>
                             <constraint firstAttribute="trailing" secondItem="0DR-KU-NfP" secondAttribute="trailing" id="nET-Xf-9Rz"/>
+                            <constraint firstItem="lSY-Qk-8Ee" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="-8" id="nM7-tD-1Vy"/>
                             <constraint firstAttribute="trailing" secondItem="0DR-KU-NfP" secondAttribute="trailing" id="q6v-Mn-hbh"/>
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="top" secondItem="Q1o-Fb-ueg" secondAttribute="bottom" constant="74" id="xps-mV-7s8"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="54z-lT-iLv"/>
+                                <exclude reference="6Wf-HV-mYa"/>
+                                <exclude reference="aUh-JE-6gV"/>
                                 <exclude reference="9Pb-T2-sry"/>
                                 <exclude reference="FYX-lV-Yei"/>
                                 <exclude reference="q6v-Mn-hbh"/>
