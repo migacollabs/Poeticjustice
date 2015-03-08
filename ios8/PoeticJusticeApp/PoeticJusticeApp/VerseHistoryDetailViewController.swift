@@ -59,6 +59,9 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var activityButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "showActivityPanel")
+        self.navigationItem.rightBarButtonItem = activityButton
+        
         // Do any additional setup after loading the view.
         
         // clear the labels
@@ -620,6 +623,23 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     
     func appdelegate () -> AppDelegate{
         return UIApplication.sharedApplication().delegate as AppDelegate
+    }
+    
+    
+    func showActivityPanel(){
+        
+        if self.verseLinesForTable.count > 0{
+            var verseText:String = ""
+            
+            for line in self.verseLinesForTable{
+                verseText += line.text + "\n"
+            }
+            
+            let objectsToShare = [verseText]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+            self.presentViewController(activityVC, animated: true, completion: nil)
+        }
+        
     }
     
 }

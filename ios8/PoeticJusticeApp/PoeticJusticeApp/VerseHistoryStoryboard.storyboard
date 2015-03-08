@@ -66,7 +66,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Verse History" id="h29-Mc-4GC">
+                    <navigationItem key="navigationItem" title="Verses" id="h29-Mc-4GC">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="UPr-UU-fUX">
                             <connections>
                                 <segue destination="xIA-nT-EZo" kind="custom" identifier="doneSegue" customClass="MGPushNoAnimationSegue" id="CTL-rn-v5Q"/>
@@ -79,7 +79,7 @@
             </objects>
             <point key="canvasLocation" x="2908" y="529"/>
         </scene>
-        <!--Verse-->
+        <!--Verse History Detail View Controller-->
         <scene sceneID="ftA-Nb-LZV">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="pd3-xg-W7Y" customClass="VerseHistoryDetailViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -329,7 +329,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Verse" id="dqg-Yh-MXZ"/>
+                    <navigationItem key="navigationItem" id="dqg-Yh-MXZ"/>
                     <connections>
                         <outlet property="avatarPlayerFive" destination="Kmp-PV-MII" id="Xo9-Gx-oFF"/>
                         <outlet property="avatarPlayerFour" destination="hC3-CH-Ghv" id="Wyg-h3-uYE"/>
@@ -346,7 +346,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dp0-tK-980" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3675" y="526"/>
+            <point key="canvasLocation" x="3656" y="551"/>
         </scene>
         <!--VerseHistoryMasterViewController-->
         <scene sceneID="45i-Zm-QUU">
