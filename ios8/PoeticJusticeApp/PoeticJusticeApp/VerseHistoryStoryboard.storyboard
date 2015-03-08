@@ -15,21 +15,47 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="oLW-Jb-yzZ" style="IBUITableViewCellStyleDefault" id="T8z-I9-2cT">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="65" id="T8z-I9-2cT" customClass="VerseHistoryTableViewCell" customModule="PoeticJusticeApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T8z-I9-2cT" id="tGA-IJ-pXj">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oLW-Jb-yzZ">
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Acoustic-Guitar.png" translatesAutoresizingMaskIntoConstraints="NO" id="uV9-hI-jnm">
+                                            <rect key="frame" x="8" y="8" width="48" height="48"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="48" id="H0p-83-wWQ"/>
+                                                <constraint firstAttribute="width" constant="48" id="kyv-4f-EqN"/>
+                                                <constraint firstAttribute="width" secondItem="uV9-hI-jnm" secondAttribute="height" multiplier="1:1" id="xSn-Nk-eBy"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTs-ou-6XL">
+                                            <rect key="frame" x="64" y="21" width="256" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="128" id="bTd-6F-xq8"/>
+                                                <constraint firstAttribute="height" constant="21" id="wDg-WY-7YE"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="bTd-6F-xq8"/>
+                                                </mask>
+                                            </variation>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="dTs-ou-6XL" firstAttribute="leading" secondItem="uV9-hI-jnm" secondAttribute="trailing" constant="8" id="GTp-u7-UNs"/>
+                                        <constraint firstItem="uV9-hI-jnm" firstAttribute="leading" secondItem="tGA-IJ-pXj" secondAttribute="leadingMargin" id="Zkp-8s-Mb2"/>
+                                        <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="dTs-ou-6XL" secondAttribute="trailing" constant="239" id="fih-K6-IEx"/>
+                                        <constraint firstAttribute="centerY" secondItem="dTs-ou-6XL" secondAttribute="centerY" constant="0.5" id="l6b-N8-Ezg"/>
+                                        <constraint firstAttribute="centerY" secondItem="uV9-hI-jnm" secondAttribute="centerY" id="sSB-9v-d3Q"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="topicImage" destination="uV9-hI-jnm" id="sYp-8D-lXK"/>
+                                    <outlet property="verseTitle" destination="dTs-ou-6XL" id="v1g-GG-kz1"/>
                                     <segue destination="pd3-xg-W7Y" kind="show" identifier="showDetail" id="4Sf-Mw-qye"/>
                                 </connections>
                             </tableViewCell>
@@ -87,6 +113,11 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="Qpp-d8-XUz"/>
+                                                        </mask>
+                                                    </variation>
                                                     <variation key="widthClass=compact" fixedFrame="YES">
                                                         <rect key="frame" x="8" y="1" width="342" height="36"/>
                                                     </variation>
@@ -248,7 +279,7 @@
                                     <constraint firstItem="Kmp-PV-MII" firstAttribute="top" secondItem="W4j-2B-cVi" secondAttribute="top" constant="8" id="hU1-Eg-9Yi"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnU-ax-bsX">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnU-ax-bsX">
                                 <rect key="frame" x="8" y="72" width="48" height="48"/>
                                 <state key="normal" image="Acoustic-Guitar.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
