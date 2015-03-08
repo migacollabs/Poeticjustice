@@ -3,7 +3,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
 
-    <title>Poetic Justice App - New Device?</title>
+    <title>Iambic, Are You? - New Device?</title>
 
 <style>
 
@@ -103,7 +103,7 @@ h {
 <div class="row">
     <div class="large-12 columns">
         <br>
-        <h6 class="subheader">Poetic Justice App, a Miga Col.labs Game</h6>
+        <h6 class="subheader">Iambic, Are You?, a Miga Col.labs Game</h6>
     </div>
 </div>
 
