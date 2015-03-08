@@ -23,7 +23,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="53H-E5-Xok"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -33,7 +33,7 @@
                         <constraint firstAttribute="height" constant="21" id="eXU-aD-qrI"/>
                         <constraint firstAttribute="width" constant="220" id="z1l-0n-aZZ"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -43,7 +43,7 @@
                         <constraint firstAttribute="width" constant="251" id="VLV-L9-sRb"/>
                         <constraint firstAttribute="height" constant="21" id="sqx-1r-0k6"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -53,7 +53,7 @@
                         <constraint firstAttribute="width" constant="208" id="MbN-vi-rGs"/>
                         <constraint firstAttribute="height" constant="21" id="PlR-VM-GC4"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -63,7 +63,7 @@
                         <constraint firstAttribute="width" constant="178" id="Hn5-QQ-sFn"/>
                         <constraint firstAttribute="height" constant="21" id="jcp-gy-hYK"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
