@@ -79,6 +79,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
 
         // Do any additional setup after loading the view.
         
+        var refreshButton : UIBarButtonItem = UIBarButtonItem(title: "Help", style: UIBarButtonItemStyle.Plain, target: self, action: "showHelp")
+        self.navigationItem.rightBarButtonItem = refreshButton
+        
         // clear the labels
         self.currentUserName.text = ""
         self.winnerUserName.text = ""
@@ -937,6 +940,13 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
 //    func hide_adbanner(){
 //        self.iAdBanner?.hidden = true
 //    }
+    
+    
+    func showHelp(){
+        self.show_alert("What's this?",
+            message: "After each player awards their favorite line with a gold star you can see them all here. The player with the most stars wins this verse!", controller_title:"Ok, got it!")
+        
+    }
     
 
     
