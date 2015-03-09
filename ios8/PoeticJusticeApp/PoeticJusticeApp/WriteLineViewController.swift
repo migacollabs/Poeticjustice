@@ -151,16 +151,14 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
         if (!is_busy) {
             is_busy = true
             
-            // remove the existing blocking view
-            self.textViewBlock.removeFromSuperview()
-            
             // blocking view gets added back
             viewWillAppear(true)
             
+            // don't need this if it's my turn
             if (self.is_my_turn) {
-                // remove it if it's my turn, otherwise leave it
                 self.textViewBlock.removeFromSuperview()
             }
+            
         }
     }
     
@@ -172,9 +170,8 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    var lastTabbed : NSDate?
-    
-    override func viewWillAppear(animated: Bool) {
+    func createTextViewBlock() {
+        textViewBlock.removeFromSuperview()
         
         textViewBlock = UIView()
         textViewBlock.frame = self.setLine.frame
@@ -182,6 +179,13 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
         textViewBlock.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.0)
         
         self.view.addSubview(textViewBlock)
+    }
+    
+    var lastTabbed : NSDate?
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        createTextViewBlock()
         
 //        var screen_height = UIScreen.mainScreen().bounds.height
 //        self.canDisplayBannerAds = true
@@ -603,6 +607,8 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
             
             // println("hitting saveline url")
             // println(params)
+            
+            createTextViewBlock()
             
             NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
             
