@@ -632,17 +632,35 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     func showActivityPanel(){
         
         if self.verseLinesForTable.count > 0{
-            var verseText:String = "A Verse from Iambic, Are You?\n----\n\n\n"
             
-            verseText += self.verseRec!.title + "\n\n"
+            var url = NetOpers.sharedInstance.appserver_hostname! + "/v/p/vid=\(self.verseRec?.id)"
             
-            for line in self.verseLinesForTable{
-                verseText += line.text + "\n"
+            var params = Dictionary<String,AnyObject>()
+            params["vid"]=self.verseRec?.id
+            params["user_id"]=NetOpers.sharedInstance.user.id
+            
+            var result = NetOpers.sharedInstance.sync_post(url, params: params)
+            if result != nil{
+                if let vk = result!["verse_key"] as? String{
+                    
+                    var verseUrl = "http://192.168.0.28:8888/v/p/k=\(vk)"
+                    
+                    var verseText:String = "A Verse from Iambic, Are You?\n----\n\(verseUrl)\n\n"
+                    
+                    verseText += self.verseRec!.title + "\n\n"
+                    
+                    for line in self.verseLinesForTable{
+                        verseText += line.text + "\n"
+                    }
+                    
+                    let objectsToShare = [verseText]
+                    let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+                    self.presentViewController(activityVC, animated: true, completion: nil)
+                    
+                }
             }
             
-            let objectsToShare = [verseText]
-            let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-            self.presentViewController(activityVC, animated: true, completion: nil)
+
         }
         
     }

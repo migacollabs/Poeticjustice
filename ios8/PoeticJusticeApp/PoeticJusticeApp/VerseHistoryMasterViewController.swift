@@ -149,6 +149,10 @@ class VerseHistoryMasterViewController: UITableViewController {
                                 vh.id = x
                             }
                             
+                            if let x = v["verse_key"] as? String{
+                                vh.verseKey = x
+                            }
+                            
                             if let x = v["title"] as? String{
                                 vh.title = x
                             }

@@ -22,6 +22,7 @@ from geoip import geolite2
 # pyaella imports
 from pyaella import *
 from pyaella import dinj
+from pyaella.codify import IdCoder
 from pyaella.server.api import retrieve_entity, make_result_repr, filter_model_attrs
 from pyaella.server.api import _process_subpath, _process_args, _process_xmodel_args
 from pyaella.server.api import get_current_user
@@ -34,7 +35,7 @@ from pyaella.server.api import LutValues
 from pyaella.server.api import get_current_user, get_current_rbac_user
 
 import poeticjustice
-from poeticjustice import default_hashkey
+from poeticjustice import default_hashkey, idcoder_key
 from poeticjustice.models import *
 
 
@@ -49,6 +50,8 @@ log.info('Started')
 
 
 ASSETS_DIR = os.path.dirname(os.path.abspath(poeticjustice.assets.__file__))
+
+IDCODER = IdCoder(kseq=idcoder_key)
 
 
 HOST, PORT = None, None
@@ -839,4 +842,107 @@ def logout(request):
     renderer='default.mako')
 def say_hello(request):
     return {'app_name': 'Poeticjustice'}
+
+
+
+
+
+@view_config(
+    name='p',
+    request_method='POST',
+    context='poeticjustice:contexts.Verses',
+    renderer='json',
+    permission='edit')
+def gen_public_verse_url(request):
+    print 'get_public_verse_url'
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(request.subpath, formUrlEncodedParams=request.POST)
+        auth_usrid = authenticated_userid(request)
+        with SQLAlchemySessionFactory() as session:
+
+            verse_id = kwds['vid']
+            verse_key = IDCODER.encode(int(verse_id))
+
+            res = dict(
+                verse_key=verse_key,
+                logged_in=auth_usrid
+            )
+            print res
+            return res
+
+        raise HTTPBadRequest
+
+    except:
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Bad Request')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+
+@view_config(
+    name='p',
+    request_method='GET',
+    context='poeticjustice:contexts.Verses',
+    renderer='verse.mako')
+def public_verse(request):
+    try:
+        args = list(request.subpath)
+        kwds = _process_subpath(args)
+        verse = None
+        lines = []
+        with SQLAlchemySessionFactory() as session:
+
+            verse_id = -1
+            try:
+                verse_id = IDCODER.decode(kwds['k'])
+                print 'THE VERSE ID', verse_id
+            except:
+                print traceback.format_exc()
+
+            V, LxV = ~Verse, ~LineXVerse
+            rp = (session.query(V, LxV)
+                    .filter(V.id==verse_id)
+                    .filter(LxV.verse_id==V.id)
+                    .order_by(LxV.id)
+                    ).all()
+            print 'RP', rp
+
+            if rp:
+                for row in rp:
+                    print row
+                    v, lxv = row
+
+                    if not verse:
+                        verse = v
+                    lines.append(lxv.line_text)
+            else:
+                raise HTTPGone
+
+        return dict(
+            status="Ok",
+            title=verse.title if verse else "",
+            lines=lines
+        )
+
+    except HTTPFound: raise
+    except:
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Bad Request')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+
+
+
+
+
 

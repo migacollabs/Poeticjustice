@@ -26,6 +26,7 @@ from sqlalchemy.orm import aliased
 # pyaella imports
 from pyaella import *
 from pyaella import dinj
+from pyaella.codify import IdCoder
 from pyaella.server.api import retrieve_entity, make_result_repr, filter_model_attrs
 from pyaella.server.api import _process_subpath, _process_args, _process_xmodel_args
 from pyaella.server.api import get_current_user, get_current_rbac_user
@@ -36,7 +37,7 @@ from pyaella.metacode import tmpl as pyaella_templates
 from pyaella.server.processes import Emailer
 from pyaella.server.api import LutValues
 
-from poeticjustice import default_hashkey
+from poeticjustice import default_hashkey, idcoder_key
 from poeticjustice.models import *
 from poeticjustice.views import _save_user
 
@@ -49,6 +50,8 @@ frmttr = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s
 fh.setFormatter(frmttr)
 log.addHandler(fh)
 log.info('Started')
+
+IDCODER = IdCoder(kseq=idcoder_key)
 
 
 HOST, PORT = None, None
@@ -965,6 +968,12 @@ def get_users_verse_history(request):
                         .filter(UVH.player_id==user.id)
                         .order_by(UVH.last_upd)
                         ).all()
+
+                results = []
+                for uvh in rp:
+                    uvh_d = UserVerseHistory(entity=uvh).to_dict()
+                    uvh_d['verse_key'] = IDCODER.encode(int(uvh_d['id']))
+                    results.append(uvh_d)
 
                 res = dict(
                     status='Ok',

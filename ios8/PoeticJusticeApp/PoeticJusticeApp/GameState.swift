@@ -34,6 +34,7 @@ struct VerseResultScreenRec{
     var user_ids:[Int] = []
     var participantCount = -1
     var topicId = -1
+    var verseKey = ""
     
     // int is pk and position
     var lines_recs = Dictionary<Int,VerseResultScreenLineRec>()
