@@ -643,7 +643,9 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
             if result != nil{
                 if let vk = result!["verse_key"] as? String{
                     
-                    var verseUrl = "http://192.168.0.28:8888/v/p/k=\(vk)"
+                    var site = result!["site_addr"] as String
+                    
+                    var verseUrl = "http://\(site)/v/p/k=\(vk)"
                     
                     var verseText:String = "A Verse from Iambic, Are You?\n----\n\(verseUrl)\n\n"
                     

@@ -864,8 +864,11 @@ def gen_public_verse_url(request):
             verse_id = kwds['vid']
             verse_key = IDCODER.encode(int(verse_id))
 
+            site_addr = get_site_addr()
+
             res = dict(
                 verse_key=verse_key,
+                site_addr=site_addr,
                 logged_in=auth_usrid
             )
             print res
@@ -900,7 +903,6 @@ def public_verse(request):
             verse_id = -1
             try:
                 verse_id = IDCODER.decode(kwds['k'])
-                print 'THE VERSE ID', verse_id
             except:
                 print traceback.format_exc()
 
@@ -910,8 +912,7 @@ def public_verse(request):
                     .filter(LxV.verse_id==V.id)
                     .order_by(LxV.id)
                     ).all()
-            print 'RP', rp
-
+            
             if rp:
                 for row in rp:
                     print row
