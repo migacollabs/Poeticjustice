@@ -132,7 +132,7 @@
                         <constraint firstAttribute="height" constant="25" id="oeL-Rw-NUc"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UOE-rm-V6E">
+                <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UOE-rm-V6E">
                     <rect key="frame" x="0.0" y="490" width="600" height="110"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -183,13 +183,11 @@
                 <constraint firstItem="xBS-xc-17G" firstAttribute="top" secondItem="Prw-C7-NFc" secondAttribute="bottom" constant="12" id="20F-hE-lT3"/>
                 <constraint firstItem="DeK-pn-1LR" firstAttribute="centerX" secondItem="qRP-Qs-sqY" secondAttribute="centerX" id="2AU-bo-bV2"/>
                 <constraint firstItem="UOE-rm-V6E" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="490" id="3h2-dr-yR2"/>
-                <constraint firstItem="RsI-de-Ca4" firstAttribute="trailing" secondItem="UOE-rm-V6E" secondAttribute="trailing" id="56a-oq-T8D"/>
                 <constraint firstItem="RsI-de-Ca4" firstAttribute="centerX" secondItem="0DN-ks-1ka" secondAttribute="centerX" id="61S-8G-PCt"/>
                 <constraint firstAttribute="centerX" secondItem="ym8-Dp-9WO" secondAttribute="centerX" constant="-7.5" id="6dK-ii-9bd"/>
                 <constraint firstItem="RDd-pJ-CHQ" firstAttribute="centerX" secondItem="DeK-pn-1LR" secondAttribute="centerX" id="9nC-a2-R4Y"/>
                 <constraint firstItem="RDd-pJ-CHQ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="DeK-pn-1LR" secondAttribute="bottom" constant="62" id="Bfz-DN-Gqn"/>
                 <constraint firstAttribute="centerX" secondItem="qRP-Qs-sqY" secondAttribute="centerX" id="EXk-OG-cZI"/>
-                <constraint firstItem="RsI-de-Ca4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ElY-Te-gUh"/>
                 <constraint firstItem="ym8-Dp-9WO" firstAttribute="top" relation="greaterThanOrEqual" secondItem="RDd-pJ-CHQ" secondAttribute="bottom" constant="8" id="Esk-Bi-yuY"/>
                 <constraint firstAttribute="centerX" secondItem="Prw-C7-NFc" secondAttribute="centerX" id="FYZ-da-GJ0"/>
                 <constraint firstItem="RsI-de-Ca4" firstAttribute="bottom" secondItem="UOE-rm-V6E" secondAttribute="bottom" id="GVF-rG-j0H"/>
@@ -198,25 +196,27 @@
                 <constraint firstItem="RDd-pJ-CHQ" firstAttribute="top" secondItem="DeK-pn-1LR" secondAttribute="bottom" constant="13" id="Mza-cs-fI8"/>
                 <constraint firstAttribute="centerX" secondItem="xBS-xc-17G" secondAttribute="centerX" id="Oik-QO-ICw"/>
                 <constraint firstItem="UOE-rm-V6E" firstAttribute="top" secondItem="hgX-Bb-RaP" secondAttribute="bottom" constant="24" id="XWe-OA-L6H"/>
-                <constraint firstItem="RsI-de-Ca4" firstAttribute="leading" secondItem="UOE-rm-V6E" secondAttribute="leading" id="bm0-v2-C8m"/>
+                <constraint firstAttribute="trailing" secondItem="RsI-de-Ca4" secondAttribute="trailing" id="b3K-Vb-4k4"/>
                 <constraint firstItem="UOE-rm-V6E" firstAttribute="top" relation="greaterThanOrEqual" secondItem="hgX-Bb-RaP" secondAttribute="bottom" constant="8" id="cpU-RW-7Sf"/>
                 <constraint firstItem="RDd-pJ-CHQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="210" id="dMn-gG-TKY"/>
                 <constraint firstAttribute="centerX" secondItem="RDd-pJ-CHQ" secondAttribute="centerX" id="du2-9K-yig"/>
+                <constraint firstItem="RsI-de-Ca4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="e3j-oy-UYk"/>
                 <constraint firstItem="qRP-Qs-sqY" firstAttribute="top" secondItem="xBS-xc-17G" secondAttribute="bottom" constant="8" id="f7I-WR-a5o"/>
                 <constraint firstItem="RsI-de-Ca4" firstAttribute="centerX" secondItem="0DN-ks-1ka" secondAttribute="centerX" id="gP0-4b-utl"/>
                 <constraint firstAttribute="centerX" secondItem="hgX-Bb-RaP" secondAttribute="centerX" constant="-7.5" id="gn3-AX-7Z5"/>
                 <constraint firstItem="Prw-C7-NFc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="85" id="iD7-a9-j9o"/>
+                <constraint firstAttribute="bottom" secondItem="RsI-de-Ca4" secondAttribute="bottom" id="jq6-st-aFF"/>
                 <constraint firstItem="RsI-de-Ca4" firstAttribute="centerX" secondItem="Prw-C7-NFc" secondAttribute="centerX" id="lMp-CR-oYv"/>
-                <constraint firstItem="RsI-de-Ca4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qH1-8Z-bSi"/>
                 <constraint firstItem="DeK-pn-1LR" firstAttribute="centerX" secondItem="RsI-de-Ca4" secondAttribute="centerX" id="qRV-2u-0zZ"/>
                 <constraint firstItem="hgX-Bb-RaP" firstAttribute="top" secondItem="ym8-Dp-9WO" secondAttribute="bottom" constant="8" id="vFE-Zn-VaS"/>
-                <constraint firstAttribute="centerX" secondItem="RsI-de-Ca4" secondAttribute="centerX" id="wiS-U4-AEf"/>
+                <constraint firstItem="RsI-de-Ca4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="wjG-1S-jtJ"/>
                 <constraint firstAttribute="centerX" secondItem="DeK-pn-1LR" secondAttribute="centerX" id="xr5-vs-pXD"/>
                 <constraint firstItem="RsI-de-Ca4" firstAttribute="centerX" secondItem="xBS-xc-17G" secondAttribute="centerX" id="ytA-Dv-gSB"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="61S-8G-PCt"/>
+                    <exclude reference="GVF-rG-j0H"/>
                     <exclude reference="gP0-4b-utl"/>
                     <exclude reference="lMp-CR-oYv"/>
                     <exclude reference="ytA-Dv-gSB"/>
