@@ -270,6 +270,7 @@ PYAELLAC:
         max_participants: Column(Integer, nullable=False, default=2)
         participant_count: Column(Integer, nullable=False, default=1)
         max_lines: Column(Integer, nullable=False, default=8)
+        num_lines: Column(Integer, nullable=False, default=0)
         friends_only: Column(Boolean, nullable=False, default=False)
         complete: Column(Boolean, nullable=False, default=False)
         votes: Column(String)

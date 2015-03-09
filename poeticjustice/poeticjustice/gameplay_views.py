@@ -759,7 +759,8 @@ def get_active_topics(request):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'mine', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
+                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
+                        "num_lines":r[0].num_lines
                         }
                 
                 if user.open_verse_ids:
@@ -779,13 +780,15 @@ def get_active_topics(request):
                             topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                                     "user_name":r[2].user_name, "src":'joined_friend', "next_index_user_ids":r[0].next_index_user_ids, 
                                     "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                                    "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
+                                    "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
+                                    "num_lines":r[0].num_lines
                                     }
                         else:
                             topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                                     "user_name":r[2].user_name, "src":'joined_world', "next_index_user_ids":r[0].next_index_user_ids, 
                                     "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                                    "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
+                                    "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
+                                    "num_lines":r[0].num_lines
                                     }
 
                 # friendships
@@ -803,7 +806,8 @@ def get_active_topics(request):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
+                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
+                        "num_lines":r[0].num_lines
                         }
 
                 # put global open verses last, so mine and friends show up first in topics view
@@ -822,7 +826,8 @@ def get_active_topics(request):
                     topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
                         "user_name":r[2].user_name, "src":'world', "next_index_user_ids":r[0].next_index_user_ids, 
                         "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete
+                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
+                        "num_lines":r[0].num_lines
                         }
 
                 # TODO: optimize this - definitely a better way
@@ -1179,6 +1184,9 @@ def save_verse_line(request):
                 verse = session.query(~Verse).filter((~Verse).id==verseId).first()
 
                 verse.next_index_user_ids = verse.next_index_user_ids + 1
+
+                # current number of lines for the verse
+                verse.num_lines = verse.num_lines + 1
 
                 if verse.next_index_user_ids==len(verse.user_ids):
                     verse.next_index_user_ids = 0

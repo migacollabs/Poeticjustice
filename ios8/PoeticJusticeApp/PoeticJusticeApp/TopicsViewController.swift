@@ -32,6 +32,8 @@ struct ActiveTopicRec {
     var verse_title : String = ""
     var owner_id : Int = -1
     var current_user_has_voted : Bool = false
+    var max_lines : Int = 8
+    var num_lines : Int = 0 // current number of lines
     
     func getTopicStateImageName() -> String {
         
@@ -151,7 +153,14 @@ class ActiveTopic {
             if (counts==0) {
                 topicStateAnimDuration = 1.0
             } else {
-                topicStateAnimDuration = 4.0
+                
+                if ((activeTopicRec.num_lines + counts) >= activeTopicRec.max_lines) {
+                    // time to get that vote in
+                    topicStateAnimDuration = 1.0
+                } else {
+                    topicStateAnimDuration = 4.0
+                }
+                
             }
             
         } else {
