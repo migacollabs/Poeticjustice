@@ -92,7 +92,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tree_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Or0-ZK-uyb" userLabel="Background Image">
-                                <rect key="frame" x="-85" y="-84" width="769" height="768"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="555"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="unh-F7-RXC">
                                 <rect key="frame" x="0.0" y="138" width="600" height="280"/>
@@ -279,7 +279,7 @@
                                     <constraint firstItem="Kmp-PV-MII" firstAttribute="top" secondItem="W4j-2B-cVi" secondAttribute="top" constant="8" id="hU1-Eg-9Yi"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnU-ax-bsX">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnU-ax-bsX">
                                 <rect key="frame" x="8" y="72" width="48" height="48"/>
                                 <state key="normal" image="Acoustic-Guitar.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -302,22 +302,38 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="And the winner is!" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZw-h1-OHJ">
+                                <rect key="frame" x="455" y="80" width="137" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="1Dg-sw-HFw"/>
+                                    <constraint firstAttribute="width" constant="137" id="kbz-O7-aMs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="UZw-h1-OHJ" secondAttribute="trailing" constant="-8" id="4yM-vr-gsc"/>
                             <constraint firstItem="unh-F7-RXC" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-16" id="64i-HW-l2N"/>
                             <constraint firstItem="W4j-2B-cVi" firstAttribute="top" secondItem="unh-F7-RXC" secondAttribute="bottom" constant="8" id="BGl-7P-PZ9"/>
                             <constraint firstItem="t1h-qj-Edf" firstAttribute="leading" relation="lessThanOrEqual" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="504" id="EKV-Hq-qkZ"/>
                             <constraint firstItem="Kpg-2q-800" firstAttribute="leading" secondItem="t1h-qj-Edf" secondAttribute="trailing" constant="8" id="EeI-bO-jgJ"/>
                             <constraint firstItem="unh-F7-RXC" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="74" id="Ejd-Hx-Wvk"/>
+                            <constraint firstItem="Or0-ZK-uyb" firstAttribute="top" secondItem="KJg-gK-7aB" secondAttribute="topMargin" id="H01-Cr-9nR"/>
+                            <constraint firstItem="Or0-ZK-uyb" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-16" id="InU-B8-s1f"/>
                             <constraint firstItem="VnU-ax-bsX" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-8" id="K49-Tq-44I"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Or0-ZK-uyb" secondAttribute="trailing" constant="-16" id="LZy-JS-Rxm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Kpg-2q-800" secondAttribute="trailing" constant="-8" id="PmZ-4V-mLt"/>
+                            <constraint firstItem="Kpg-2q-800" firstAttribute="top" secondItem="UZw-h1-OHJ" secondAttribute="bottom" constant="5" id="Rff-Ci-b4U"/>
                             <constraint firstAttribute="centerY" secondItem="Or0-ZK-uyb" secondAttribute="centerY" id="UIE-m8-QVK"/>
                             <constraint firstItem="VnU-ax-bsX" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="8" id="WYW-I5-Gjc"/>
                             <constraint firstItem="Kpg-2q-800" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="42" id="axd-Cu-Vtw"/>
                             <constraint firstAttribute="centerX" secondItem="Or0-ZK-uyb" secondAttribute="centerX" id="bjP-3I-IMT"/>
                             <constraint firstItem="W4j-2B-cVi" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-16" id="jzY-yp-9mK"/>
                             <constraint firstItem="NMe-EJ-dfC" firstAttribute="top" secondItem="W4j-2B-cVi" secondAttribute="bottom" constant="50" id="nae-QA-ysn"/>
+                            <constraint firstItem="NMe-EJ-dfC" firstAttribute="top" secondItem="Or0-ZK-uyb" secondAttribute="bottom" constant="1" id="qri-AU-DOb"/>
                             <constraint firstItem="Or0-ZK-uyb" firstAttribute="top" secondItem="Kpg-2q-800" secondAttribute="bottom" constant="-130" id="wtX-zD-5Vv"/>
                             <constraint firstItem="t1h-qj-Edf" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="45" id="xaF-b7-Xuw"/>
                             <constraint firstAttribute="trailingMargin" secondItem="W4j-2B-cVi" secondAttribute="trailing" constant="-16" id="yCF-ME-bTq"/>
@@ -325,6 +341,8 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="UIE-m8-QVK"/>
+                                <exclude reference="bjP-3I-IMT"/>
                                 <exclude reference="wtX-zD-5Vv"/>
                             </mask>
                         </variation>
@@ -340,6 +358,7 @@
                         <outlet property="currentUserNameConstraint" destination="dm3-zL-VEf" id="2Xl-RE-ZFY"/>
                         <outlet property="tableView" destination="unh-F7-RXC" id="8iq-c5-d7l"/>
                         <outlet property="topicButton" destination="VnU-ax-bsX" id="wy4-fL-278"/>
+                        <outlet property="voteMsgLabel" destination="UZw-h1-OHJ" id="947-QT-lFN"/>
                         <outlet property="winnerIcon" destination="Kpg-2q-800" id="6yT-dH-lq7"/>
                         <outlet property="winnerUserName" destination="t1h-qj-Edf" id="iiF-WD-XHA"/>
                     </connections>

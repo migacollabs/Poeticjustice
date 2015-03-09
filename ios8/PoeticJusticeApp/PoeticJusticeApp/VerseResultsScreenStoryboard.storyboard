@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tree_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="cjK-W8-BML" userLabel="Background Image">
-                                <rect key="frame" x="1" y="0.0" width="599" height="555"/>
+                                <rect key="frame" x="0.0" y="0.0" width="599" height="555"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4x9-5v-f4d">
                                 <rect key="frame" x="567" y="106" width="24" height="24"/>
@@ -266,6 +266,16 @@
                                     <rect key="frame" x="224" y="129" width="128" height="21"/>
                                 </variation>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="And the winner is!" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ah7-Ue-5Yd">
+                                <rect key="frame" x="454" y="77" width="137" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="YvK-l1-CR4"/>
+                                    <constraint firstAttribute="width" constant="137" id="ZJb-ix-4GY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -276,12 +286,14 @@
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leading" id="9Pb-T2-sry"/>
                             <constraint firstItem="GZF-VJ-uTc" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="-16" id="9eH-bi-Uc0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4x9-5v-f4d" secondAttribute="trailing" constant="-7" id="Ctz-GI-bgH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ah7-Ue-5Yd" secondAttribute="trailing" constant="-7" id="DaY-om-pWD"/>
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="top" secondItem="4x9-5v-f4d" secondAttribute="bottom" constant="4" id="FYX-lV-Yei"/>
                             <constraint firstItem="4x9-5v-f4d" firstAttribute="top" secondItem="Q1o-Fb-ueg" secondAttribute="bottom" constant="42" id="IHl-TH-zBz"/>
                             <constraint firstItem="GZF-VJ-uTc" firstAttribute="top" relation="lessThanOrEqual" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="98" id="NIl-87-ew2"/>
+                            <constraint firstItem="4x9-5v-f4d" firstAttribute="top" secondItem="ah7-Ue-5Yd" secondAttribute="bottom" constant="8" id="Nwh-C4-cOY"/>
                             <constraint firstItem="4x9-5v-f4d" firstAttribute="trailing" secondItem="jQ5-e5-6Uw" secondAttribute="trailingMargin" constant="7" id="SM8-4Z-CyC"/>
-                            <constraint firstItem="cjK-W8-BML" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="-15" id="UYd-6n-LQp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="cjK-W8-BML" secondAttribute="trailing" constant="-16" id="Wza-Yn-EUm"/>
+                            <constraint firstItem="cjK-W8-BML" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="-16" id="UYd-6n-LQp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cjK-W8-BML" secondAttribute="trailing" constant="-15" id="Wza-Yn-EUm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GZF-VJ-uTc" secondAttribute="trailing" constant="-16" id="Zfi-PA-X36"/>
                             <constraint firstItem="lSY-Qk-8Ee" firstAttribute="top" secondItem="Q1o-Fb-ueg" secondAttribute="bottom" constant="8" id="a2U-rs-7Mr"/>
                             <constraint firstItem="cjK-W8-BML" firstAttribute="top" secondItem="lSY-Qk-8Ee" secondAttribute="bottom" constant="-120" id="aUh-JE-6gV"/>
@@ -333,6 +345,7 @@
                         <outlet property="currentUserNameLeadingConstraint" destination="iHF-FN-SAQ" id="bUM-Cf-kNG"/>
                         <outlet property="tableView" destination="0DR-KU-NfP" id="2GX-Sk-UbH"/>
                         <outlet property="topicButton" destination="lSY-Qk-8Ee" id="OPr-VF-HjB"/>
+                        <outlet property="voteMsgLabel" destination="ah7-Ue-5Yd" id="aGv-Rr-r2l"/>
                         <outlet property="winnerIcon" destination="4x9-5v-f4d" id="CMx-VL-j4U"/>
                         <outlet property="winnerUserName" destination="Zh7-oI-lJi" id="tfI-km-lyn"/>
                     </connections>
