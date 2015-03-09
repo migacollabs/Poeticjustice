@@ -54,7 +54,7 @@ class User{
     }
     
     func is_logged_in() -> Bool {
-        return self.id > 0 && countElements(self.access_token)>0
+        return self.id > 0 && countElements(self.access_token)>1
     }
     
     func addUserDelegate(delegate : UserDelegate) {
@@ -91,12 +91,19 @@ class User{
         if let mn = user_data["mobile_number"] as? String {
             self.mobile_number = mn
         }
+        
         if let at = user_data["access_token"] as? String {
             self.access_token = at
+        } else {
+            self.access_token = ""
         }
+        
         if let dt = user_data["device_token"] as? String {
             self.device_token = dt
+        } else {
+            self.device_token = ""
         }
+        
         if let nf = user_data["num_of_favorited_lines"] as? Int {
             self.num_favorited_lines = nf
         }

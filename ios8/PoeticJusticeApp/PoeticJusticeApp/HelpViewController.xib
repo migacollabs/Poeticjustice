@@ -83,7 +83,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="7vj-uU-3t7"/>
                     </constraints>
-                    <string key="text">Choose a topic, start a verse, and write a line!  Blue dots are for verses with friends.  Green dots are for verses with anyone.</string>
+                    <string key="text">Choose a topic, start a verse, and write a line!  The tiny dots around the topics represent who you're playing with: blue for friends, green for anyone, and grey are ones you created.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -92,6 +92,22 @@
                     </variation>
                     <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="8" y="101" width="816" height="56"/>
+                    </variation>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kho-qW-80u">
+                    <rect key="frame" x="8" y="349" width="592" height="56"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="56" id="Bca-hB-sbu"/>
+                    </constraints>
+                    <string key="text">Each line earns a point.  When a verse is completed, players can select a favorite line.  The leaf icon represents points.  The star icon represents number of favorited lines.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="344" width="816" height="56"/>
+                    </variation>
+                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                        <rect key="frame" x="8" y="344" width="816" height="56"/>
                     </variation>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVa-Pf-6KI">
@@ -108,22 +124,6 @@
                     </variation>
                     <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="8" y="184" width="816" height="56"/>
-                    </variation>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kho-qW-80u">
-                    <rect key="frame" x="8" y="349" width="592" height="56"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="56" id="Bca-hB-sbu"/>
-                    </constraints>
-                    <string key="text">Every player earns a point for each line.  When a verse is completed, each player can select their favorite line for a nice point boost!</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                    <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
-                        <rect key="frame" x="8" y="344" width="816" height="56"/>
-                    </variation>
-                    <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
-                        <rect key="frame" x="8" y="344" width="816" height="56"/>
                     </variation>
                 </label>
             </subviews>

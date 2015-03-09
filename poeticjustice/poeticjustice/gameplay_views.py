@@ -836,7 +836,8 @@ def get_active_topics(request):
                     if topics[k]!=None:
                         results.append(topics[k])
 
-                res = {"results":results, "user_level":user.level, "user_score":user.user_score}
+                res = {"results":results, "user_level":user.level, "user_score":user.user_score, 
+                    "num_of_favorited_lines":user.num_of_favorited_lines}
                 print res
                 return res
 

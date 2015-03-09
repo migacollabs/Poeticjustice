@@ -280,6 +280,14 @@ class TopicsHelper {
                 atr.current_user_has_voted = cuhv
             }
             
+            if let ml = r["max_lines"] as? Int {
+                atr.max_lines = ml
+            }
+            
+            if let nl = r["num_lines"] as? Int {
+                atr.num_lines = nl
+            }
+            
             recs.append(atr)
         }
         
@@ -919,6 +927,10 @@ class TopicsViewController: UIViewController, UserDelegate {
                     
                     if let score = jsonResult["user_score"] as? Int {
                         NetOpers.sharedInstance.user.user_score = score
+                    }
+                    
+                    if let numFavs = jsonResult["num_of_favorited_lines"] as? Int {
+                        NetOpers.sharedInstance.user.num_favorited_lines = numFavs
                     }
                     
                     if let results = jsonResult["results"] as? NSArray {

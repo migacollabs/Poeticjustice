@@ -921,19 +921,20 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    
     func show_verse_title(title:String, message:String, controller_title:String){
         dispatch_async(dispatch_get_main_queue()) {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: controller_title, style: UIAlertActionStyle.Default, handler: nil))
             
             if let url = NSURL(string:self.verse.verse_title) {
+                
                 let open: ((UIAlertAction!) -> Void)! = { action in
                     UIApplication.sharedApplication().openURL(url)
                     return
                 }
                 
                 alertController.addAction(UIAlertAction(title: "Open in Safari", style: UIAlertActionStyle.Default, handler: open ))
+            
             }
             
             self.presentViewController(alertController, animated: true, completion: nil)

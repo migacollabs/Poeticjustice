@@ -85,7 +85,7 @@
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="You'll get to unlock more topics.  But more importantly you'll earn prestige!" translatesAutoresizingMaskIntoConstraints="NO" id="JqM-tR-riC">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="You'll get to unlock more topics.  But more importantly you'll earn prestige.  Finish topics to level up!" translatesAutoresizingMaskIntoConstraints="NO" id="JqM-tR-riC">
                     <rect key="frame" x="8" y="279" width="584" height="35"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="35" id="dkD-jD-HUQ"/>
