@@ -67,6 +67,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         // clear the labels
         self.currentUserName.text = ""
         self.winnerUserName.text = ""
+        self.voteMsgLabel.text = ""
         
         var screen_height = UIScreen.mainScreen().bounds.height
         
@@ -182,6 +183,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                         // there is a winner
                         self.winnerUserName.text = userName
                         self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
+                        self.voteMsgLabel.text = "And the winner is!"
                     }
                     
                     for(lineId, starCount) in starsForLines{
