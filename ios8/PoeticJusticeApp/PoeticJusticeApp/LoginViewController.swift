@@ -18,6 +18,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var email_address: UITextField!
     @IBOutlet var userLabel: UILabel!
     @IBOutlet var goButton: UIButton!
+    @IBOutlet var avatarLogo: UIButton!
     
     private var loginTimerCount : Int = 0
     private var is_busy : Bool = false
@@ -69,27 +70,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return false;
     }
     
-    func showActivityIndicator(uiView: UIView) {
+    func showActivityIndicator() {
         
         goButton.setTitle("", forState: UIControlState.Normal)
         
-        progressContainer.frame = uiView.frame
-        progressContainer.center = uiView.center
+        progressContainer.frame = self.goButton.frame
         progressContainer.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.00)
         
-        progressLoadingView.frame = CGRectMake(0, 0, 80, 80)
-        progressLoadingView.center = uiView.center
-        progressLoadingView.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.00)
-        progressLoadingView.clipsToBounds = true
-        progressLoadingView.layer.cornerRadius = 10
-        
-        activityIndicator.frame = CGRectMake(0.0, 0.0, 40, 40);
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: self.goButton.frame.width, height: self.goButton.frame.height)
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
-        activityIndicator.center = CGPointMake(progressLoadingView.frame.size.width / 2, progressLoadingView.frame.size.height / 2);
         
-        progressLoadingView.addSubview(activityIndicator)
-        progressContainer.addSubview(progressLoadingView)
-        uiView.addSubview(progressContainer)
+        progressContainer.addSubview(activityIndicator)
+        self.view.addSubview(progressContainer)
         activityIndicator.startAnimating()
     }
     
@@ -108,11 +100,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             title = user.user_name
             self.navigationController?.navigationBar.topItem?.title = "Home"
+            
+            self.avatarLogo.setImage(UIImage(named: user.avatarName), forState: .Normal)
+            
         } else {
             self.userLabel.text = "Sign In"
             
             title = "Home"
             self.navigationController?.navigationBar.topItem?.title = "Home"
+            
+            self.avatarLogo.setImage(UIImage(named: "avatar_default.png"), forState: .Normal)
         }
     }
     
@@ -165,7 +162,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if (!is_busy) {
             is_busy = true
             
-            self.showActivityIndicator(self.view)
+            self.showActivityIndicator()
             
             println("attempting login...")
             
