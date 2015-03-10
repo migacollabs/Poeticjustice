@@ -85,7 +85,7 @@ def get_site_addr():
     context='poeticjustice:contexts.AppRoot',
     request_method='GET',
     renderer='default.mako')
-def say_hello(request):
+def index(request):
     return {'app_name': 'Poeticjustice'}
 
 
