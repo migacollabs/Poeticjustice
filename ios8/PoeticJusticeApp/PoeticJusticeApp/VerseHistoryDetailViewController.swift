@@ -55,13 +55,13 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     var verseId: Int?
     var topic: Topic?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         var activityButton : UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "showActivityPanel")
         self.navigationItem.rightBarButtonItem = activityButton
         
+
         // Do any additional setup after loading the view.
         
         // clear the labels
@@ -69,7 +69,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         self.winnerUserName.text = ""
         self.voteMsgLabel.text = ""
         
-        var screen_height = UIScreen.mainScreen().bounds.height
+        
         
         self.viewLoaded = true
         

@@ -82,17 +82,17 @@
         <!--Verse History Detail View Controller-->
         <scene sceneID="ftA-Nb-LZV">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="pd3-xg-W7Y" customClass="VerseHistoryDetailViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="pd3-xg-W7Y" customClass="VerseHistoryDetailViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DKx-Ku-75f"/>
                         <viewControllerLayoutGuide type="bottom" id="NMe-EJ-dfC"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="KJg-gK-7aB">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tree_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Or0-ZK-uyb" userLabel="Background Image">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="555"/>
+                            <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tree_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Wkt-eQ-A1j">
+                                <rect key="frame" x="-4" y="0.0" width="608" height="600"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="unh-F7-RXC">
                                 <rect key="frame" x="0.0" y="138" width="600" height="280"/>
@@ -118,9 +118,6 @@
                                                             <exclude reference="Qpp-d8-XUz"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="8" y="1" width="342" height="36"/>
-                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nzh-Gy-5Bd">
                                                     <rect key="frame" x="568" y="5" width="24" height="24"/>
@@ -128,9 +125,6 @@
                                                         <constraint firstAttribute="width" constant="24" id="JGe-Jw-b9n"/>
                                                         <constraint firstAttribute="height" constant="24" id="Sqe-d3-vTe"/>
                                                     </constraints>
-                                                    <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="368" y="11" width="24" height="24"/>
-                                                    </variation>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SXZ-CZ-pvZ">
                                                     <rect key="frame" x="536" y="5" width="24" height="24"/>
@@ -138,9 +132,6 @@
                                                         <constraint firstAttribute="width" constant="24" id="TMa-dn-FYH"/>
                                                         <constraint firstAttribute="height" constant="24" id="dFA-Mo-AZs"/>
                                                     </constraints>
-                                                    <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="368" y="11" width="24" height="24"/>
-                                                    </variation>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dme-16-yzs">
                                                     <rect key="frame" x="504" y="5" width="24" height="24"/>
@@ -148,9 +139,6 @@
                                                         <constraint firstAttribute="height" constant="24" id="F9g-vN-Czf"/>
                                                         <constraint firstAttribute="width" constant="24" id="c1s-ho-wTP"/>
                                                     </constraints>
-                                                    <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="368" y="11" width="24" height="24"/>
-                                                    </variation>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8pr-ic-dbs">
                                                     <rect key="frame" x="472" y="5" width="24" height="24"/>
@@ -158,9 +146,6 @@
                                                         <constraint firstAttribute="width" constant="24" id="2pK-Ng-cz2"/>
                                                         <constraint firstAttribute="height" constant="24" id="HhQ-Dt-oXZ"/>
                                                     </constraints>
-                                                    <variation key="widthClass=compact" fixedFrame="YES">
-                                                        <rect key="frame" x="368" y="11" width="24" height="24"/>
-                                                    </variation>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -195,9 +180,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <variation key="widthClass=compact" ambiguous="YES">
-                                    <rect key="frame" x="0.0" y="155" width="400" height="285"/>
-                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="pd3-xg-W7Y" id="ihi-kx-sui"/>
                                     <outlet property="delegate" destination="pd3-xg-W7Y" id="F93-an-faB"/>
@@ -321,31 +303,21 @@
                             <constraint firstItem="t1h-qj-Edf" firstAttribute="leading" relation="lessThanOrEqual" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="504" id="EKV-Hq-qkZ"/>
                             <constraint firstItem="Kpg-2q-800" firstAttribute="leading" secondItem="t1h-qj-Edf" secondAttribute="trailing" constant="8" id="EeI-bO-jgJ"/>
                             <constraint firstItem="unh-F7-RXC" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="74" id="Ejd-Hx-Wvk"/>
-                            <constraint firstItem="Or0-ZK-uyb" firstAttribute="top" secondItem="KJg-gK-7aB" secondAttribute="topMargin" id="H01-Cr-9nR"/>
-                            <constraint firstItem="Or0-ZK-uyb" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-16" id="InU-B8-s1f"/>
+                            <constraint firstItem="Wkt-eQ-A1j" firstAttribute="bottom" secondItem="KJg-gK-7aB" secondAttribute="bottomMargin" id="Ewu-3Q-Enc"/>
+                            <constraint firstItem="Wkt-eQ-A1j" firstAttribute="top" secondItem="KJg-gK-7aB" secondAttribute="topMargin" id="Ffp-Hi-aZ9"/>
                             <constraint firstItem="VnU-ax-bsX" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-8" id="K49-Tq-44I"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Or0-ZK-uyb" secondAttribute="trailing" constant="-16" id="LZy-JS-Rxm"/>
+                            <constraint firstItem="Wkt-eQ-A1j" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-20" id="Kwl-ui-f8E"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Kpg-2q-800" secondAttribute="trailing" constant="-8" id="PmZ-4V-mLt"/>
                             <constraint firstItem="Kpg-2q-800" firstAttribute="top" secondItem="UZw-h1-OHJ" secondAttribute="bottom" constant="5" id="Rff-Ci-b4U"/>
-                            <constraint firstAttribute="centerY" secondItem="Or0-ZK-uyb" secondAttribute="centerY" id="UIE-m8-QVK"/>
                             <constraint firstItem="VnU-ax-bsX" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="8" id="WYW-I5-Gjc"/>
                             <constraint firstItem="Kpg-2q-800" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="42" id="axd-Cu-Vtw"/>
-                            <constraint firstAttribute="centerX" secondItem="Or0-ZK-uyb" secondAttribute="centerX" id="bjP-3I-IMT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Wkt-eQ-A1j" secondAttribute="trailing" constant="-20" id="cV1-Ni-jPB"/>
                             <constraint firstItem="W4j-2B-cVi" firstAttribute="leading" secondItem="KJg-gK-7aB" secondAttribute="leadingMargin" constant="-16" id="jzY-yp-9mK"/>
                             <constraint firstItem="NMe-EJ-dfC" firstAttribute="top" secondItem="W4j-2B-cVi" secondAttribute="bottom" constant="50" id="nae-QA-ysn"/>
-                            <constraint firstItem="NMe-EJ-dfC" firstAttribute="top" secondItem="Or0-ZK-uyb" secondAttribute="bottom" constant="1" id="qri-AU-DOb"/>
-                            <constraint firstItem="Or0-ZK-uyb" firstAttribute="top" secondItem="Kpg-2q-800" secondAttribute="bottom" constant="-130" id="wtX-zD-5Vv"/>
                             <constraint firstItem="t1h-qj-Edf" firstAttribute="top" secondItem="DKx-Ku-75f" secondAttribute="bottom" constant="45" id="xaF-b7-Xuw"/>
                             <constraint firstAttribute="trailingMargin" secondItem="W4j-2B-cVi" secondAttribute="trailing" constant="-16" id="yCF-ME-bTq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="unh-F7-RXC" secondAttribute="trailing" constant="-16" id="z45-1M-oL6"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="UIE-m8-QVK"/>
-                                <exclude reference="bjP-3I-IMT"/>
-                                <exclude reference="wtX-zD-5Vv"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="dqg-Yh-MXZ"/>
                     <connections>
