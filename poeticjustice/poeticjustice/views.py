@@ -81,6 +81,15 @@ def get_site_addr():
 
 
 @view_config(
+    name='',
+    context='poeticjustice:contexts.AppRoot',
+    request_method='GET',
+    renderer='default.mako')
+def say_hello(request):
+    return {'app_name': 'Poeticjustice'}
+
+
+@view_config(
     name='new',
     request_method='GET',
     context='poeticjustice:contexts.Users',
@@ -912,7 +921,7 @@ def public_verse(request):
                     .filter(LxV.verse_id==V.id)
                     .order_by(LxV.id)
                     ).all()
-            
+
             if rp:
                 for row in rp:
                     print row
