@@ -18,8 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tree_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="cjK-W8-BML" userLabel="Background Image">
-                                <rect key="frame" x="0.0" y="0.0" width="599" height="555"/>
+                            <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="tree_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="cjK-W8-BML" userLabel="Background Image">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4x9-5v-f4d">
                                 <rect key="frame" x="567" y="106" width="24" height="24"/>
@@ -292,15 +292,15 @@
                             <constraint firstItem="GZF-VJ-uTc" firstAttribute="top" relation="lessThanOrEqual" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="98" id="NIl-87-ew2"/>
                             <constraint firstItem="4x9-5v-f4d" firstAttribute="top" secondItem="ah7-Ue-5Yd" secondAttribute="bottom" constant="8" id="Nwh-C4-cOY"/>
                             <constraint firstItem="4x9-5v-f4d" firstAttribute="trailing" secondItem="jQ5-e5-6Uw" secondAttribute="trailingMargin" constant="7" id="SM8-4Z-CyC"/>
-                            <constraint firstItem="cjK-W8-BML" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="-16" id="UYd-6n-LQp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="cjK-W8-BML" secondAttribute="trailing" constant="-15" id="Wza-Yn-EUm"/>
+                            <constraint firstItem="cjK-W8-BML" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" id="UYd-6n-LQp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cjK-W8-BML" secondAttribute="trailing" id="Wza-Yn-EUm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="GZF-VJ-uTc" secondAttribute="trailing" constant="-16" id="Zfi-PA-X36"/>
                             <constraint firstItem="lSY-Qk-8Ee" firstAttribute="top" secondItem="Q1o-Fb-ueg" secondAttribute="bottom" constant="8" id="a2U-rs-7Mr"/>
                             <constraint firstItem="cjK-W8-BML" firstAttribute="top" secondItem="lSY-Qk-8Ee" secondAttribute="bottom" constant="-120" id="aUh-JE-6gV"/>
                             <constraint firstItem="0DR-KU-NfP" firstAttribute="leading" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="-16" id="bxo-MO-e5S"/>
                             <constraint firstItem="cjK-W8-BML" firstAttribute="top" secondItem="jQ5-e5-6Uw" secondAttribute="top" id="cqL-IS-oz3"/>
                             <constraint firstItem="GZF-VJ-uTc" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="8" id="dJV-V2-lGs"/>
-                            <constraint firstAttribute="bottom" secondItem="cjK-W8-BML" secondAttribute="bottom" constant="45" id="e6d-Nb-JGF"/>
+                            <constraint firstAttribute="bottom" secondItem="cjK-W8-BML" secondAttribute="bottom" id="e6d-Nb-JGF"/>
                             <constraint firstItem="5wv-f1-r5d" firstAttribute="top" secondItem="GZF-VJ-uTc" secondAttribute="bottom" constant="50" id="ftu-3L-SMp"/>
                             <constraint firstItem="Zh7-oI-lJi" firstAttribute="leading" relation="lessThanOrEqual" secondItem="jQ5-e5-6Uw" secondAttribute="leadingMargin" constant="504" id="kUA-Hk-2bP"/>
                             <constraint firstItem="5wv-f1-r5d" firstAttribute="top" secondItem="0DR-KU-NfP" secondAttribute="bottom" constant="130" id="me6-jS-dTR">
