@@ -79,9 +79,6 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
 
         // Do any additional setup after loading the view.
         
-        var refreshButton : UIBarButtonItem = UIBarButtonItem(title: "Help", style: UIBarButtonItemStyle.Plain, target: self, action: "showHelp")
-        self.navigationItem.rightBarButtonItem = refreshButton
-        
         // clear the labels
         self.currentUserName.text = ""
         self.winnerUserName.text = ""
@@ -340,6 +337,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 // if all the votes are in
                 if vr.votes.count == vr.user_ids.count{
                     
+                    var rightButton : UIBarButtonItem = UIBarButtonItem(
+                        barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "showActivityPanel")
+                    self.navigationItem.rightBarButtonItem = rightButton
+                    
                     var linesForPlayer = [Int:Int]()
                     var starsForLines = [Int:Int]()
                     
@@ -394,7 +395,12 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         
                     }
 
+                }else{
+                    var rightButton : UIBarButtonItem = UIBarButtonItem(
+                        title: "Help", style: UIBarButtonItemStyle.Plain, target: self, action: "showHelp")
+                    self.navigationItem.rightBarButtonItem = rightButton
                 }
+                
                 
                 var i = 0
                 for user_id in vr.user_ids {
@@ -947,6 +953,44 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     func showHelp(){
         self.show_alert("What's this?",
             message: "After each player awards their favorite line with a gold star you can see them all here. The player with the most stars wins this verse!", controller_title:"Ok, got it!")
+        
+    }
+    
+    func showActivityPanel(){
+        
+        if self.verseLinesForTable.count > 0{
+            
+            var url = NetOpers.sharedInstance.appserver_hostname! + "/v/p/vid=\(self.verseRec?.id)"
+            
+            var params = Dictionary<String,AnyObject>()
+            params["vid"]=self.verseRec?.id
+            params["user_id"]=NetOpers.sharedInstance.user.id
+            
+            var result = NetOpers.sharedInstance.sync_post(url, params: params)
+            if result != nil{
+                if let vk = result!["verse_key"] as? String{
+                    
+                    var site = result!["site_addr"] as String
+                    
+                    var verseUrl = "http://\(site)/v/p/k=\(vk)"
+                    
+                    var verseText:String = "A Verse from Iambic, Are You?\n----\n\(verseUrl)\n\n"
+                    
+                    verseText += self.verseRec!.title + "\n\n"
+                    
+                    for line in self.verseLinesForTable{
+                        verseText += line.text + "\n"
+                    }
+                    
+                    let objectsToShare = [verseText]
+                    let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+                    self.presentViewController(activityVC, animated: true, completion: nil)
+                    
+                }
+            }
+            
+            
+        }
         
     }
     
