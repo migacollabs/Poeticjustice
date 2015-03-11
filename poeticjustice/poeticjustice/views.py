@@ -551,6 +551,7 @@ def login_post(request):
 
                 else:
 
+                    log.info("new user")
                     user_obj = session.query(~User).filter((~User).email_address==login).first()
                     if user_obj:
                         user_obj = User(entity=user_obj)
@@ -572,7 +573,10 @@ def login_post(request):
 
                         user_obj.save(session=session, upsert=True)
 
+                        log.info("saved user")
 
+
+                        log.info("sending new user verify email")
                         try:
                             _send_notification(user_obj, 
                                 user_obj.auth_hash, 
@@ -600,6 +604,8 @@ def login_post(request):
                    
                     headers = remember(request, login)
                     request.response.headerlist.extend(headers)
+
+                    log.info("returning to new user")
 
                     return dict(
                         status='Ok',
