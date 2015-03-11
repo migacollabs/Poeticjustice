@@ -16,7 +16,7 @@
 
 
 <div class="small-12 small-centered medium-8 medium-centered columns text-center">
-    <h1 class="subheader">Poetic Justice App!</h1>
+    <h1 class="subheader">Iambic, Are You?</h1>
 </div>
 
 
