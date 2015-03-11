@@ -457,6 +457,8 @@ def get_leaderboard(request):
 
         with SQLAlchemySessionFactory() as session:
 
+            count = 0
+
             if leaderboard_type=="Friends":
                 # friends
                 if user_id:
@@ -465,40 +467,49 @@ def get_leaderboard(request):
                         if (f["approved"]==True):
                             friend_ids.append(f["friend_id"])
 
+                    count = 0
                     for r in session.query(U).filter(U.is_active==True).\
                         filter(U.id.in_(friend_ids)).\
                         order_by(desc(U.user_score)):
+                        count += 1
                         users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
                             "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level, 
-                            "num_of_favorited_lines":r.num_of_favorited_lines})
+                            "num_of_favorited_lines":r.num_of_favorited_lines, "rank":str(count)})
                 else:
+                    count = 0
                     # this won't happen but just in case...
                     for r in session.query(U).filter(U.is_active==True).\
                         order_by(desc(U.user_score)).limit(25):
+                        count += 1
                         users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
                             "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level,
-                            "num_of_favorited_lines":r.num_of_favorited_lines})
+                            "num_of_favorited_lines":r.num_of_favorited_lines, "rank":str(count)})
             else:
                 # global
                 if user_id:
+                    count = 0
                     has_user = False
                     for r in session.query(U).filter(U.is_active==True).order_by(desc(U.user_score)).limit(24):
+                        count += 1
                         if (r.id==user_id):
                             has_user = True
                         users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
                             "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level,
-                            "num_of_favorited_lines":r.num_of_favorited_lines})
+                            "num_of_favorited_lines":r.num_of_favorited_lines, "rank":str(count)})
 
+                    count = 0
                     if has_user==False:
                         for r in session.query(U).filter(U.id==user_id):
                             users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
                             "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level,
-                            "num_of_favorited_lines":r.num_of_favorited_lines})
+                            "num_of_favorited_lines":r.num_of_favorited_lines, "rank":"?"})
                 else:
+                    count = 0
                     for r in session.query(U).filter(U.is_active==True).order_by(desc(U.user_score)).limit(25):
+                        count += 1
                         users.append({"user_name":r.user_name, "user_score":r.user_score, "user_id":r.id,
                             "avatar_name":get_user_pref_data(r, "avatar_name"), "level":r.level,
-                            "num_of_favorited_lines":r.num_of_favorited_lines})
+                            "num_of_favorited_lines":r.num_of_favorited_lines, "rank":str(count)})
 
         return {"results":users}
 

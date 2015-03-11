@@ -32,6 +32,9 @@ class VerseHistoryMasterViewController: UITableViewController {
         
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/verse-history", load_verses)
         
+        var helpButton : UIBarButtonItem = UIBarButtonItem(title: "Help", style: UIBarButtonItemStyle.Plain, target: self, action: "handleHelpButton")
+        self.navigationItem.rightBarButtonItem = helpButton
+        
 //        var screen_height = UIScreen.mainScreen().bounds.height
 //        self.iAdBanner = self.appdelegate().iAdBanner
 //        //self.iAdBanner?.delegate = self
@@ -41,6 +44,10 @@ class VerseHistoryMasterViewController: UITableViewController {
 //            // self.view.addSubview(adb)
 //        }
         
+    }
+    
+    func handleHelpButton() {
+        self.show_alert("Verse History", message: "The verse history contains all of the verses that you participated in with voting completed.\n\nQuick tip: The player profile info found in each verse displays the player's score at the time the verse was completed!", controller_title:"Ok")
     }
     
     override func didReceiveMemoryWarning() {
