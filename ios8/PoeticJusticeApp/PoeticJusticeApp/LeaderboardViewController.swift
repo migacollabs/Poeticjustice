@@ -15,6 +15,7 @@ struct LeaderboardUserRec {
     var avatar_name : String = "avatar_default.png"
     var user_id : Int = -1
     var num_favorited_lines : Int = 0
+    var rank : String = ""
 }
 
 class LeaderboardTableViewCell: UITableViewCell {
@@ -152,6 +153,10 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                                 lr.num_favorited_lines = n
                             }
                             
+                            if let r = lu["rank"] as? String {
+                                lr.rank = r
+                            }
+                            
                             self.leaderboard_users.append(lr)
                         }
                         
@@ -233,7 +238,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         if let lc = cell as? LeaderboardTableViewCell{
             if let lur = self.leaderboard_users[indexPath.row] as LeaderboardUserRec? {
                 
-                lc.lineNum.text = String(indexPath.row+1) + "."
+                lc.lineNum.text = lur.rank + "."
                 lc.userScore.text = String(format: "x%03d", lur.user_score)
                 lc.numFavs.text = String(format: "x%03d", lur.num_favorited_lines)
                 lc.levelImage.image = UIImage(named: "lvl_" + String(lur.level) + ".png")
