@@ -558,6 +558,8 @@ def login_post(request):
 
                     if user_obj is None or user_obj.device_rec == None:
 
+                        log.info("no user obj or no device_rec")
+
                         if not user_obj:
                             user_obj = User(
                                 email_address=login,

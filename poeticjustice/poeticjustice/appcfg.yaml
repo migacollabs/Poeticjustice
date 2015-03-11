@@ -15,8 +15,8 @@ Web:
         css: poeticjustice/css
         scripts: poeticjustice/scripts
         foundation: poeticjustice/foundation
-    SiteName: mivid.io
-    Port: 8088
+    SiteName: iambicgame.com
+    Port: 80
 Resources:
     Database:
         User: postgres
