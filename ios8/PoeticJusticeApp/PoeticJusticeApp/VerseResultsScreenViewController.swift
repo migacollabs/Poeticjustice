@@ -36,7 +36,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var currentUserAvatarImage: UIImageView!
     @IBOutlet weak var currentUserCoinsImg: UIImageView!
     
-    @IBOutlet weak var winnerUserName: UILabel!
+    // @IBOutlet weak var winnerUserName: UILabel!
     @IBOutlet weak var winnerIcon: UIImageView!
     
     @IBOutlet weak var playerDataView: UIView!
@@ -81,7 +81,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         
         // clear the labels
         self.currentUserName.text = ""
-        self.winnerUserName.text = ""
+        // self.winnerUserName.text = ""
         self.voteMsgLabel.text = ""
         
 //        var screen_height = UIScreen.mainScreen().bounds.height
@@ -377,12 +377,15 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                             winners.append(player_id)
                         }
                     }
+                   
                     if winners.count == 1{
                         var userName = self.verseRec?.players[winners[0]]?.user_name
                         // there is a winner
-                        self.winnerUserName.text = userName
+                        // self.winnerUserName.text = userName
                         self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
-                        self.voteMsgLabel.text = "And the winner is!"
+                        self.voteMsgLabel.text = "And the winner is " + userName! + "!"
+                    } else {
+                        self.voteMsgLabel.text = "It's a draw!"
                     }
                     
                     for(lineId, starCount) in starsForLines{
