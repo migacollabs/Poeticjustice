@@ -236,7 +236,7 @@ def _send_notification(user_obj,
         auth_hash, device_auth_hash, device_type, email_tmpl_file, 
         subject='Iambic, Are You?', logo_name=None):
 
-    print '_send_notification called', auth_hash, device_auth_hash, device_type
+    log.info('_send_notification called', str(auth_hash), str(device_auth_hash), str(device_type))
 
     ac = get_app_config()
     dconfig = get_dinj_config(ac)
@@ -264,6 +264,8 @@ def _send_notification(user_obj,
     smtp_user = os.environ['POETIC_JUSTICE_SMTP_USER']
     smtp_server = os.environ['POETIC_JUSTICE_SMTP_SERVER']
 
+    log.info("creating emailer")
+
     emailer = Emailer(
         smtp_user, 
         smtp_psswd, 
@@ -275,7 +277,7 @@ def _send_notification(user_obj,
         'message_body': message_body},
         attached_logo=os.path.join(ASSETS_DIR, logo_name) if logo_name else None)
 
-    print 'sent email'
+    log.info( 'sent email' )
 
 
 @view_config(
@@ -403,7 +405,7 @@ def login_get(request):
 @forbidden_view_config(renderer='login.mako')
 def login_post(request):
     try:
-        print '\nlogin post called\n', request
+        log.info('\nlogin post called\n')
         login_url = request.resource_url(request.context, 'login')
         referrer = request.url
         if referrer == login_url:
