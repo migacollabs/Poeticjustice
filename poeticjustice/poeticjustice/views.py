@@ -484,7 +484,7 @@ def login_post(request):
 
                                 if do_notification(user, user.auth_hash, device_auth_hash, device_type):
 
-                                    user.device_rec = json.dumps({'device_token':None})
+                                    user.device_rec = json.dumps({device_token:None})
                                     user.is_invited = True
                                     user.save(session=session)
 
