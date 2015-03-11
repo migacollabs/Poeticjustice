@@ -77,7 +77,7 @@ def get_dinj_config(app_config):
 @memoize
 def get_site_addr():
         sn = get_dinj_config(get_app_config()).Web.SiteName 
-        return sn + ':%s'%PORT if PORT not in [80, '80', None, ''] else ''
+        return sn + ':%s'%PORT if PORT not in [80, '80', None, ''] else sn
 
 
 @view_config(
