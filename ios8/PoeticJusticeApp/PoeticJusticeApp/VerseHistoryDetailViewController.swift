@@ -33,7 +33,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     @IBOutlet weak var currentUserAvatarImage: UIImageView!
     @IBOutlet weak var currentUserCoinsImg: UIImageView!
     
-    @IBOutlet weak var winnerUserName: UILabel!
+    // @IBOutlet weak var winnerUserName: UILabel!
     @IBOutlet weak var winnerIcon: UIImageView!
     
     @IBOutlet weak var playerDataView: UIView!
@@ -66,7 +66,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         
         // clear the labels
         self.currentUserName.text = ""
-        self.winnerUserName.text = ""
+        // self.winnerUserName.text = ""
         self.voteMsgLabel.text = ""
         
         
@@ -181,9 +181,11 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                     if winners.count == 1{
                         var userName = self.verseRec?.players[winners[0]]?.user_name
                         // there is a winner
-                        self.winnerUserName.text = userName
+                        // self.winnerUserName.text = userName
                         self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
-                        self.voteMsgLabel.text = "And the winner is!"
+                        self.voteMsgLabel.text = "The winner is " + userName! + "!"
+                    } else {
+                        self.voteMsgLabel.text = "It's a draw!"
                     }
                     
                     for(lineId, starCount) in starsForLines{

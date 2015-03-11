@@ -320,10 +320,13 @@ class VerseHistoryMasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         if let tc = cell as? VerseHistoryTableViewCell{
-            var verse = self.verses[indexPath.row]
-            var topic = self.topics[verse.topicId] as Topic
-            tc.verseTitle?.text = verse.title
-            tc.topicImage?.image = UIImage(named: topic.main_icon_name as String)
+            if (self.verses.count>0 && self.topics.count>0) {
+                // ran into a rare error here (depending on sequence of which views the user navigates) where self.verses has data while self.topics does not.  this is just to make sure
+                var verse = self.verses[indexPath.row]
+                var topic = self.topics[verse.topicId] as Topic
+                tc.verseTitle?.text = verse.title
+                tc.topicImage?.image = UIImage(named: topic.main_icon_name as String)
+            }
         }
         return cell
     }
