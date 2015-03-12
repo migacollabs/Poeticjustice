@@ -38,7 +38,7 @@ h {
 
 <body>
 
-<img src="cid:mividio_logo" width="100">
+<img src="cid:Conversation.png" width="100">
 
 <div class="row">
     <div class="panel" style="overflow:auto;">

@@ -6,6 +6,7 @@ import copy
 import datetime
 import traceback
 import logging
+import requests
 import ConfigParser
 from hashlib import sha512
 from pyramid.response import Response
@@ -35,7 +36,7 @@ from pyaella.server.api import LutValues
 from pyaella.server.api import get_current_user, get_current_rbac_user
 
 import poeticjustice
-from poeticjustice import default_hashkey, idcoder_key
+from poeticjustice import default_hashkey, idcoder_key, MAILGUN_API_KEY
 from poeticjustice.models import *
 
 
@@ -238,6 +239,22 @@ def _send_notification(user_obj,
 
     log.info('_send_notification called', str(auth_hash), str(device_auth_hash), str(device_type))
 
+
+    def send_mail_gun(to_addr, subject, msg):
+        try:
+            return requests.post(
+                "https://api.mailgun.net/v2/mg.iambicgame.com/messages",
+                auth=("api", MAILGUN_API_KEY),
+                files=[("inline", open(os.path.join(ASSETS_DIR, logo_name)))] if logo_name else [],
+                data={"from": "Iambic! <mailgun@mg.iambicgame.com>",
+                      "to": [to_addr],
+                      "subject": "Hello",
+                      "html": msg
+                      })
+        except:
+            print traceback.format_exc()
+
+
     ac = get_app_config()
     dconfig = get_dinj_config(ac)
 
@@ -259,23 +276,27 @@ def _send_notification(user_obj,
 
     message_body = Template(filename=email_tmpl).render(**tmpl_vars)
 
-    # email the new user
-    smtp_psswd = os.environ['POETIC_JUSTICE_SMTP_PASSWORD']
-    smtp_user = os.environ['POETIC_JUSTICE_SMTP_USER']
-    smtp_server = os.environ['POETIC_JUSTICE_SMTP_SERVER']
+    res = send_mail_gun(user_obj.email_address, subject, message_body)
 
-    log.info("creating emailer")
+    print 'SENT MAIL GUN', res
 
-    emailer = Emailer(
-        smtp_user, 
-        smtp_psswd, 
-        smtp_server) \
-    .send_html_email({
-        'to': user_obj.email_address,
-        'from': smtp_user,
-        'subject': subject,
-        'message_body': message_body},
-        attached_logo=os.path.join(ASSETS_DIR, logo_name) if logo_name else None)
+    # # email the new user
+    # smtp_psswd = os.environ['POETIC_JUSTICE_SMTP_PASSWORD']
+    # smtp_user = os.environ['POETIC_JUSTICE_SMTP_USER']
+    # smtp_server = os.environ['POETIC_JUSTICE_SMTP_SERVER']
+
+    # log.info("creating emailer")
+
+    # emailer = Emailer(
+    #     smtp_user, 
+    #     smtp_psswd, 
+    #     smtp_server) \
+    # .send_html_email({
+    #     'to': user_obj.email_address,
+    #     'from': smtp_user,
+    #     'subject': subject,
+    #     'message_body': message_body},
+    #     attached_logo=os.path.join(ASSETS_DIR, logo_name) if logo_name else None)
 
     log.info( 'sent email' )
 
