@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
 
     var window: UIWindow?
     var iAdBanner: ADBannerView = ADBannerView(adType: ADAdType.Banner)
-    var timer : NSTimer?
+    var timer : NSTimer = NSTimer()
     var tabBarController : UITabBarController?
     
     var isPaused = false
@@ -51,10 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         self.isPaused = true
-        if let t = timer {
-            println("Stopping timer from refreshing navigation badges")
-            t.invalidate()
-        }
+        println("Stopping timer from refreshing navigation badges")
+        self.timer.invalidate()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -64,7 +62,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
+        
         println("Starting timer to refresh navigation badges")
+        
+        if (self.timer.valid) {
+            self.timer.invalidate()
+        }
+        
         timer = NSTimer.scheduledTimerWithTimeInterval(45.0, target: self, selector: Selector("refreshNavigationBadges"), userInfo: nil, repeats: true)
         self.isPaused = false
     }
