@@ -2,7 +2,7 @@
 <html>
 <head>
 
-    <title>Poetic Justice App - Verified</title>
+    <title>Iambic, Are You? - Verified</title>
 
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width"/>
@@ -33,7 +33,7 @@
 
 			% if verified:
 
-				<h5>Email verified! Please launch Poetic Justice App and sign in!</h5>
+				<h5>Email verified! Please launch Iambic, Are You? and sign in!</h5>
 
 			% else:
 
