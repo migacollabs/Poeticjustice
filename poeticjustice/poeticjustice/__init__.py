@@ -6,3 +6,5 @@ default_hashkey = (
 )
 
 idcoder_key = 'zq03dr2hs1xj9atec4kv8bp7yg6fw5mn'
+
+MAILGUN_API_KEY = 'key-d7d2d69c924fedd5867c5a97d8345046'
