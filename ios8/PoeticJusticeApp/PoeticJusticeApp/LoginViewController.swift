@@ -22,7 +22,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     private var loginTimerCount : Int = 0
     private var is_busy : Bool = false
-    private var timer : NSTimer?
+    private var timer : NSTimer = NSTimer()
     private var audioPlayer : AVAudioPlayer?
     
     var progressContainer: UIView = UIView()
@@ -129,30 +129,33 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // TODO: possible error handling or clean up post netopers stuff?
         println("finished netopers login")
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("verifyLogin"), userInfo: nil, repeats: true)
+        if (self.timer.valid) {
+            self.timer.invalidate()
+        }
+        
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("verifyLogin"), userInfo: nil, repeats: true)
         loginTimerCount = 0
     }
     
     func verifyLogin() {
         println("verifying login on timer")
-        if let t = timer {
-            if (NetOpers.sharedInstance.user.is_logged_in()) {
-                println("login verified, stopping timer")
-                t.invalidate()
-            } else {
-                if loginTimerCount>8 {
-                    println("server was probably down, unlocking the go button to try again")
-                    is_busy = false
-                    
-                    t.invalidate()
-                    
-                    self.show_alert("Oops", message: "Looks like there was a network issue.  Please try again!", controller_title: "Ok")
-                    
-                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                    self.hideActivityIndicator()
-                }
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
+            println("login verified, stopping timer")
+            self.timer.invalidate()
+        } else {
+            if loginTimerCount>8 {
+                println("server was probably down, unlocking the go button to try again")
+                is_busy = false
+                
+                self.timer.invalidate()
+                
+                self.show_alert("Oops", message: "Looks like there was a network issue.  Please try again!", controller_title: "Ok")
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                self.hideActivityIndicator()
             }
         }
+        
         loginTimerCount += 1
     }
     
