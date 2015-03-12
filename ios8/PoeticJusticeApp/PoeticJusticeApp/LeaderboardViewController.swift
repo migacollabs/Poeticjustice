@@ -197,8 +197,6 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     
     func animateTable() {
         
-        selectedRowImage.removeFromSuperview()
-        
         self.myTableView.reloadData()
         
         let cells = self.myTableView.visibleCells()
@@ -229,7 +227,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         return leaderboard_users.count
     }
     
-    private var selectedRowImage : UIImageView = UIImageView(image: UIImage(named: "Init.png"));
+//    private var selectedRowImage : UIImageView = UIImageView(image: UIImage(named: "mine_complete.png"));
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -253,10 +251,10 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                     // selectedRowImage.frame = CGRect(x: -27, y: 15.0, width: 56, height: 56)
                     
                     // large circle behind the avatar
-                    selectedRowImage.frame = CGRect(x: cell.frame.size.width - 60, y: 12, width: 56, height: 56)
-                 
-                    cell.addSubview(selectedRowImage);
-                    cell.sendSubviewToBack(selectedRowImage);
+//                    selectedRowImage.frame = CGRect(x: 0, y: 0, width: 56, height: 56)
+//                 
+//                    lc.avatarImage.addSubview(selectedRowImage);
+//                    lc.avatarImage.sendSubviewToBack(selectedRowImage);
                 }
             }
         }

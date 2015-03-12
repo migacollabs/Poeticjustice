@@ -24,6 +24,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var is_busy : Bool = false
     private var timer : NSTimer = NSTimer()
     private var audioPlayer : AVAudioPlayer?
+    private var isVerifyingEmail : Bool = false
     
     var progressContainer: UIView = UIView()
     var progressLoadingView: UIView = UIView()
@@ -137,8 +138,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginTimerCount = 0
     }
     
+    
+    
     func verifyLogin() {
         println("verifying login on timer")
+        
+        if (self.isVerifyingEmail) {
+            self.timer.invalidate()
+            self.isVerifyingEmail = false
+        }
+        
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             println("login verified, stopping timer")
             self.timer.invalidate()
@@ -261,7 +270,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func on_email_notification() {
-        is_busy = false
+        self.isVerifyingEmail = true
+        self.is_busy = false
         hideActivityIndicator();
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }

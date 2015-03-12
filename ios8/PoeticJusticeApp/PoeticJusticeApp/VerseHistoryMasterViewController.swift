@@ -27,10 +27,15 @@ class VerseHistoryMasterViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         //self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
-        
-        NetOpers.sharedInstance._load_topics(loadTopicData)
-        
-        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/verse-history", load_verses)
+        if (NetOpers.sharedInstance.user.is_logged_in()) {
+            
+            NetOpers.sharedInstance._load_topics(loadTopicData)
+            
+            NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/verse-history", load_verses)
+            
+        } else {
+            self.show_alert("You are not signed in", message: "Please sign in before viewing your verse history.", controller_title: "Ok")
+        }
         
         var helpButton : UIBarButtonItem = UIBarButtonItem(title: "Help", style: UIBarButtonItemStyle.Plain, target: self, action: "handleHelpButton")
         self.navigationItem.rightBarButtonItem = helpButton
