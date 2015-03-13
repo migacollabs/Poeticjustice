@@ -140,10 +140,10 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RDd-pJ-CHQ">
-                    <rect key="frame" x="235" y="350" width="118" height="50"/>
+                    <rect key="frame" x="234" y="350" width="118" height="50"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qb3-ed-ESX">
-                            <rect key="frame" x="43" y="0.0" width="55" height="48"/>
+                            <rect key="frame" x="42" y="0.0" width="55" height="48"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <state key="normal" title=" Avatar">
                                 <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -154,7 +154,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EFB-QK-31i">
-                            <rect key="frame" x="-5" y="0.0" width="48" height="48"/>
+                            <rect key="frame" x="-2" y="0.0" width="48" height="48"/>
                             <state key="normal" title="Button" image="avatar_default.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -191,7 +191,7 @@
                 <constraint firstItem="ym8-Dp-9WO" firstAttribute="top" relation="greaterThanOrEqual" secondItem="RDd-pJ-CHQ" secondAttribute="bottom" constant="8" id="Esk-Bi-yuY"/>
                 <constraint firstAttribute="centerX" secondItem="Prw-C7-NFc" secondAttribute="centerX" id="FYZ-da-GJ0"/>
                 <constraint firstItem="RsI-de-Ca4" firstAttribute="bottom" secondItem="UOE-rm-V6E" secondAttribute="bottom" id="GVF-rG-j0H"/>
-                <constraint firstAttribute="centerX" secondItem="RDd-pJ-CHQ" secondAttribute="centerX" constant="6" id="J3Y-My-m9X"/>
+                <constraint firstAttribute="centerX" secondItem="RDd-pJ-CHQ" secondAttribute="centerX" constant="7" id="J3Y-My-m9X"/>
                 <constraint firstItem="DeK-pn-1LR" firstAttribute="top" secondItem="qRP-Qs-sqY" secondAttribute="bottom" constant="27" id="MiU-ub-gag"/>
                 <constraint firstItem="RDd-pJ-CHQ" firstAttribute="top" secondItem="DeK-pn-1LR" secondAttribute="bottom" constant="13" id="Mza-cs-fI8"/>
                 <constraint firstAttribute="centerX" secondItem="xBS-xc-17G" secondAttribute="centerX" id="Oik-QO-ICw"/>
