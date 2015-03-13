@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KFD-JT-K5a">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="avatar_default.png" translatesAutoresizingMaskIntoConstraints="NO" id="KFD-JT-K5a">
                     <rect key="frame" x="536" y="10" width="64" height="64"/>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W49-Fz-mrs">
@@ -47,7 +47,7 @@
                         </mask>
                     </variation>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I25-be-IWe">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lvl_1.png" translatesAutoresizingMaskIntoConstraints="NO" id="I25-be-IWe">
                     <rect key="frame" x="536" y="50" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="NNq-Py-DRe"/>
@@ -128,10 +128,12 @@
                 <outlet property="userName" destination="upN-TJ-iRA" id="9ER-8V-ATc"/>
                 <outlet property="userScore" destination="3sM-wG-dvl" id="xjt-0d-5Xn"/>
             </connections>
-            <point key="canvasLocation" x="297" y="150"/>
+            <point key="canvasLocation" x="297" y="110"/>
         </view>
     </objects>
     <resources>
+        <image name="avatar_default.png" width="256" height="256"/>
+        <image name="lvl_1.png" width="256" height="256"/>
         <image name="star_gold_256.png" width="256" height="256"/>
         <image name="tea-plant-leaf-icon.png" width="229" height="217"/>
     </resources>

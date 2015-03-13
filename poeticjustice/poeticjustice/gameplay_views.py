@@ -1111,7 +1111,8 @@ def get_user_level_up_progress(request):
             )
         )
         if user and user.is_active and user.email_address==auth_usrid:
-            return get_level_progress(user.id, user.level)
+            with SQLAlchemySessionFactory() as session:
+                return get_level_progress(user.id, user.level, session)
 
         raise HTTPUnauthorized
 
@@ -1129,7 +1130,7 @@ def get_user_level_up_progress(request):
         except:
             pass
 
-def get_level_progress(userId, level):
+def get_level_progress(userId, level, session):
     # this function can be used to determine if a user should level
     # up.  just need to make sure num_completed_verses = total_verses.
     # also, num_incomplete_verses should be zero
@@ -1143,13 +1144,12 @@ def get_level_progress(userId, level):
 
     verses = {}
 
-    with SQLAlchemySessionFactory() as session:
-        U, LxV, V = ~User, ~LineXVerse, ~Verse
-        for r in session.query(V, LxV).filter(LxV.verse_id==V.id).\
-            filter(LxV.user_level==level).\
-            filter(LxV.user_id==userId):
-            num_lines += 1
-            verses[r[0].id]=r[0].complete
+    U, LxV, V = ~User, ~LineXVerse, ~Verse
+    for r in session.query(V, LxV).filter(LxV.verse_id==V.id).\
+        filter(LxV.user_level==level).\
+        filter(LxV.user_id==userId):
+        num_lines += 1
+        verses[r[0].id]=r[0].complete
 
     for k in verses:
         if verses[k]==True:
@@ -1161,10 +1161,9 @@ def get_level_progress(userId, level):
         "num_incomplete_verses":num_incomplete_verses, "num_verses_required":num_verses_required,
         "current_level":level}}
 
-
-def do_level_up(user):
+def do_level_up(user, session):
     # return true if the user should level up from their current level
-    level = get_level_progress(user.id, user.level)
+    level = get_level_progress(user.id, user.level, session)
     return level["results"]["num_complete_verses"]==level["results"]["num_verses_required"]
 
 @view_config(
@@ -1214,7 +1213,7 @@ def save_verse_line(request):
                 setattr(verse, 'next_index_user_ids', verse.next_index_user_ids)
                 verse.save(session=session)
 
-                if (do_level_up(user)):
+                if (do_level_up(user, session)):
                     print 'user is leveling up'
                     user.level = user.level + 1
                 else:

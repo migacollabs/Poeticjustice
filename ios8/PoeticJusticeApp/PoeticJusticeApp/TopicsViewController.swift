@@ -150,17 +150,16 @@ class ActiveTopic {
             
             println("refresh active topic_id \(activeTopicRec.topic_id) - turns left for player \(counts)")
             
+            topicStateAnimDuration = 4.0
+            
             if (counts==0) {
+                // player's turn to write a line
                 topicStateAnimDuration = 1.0
             } else {
-                
-                if ((activeTopicRec.num_lines + counts) >= activeTopicRec.max_lines) {
-                    // time to get that vote in
-                    topicStateAnimDuration = 1.0
-                } else {
-                    topicStateAnimDuration = 4.0
+                // player's turn to wait, unless it's time to vote
+                if (activeTopicRec.num_lines>=activeTopicRec.max_lines && !activeTopicRec.current_user_has_voted) {
+                        topicStateAnimDuration = 1.0
                 }
-                
             }
             
         } else {

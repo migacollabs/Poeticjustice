@@ -81,7 +81,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var player5Avatar: UIImageView!
     
     private var textViewBlock : UIView = UIView()
-    
+    private var userEnteredLine : Bool = false
     
     @IBOutlet var cancelButton: UIButton!
     // var iAdBanner: ADBannerView?
@@ -140,6 +140,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
             textView.text = nil
             textView.textColor = UIColor.blackColor()
         }
+        userEnteredLine = true
     }
     
     func textFieldShouldReturn(textView: UITextView!) -> Bool {
@@ -186,6 +187,8 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
     override func viewWillAppear(animated: Bool) {
         
         createTextViewBlock()
+        
+        userEnteredLine = false
         
 //        var screen_height = UIScreen.mainScreen().bounds.height
 //        self.canDisplayBannerAds = true
@@ -587,32 +590,40 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func sendLine(sender: AnyObject) {
         
-        if (!is_busy) {
+        if (!is_busy && userEnteredLine) {
             is_busy = true
             
             self.setLine.resignFirstResponder()
             
-            animateButtonTapped();
-            
-            is_my_turn = false
-            
             // println("Clicked send " + setLine.text)
             
-            playButtonSound()
+            var line : String = setLine.text
             
-            var params = Dictionary<String,AnyObject>()
-            params["topic_id"]=topic?.id
-            params["line"]=setLine.text
-            params["verse_id"]=verseId
+            var count = countElements(line)
+        
+            if (count>65 || count==0) {
+                self.show_alert("Invalid Line", message: "Please enter a line between 1 and 65 characters in length.  Current character length is \(count).", controller_title:"Ok")
+            } else {
+                
+                var params = Dictionary<String,AnyObject>()
+                params["topic_id"]=topic?.id
+                
+                animateButtonTapped();
+                
+                is_my_turn = false
+                
+                playButtonSound()
+                
+                params["line"]=line
+                params["verse_id"]=verseId
+                
+                createTextViewBlock()
+                
+                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
+                
+                self.setLine.text = ""
+            }
             
-            // println("hitting saveline url")
-            // println(params)
-            
-            createTextViewBlock()
-            
-            NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
-            
-            self.setLine.text = ""
         }
         
     }
