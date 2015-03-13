@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -83,7 +83,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="56" id="7vj-uU-3t7"/>
                     </constraints>
-                    <string key="text">Choose a topic, start a verse, and write a line!  The tiny dots around the topics represent who you're playing with: blue for friends, green for anyone, and grey are ones you created.</string>
+                    <string key="text">Choose a topic, start a verse, and write a line!  The dots around the topics represent who started the verse: blue for friends, green for anyone, and yellow are yours.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>

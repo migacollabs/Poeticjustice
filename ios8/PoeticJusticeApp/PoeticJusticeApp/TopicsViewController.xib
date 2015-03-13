@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
@@ -21,7 +21,7 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" bounces="NO" minimumZoomScale="0.10000000000000001" maximumZoomScale="2" translatesAutoresizingMaskIntoConstraints="NO" id="sOo-jU-jWS">
                     <rect key="frame" x="0.0" y="0.0" width="1900" height="4500"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" alpha="0.59999999999999964" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topic_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="emx-BP-0Od">
+                        <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="topic_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="emx-BP-0Od">
                             <rect key="frame" x="-121" y="-62" width="953" height="1186"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="953" id="I3H-0u-iqM"/>

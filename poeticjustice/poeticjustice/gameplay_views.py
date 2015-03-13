@@ -847,6 +847,16 @@ def get_active_topics(request):
                     if topics[k]!=None:
                         results.append(topics[k])
 
+                # check if user can level up
+                user = User(entity=session.merge(user))
+
+                if (do_level_up(user, session)):
+                    print 'user is leveling up'
+                    user.level = user.level + 1
+                    user.save(session=session)
+                else:
+                    print 'user is not leveling up'
+
                 res = {"results":results, "user_level":user.level, "user_score":user.user_score, 
                     "num_of_favorited_lines":user.num_of_favorited_lines}
                 print res
@@ -1330,6 +1340,7 @@ def start_topic(request):
                 ]
             )
         )
+
         if user and user.is_active:
             with SQLAlchemySessionFactory() as session:
                 user = User(entity=session.merge(user))
