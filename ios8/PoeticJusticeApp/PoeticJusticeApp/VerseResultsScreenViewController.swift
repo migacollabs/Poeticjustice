@@ -36,6 +36,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     @IBOutlet weak var currentUserAvatarImage: UIImageView!
     @IBOutlet weak var currentUserCoinsImg: UIImageView!
     
+    var currentUserId: Int = -1
+    
     // @IBOutlet weak var winnerUserName: UILabel!
     @IBOutlet weak var winnerIcon: UIImageView!
     
@@ -512,9 +514,13 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     
     func updateCurrentUser(userId:Int){
         var player = self.verseRec!.players[userId]
-        if let x = self.currentUserName{
-            x.text = player!.user_name
+        if player != nil{
+            if let x = self.currentUserName{
+                self.currentUserId = player!.user_id
+                x.text = player!.user_name
+            }
         }
+
     }
     
     func setStarOnRow(indexPath:NSIndexPath){
@@ -811,7 +817,9 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         if let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell{
             if let pc = cell as? PlayerLineTableViewCell{
                 
-                var h = self.heightForLabel(vlr.text, font:pc.verseLabel.font, width:pc.verseLabel.frame.width)
+                var w = UIScreen.mainScreen().bounds.width * 0.8
+                
+                var h = self.heightForLabel(vlr.text, font:pc.verseLabel.font, width:w)
                 
                 if h > 17.0{
                     return 35.0 + 17.0

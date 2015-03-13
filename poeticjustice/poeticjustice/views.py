@@ -467,7 +467,7 @@ def login_post(request):
         user_country = "earth_flag"
         try:
             if request.remote_addr:
-                geo_match = geolite2.lookup("97.124.28.77")
+                geo_match = geolite2.lookup(request.remote_addr)
                 if geo_match:
                     user_country = geo_match.country
         except:

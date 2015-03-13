@@ -492,7 +492,9 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         if let cell = tableView.dequeueReusableCellWithIdentifier("Cell") as? UITableViewCell{
             if let pc = cell as? PlayerLineTableViewCell{
                 
-                var h = self.heightForLabel(vlr.text, font:pc.verseLabel.font, width:pc.verseLabel.frame.width)
+                var w = UIScreen.mainScreen().bounds.width * 0.8
+                
+                var h = self.heightForLabel(vlr.text, font:pc.verseLabel.font, width:w)
                 
                 if h > 17.0{
                     return 35.0 + 17.0
