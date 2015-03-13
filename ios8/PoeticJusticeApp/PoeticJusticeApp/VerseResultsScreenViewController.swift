@@ -333,80 +333,10 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     
                 }
                 
-                //self.tableView.reloadData()
                 self.animateTable()
                 
-                // if all the votes are in
-                if vr.votes.count == vr.user_ids.count{
-                    
-                    var rightButton : UIBarButtonItem = UIBarButtonItem(
-                        barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "showActivityPanel")
-                    self.navigationItem.rightBarButtonItem = rightButton
-                    
-                    var linesForPlayer = [Int:Int]()
-                    var starsForLines = [Int:Int]()
-                    
-                    for pid in vr.user_ids{
-                        linesForPlayer[pid as Int] = 0 as Int
-                    }
-                    
-                    // tally votes for each player's line
-                    for (voter, line_id) in vr.votes{
-                        
-                        if var vlfv = self.verseLinesForVoting[line_id as Int]{
-                            if (contains(linesForPlayer.keys, vlfv.player_id)) {
-                                linesForPlayer[vlfv.player_id]! += 1
-                            }
-                            
-                            vlfv.line_score += 1
-                            
-                            if(contains(starsForLines.keys, line_id)){
-                                starsForLines[line_id]! += 1
-                            }else{
-                                starsForLines[line_id] = 1
-                            }
-                            
-                        }
-                    }
-                    
-                    var winners:[Int] = []
-                    var highestScore = 0
-                    for (player_id, tally) in linesForPlayer{
-                        if tally > highestScore{
-                            highestScore = tally
-                            winners = [player_id]
-                        }else if tally == highestScore{
-                            winners.append(player_id)
-                        }
-                    }
-                   
-                    if winners.count == 1{
-                        var userName = self.verseRec?.players[winners[0]]?.user_name
-                        // there is a winner
-                        // self.winnerUserName.text = userName
-                        self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
-                        self.voteMsgLabel.text = "And the winner is " + userName! + "!"
-                    } else {
-                        self.voteMsgLabel.text = "It's a draw!"
-                    }
-                    
-                    for(lineId, starCount) in starsForLines{
-                        var rowNumber = find(self.sortedLineIndexes, lineId)
-                        self.verseLinesForTable[rowNumber!].line_score += 1
-                        
-                        if rowNumber != nil{
-                            self.setVoteStarOnRow(NSIndexPath(forRow:rowNumber!, inSection:0), numOfStars: starCount)
-                        }
-                        
-                    }
+                self.checkVotes()
 
-                }else{
-                    var rightButton : UIBarButtonItem = UIBarButtonItem(
-                        title: "Help", style: UIBarButtonItemStyle.Plain, target: self, action: "showHelp")
-                    self.navigationItem.rightBarButtonItem = rightButton
-                }
-                
-                
                 var i = 0
                 for user_id in vr.user_ids {
                     
@@ -461,8 +391,86 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         }
         
         //self.tableView.reloadData()
-        
     }
+    
+    
+    func checkVotes(){
+        
+        if let vr = self.verseRec{
+            
+            // if all the votes are in
+            if vr.votes.count == vr.user_ids.count{
+                
+                var rightButton : UIBarButtonItem = UIBarButtonItem(
+                    barButtonSystemItem: UIBarButtonSystemItem.Action, target: self, action: "showActivityPanel")
+                self.navigationItem.rightBarButtonItem = rightButton
+                
+                var linesForPlayer = [Int:Int]()
+                var starsForLines = [Int:Int]()
+                
+                for pid in vr.user_ids{
+                    linesForPlayer[pid as Int] = 0 as Int
+                }
+                
+                // tally votes for each player's line
+                for (voter, line_id) in vr.votes{
+                    
+                    if var vlfv = self.verseLinesForVoting[line_id as Int]{
+                        if (contains(linesForPlayer.keys, vlfv.player_id)) {
+                            linesForPlayer[vlfv.player_id]! += 1
+                        }
+                        
+                        vlfv.line_score += 1
+                        
+                        if(contains(starsForLines.keys, line_id)){
+                            starsForLines[line_id]! += 1
+                        }else{
+                            starsForLines[line_id] = 1
+                        }
+                        
+                    }
+                }
+                
+                var winners:[Int] = []
+                var highestScore = 0
+                for (player_id, tally) in linesForPlayer{
+                    if tally > highestScore{
+                        highestScore = tally
+                        winners = [player_id]
+                    }else if tally == highestScore{
+                        winners.append(player_id)
+                    }
+                }
+                
+                if winners.count == 1{
+                    var userName = self.verseRec?.players[winners[0]]?.user_name
+                    // there is a winner
+                    // self.winnerUserName.text = userName
+                    self.winnerIcon.image = UIImage(named:"medal-ribbon.png")
+                    self.voteMsgLabel.text = "And the winner is " + userName! + "!"
+                } else {
+                    self.voteMsgLabel.text = "It's a draw!"
+                }
+                
+                for(lineId, starCount) in starsForLines{
+                    var rowNumber = find(self.sortedLineIndexes, lineId)
+                    self.verseLinesForTable[rowNumber!].line_score += 1
+                    
+                    if rowNumber != nil{
+                        self.setVoteStarOnRow(NSIndexPath(forRow:rowNumber!, inSection:0), numOfStars: starCount)
+                    }
+                    
+                }
+                
+            }else{
+                var rightButton : UIBarButtonItem = UIBarButtonItem(
+                    title: "Help", style: UIBarButtonItemStyle.Plain, target: self, action: "showHelp")
+                self.navigationItem.rightBarButtonItem = rightButton
+            }
+            
+        }
+    }
+    
     
     func highlightAvatar(userId:Int){
         
@@ -711,6 +719,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                             dispatch_async(dispatch_get_main_queue(), {
                                                 //self.voteMsgLabel.text = "Vote confirmed!"
                                                 self.setStarOnRow(indexPath)
+                                                self.checkVotes()
                                             })
                                             
                                             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
