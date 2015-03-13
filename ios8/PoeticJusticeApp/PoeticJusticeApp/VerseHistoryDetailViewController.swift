@@ -33,6 +33,9 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     @IBOutlet weak var currentUserAvatarImage: UIImageView!
     @IBOutlet weak var currentUserCoinsImg: UIImageView!
     
+    var currentUserId = -1
+    var prevUserId = -1
+    
     // @IBOutlet weak var winnerUserName: UILabel!
     @IBOutlet weak var winnerIcon: UIImageView!
     
@@ -251,53 +254,59 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         }
     }
     
+    
     func highlightAvatar(userId:Int){
         
-        self.avatarPlayerOne.backgroundColor = UIColor.clearColor()
-        self.avatarPlayerTwo.backgroundColor = UIColor.clearColor()
-        self.avatarPlayerThree.backgroundColor = UIColor.clearColor()
-        self.avatarPlayerFour.backgroundColor = UIColor.clearColor()
-        self.avatarPlayerFive.backgroundColor = UIColor.clearColor()
-        
-        if let idx = find(self.verseRec!.user_ids, userId){
+        if userId != self.prevUserId{
+            self.avatarPlayerOne.backgroundColor = UIColor.clearColor()
+            self.avatarPlayerTwo.backgroundColor = UIColor.clearColor()
+            self.avatarPlayerThree.backgroundColor = UIColor.clearColor()
+            self.avatarPlayerFour.backgroundColor = UIColor.clearColor()
+            self.avatarPlayerFive.backgroundColor = UIColor.clearColor()
             
-            var avatarPlayer: UIImageView?
-            
-            switch idx{
-            case 0:
-                avatarPlayer = self.avatarPlayerOne
-            case 1:
-                avatarPlayer = self.avatarPlayerTwo
-            case 2:
-                avatarPlayer = self.avatarPlayerThree
-            case 3:
-                avatarPlayer = self.avatarPlayerFour
-            case 4:
-                avatarPlayer = self.avatarPlayerFive
-            default:
-                ()
-            }
-            
-            if avatarPlayer != nil{
-                avatarPlayer!.backgroundColor = GameStateColors.LightBlueT
+            if let idx = find(self.verseRec!.user_ids, userId){
                 
-                if avatarPlayer!.frame.origin.x != self.currentUserName!.frame.origin.x{
+                var avatarPlayer: UIImageView?
+                
+                switch idx{
+                case 0:
+                    avatarPlayer = self.avatarPlayerOne
+                case 1:
+                    avatarPlayer = self.avatarPlayerTwo
+                case 2:
+                    avatarPlayer = self.avatarPlayerThree
+                case 3:
+                    avatarPlayer = self.avatarPlayerFour
+                case 4:
+                    avatarPlayer = self.avatarPlayerFive
+                default:
+                    ()
+                }
+                
+                if avatarPlayer != nil{
+                    avatarPlayer!.backgroundColor = GameStateColors.LightBlueT
                     
-                    self.currentUserName.frame.origin.x = avatarPlayer!.frame.origin.x
-                    
-                    UIView.animateWithDuration(0.5, delay: 0.25, options: .CurveEaseOut, animations: {
-                        var offset = avatarPlayer!.frame.origin.x
-                        self.currentUserName!.frame = CGRectOffset( self.currentUserName!.frame, offset, 0 )
-                        self.currentUserNameConstraint.constant = offset
-                        }, nil
-                    )
+                    if avatarPlayer!.frame.origin.x != self.currentUserName!.frame.origin.x{
+                        
+                        self.currentUserName.frame.origin.x = avatarPlayer!.frame.origin.x
+                        
+                        UIView.animateWithDuration(0.5, delay: 0.25, options: .CurveEaseOut, animations: {
+                            var offset = avatarPlayer!.frame.origin.x
+                            self.currentUserName!.frame = CGRectOffset( self.currentUserName!.frame, offset, 0 )
+                            self.currentUserNameConstraint.constant = offset
+                            }, nil
+                        )
+                    }
                 }
             }
         }
     }
     
+    
     func updateCurrentUser(userId:Int){
         var player = self.verseRec!.players[userId]
+        self.prevUserId = self.currentUserId
+        self.currentUserId = userId
         if let x = self.currentUserName{
             x.text = player!.user_name
         }
