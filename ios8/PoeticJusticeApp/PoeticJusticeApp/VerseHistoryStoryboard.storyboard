@@ -261,7 +261,7 @@
                                     <constraint firstItem="Kmp-PV-MII" firstAttribute="top" secondItem="W4j-2B-cVi" secondAttribute="top" constant="8" id="hU1-Eg-9Yi"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnU-ax-bsX">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VnU-ax-bsX">
                                 <rect key="frame" x="8" y="72" width="48" height="48"/>
                                 <state key="normal" image="Acoustic-Guitar.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
