@@ -15,11 +15,16 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="LtZ-RG-9n8">
-                    <rect key="frame" x="0.0" y="0.0" width="814" height="600"/>
+                <imageView userInteractionEnabled="NO" alpha="0.25" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title_background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="LtZ-RG-9n8">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="814" id="92p-oq-SG6"/>
+                        <constraint firstAttribute="width" constant="600" id="92p-oq-SG6"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="92p-oq-SG6"/>
+                        </mask>
+                    </variation>
                     <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="0.0" y="0.0" width="814" height="800"/>
                     </variation>
@@ -85,7 +90,7 @@
                     </constraints>
                     <string key="text">Choose a topic, start a verse, and write a line!  The dots around the topics represent who started the verse: blue for friends, green for anyone, and yellow are yours.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="8" y="101" width="816" height="56"/>
@@ -101,7 +106,7 @@
                     </constraints>
                     <string key="text">Each line earns a point.  When a verse is completed, players can select a favorite line.  The leaf icon represents points.  The star icon represents number of favorited lines.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="8" y="344" width="816" height="56"/>
@@ -117,7 +122,7 @@
                     </constraints>
                     <string key="text">Topics provide a subject for all players to write about.  Verses are a collection of lines.  A Line is a single line within a poem, lyric, or rap.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
                         <rect key="frame" x="8" y="184" width="816" height="56"/>
@@ -130,6 +135,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="bVa-Pf-6KI" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="0ba-T9-yhR"/>
+                <constraint firstAttribute="trailing" secondItem="LtZ-RG-9n8" secondAttribute="trailing" id="4u2-Kr-12t"/>
                 <constraint firstItem="ev5-6N-OwT" firstAttribute="leading" secondItem="t0b-AC-diX" secondAttribute="leading" id="581-mx-aCT"/>
                 <constraint firstItem="b4f-bt-pRC" firstAttribute="leading" secondItem="bVa-Pf-6KI" secondAttribute="leading" id="7ar-Jv-lmb"/>
                 <constraint firstItem="1m8-bd-KJH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="BXb-lX-JP6"/>
@@ -139,6 +145,7 @@
                 <constraint firstItem="b4f-bt-pRC" firstAttribute="top" secondItem="bVa-Pf-6KI" secondAttribute="bottom" constant="3" id="HSW-3a-KSK"/>
                 <constraint firstItem="bVa-Pf-6KI" firstAttribute="top" secondItem="1m8-bd-KJH" secondAttribute="bottom" constant="8" symbolic="YES" id="Il9-Z5-l7y"/>
                 <constraint firstAttribute="bottom" secondItem="LtZ-RG-9n8" secondAttribute="bottom" id="L1a-Vt-If1"/>
+                <constraint firstItem="LtZ-RG-9n8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="L3C-th-GLr"/>
                 <constraint firstItem="t0b-AC-diX" firstAttribute="top" secondItem="ev5-6N-OwT" secondAttribute="bottom" constant="8" symbolic="YES" id="O6H-Og-5Pb"/>
                 <constraint firstItem="5yS-pG-0x9" firstAttribute="top" secondItem="DQZ-xT-xPq" secondAttribute="bottom" constant="8" symbolic="YES" id="Ufc-86-24X"/>
                 <constraint firstItem="LtZ-RG-9n8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aG3-rN-0Y9"/>
@@ -146,6 +153,8 @@
                 <constraint firstItem="t0b-AC-diX" firstAttribute="leading" secondItem="1m8-bd-KJH" secondAttribute="leading" id="foy-EL-ou9"/>
                 <constraint firstItem="kho-qW-80u" firstAttribute="top" secondItem="5yS-pG-0x9" secondAttribute="bottom" constant="8" symbolic="YES" id="haO-GT-wTy"/>
                 <constraint firstItem="DQZ-xT-xPq" firstAttribute="top" secondItem="b4f-bt-pRC" secondAttribute="bottom" constant="8" symbolic="YES" id="ieD-HN-DtW"/>
+                <constraint firstItem="LtZ-RG-9n8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="jMZ-xM-rrr"/>
+                <constraint firstAttribute="bottom" secondItem="LtZ-RG-9n8" secondAttribute="bottom" id="oPK-fl-Aiw"/>
                 <constraint firstItem="5yS-pG-0x9" firstAttribute="trailing" secondItem="ev5-6N-OwT" secondAttribute="trailing" id="qNC-9S-FKn"/>
                 <constraint firstItem="ev5-6N-OwT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="72" id="tE4-jo-A3q"/>
                 <constraint firstItem="bVa-Pf-6KI" firstAttribute="trailing" secondItem="kho-qW-80u" secondAttribute="trailing" id="v6D-f4-wGY"/>
@@ -153,6 +162,13 @@
                 <constraint firstItem="bVa-Pf-6KI" firstAttribute="trailing" secondItem="t0b-AC-diX" secondAttribute="trailing" id="yfp-yv-n4h"/>
                 <constraint firstItem="1m8-bd-KJH" firstAttribute="top" secondItem="t0b-AC-diX" secondAttribute="bottom" constant="8" symbolic="YES" id="z69-SY-3SV"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="aG3-rN-0Y9"/>
+                    <exclude reference="jMZ-xM-rrr"/>
+                    <exclude reference="oPK-fl-Aiw"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="83" y="-87"/>
         </view>
     </objects>
