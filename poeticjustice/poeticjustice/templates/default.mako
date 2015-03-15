@@ -12,13 +12,65 @@
 
 
 <style type="text/css">
-.footer{
+.footer-bar{
 	width: 100%;
 	height: 32px;
 	position: fixed;
 	bottom: 0px;
 	background-color: lightgray;
+	z-index: 900;
 }
+
+#announcement {
+    position: relative;
+    /*padding-top: 25px;*/
+    margin: 0;
+    /*background: url(/assets/coverphoto_900x300.png) no-repeat center center scroll;*/
+    background: url(/assets/web_banner.jpg) no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 320px;
+    border: 0;
+    overflow: auto;
+    /*background-color: #E5E5E5;*/
+}
+
+.center-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.center-piece {
+    position: relative;
+    top:300px;
+    margin: 0px auto;
+    text-align: center;
+    background: rgba(0, 0, 0, 0);
+    z-index: 10;
+}
+
+.center-logo {
+    position: relative;
+    top:-250px;
+    right:5px;
+    margin: 0px auto;
+    text-align: center;
+    background: rgba(0, 0, 0, 0);
+    z-index: 50;
+}
+
+#game-name{
+	position: relative;
+	top:-275px;
+}
+
+#badge{
+	position: relative;
+	right: 12px;
+}
+
 </style>
 
 </head>
@@ -35,42 +87,36 @@
 </script>
 
 <body>
+
+
+<div id="announcement">
+
+</div>
+
+<div class='center-logo'>
+	<div class="center-wrap">
+	<img src="/assets/shakespeare.png" width="400">
+	</div>
+</div>
 	
-<div class="small-12 small-centered medium-8 medium-centered columns text-center">
+<div id="game-name" class="small-12 small-centered medium-8 medium-centered columns text-center">
 	<br>
-	<h1 class="subheader">Iambic, Are You?!</h1>
+	<h1 class="subheader"><b>iambic, are you?</b></h1>
+	<br>
+	<br>
+	<div id="badge">
+		<object data="/assets/Download_on_the_App_Store_Badge_US-UK_135x40.svg" 
+			type="image/svg+xml"  class="logo"> 
+		</object>
+	</div>
+
 </div>
 
 
 
-
-
-
-
-
-<div id="messages-reveal" class="reveal-modal medium" data-reveal>
-	<h4 class="subheader" id="message-title"></h4>
-	<hr>
-	<h5 class="subheader" id="message-body"></h5>
-	<a class="close-reveal-modal">&#215;</a>
+<div class="footer-bar">
+	<h6 class="subheader"><a href="http://migacollabs.com">Miga Col.labs LLC</a> - <a href="/assets/privacypolicy.html">Privacy Policy</a></h6>
 </div>
-
-<div class="footer">
-	<h6 class="subheader">&nbsp&nbsp Miga Col.labs LLC - <a href="/assets/privacypolicy.html">Privacy Policy</a></h6>
-</div>
-
-
-
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Test -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:300px;height:600px"
-     data-ad-client="ca-pub-7917203112531608"
-     data-ad-slot="3586881377"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-
 
 
 

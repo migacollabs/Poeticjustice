@@ -29,6 +29,14 @@
   overflow: auto;
 }
 
+h1, h2, h3{
+	color:black;
+}
+
+.subheader{
+	color:black;
+}
+
 </style>
 
 </head>
@@ -96,6 +104,7 @@
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
+
 
 
 
