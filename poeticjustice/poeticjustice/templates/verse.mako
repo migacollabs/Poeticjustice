@@ -19,6 +19,16 @@
 	bottom: 0px;
 	background-color: lightgray;
 }
+
+#main { 
+  background: url(/assets/web_background.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  overflow: auto;
+}
+
 </style>
 
 </head>
@@ -37,22 +47,29 @@
 
 <body>
 
-
-<div class="small-12 small-centered medium-8 medium-centered columns text-center">
-	<h1 class="subheader">Iambic, Are You?</h1>
-</div>
-
-
 <p>&nbsp</p>
 
-<div class="small-12 medium-9  large-7 columns text-center">
+<div id="main" class="small-12 columns">
+	<div class="row">
+		<p>&nbsp</p>
+		<h1 class="subheader">Iambic, Are You?</h1>
+		<p>&nbsp</p>
+	</div>
 	<div class="row">
 		<h2 class="subheader">${title}</h2>
 	</div>
 	<div class="row">
 		%for line in lines:
-		<h3 class="subheader">${line}</h3>
+		<h3 
+			class="subheader">${line.line_text} 
+				<small>${users[line.user_id]['user_name']} - ${line.line_score}</small>
+		</h3>
 		%endfor
+	</div>
+	<div class="row">
+		<p>&nbsp</p>
+		<p>&nbsp</p>
+		<p>&nbsp</p>
 	</div>
 </div>
 

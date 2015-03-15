@@ -464,7 +464,7 @@ def login_post(request):
         device_auth_hash = sha512(device_token + default_hashkey).hexdigest()
 
 
-        user_country = "earth_flag"
+        user_country = "zz"
         try:
             if request.remote_addr:
                 geo_match = geolite2.lookup(request.remote_addr)
@@ -938,6 +938,7 @@ def public_verse(request):
         kwds = _process_subpath(args)
         verse = None
         lines = []
+        users = {}
         with SQLAlchemySessionFactory() as session:
 
             verse_id = -1
@@ -946,7 +947,7 @@ def public_verse(request):
             except:
                 print traceback.format_exc()
 
-            V, LxV = ~Verse, ~LineXVerse
+            U, V, LxV = ~User, ~Verse, ~LineXVerse
             rp = (session.query(V, LxV)
                     .filter(V.id==verse_id)
                     .filter(LxV.verse_id==V.id)
@@ -955,19 +956,33 @@ def public_verse(request):
 
             if rp:
                 for row in rp:
-                    print row
                     v, lxv = row
 
                     if not verse:
                         verse = v
-                    lines.append(lxv.line_text)
+                    lines.append(lxv)
+
+                u_rp = (session.query(U)
+                        .filter(U.id.in_(v.user_ids))
+                        ).all()
+
+                for row in u_rp:
+                    u = User(entity=row).to_dict(
+                            ignore_fields=[
+                                'auth_hash', 'access_token', 'password', 'email_address',
+                                'device_rec', 'user_prefs', 'user_types'
+                            ]
+                        ) 
+                    users[u['id']] = u
+
             else:
                 raise HTTPGone
 
         return dict(
             status="Ok",
             title=verse.title if verse else "",
-            lines=lines
+            lines=lines,
+            users=users
         )
 
     except HTTPFound: raise

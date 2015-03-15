@@ -59,7 +59,7 @@ struct VerseResultScreenPlayerRec{
     var user_score = -1
     var num_of_favorited_lines = -1
     var level = 1
-    var flag_icon = "earth_flag.png"
+    var flag_icon = "zz.png"
     var avatar_name = "avatar_default.png"
 }
 
