@@ -8,7 +8,7 @@
         <!--Layout Help View Controller-->
         <scene sceneID="7sg-ed-XPd">
             <objects>
-                <viewController id="BwZ-3x-SF5" customClass="LayoutHelpViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BwZ-3x-SF5" customClass="LayoutHelpViewController" customModule="IambicAreYou" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ldo-CV-pwS"/>
                         <viewControllerLayoutGuide type="bottom" id="ofe-y0-GkQ"/>
@@ -39,7 +39,7 @@
         <!--Layout Friends View Controller-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController id="8rJ-Kc-sve" customClass="LayoutFriendsViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="8rJ-Kc-sve" customClass="LayoutFriendsViewController" customModule="IambicAreYou" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
@@ -71,7 +71,7 @@
         <!--Layout Login View Controller-->
         <scene sceneID="kWf-U5-GKx">
             <objects>
-                <viewController id="Fx1-qz-jZa" customClass="LayoutLoginViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Fx1-qz-jZa" customClass="LayoutLoginViewController" customModule="IambicAreYou" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OrN-ef-EhU"/>
                         <viewControllerLayoutGuide type="bottom" id="vdh-Xq-MDL"/>
@@ -90,7 +90,7 @@
         <!--Avatar Pic Collection View Controller-->
         <scene sceneID="RXe-iF-VRK">
             <objects>
-                <collectionViewController storyboardIdentifier="AvatarPicCollectionViewController" id="vmr-zO-x3l" customClass="AvatarPicCollectionViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="AvatarPicCollectionViewController" id="vmr-zO-x3l" customClass="AvatarPicCollectionViewController" customModule="IambicAreYou" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="A4B-e7-Kwn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -102,7 +102,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="7oP-Hx-eMo" customClass="AvatarPicCollectionViewCell" customModule="PoeticJusticeApp" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="7oP-Hx-eMo" customClass="AvatarPicCollectionViewCell" customModule="IambicAreYou" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -162,7 +162,7 @@
         <!--Topics-->
         <scene sceneID="GNt-vz-OuE">
             <objects>
-                <viewController title="Topics" id="FiA-hQ-i8D" customClass="LayoutTopicsViewController" customModule="PoeticJusticeApp" sceneMemberID="viewController">
+                <viewController title="Topics" id="FiA-hQ-i8D" customClass="LayoutTopicsViewController" customModule="IambicAreYou" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pdN-w3-Dad"/>
                         <viewControllerLayoutGuide type="bottom" id="uRN-JC-8v0"/>
@@ -193,7 +193,7 @@
         <!--Write Line View Controller-->
         <scene sceneID="ZDc-Bd-Oqg">
             <objects>
-                <viewController id="Bp8-VX-3UL" customClass="WriteLineViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Bp8-VX-3UL" customClass="WriteLineViewController" customModule="IambicAreYou" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8wE-xp-UWx"/>
                         <viewControllerLayoutGuide type="bottom" id="Nkc-mm-X8D"/>
