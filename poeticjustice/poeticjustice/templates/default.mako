@@ -53,8 +53,8 @@
 
 .center-logo {
     position: relative;
-    top:-250px;
-    right:5px;
+    top:-200px;
+    right:15px;
     margin: 0px auto;
     text-align: center;
     background: rgba(0, 0, 0, 0);
@@ -63,12 +63,33 @@
 
 #game-name{
 	position: relative;
-	top:-275px;
+	top:-200px;
+	right:10px;
 }
 
 #badge{
 	position: relative;
-	right: 12px;
+	right: 15px;
+}
+
+#left-taglines{
+	position: absolute;
+	left: 50px;
+	top: 350px;
+	z-index: 100;
+}
+
+#right-taglines{
+	position: absolute;
+	right: 50px;
+	top: 350px;
+	z-index: 100;
+	text-align: right;
+}
+
+#features{
+	top:-100px;
+	background-color: lightgray;
 }
 
 </style>
@@ -95,8 +116,15 @@
 
 <div class='center-logo'>
 	<div class="center-wrap">
-	<img src="/assets/shakespeare.png" width="400">
+	<img src="/assets/shakespeare.png" width="280">
 	</div>
+</div>
+
+<div id="left-taglines">
+	<h4 class="subheader">Tap a Topic<br>Start a Verse</h4>
+	<p>&nbsp</p>
+	<p>&nbsp</p>
+	<h4 class="subheader">Play with just<br>Friends or Open it up<br>to the World!</h4>
 </div>
 	
 <div id="game-name" class="small-12 small-centered medium-8 medium-centered columns text-center">
@@ -109,13 +137,46 @@
 			type="image/svg+xml"  class="logo"> 
 		</object>
 	</div>
+</div>
 
+<div id="right-taglines">
+	<h4 class="subheader">Everybody gets 4 lines<br>make them count!</h4>
+	<p>&nbsp</p>
+	<p>&nbsp</p>
+	<h4 class="subheader">Be weird, be unique!<br>Get a Gold Star or your<br>rhymes were weak!</h4>
+</div>
+
+
+<div id="features" class="small-9 small-centered columns text-center">
+	<p>&nbsp</p>
+	<h2 class="subheader">Join the fun in a turn-based social game of poetry</h2>
+	<h3 class="subheader">Test your wit and knowledge against friends and new friends!</h3>
+	<p>&nbsp</p>
+	<h3 class="subheader">
+	* Supports 2-4 players<br>
+	* Player scores and favorites<br>
+	* Supports unlimited friends<br>
+	* Play against anyone or friends<br>
+	* 64 topics for inspiration<br>
+	* 7 levels<br>
+	* Player avatars<br>
+	* No passwords<br>
+	* Supports multiple devices per player<br>
+	* Supports creative usernames that can be changed at any time<br>
+	* Learn about poetry<br>
+	* Global and Friend leaderboards<br>
+	* Share your creative writing skills<br>
+	* Just have fun!!
+	</h3>
+	<p>&nbsp</p>
 </div>
 
 
 
+
+
 <div class="footer-bar">
-	<h6 class="subheader"><a href="http://migacollabs.com">Miga Col.labs LLC</a> - <a href="/assets/privacypolicy.html">Privacy Policy</a></h6>
+	<h6 class="subheader">&nbsp<a href="http://migacollabs.com">Miga Col.labs LLC</a> - <a href="/assets/privacypolicy.html">Privacy Policy</a></h6>
 </div>
 
 
