@@ -110,6 +110,26 @@ def index(request):
 
 
 @view_config(
+    name='credits',
+    context='poeticjustice:contexts.AppRoot',
+    request_method='GET',
+    renderer='credits.mako')
+def credits(request):
+    try:
+        return {'app_name': 'iambic, are you?'}
+
+    except HTTPFound: raise
+    except:
+        log.exception(traceback.format_exc())
+        raise HTTPBadRequest(explanation='Bad Request')
+    finally:
+        try:
+            session.close()
+        except:
+            pass
+
+
+@view_config(
     name='new',
     request_method='GET',
     context='poeticjustice:contexts.Users',

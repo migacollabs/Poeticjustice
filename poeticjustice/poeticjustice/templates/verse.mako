@@ -18,15 +18,45 @@
 	position: fixed;
 	bottom: 0px;
 	background-color: lightgray;
+	z-index: 60;
 }
 
-#main { 
+
+html{ 
   background: url(/assets/web_background.png) no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   overflow: auto;
+  z-index: 0;
+}
+
+
+#main { 
+  position: absolute;
+  top:0px;
+  left:0px;
+  background: url(/assets/web_background.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  overflow: auto;
+  z-index: 0;
+}
+
+#adbanner{
+	position: absolute;
+	top: 25px;
+	left: 5px;
+	z-index: 5000;
+	background: url(/assets/web_background.png) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	overflow: auto;
 }
 
 h1, h2, h3{
@@ -55,6 +85,7 @@ h1, h2, h3{
 
 <body>
 
+
 <p>&nbsp</p>
 
 <div id="main" class="small-12 columns">
@@ -82,28 +113,22 @@ h1, h2, h3{
 </div>
 
 
-<div id="messages-reveal" class="reveal-modal medium" data-reveal>
-	<h4 class="subheader" id="message-title"></h4>
-	<hr>
-	<h5 class="subheader" id="message-body"></h5>
-	<a class="close-reveal-modal">&#215;</a>
+<div class="adbanner">
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- Test -->
+	<ins class="adsbygoogle"
+	     style="display:inline-block;width:300px;height:600px"
+	     data-ad-client="ca-pub-7917203112531608"
+	     data-ad-slot="3586881377"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
 </div>
 
 
 <div class="footer">
 	<h6 class="subheader">&nbsp&nbsp Miga Col.labs LLC - <a href="/assets/privacypolicy.html">Privacy Policy</a></h6>
 </div>
-
-
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Test -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:300px;height:600px"
-     data-ad-client="ca-pub-7917203112531608"
-     data-ad-slot="3586881377"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 
 
 
