@@ -120,11 +120,10 @@ h1, h2, h3{
 </div>
 
 
-<div class="footer">
-	<h6 class="subheader">&nbsp&nbsp Miga Col.labs LLC - <a href="/assets/privacypolicy.html">Privacy Policy</a></h6>
+<div class="footer-bar">
+	<h6 class="subheader">&nbsp<a href="http://migacollabs.com">Miga Col.labs LLC</a> - 
+		<a href="/assets/privacypolicy.html">Privacy Policy</a> - <a href="/credits">About</a></h6>
 </div>
-
-
 
 
 <script src="/foundation/bower_components/foundation/js/foundation.js"></script>

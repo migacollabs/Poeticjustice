@@ -119,9 +119,7 @@
 <body>
 
 
-<div id="announcement">
-
-</div>
+<div id="announcement"></div>
 
 <div class='center-logo'>
 	<div class="center-wrap">
@@ -189,10 +187,9 @@
 
 
 
-
-
 <div class="footer-bar">
-	<h6 class="subheader">&nbsp<a href="http://migacollabs.com">Miga Col.labs LLC</a> - <a href="/assets/privacypolicy.html">Privacy Policy</a></h6>
+	<h6 class="subheader">&nbsp<a href="http://migacollabs.com">Miga Col.labs LLC</a> - 
+		<a href="/assets/privacypolicy.html">Privacy Policy</a> - <a href="/credits">About</a></h6>
 </div>
 
 
