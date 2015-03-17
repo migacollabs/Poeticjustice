@@ -171,7 +171,7 @@
 	* 64 topics for inspiration<br>
 	* 7 levels<br>
 	* Player avatars<br>
-	* No passwords<br>
+	* No passwords neccesarry<br>
 	* Supports multiple devices per player<br>
 	* Supports creative usernames that can be changed at any time<br>
 	* Learn about poetry<br>

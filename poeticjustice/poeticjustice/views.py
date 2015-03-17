@@ -761,14 +761,11 @@ def verify_new_user(request):
             if user:
                 h = sha512(user.email_address + default_hashkey).hexdigest()
                 if h == kwds['hash']:
-                    print 'h hash matches'
                     matching_device = None
                     device_rec = json.loads(user.device_rec) if user.device_rec else {}
-                    print 'device_rec', device_rec
                     for d,s in device_rec.items():
-                        if sha512(d + default_hashkey).hexdigest() == kwds['dhash']:
+                        if sha512(d + default_hashkey).hexdigest() == kwds['dhash'] if 'dhash' in kwds:
                             # found matching device token
-                            print 'found matching device'
                             matching_device = d
                             break
                     if matching_device:
