@@ -489,7 +489,7 @@ def login_post(request):
                         device_type,
                         tmpl, 
                         subject='Iambic, Are You? - Verify!',
-                        logo_name="Conversation.png")
+                        logo_name="icon_120.png")
                     return True
                 else:
                     return False
@@ -646,7 +646,7 @@ def login_post(request):
                                 device_type,
                                 "email.verification.mako", 
                                 subject='Iambic, Are You? - Verify your email!',
-                                logo_name="Conversation.png")
+                                logo_name="icon_120.png")
                         except:
                             print traceback.format_exc()
                             time.sleep(1)
@@ -656,7 +656,7 @@ def login_post(request):
                                 device_type,
                                 "email.verification.mako", 
                                 subject='Iambic, Are You? - Verify your email!',
-                                logo_name="Conversation.png")
+                                logo_name="icon_120.png")
 
                         # save new user
                         user_obj = _save_user(user_obj, session)
