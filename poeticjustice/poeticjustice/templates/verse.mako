@@ -47,16 +47,18 @@ html{
 }
 
 #adbanner{
-	position: absolute;
+	position: fixed;
 	top: 25px;
-	left: 5px;
+	right: 0px;
+	height: 600px;
+	width: 300px;
 	z-index: 5000;
-	background: url(/assets/web_background.png) no-repeat center center fixed; 
-	-webkit-background-size: cover;
+	/*background: url(/assets/web_background.png) no-repeat center center fixed; */
+/*	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	overflow: auto;
+	overflow: auto;*/
 }
 
 h1, h2, h3{
@@ -86,6 +88,18 @@ h1, h2, h3{
 <body>
 
 
+<div class="adbanner">
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- Test -->
+	<ins class="adsbygoogle"
+	     style="display:inline-block;width:300px;height:600px"
+	     data-ad-client="ca-pub-7917203112531608"
+	     data-ad-slot="3586881377"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</div>
+
 <p>&nbsp</p>
 
 <div id="main" class="small-12 columns">
@@ -110,19 +124,6 @@ h1, h2, h3{
 		<p>&nbsp</p>
 		<p>&nbsp</p>
 	</div>
-</div>
-
-
-<div class="adbanner">
-	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	<!-- Test -->
-	<ins class="adsbygoogle"
-	     style="display:inline-block;width:300px;height:600px"
-	     data-ad-client="ca-pub-7917203112531608"
-	     data-ad-slot="3586881377"></ins>
-	<script>
-	(adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
 </div>
 
 
