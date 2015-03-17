@@ -626,8 +626,11 @@ def get_verse(verse_id, user_id, session):
         # for l in session.query(LxV).filter(LxV.verse_id==verse_id).order_by(LxV.id):
         #     lines.append(l.line_text)
         #     last_user_id = l.user_id
-
+        # no verse obj yet, because there are no lines yet
         U, V, LxV = ~User, ~Verse, ~LineXVerse
+
+        verse = session.query(V).filter(V.id==verse_id).first()
+
         for row in session.query(V, LxV) \
                 .filter(V.id==verse_id) \
                 .filter(LxV.verse_id==verse_id) \
@@ -636,10 +639,6 @@ def get_verse(verse_id, user_id, session):
             lines_d[row.LineXVerse.id] = (row.LineXVerse.user_id, row.LineXVerse.line_text)
             if not verse:
                 verse = row.Verse
-
-        if not verse:
-            # no verse obj yet, because there are no lines yet
-            verse = session.query(V).filter(V.id==verse_id).first()
 
         owner_id = verse.owner_id
         next_index_user_ids = verse.next_index_user_ids
@@ -859,7 +858,11 @@ def get_active_topics(request):
 
                 res = {"results":results, "user_level":user.level, "user_score":user.user_score, 
                     "num_of_favorited_lines":user.num_of_favorited_lines}
+
+                print '************** Start Active Topics **************'
                 print res
+                print '************** End Active Topics **************'
+                
                 return res
 
         raise HTTPUnauthorized
@@ -1874,7 +1877,7 @@ def cancel_verse(request):
                 except:
                     print traceback.format_exc()
                     try:
-                        time.sleep(1)
+                        # time.sleep(1)
                         del_it()
                     except:
                         raise HTTPConflict

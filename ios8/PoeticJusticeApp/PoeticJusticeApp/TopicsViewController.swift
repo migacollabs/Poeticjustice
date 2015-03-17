@@ -34,6 +34,7 @@ struct ActiveTopicRec {
     var current_user_has_voted : Bool = false
     var max_lines : Int = 8
     var num_lines : Int = 0 // current number of lines
+
     
     func getTopicStateImageName() -> String {
         
@@ -126,6 +127,9 @@ class ActiveTopic {
         self.topicStateImage.image = nil
         // self.topicStateImage.removeFromSuperview()
         self.topicLabel?.text = ""
+        
+        self.activeTopicRec.verse_user_ids = []
+        self.activeTopicRec.owner_id = -1
     }
     
     func getCountTurnsLeft() -> Int {
@@ -257,6 +261,8 @@ class TopicsHelper {
             
             if let vids = r["user_ids"] as? [Int] {
                 atr.verse_user_ids = vids
+            } else {
+                atr.verse_user_ids = []
             }
             
             if let ea = r["email_address"] as? String {
@@ -497,6 +503,8 @@ class TopicsViewController: UIViewController, UserDelegate {
             
             self.show_alert("You are not signed in", message: "Please sign in before playing.", controller_title: "Ok")
             
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
             is_busy = false
         }
         
@@ -611,7 +619,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                             
                             if (activeTopicRec.topic_id==tid) {
                                 
-                                // println("button press topic_id \(tid) activeTopicRec.verse_user_ids \(activeTopicRec.verse_user_ids) src \(activeTopicRec.src)")
+                                 println("button press topic_id \(tid) activeTopicRec.verse_user_ids \(activeTopicRec.verse_user_ids) src \(activeTopicRec.src)")
                                 
                                 // i've either joined or created these verses
                                 if (at.isUserParticipating() || activeTopicRec.owner_id==NetOpers.sharedInstance.user.id){
@@ -630,6 +638,8 @@ class TopicsViewController: UIViewController, UserDelegate {
                                 
                             }
                         }
+                        
+                        println("is verse open? \(isOpen)")
                         
                         if let vid = verseId {
                             
