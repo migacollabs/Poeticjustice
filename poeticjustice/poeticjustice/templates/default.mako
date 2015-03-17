@@ -54,7 +54,7 @@
 .center-logo {
     position: relative;
     top:-200px;
-    right:15px;
+    /*right:15px;*/
     margin: 0px auto;
     text-align: center;
     background: rgba(0, 0, 0, 0);
@@ -64,12 +64,12 @@
 #game-name{
 	position: relative;
 	top:-200px;
-	right:10px;
+	/*right:-10px;*/
 }
 
 #badge{
 	position: relative;
-	right: 15px;
+	/*right: 15px;*/
 }
 
 #left-taglines{
@@ -85,6 +85,10 @@
 	top: 350px;
 	z-index: 100;
 	text-align: right;
+}
+
+#tag-lines{
+	top:-150px;
 }
 
 #features{
@@ -120,16 +124,16 @@
 	</div>
 </div>
 
-<div id="left-taglines">
+<!-- <div id="left-taglines">
 	<h4 class="subheader">Tap a Topic<br>Start a Verse</h4>
 	<p>&nbsp</p>
 	<p>&nbsp</p>
 	<h4 class="subheader">Play with just<br>Friends or Open it up<br>to the World!</h4>
-</div>
+</div> -->
 	
 <div id="game-name" class="small-12 small-centered medium-8 medium-centered columns text-center">
 	<br>
-	<h1 class="subheader"><b>iambic, are you?</b></h1>
+	<h1 class="subheader">&nbsp&nbsp&nbsp<b>iambic, are you?</b></h1>
 	<br>
 	<br>
 	<div id="badge">
@@ -139,11 +143,18 @@
 	</div>
 </div>
 
-<div id="right-taglines">
+<!-- <div id="right-taglines">
 	<h4 class="subheader">Everybody gets 4 lines<br>make them count!</h4>
 	<p>&nbsp</p>
 	<p>&nbsp</p>
 	<h4 class="subheader">Be weird, be unique!<br>Get a Gold Star or your<br>rhymes were weak!</h4>
+</div> -->
+
+<div id="tag-lines" class="small-9 small-centered columns text-center">
+	<h4 class="subheader">Tap a Topic, Start a Verse</h4>
+	<h4 class="subheader">Everybody gets 4 lines, so make them count!</h4>
+	<h4 class="subheader">Play with just Friends or Open it up to the World!</h4>
+	<h4 class="subheader">Be weird, be unique! Get a Gold Star or your rhymes were weak!</h4>
 </div>
 
 
