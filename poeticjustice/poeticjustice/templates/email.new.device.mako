@@ -38,7 +38,8 @@ h {
 
 <body>
 
-<img src="cid:Conversation.png" width="100">
+
+<img src="cid:icon_120.png" width="100">
 
 <div class="row">
     <div class="panel" style="overflow:auto;">

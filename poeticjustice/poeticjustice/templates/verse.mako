@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width"/>
+
+<link rel="icon" 
+      type="image/png" 
+      href="/assets/favicon.png" />
+
 <title>Iambic, Are You?</title>
 <link rel="stylesheet" href="/foundation/stylesheets/app.css"/>
 <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
@@ -46,17 +51,18 @@ html{
   z-index: 0;
 }
 
-#adbanner{
+#google-ad-banner{
 	position: absolute;
-	top: 25px;
-	left: 5px;
+	top:50px;
+	right: 0px;
+	width: 300px;
 	z-index: 5000;
-	background: url(/assets/web_background.png) no-repeat center center fixed; 
-	-webkit-background-size: cover;
+	/*background: url(/assets/web_background.png) no-repeat center center fixed; */
+/*	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	overflow: auto;
+	overflow: auto;*/
 }
 
 h1, h2, h3{
@@ -88,6 +94,7 @@ h1, h2, h3{
 
 <p>&nbsp</p>
 
+
 <div id="main" class="small-12 columns">
 	<div class="row">
 		<p>&nbsp</p>
@@ -113,7 +120,22 @@ h1, h2, h3{
 </div>
 
 
-<div class="adbanner">
+<div class="footer-bar">
+	<h6 class="subheader">&nbsp<a href="http://migacollabs.com">Miga Col.labs LLC</a> - 
+		<a href="/assets/privacypolicy.html">Privacy Policy</a> - <a href="/credits">About</a></h6>
+</div>
+
+
+<script src="/foundation/bower_components/foundation/js/foundation.js"></script>
+
+
+
+<script>
+	$(document).foundation();
+</script>
+
+
+<div id="google-ad-banner">
 	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<!-- Test -->
 	<ins class="adsbygoogle"
@@ -124,24 +146,6 @@ h1, h2, h3{
 	(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
 </div>
-
-
-<div class="footer">
-	<h6 class="subheader">&nbsp&nbsp Miga Col.labs LLC - <a href="/assets/privacypolicy.html">Privacy Policy</a></h6>
-</div>
-
-
-
-
-<script src="/foundation/bower_components/foundation/js/foundation.js"></script>
-
-
-
-
-
-<script>
-	$(document).foundation();
-</script>
 
 
 </body>

@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width"/>
+
+<link rel="icon" 
+      type="image/png" 
+      href="/assets/favicon.png" />
+
 <title>Iambic, Are You?</title>
 <link rel="stylesheet" href="/foundation/stylesheets/app.css"/>
 <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css">
@@ -114,9 +119,7 @@
 <body>
 
 
-<div id="announcement">
-
-</div>
+<div id="announcement"></div>
 
 <div class='center-logo'>
 	<div class="center-wrap">
@@ -171,7 +174,7 @@
 	* 64 topics for inspiration<br>
 	* 7 levels<br>
 	* Player avatars<br>
-	* No passwords<br>
+	* No passwords neccesarry<br>
 	* Supports multiple devices per player<br>
 	* Supports creative usernames that can be changed at any time<br>
 	* Learn about poetry<br>
@@ -184,10 +187,9 @@
 
 
 
-
-
 <div class="footer-bar">
-	<h6 class="subheader">&nbsp<a href="http://migacollabs.com">Miga Col.labs LLC</a> - <a href="/assets/privacypolicy.html">Privacy Policy</a></h6>
+	<h6 class="subheader">&nbsp<a href="http://migacollabs.com">Miga Col.labs LLC</a> - 
+		<a href="/assets/privacypolicy.html">Privacy Policy</a> - <a href="/credits">About</a></h6>
 </div>
 
 
