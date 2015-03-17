@@ -161,7 +161,7 @@
 <div id="features" class="small-9 small-centered columns text-center">
 	<p>&nbsp</p>
 	<h2 class="subheader">Join the fun in a turn-based social game of poetry</h2>
-	<h3 class="subheader">Test your wit and knowledge against friends and new friends!</h3>
+	<h3 class="subheader">Test your wit and knowledge against friends or make new friends</h3>
 	<p>&nbsp</p>
 	<h3 class="subheader">
 	* Supports 2-4 players<br>
