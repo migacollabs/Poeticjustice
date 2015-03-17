@@ -46,11 +46,10 @@ html{
   z-index: 0;
 }
 
-#adbanner{
-	position: fixed;
-	top: 25px;
+#google-ad-banner{
+	position: absolute;
+	top:50px;
 	right: 0px;
-	height: 600px;
 	width: 300px;
 	z-index: 5000;
 	/*background: url(/assets/web_background.png) no-repeat center center fixed; */
@@ -88,19 +87,8 @@ h1, h2, h3{
 <body>
 
 
-<div class="adbanner">
-	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-	<!-- Test -->
-	<ins class="adsbygoogle"
-	     style="display:inline-block;width:300px;height:600px"
-	     data-ad-client="ca-pub-7917203112531608"
-	     data-ad-slot="3586881377"></ins>
-	<script>
-	(adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
-</div>
-
 <p>&nbsp</p>
+
 
 <div id="main" class="small-12 columns">
 	<div class="row">
@@ -138,11 +126,22 @@ h1, h2, h3{
 
 
 
-
-
 <script>
 	$(document).foundation();
 </script>
+
+
+<div id="google-ad-banner">
+	<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- Test -->
+	<ins class="adsbygoogle"
+	     style="display:inline-block;width:300px;height:600px"
+	     data-ad-client="ca-pub-7917203112531608"
+	     data-ad-slot="3586881377"></ins>
+	<script>
+	(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</div>
 
 
 </body>
