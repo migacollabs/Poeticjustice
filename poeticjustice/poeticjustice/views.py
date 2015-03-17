@@ -764,10 +764,11 @@ def verify_new_user(request):
                     matching_device = None
                     device_rec = json.loads(user.device_rec) if user.device_rec else {}
                     for d,s in device_rec.items():
-                        if sha512(d + default_hashkey).hexdigest() == kwds['dhash'] if 'dhash' in kwds:
-                            # found matching device token
-                            matching_device = d
-                            break
+                        if 'dhash' in kwds:
+                            if sha512(d + default_hashkey).hexdigest() == kwds['dhash']:
+                                # found matching device token
+                                matching_device = d
+                                break
                     if matching_device:
                         device_rec[matching_device] = True
                         user.device_rec = json.dumps(device_rec)
