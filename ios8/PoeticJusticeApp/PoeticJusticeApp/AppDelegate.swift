@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
     var tabBarController : UITabBarController?
     
     var isPaused = false
+    
+    var topics = Dictionary<Int,Topic>()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -37,6 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
             
             iAdBanner.hidden = true;
         }
+        
+        NetOpers.sharedInstance._load_topics(loadTopicData)
         
         return true
     }
@@ -113,6 +117,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
             println("Not refreshing navigation badges as no user is logged in")
         }
     }
+    
+    
+    func loadTopicData(data:NSData?, response:NSURLResponse?, error:NSError?){
+        
+        if let httpResponse = response as? NSHTTPURLResponse {
+            if httpResponse.statusCode == 200 {
+                
+                var user = NetOpers.sharedInstance.user
+                
+                if data != nil {
+                    
+                    if let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
+                        data!, options: NSJSONReadingOptions.MutableContainers,
+                        error: nil) as? NSDictionary{
+                            
+                            if let results = jsonResult["results"] as? NSArray {
+                                
+                                for topic in results {
+                                    var t = Topic(rec:topic as NSDictionary)
+                                    var tid = t.id! as Int
+                                    self.topics[tid] = t
+                                }
+                            }
+                            
+                    }
+                    
+                }
+                
+                
+            }else{
+                ()
+            }
+        }
+    }
+    
+    
+    
     
     func updateActiveTopics(data:NSData?, response:NSURLResponse?, error:NSError?){
         if let httpResponse = response as? NSHTTPURLResponse {
