@@ -9,13 +9,13 @@
         <!--Master-->
         <scene sceneID="eOi-ER-uhS">
             <objects>
-                <tableViewController title="Master" id="xIA-nT-EZo" customClass="VerseHistoryMasterViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Master" id="xIA-nT-EZo" customClass="VerseHistoryMasterViewController" customModule="IambicAreYou" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="r8q-Ca-xa8">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="65" id="T8z-I9-2cT" customClass="VerseHistoryTableViewCell" customModule="PoeticJusticeApp" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="65" id="T8z-I9-2cT" customClass="VerseHistoryTableViewCell" customModule="IambicAreYou" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="T8z-I9-2cT" id="tGA-IJ-pXj">
@@ -82,7 +82,7 @@
         <!--Verse History Detail View Controller-->
         <scene sceneID="ftA-Nb-LZV">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="pd3-xg-W7Y" customClass="VerseHistoryDetailViewController" customModule="PoeticJusticeApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" modalTransitionStyle="crossDissolve" id="pd3-xg-W7Y" customClass="VerseHistoryDetailViewController" customModule="IambicAreYou" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DKx-Ku-75f"/>
                         <viewControllerLayoutGuide type="bottom" id="NMe-EJ-dfC"/>
@@ -99,7 +99,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="35" id="yVU-qF-Nga" customClass="PlayerLineTableViewCell" customModule="PoeticJusticeApp" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="35" id="yVU-qF-Nga" customClass="PlayerLineTableViewCell" customModule="IambicAreYou" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yVU-qF-Nga" id="NyZ-Wy-Qvz">
