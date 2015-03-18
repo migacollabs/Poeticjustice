@@ -211,16 +211,30 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                     dispatch_async(dispatch_get_main_queue(),{
                         
-                        self.friendEmailAddress.text = ""
                         self.friendEmailAddress.resignFirstResponder()
                         
                         self.myTableView.reloadData()
+                        
+                        var resetField : Bool = false
+                        var currentText = self.friendEmailAddress.text
+                        
+                        if (!currentText.isEmpty) {
+                            currentText = currentText.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                        }
                         
                         var badgeCount : Int = 0
                         for fr : FriendRec in self.friends {
                             if (!fr.approved && fr.src=="them") {
                                 badgeCount += 1
                             }
+                            
+                            if (currentText==fr.email_address) {
+                                resetField = true
+                            }
+                        }
+                        
+                        if (resetField) {
+                            self.friendEmailAddress.text = ""
                         }
                         
                         if (badgeCount>0) {
@@ -272,17 +286,20 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet var friendEmailAddress: UITextField!
     
     @IBAction func addFriend(sender: AnyObject) {
-        if (!self.friendEmailAddress.text.isEmpty) {
+        var frEmail : String = self.friendEmailAddress.text
+        if (!frEmail.isEmpty) {
+            
+            frEmail = frEmail.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
             
             if (!is_busy) {
                 is_busy = true
                 
-                if (isValidEmail(self.friendEmailAddress.text)) {
+                if (isValidEmail(frEmail)) {
                     
                     var exists : Bool = false
                     
                     for fr in self.friends {
-                        if (fr.email_address==self.friendEmailAddress.text) {
+                        if (fr.email_address==frEmail) {
                             exists = true
                             is_busy = false
                             break
@@ -290,7 +307,13 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     }
                     
                     if (!exists && NetOpers.sharedInstance.user.is_logged_in()) {
-                        add_friend(self.friendEmailAddress.text)
+                        if (NetOpers.sharedInstance.user.email_address != frEmail) {
+                            add_friend(frEmail)
+                        } else {
+                            self.show_alert("Invalid email address", message: "Please enter a valid email address that is not your own", controller_title:"Ok")
+                            is_busy = false
+                            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                        }
                     }
                 } else {
                     self.show_alert("Invalid email address", message: "Please enter a valid email address", controller_title:"Ok")
