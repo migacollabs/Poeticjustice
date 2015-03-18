@@ -350,7 +350,17 @@ class TopicsViewController: UIViewController, UserDelegate {
             }
         }
         
-        topicScrollView.contentSize=CGSizeMake(953*1.3,1186*1.3);
+        // topicScrollView.contentSize=CGSizeMake(953*1.3,1186*1.3);
+        
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
+        println("Screen height: \(screenSize.height)")
+        
+        if (screenSize.height>600) {
+            topicScrollView.contentSize=CGSizeMake(953*1.4,1186*1.35);
+        } else {
+            topicScrollView.contentSize=CGSizeMake(953*1.5,1186*1.45);
+        }
         
         self.scoreView.addSubview(scoreLabel);
         self.favView.addSubview(favLabel);
