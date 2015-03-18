@@ -99,6 +99,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var friends : [FriendRec] = []
     var lastTabbed : NSDate?
     // var iAdBanner: ADBannerView?
+    var lastUserEmailAddress : String = ""
     
     @IBOutlet var addButton: UIButton!
     @IBOutlet var removeButton: UIButton!
@@ -119,6 +120,8 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.myTableView.delegate = self
         self.friendEmailAddress.delegate = self
         
+        lastUserEmailAddress = NetOpers.sharedInstance.user.email_address
+        
     }
     
     func textFieldShouldReturn(textField: UITextField!) -> Bool {
@@ -136,6 +139,11 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
 //        if let adb = self.iAdBanner{
 //            // self.view.addSubview(adb)
 //        }
+        
+        if (NetOpers.sharedInstance.user.email_address != self.lastUserEmailAddress) {
+            self.friends.removeAll(keepCapacity: false)
+            self.lastUserEmailAddress = NetOpers.sharedInstance.user.email_address
+        }
         
         if (NetOpers.sharedInstance.user.is_logged_in()) {
             

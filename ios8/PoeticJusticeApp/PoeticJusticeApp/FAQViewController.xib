@@ -5,7 +5,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FAQViewController" customModule="PoeticJusticeApp" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FAQViewController" customModule="IambicAreYou" customModuleProvider="target">
             <connections>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -72,7 +72,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="lCj-VY-eGV"/>
                     </constraints>
-                    <string key="text">On the Friends tab enter your friends email address and press "Add Friend".  Your friend will automatically receive an invite to play, which they can accept or reject.</string>
+                    <string key="text">On the Friends tab enter your friends email address and press "Add".  Your friend will automatically receive an invite to play, which they can accept or reject.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
@@ -81,7 +81,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="55" id="w6F-jl-L4e"/>
                     </constraints>
-                    <string key="text">Absolutely!  There are no restrictions on your username other than it needs to be at least one character long.  It can be changed at any time.</string>
+                    <string key="text">Absolutely!  There are no restrictions on your username other than it needs to be between 1 and 12 characters in length.  It can be changed at any time.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
