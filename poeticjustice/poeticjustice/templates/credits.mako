@@ -104,7 +104,12 @@
 </div>
 
 <div class="small-12 small-centered columns text-center">
+  <h5 class="subheader">&copy; 2015 Miga Col.labs LLC</h5>
+</div>
+
+<div class="small-12 small-centered columns text-center">
   <h5 class="subheader">Game design, Programming - Larry Johnson, Mat Mathews</h5>
+  <h5 class="subheader">Marketing - Doran Bastin</h5>
   <h5 class="subheader">Creative Producer - Pamela Mathews</h5>
   <h5 class="subheader">Graphic Design - Jeff Churchill</h5>
 </div>
