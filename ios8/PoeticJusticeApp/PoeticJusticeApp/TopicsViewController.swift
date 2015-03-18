@@ -120,6 +120,10 @@ class ActiveTopic {
         return refreshed==false
     }
     
+    func resetAnimation() {
+        self.topicStateImage.image = nil
+    }
+    
     func unload() {
         // unload resources before remove this instance
         // from a list
@@ -345,6 +349,8 @@ class TopicsViewController: UIViewController, UserDelegate {
                 lbl.text = ""
             }
         }
+        
+        topicScrollView.contentSize=CGSizeMake(953*1.3,1186*1.3);
         
         self.scoreView.addSubview(scoreLabel);
         self.favView.addSubview(favLabel);
@@ -886,7 +892,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     func fetchActiveTopics() {
         // TODO: don't let this be spammed
         is_busy = true
-        // println("fetchActiveTopics called")
+        println("fetchActiveTopics called")
         NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", loadActiveTopicData)
     }
     
@@ -1011,6 +1017,9 @@ class TopicsViewController: UIViewController, UserDelegate {
                     
                     if (at.isUserParticipating()) {
                         joinedCount += 1;
+                    } else {
+                        // in case a player leaves a verse (this gets updated down below)
+                        at.resetAnimation()
                     }
                 }
             }
