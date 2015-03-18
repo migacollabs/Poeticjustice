@@ -379,6 +379,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         let indexPath = NSIndexPath(forRow:i,inSection:0)
                         self.currentPlayerVotedFor = indexPath
                         self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: UITableViewScrollPosition.None)
+                        self.setStarOnRow(indexPath)
                         //self.highlightAvatar(NetOpers.sharedInstance.user.id)
                         //self.updateCurrentUser(NetOpers.sharedInstance.user.id)
                     }
