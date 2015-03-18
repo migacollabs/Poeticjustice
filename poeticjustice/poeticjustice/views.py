@@ -589,7 +589,7 @@ def login_post(request):
                                     logged_in=None
                                     )
 
-                            elif do_notification(user, user.auth_hash, device_auth_hash, device_type, notification_type="device"):
+                            if do_notification(user, user.auth_hash, device_auth_hash, device_type, notification_type="device"):
                                 # new device, set state to None for unknown
                                 device_rec[device_token] = None
                                 user.device_rec = json.dumps(device_rec)
