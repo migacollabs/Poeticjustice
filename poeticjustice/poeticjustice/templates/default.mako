@@ -161,11 +161,14 @@
 </div>
 
 
-<div id="features" class="small-9 small-centered columns text-center">
+<div id="features" class="small-9 small-centered columns">
 	<p>&nbsp</p>
+	<div class="text-center">
 	<h2 class="subheader">Join the fun in a turn-based social game of poetry</h2>
 	<h3 class="subheader">Test your wit and knowledge against friends or make new friends</h3>
+	</div>
 	<p>&nbsp</p>
+	<div class="small-10 small-centered medium-10 large-9 large-centered medium-centered xlarge-5 xlarge-centered columns">
 	<h3 class="subheader">
 	* Supports 2-4 players<br>
 	* Player scores and favorites<br>
@@ -176,13 +179,15 @@
 	* Player avatars<br>
 	* No passwords neccesarry<br>
 	* Supports multiple devices per player<br>
-	* Supports creative usernames that can be changed at any time<br>
+	* Use creative usernames, update them any time<br>
 	* Learn about poetry<br>
 	* Global and Friend leaderboards<br>
 	* Share your creative writing skills<br>
-	* Just have fun!!
+	* Just have fun!
 	</h3>
 	<p>&nbsp</p>
+	<p>&nbsp</p>
+	</div>
 </div>
 
 
