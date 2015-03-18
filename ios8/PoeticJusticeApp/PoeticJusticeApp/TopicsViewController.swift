@@ -598,7 +598,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                 return true
             }
         } else {
-            if (topicButton.index < (16 + ( (userLevel-1) * 8))) {
+            if (topicButton.index <= (16 + ( (userLevel-1) * 8))) {
                 return true
             }
         }
