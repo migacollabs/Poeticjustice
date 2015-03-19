@@ -538,6 +538,7 @@ def login_post(request):
 
                         if user.email_address.lower() == 'corp+apple.review@miga.me':
                             log.info("apple logging in")
+                            device_rec = json.loads(user.device_rec) if user.device_rec else {}
                             user.auth_hash = sha512(user.email_address + default_hashkey).hexdigest()
                             device_rec[device_token] = True
                             user.device_rec = json.dumps(device_rec)
