@@ -537,14 +537,28 @@ def login_post(request):
                         ### FIRST CHECK
                         if user.access_token == None:
 
+
+                            if user.email_address.lower() == 'corp+apple.review@miga.me':
+                                user.auth_hash = sha512(user.email_address + default_hashkey).hexdigest()
+                                device_rec[device_token] = True
+                                user.device_rec = json.dumps(device_rec)
+                                user.is_invited = True
+                                user.save(session=session)
+
+                                return dict(
+                                    status='Ok',
+                                    verification_req=False,
+                                    user=user.to_dict(),
+                                    logged_in=None
+                                    )
+
                             #only invite them once
                             if not user.is_invited:
 
                                 user.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
 
                                 if do_notification(user, user.auth_hash, device_auth_hash, device_type):
-
-                                    user.device_rec = json.dumps({device_token:None})
+                                    # user.device_rec = json.dumps({device_token:None})
                                     user.is_invited = True
                                     user.save(session=session)
 
@@ -577,7 +591,7 @@ def login_post(request):
                             # new device
                             user.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
 
-                            if user.email_address == 'corp+apple.review@miga.me':
+                            if user.email_address.lower() == 'corp+apple.review@miga.me':
                                 device_rec[device_token] = True
                                 user.device_rec = json.dumps(device_rec)
                                 user.save(session=session)
