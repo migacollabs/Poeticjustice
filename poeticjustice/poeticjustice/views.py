@@ -545,12 +545,13 @@ def login_post(request):
                             user.is_invited = True
                             user.save(session=session)
 
-                            return dict(
+                            res = dict(
                                 status='Ok',
                                 verification_req=False,
                                 user=user.to_dict(),
                                 logged_in=None
                                 )
+                            log.info("saving apple user " + str(res))
 
                         ### FIRST CHECK
                         if user.access_token == None:
