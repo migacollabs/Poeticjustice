@@ -514,6 +514,7 @@ def login_post(request):
 
 
         if not device_token and device_type != "DEVICETYPEBROWSER":
+            log.info("raising HTTPForbidden")
             raise HTTPForbidden
 
 
@@ -535,24 +536,23 @@ def login_post(request):
                         # update to the latest user
                         user = User(entity=user_obj)
 
+                        if user.email_address.lower() == 'corp+apple.review@miga.me':
+                            log.info("apple logging in")
+                            user.auth_hash = sha512(user.email_address + default_hashkey).hexdigest()
+                            device_rec[device_token] = True
+                            user.device_rec = json.dumps(device_rec)
+                            user.is_invited = True
+                            user.save(session=session)
+
+                            return dict(
+                                status='Ok',
+                                verification_req=False,
+                                user=user.to_dict(),
+                                logged_in=None
+                                )
+
                         ### FIRST CHECK
                         if user.access_token == None:
-
-
-                            if user.email_address.lower() == 'corp+apple.review@miga.me':
-                                log.info("apple logging in")
-                                user.auth_hash = sha512(user.email_address + default_hashkey).hexdigest()
-                                device_rec[device_token] = True
-                                user.device_rec = json.dumps(device_rec)
-                                user.is_invited = True
-                                user.save(session=session)
-
-                                return dict(
-                                    status='Ok',
-                                    verification_req=False,
-                                    user=user.to_dict(),
-                                    logged_in=None
-                                    )
 
                             #only invite them once
                             if not user.is_invited:
