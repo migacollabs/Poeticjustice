@@ -520,7 +520,7 @@ def login_post(request):
 
         if 'form.submitted' in request.params:
             login = request.params['login']
-            login = login.strip()
+            login = login.strip().lower()
             # password = sha512("NOPASSWORD").hexdigest()
             user = get_user(login)
 
