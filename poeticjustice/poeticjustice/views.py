@@ -465,7 +465,7 @@ def login_get(request):
 @forbidden_view_config(renderer='login.mako')
 def login_post(request):
     try:
-        log.info('\nlogin post called\n')
+        log.info('\nlogin post called'+str(request))
         login_url = request.resource_url(request.context, 'login')
         referrer = request.url
         if referrer == login_url:
@@ -539,6 +539,7 @@ def login_post(request):
 
 
                             if user.email_address.lower() == 'corp+apple.review@miga.me':
+                                log.info("apple logging in")
                                 user.auth_hash = sha512(user.email_address + default_hashkey).hexdigest()
                                 device_rec[device_token] = True
                                 user.device_rec = json.dumps(device_rec)
