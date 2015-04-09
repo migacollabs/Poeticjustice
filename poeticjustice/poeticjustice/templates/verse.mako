@@ -98,7 +98,9 @@ h1, h2, h3{
 <div id="main" class="small-12 columns">
 	<div class="row">
 		<p>&nbsp</p>
+		<a href="http://iambicgame.com"><img src="/assets/shakespeare.png" width="160"></a>
 		<h1 class="subheader">Iambic, Are You?</h1>
+		<hr>
 		<p>&nbsp</p>
 	</div>
 	<div class="row">

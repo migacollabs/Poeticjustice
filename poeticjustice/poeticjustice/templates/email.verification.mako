@@ -38,13 +38,14 @@ h {
 
 <body>
 
+<h2 class="subheader">Iambic, Are You?</h2>
 
 <img src="cid:icon_120.png" width="100">
 
 <div class="row">
     <div class="panel" style="overflow:auto;">
         <div class="large-12 columns">
-                <h1 class="subheader">Start Playing!</h1>
+                <h2 class="subheader">Start Playing!</h2>
                 <!-- <h4>Your new account has been created.</h4> -->
                 <hr>
         </div>
