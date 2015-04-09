@@ -215,6 +215,7 @@ def create_new_user_post(request):
             else:
                 # This is a brand new user
                 user = User(**kwds)
+                user.email_address = kwds['email_address'].lower()
 
             user.access_token = \
                 sha512(
