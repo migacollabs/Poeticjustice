@@ -90,11 +90,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
                 if let nc = tbc.viewControllers?[1] as? UINavigationController {
                     if nc.topViewController is TopicsViewController {
                         println("Automatically refreshing through TopicsViewController")
-                        var tvc = nc.topViewController as TopicsViewController
+                        var tvc = nc.topViewController as! TopicsViewController
                         tvc.refresh()
                     } else {
                         println("Refreshing topic navigation badge for user")
-                        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", updateActiveTopics)
+                        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", completion_handler: updateActiveTopics)
                     }
                 }
                 
@@ -102,11 +102,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
                 if let nc = tbc.viewControllers?[2] as? UINavigationController {
                     if nc.topViewController is FriendsViewController {
                         println("Automatically refreshing through FriendsViewController")
-                        var fvc = nc.topViewController as FriendsViewController
+                        var fvc = nc.topViewController as! FriendsViewController
                         fvc.refresh()
                     } else {
                         println("Refreshing friend navigation badge for user")
-                        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends", updateFriends)
+                        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends", completion_handler: updateFriends)
                     }
                 }
                 
@@ -135,8 +135,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
                             if let results = jsonResult["results"] as? NSArray {
                                 
                                 for topic in results {
-                                    var t = Topic(rec:topic as NSDictionary)
-                                    var tid = t.id! as Int
+                                    var t = Topic(rec:topic as! NSDictionary)
+                                    var tid = t.id! as! Int
                                     self.topics[tid] = t
                                 }
                             }
@@ -161,7 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
                 if data != nil {
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     var upNextCount : Int = 0
                     
@@ -182,7 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
                         dispatch_async(dispatch_get_main_queue(), {
                         
                             var tabArray = tbc.tabBar.items as NSArray!
-                            var tabItem = tabArray.objectAtIndex(1) as UITabBarItem
+                            var tabItem = tabArray.objectAtIndex(1) as! UITabBarItem
                             
                             if (upNextCount > 0) {
                                 tabItem.badgeValue = String(upNextCount)
@@ -213,7 +213,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     var badgeCount : Int = 0
                     
@@ -232,7 +232,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
                         dispatch_async(dispatch_get_main_queue(),{
                             
                             var tabArray = tbc.tabBar.items as NSArray!
-                            var tabItem = tabArray.objectAtIndex(2) as UITabBarItem
+                            var tabItem = tabArray.objectAtIndex(2) as! UITabBarItem
                             
                             if (badgeCount > 0) {
                                 tabItem.badgeValue = String(badgeCount)

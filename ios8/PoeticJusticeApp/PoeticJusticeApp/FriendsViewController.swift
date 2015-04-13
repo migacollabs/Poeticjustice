@@ -73,7 +73,7 @@ class FriendsHelper {
                     let upData = (up as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                     let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         upData!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     if let avn = userPrefs["avatar_name"] as? String{
                         fr.avatar_name = avn
                     }
@@ -159,7 +159,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             if (refresh) {
                 println("refreshing friends")
                 var uId : String = String(NetOpers.sharedInstance.user.id)
-                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends", loadFriends)
+                NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/user-friends", completion_handler: loadFriends)
                 lastTabbed = NSDate()
             }
             
@@ -184,7 +184,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         params["friend_id"]=fr?.friend_id
         params["user_id"]=NetOpers.sharedInstance.user.id
         
-        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/removefriend", params: params, loadFriends)
+        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/removefriend", params: params, completion_handler: loadFriends)
     
     }
     
@@ -212,7 +212,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     if let results = jsonResult["results"] as? NSArray {
                             friends = FriendsHelper.sharedInstance.convertToFriendRecs(results)
                     }
@@ -287,7 +287,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         params["user_id"]=NetOpers.sharedInstance.user.id
         params["friend_email_address"]=frEmailAddress
         
-        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/addfriend", params: params, loadFriends)
+        NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/addfriend", params: params, completion_handler: loadFriends)
     
     }
     
@@ -344,7 +344,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let dqd = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as UITableViewCell
+        let dqd = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! UITableViewCell
         
         if let cell = dqd as? FriendsTableViewCell{
             if let fr = self.friends[indexPath.row] as FriendRec? {
@@ -450,7 +450,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
             removeFriend = friend
         }
 
-        var cell : FriendsTableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("FriendCell") as FriendsTableViewCell
+        var cell : FriendsTableViewCell = self.myTableView.dequeueReusableCellWithIdentifier("FriendCell") as! FriendsTableViewCell
 
         if let f = self.friends[indexPath.row] as FriendRec? {
             
@@ -496,7 +496,7 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
     // MARK: - Ad Banner
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
     func show_alert(title:String, message:String, controller_title:String){

@@ -30,7 +30,7 @@ class CloseVerseViewController: UIViewController {
         
         if self.verseId > 0 {
             NetOpers.sharedInstance.get(
-                NetOpers.sharedInstance.appserver_hostname! + "/v/close/id=\(self.verseId)", {data, response, error -> Void in
+                NetOpers.sharedInstance.appserver_hostname! + "/v/close/id=\(self.verseId)", completion_handler: {data, response, error -> Void in
                     
                     if let httpResponse = response as? NSHTTPURLResponse {
                         if httpResponse.statusCode == 200 {
@@ -38,7 +38,7 @@ class CloseVerseViewController: UIViewController {
                                 
                                 let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                     data!, options: NSJSONReadingOptions.MutableContainers,
-                                    error: nil) as NSDictionary
+                                    error: nil) as! NSDictionary
                                 
                                 if let status = jsonResult["status"] as? String{
                                     if status == "Ok"{
@@ -77,7 +77,7 @@ class CloseVerseViewController: UIViewController {
         
         if self.verseId > 0 {
             NetOpers.sharedInstance.get(
-                NetOpers.sharedInstance.appserver_hostname! + "/v/view/id=\(self.verseId)", {data, response, error -> Void in
+                NetOpers.sharedInstance.appserver_hostname! + "/v/view/id=\(self.verseId)", completion_handler: {data, response, error -> Void in
                     
                     if let httpResponse = response as? NSHTTPURLResponse {
                         if httpResponse.statusCode == 200 {
@@ -85,7 +85,7 @@ class CloseVerseViewController: UIViewController {
                                 
                                 let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                     data!, options: NSJSONReadingOptions.MutableContainers,
-                                    error: nil) as NSDictionary
+                                    error: nil) as! NSDictionary
                                 
                                 var verse = ""
                                 if let results = jsonResult["results"] as? NSDictionary{

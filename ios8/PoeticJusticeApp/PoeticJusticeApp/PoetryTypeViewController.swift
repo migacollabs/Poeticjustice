@@ -195,7 +195,7 @@ class PoetryTypeViewController: UIViewController, UIPickerViewDelegate, UIPicker
     */
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
 //    func hide_adbanner(){

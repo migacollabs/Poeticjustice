@@ -85,7 +85,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
             self.user_ids = at.verse_user_ids
             if self.user_ids.count>0{
                 NetOpers.sharedInstance.get(
-                    NetOpers.sharedInstance.appserver_hostname! + "/v/users/id=\(at.verse_id)", load_players)
+                    NetOpers.sharedInstance.appserver_hostname! + "/v/users/id=\(at.verse_id)", completion_handler: load_players)
             }
             
             
@@ -95,7 +95,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
         
         if let t_btn = self.topicButton{
             if let t = self.topic{
-                t_btn.setImage(UIImage(named: t.main_icon_name as String), forState: .Normal)
+                t_btn.setImage(UIImage(named: t.main_icon_name as! String), forState: .Normal)
                 self.title = t.name as? String
             }
         }
@@ -139,7 +139,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 NetOpers.sharedInstance.post(
                     NetOpers.sharedInstance.appserver_hostname! + "/v/join/id=" + String(at.verse_id),
                     params: params,
-                    onJoinedCompletionHandeler)
+                    completion_handler: onJoinedCompletionHandeler)
             }
             
         }
@@ -155,7 +155,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 if data != nil{
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     println(jsonResult)
                     
@@ -225,14 +225,14 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     if let players = jsonResult["verse_users"] as? NSArray{
                         
                         self.players.removeAll()
                         
                         for player in players{
-                            var u = User(user_data:player as NSDictionary)
+                            var u = User(user_data:player as! NSDictionary)
                             self.players.append(u)
                         }
                         
@@ -273,7 +273,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell : UITableViewCell = self.playerTable.dequeueReusableCellWithIdentifier("cell") as UITableViewCell
+        var cell : UITableViewCell = self.playerTable.dequeueReusableCellWithIdentifier("cell") as! UITableViewCell
         if self.players.count > 0{
             if let u = self.players[indexPath.row] as User? {
                 cell.textLabel?.text = u.user_name
@@ -350,7 +350,7 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
     // MARK: - Ad Banner
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
     func show_alert(title:String, message:String, controller_title:String){

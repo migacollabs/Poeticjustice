@@ -45,7 +45,7 @@ public enum JSON {
         case let number as NSNumber:
             self = .ScalarNumber(number)
         case let string as NSString:
-            self = .ScalarString(string)
+            self = .ScalarString(string as String)
         case let null as NSNull:
             self = .Null(nil)
         case let array as NSArray:
@@ -58,7 +58,7 @@ public enum JSON {
             var aJSONDictionary = Dictionary<String, JSON>()
             for (key : AnyObject, value : AnyObject) in dictionary {
                 if let key = key as? NSString {
-                    aJSONDictionary[key] = JSON(object: value)
+                    aJSONDictionary[key as String] = JSON(object: value)
                 }
             }
             self = .Mapping(aJSONDictionary)
@@ -183,7 +183,7 @@ extension JSON: BooleanType {
 
 //MARK: - Scalar: String, NSNumber, NSURL, Int, ...
 extension JSON {
-
+    
     var stringValue: String? {
         get {
             switch self {
@@ -196,7 +196,7 @@ extension JSON {
             }
         }
     }
-
+    
     var numberValue: NSNumber? {
         get {
             switch self {
@@ -216,7 +216,7 @@ extension JSON {
             }
         }
     }
-
+    
     var URLValue: NSURL? {
         get {
             switch self {
@@ -227,7 +227,7 @@ extension JSON {
             }
         }
     }
-
+    
     var charValue: Int8? {
         get {
             if let number = self.numberValue {
@@ -327,7 +327,7 @@ extension JSON {
             }
         }
     }
-
+    
     var integerValue: Int? {
         get {
             if let number = self.numberValue {
@@ -352,7 +352,7 @@ extension JSON {
 //MARK: - Comparable
 extension JSON: Comparable {
     
-   private var type: Int {
+    private var type: Int {
         get {
             switch self {
             case .ScalarNumber(let number):
@@ -399,7 +399,7 @@ public func ==(lhs: JSON, rhs: JSON) -> Bool {
 }
 
 public func <=(lhs: JSON, rhs: JSON) -> Bool {
-
+    
     if lhs.numberValue != nil && rhs.numberValue != nil {
         return lhs.numberValue <= rhs.numberValue
     }
@@ -407,7 +407,7 @@ public func <=(lhs: JSON, rhs: JSON) -> Bool {
     if lhs.type != rhs.type {
         return false
     }
-
+    
     switch lhs {
     case JSON.ScalarNumber:
         return lhs.numberValue! <= rhs.numberValue!

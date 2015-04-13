@@ -142,7 +142,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             params["id"]=vid
             
             NetOpers.sharedInstance.get(
-                NetOpers.sharedInstance.appserver_hostname! + "/v/viewable/id=\(vid)", loadVerse)
+                NetOpers.sharedInstance.appserver_hostname! + "/v/viewable/id=\(vid)", completion_handler: loadVerse)
             
         }
     }
@@ -156,7 +156,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     if let results = jsonResult["results"] as? NSDictionary{
                         
@@ -224,8 +224,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                 if let lp = p{
                                     var vlr = VerseResultScreenLineRec(
                                         position:p!,
-                                        text:line_tuple[1] as String,
-                                        player_id:line_tuple[0] as Int,
+                                        text:line_tuple[1] as! String,
+                                        player_id:line_tuple[0] as! Int,
                                         line_score:0)
                                     
                                     vrsr.lines_recs[p!] = vlr
@@ -244,8 +244,8 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         if let playersArray = results["user_data"] as? NSArray{
                             for player in playersArray as NSArray{
                                 
-                                var pid = player[0] as Int
-                                var usrnm = player[1] as String
+                                var pid = player[0] as! Int
+                                var usrnm = player[1] as! String
                                 
                                 var avnStr:String? = player[2] as? String
                                 if avnStr == nil{
@@ -256,16 +256,16 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                                     let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                                     let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                         upData!, options: NSJSONReadingOptions.MutableContainers,
-                                        error: nil) as NSDictionary
+                                        error: nil) as! NSDictionary
                                     avnStr = userPrefs["avatar_name"] as? String
                                 }else{
                                     avnStr = "avatar_default.png"
                                 }
                                 
-                                var pnts = player[3] as Int
-                                var lvl = player[4] as Int
-                                var flag = player[5] as String
-                                var numFavs = player[6] as Int
+                                var pnts = player[3] as! Int
+                                var lvl = player[4] as! Int
+                                var flag = player[5] as! String
+                                var numFavs = player[6] as! Int
                                 
                                 vrsr.players[pid] = VerseResultScreenPlayerRec(
                                     user_id: pid, user_name: usrnm, user_score:pnts,
@@ -319,7 +319,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                 
                 if let topic = self.topic{
                     if let t_btn = self.topicButton{
-                        t_btn.setImage(UIImage(named: topic.main_icon_name as String), forState: .Normal)
+                        t_btn.setImage(UIImage(named: topic.main_icon_name as! String), forState: .Normal)
                     }
                 }
                 
@@ -515,7 +515,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         var offset = avatarPlayer!.frame.origin.x
                         self.currentUserName!.frame = CGRectOffset( self.currentUserName!.frame, offset, 0 )
                         self.currentUserNameLeadingConstraint.constant = offset
-                        }, nil
+                        }, completion: nil
                     )
                 }
                 
@@ -537,7 +537,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func setStarOnRow(indexPath:NSIndexPath){
-        var cell = tableView.cellForRowAtIndexPath(indexPath) as PlayerLineTableViewCell
+        var cell = tableView.cellForRowAtIndexPath(indexPath) as! PlayerLineTableViewCell
         cell.votedStar.image = UIImage(named: "star_gold_256.png")
     }
     
@@ -575,14 +575,14 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
         let tableHeight: CGFloat = tableView.bounds.size.height
         
         for i in cells {
-            let cell: UITableViewCell = i as UITableViewCell
+            let cell: UITableViewCell = i as! UITableViewCell
             cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
         }
         
         var index = 0
         
         for a in cells {
-            let cell: UITableViewCell = a as UITableViewCell
+            let cell: UITableViewCell = a as! UITableViewCell
             UIView.animateWithDuration(1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: {
                 cell.transform = CGAffineTransformMakeTranslation(0, 0);
                 }, completion: nil)
@@ -601,7 +601,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         if let pc = cell as? PlayerLineTableViewCell{
             
             //pc.yourPickLabel.text = "" // clear it
@@ -967,7 +967,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
     }
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
 //    func hide_adbanner(){
@@ -995,7 +995,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
             if result != nil{
                 if let vk = result!["verse_key"] as? String{
                     
-                    var site = result!["site_addr"] as String
+                    var site = result!["site_addr"] as! String
                     
                     var verseUrl = "http://\(site)/v/p/k=\(vk)"
                     

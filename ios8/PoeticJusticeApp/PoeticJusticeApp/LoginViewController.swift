@@ -66,7 +66,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true);
         return false;
     }
@@ -190,7 +190,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             // myDict if myDict isn't nil. This is supposed to work
             // because myDict is an optional
             if let dict = myDict {
-                if let ah = dict["appserver_hostname"] as String?{
+                if let ah = dict["appserver_hostname"] as! String?{
                     
                     // the println is better than NSLog
                     // the cool \(var) formatting handle almost everything
@@ -226,7 +226,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     if let un = self.user_name.text{
                         params["user_name"] = un
                         
-                        var unl = countElements(un)
+                        var unl = count(un)
                         
                         if (unl>12 || unl==0) {
                             self.show_alert("Invalid user name", message: "User name must be between 1 and 12 characters long", controller_title: "Ok")
@@ -248,7 +248,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         
                         println("Connecting as \(login_em)")
                         
-                        NetOpers.sharedInstance.login(params, url: login_url, {() -> (Void) in
+                        NetOpers.sharedInstance.login(params, url: login_url, on_login: {() -> (Void) in
                             
                             // we are logged in
                             // this won't be called if we set the on_login as a callback
@@ -365,20 +365,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func show_version_history(){
         var sb = UIStoryboard(name: "VerseHistoryStoryboard", bundle: nil)
-        var controller = sb.instantiateViewControllerWithIdentifier("VerseHistoryMasterViewController") as UIViewController
+        var controller = sb.instantiateViewControllerWithIdentifier("VerseHistoryMasterViewController") as! UIViewController
         //self.navigationController?.pushViewController(controller, animated: true)
         self.presentViewController(controller, animated: true, completion: nil)
     }
 
     @IBAction func onShowAvatars(sender: AnyObject) {
         var sb = UIStoryboard(name: "Main", bundle: nil)
-        var controller = sb.instantiateViewControllerWithIdentifier("AvatarPicCollectionViewController") as UIViewController
+        var controller = sb.instantiateViewControllerWithIdentifier("AvatarPicCollectionViewController") as! UIViewController
         self.navigationController?.pushViewController(controller, animated: true)
     }
 
     @IBAction func onShowTestResultScreen(sender: AnyObject) {
         var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
-        var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
+        var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as! VerseResultsScreenViewController
         controller.verseId = 6 // this is just for testing
         self.navigationController?.pushViewController(controller, animated: true)
     }
@@ -392,7 +392,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
 }

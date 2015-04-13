@@ -170,7 +170,7 @@ class NewWriteLineViewController:
                 println("hitting active-verse url")
                 println(params)
                 
-                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, loadVerse)
+                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, completion_handler: loadVerse)
                 
                 lastTabbed = NSDate()
             }
@@ -190,7 +190,7 @@ class NewWriteLineViewController:
     func configureView(){
         if let t_btn = self.topicButton{
             if let t = self.topic{
-                t_btn.setImage(UIImage(named: t.main_icon_name as String), forState: .Normal)
+                t_btn.setImage(UIImage(named: t.main_icon_name as! String), forState: .Normal)
             }
         }
     }
@@ -224,7 +224,7 @@ class NewWriteLineViewController:
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     if let results = jsonResult["results"] as? NSDictionary {
                         
@@ -273,7 +273,7 @@ class NewWriteLineViewController:
                                 
                                 if let lp = p{
                                     var vlr = PlayerLineRec(
-                                        position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int)
+                                        position:p!, text:line_tuple[1] as! String, player_id:line_tuple[0] as! Int)
                                     
                                     verse.lines_recs[p!] = vlr
                                     
@@ -291,8 +291,8 @@ class NewWriteLineViewController:
                                 
                                 println(player)
                                 
-                                var pid = player[0] as Int
-                                var usrnm = player[1] as String
+                                var pid = player[0] as! Int
+                                var usrnm = player[1] as! String
                                 
                                 var avnStr:String? = player[2] as? String
                                 if avnStr == nil{
@@ -303,7 +303,7 @@ class NewWriteLineViewController:
                                     let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                                     let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                         upData!, options: NSJSONReadingOptions.MutableContainers,
-                                        error: nil) as NSDictionary
+                                        error: nil) as! NSDictionary
                                     avnStr = userPrefs["avatar_name"] as? String
                                 }else{
                                     avnStr = "avatar_default.png"
@@ -430,7 +430,7 @@ class NewWriteLineViewController:
             println("hitting saveline url")
             println(params)
             
-            NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
+            NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, completion_handler: loadVerse)
             
             self.setLine.text = ""
         }
@@ -450,7 +450,7 @@ class NewWriteLineViewController:
         dispatch_async(dispatch_get_main_queue(), {
             
             var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
-            var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
+            var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as! VerseResultsScreenViewController
             controller.verseId = verseId
             self.navigationController?.pushViewController(controller, animated: true)
             
@@ -461,7 +461,7 @@ class NewWriteLineViewController:
     // MARK: - Ad Banner
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
 //    
 //    
@@ -515,7 +515,7 @@ class NewWriteLineViewController:
                             
                             let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                 data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSDictionary
+                                error: nil) as! NSDictionary
                             
                             // this should be the verse that we just deleted
                             println(jsonResult)
@@ -558,7 +558,7 @@ class NewWriteLineViewController:
                             
                             let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                 data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSDictionary
+                                error: nil) as! NSDictionary
                             
                             // this should be the verse that we just deleted
                             println(jsonResult)
@@ -651,7 +651,7 @@ class NewWriteLineViewController:
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         println("DEQUEUED \(cell)")
         if let pc = cell as? PlayerLineTableViewCell{
             

@@ -92,7 +92,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         
         println("hitting leaderboard at \(params)")
         
-        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/leaderboard" + params, loadLeaderboard)
+        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/leaderboard" + params, completion_handler: loadLeaderboard)
     
     }
     
@@ -119,7 +119,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     if let results = jsonResult["results"] as? NSArray{
                         
@@ -203,14 +203,14 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         let tableHeight: CGFloat = self.myTableView.bounds.size.height
         
         for i in cells {
-            let cell: UITableViewCell = i as UITableViewCell
+            let cell: UITableViewCell = i as! UITableViewCell
             cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
         }
         
         var index = 0
         
         for a in cells {
-            let cell: UITableViewCell = a as UITableViewCell
+            let cell: UITableViewCell = a as! UITableViewCell
             UIView.animateWithDuration(1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: {
                 cell.transform = CGAffineTransformMakeTranslation(0, 0);
                 }, completion: nil)
@@ -231,7 +231,7 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         
         if let lc = cell as? LeaderboardTableViewCell{
             if let lur = self.leaderboard_users[indexPath.row] as LeaderboardUserRec? {

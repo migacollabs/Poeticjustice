@@ -33,7 +33,7 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func setNumberPlayers(sender: AnyObject) {
-        let sc = (sender as UISegmentedControl)
+        let sc = (sender as! UISegmentedControl)
         switch sc.selectedSegmentIndex
         {
         case 0:
@@ -88,7 +88,7 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
     func configureView(){
         if let t_btn = self.topicButton{
             if let t = self.topic{
-                t_btn.setImage(UIImage(named: t.main_icon_name as String), forState: .Normal)
+                t_btn.setImage(UIImage(named: t.main_icon_name as! String), forState: .Normal)
                 self.title = t.name as? String
             }
         }
@@ -106,7 +106,7 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
     @IBAction func onStart(sender: AnyObject) {
         
         if let vt = self.verseTitle.text{
-            var vtl = countElements(vt)
+            var vtl = count(vt)
             if (vtl==0) {
                 self.showAlert("Missing title", message: "Please enter a title for the verse", controller_title: "Ok")
                 return
@@ -145,7 +145,7 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
             
             NetOpers.sharedInstance.post(
                 NetOpers.sharedInstance.appserver_hostname! + "/m/edit/Verse",
-                params: params, {(data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                params: params, completion_handler: {(data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
                     
                     if let httpResponse = response as? NSHTTPURLResponse {
                         if httpResponse.statusCode == 200 {
@@ -153,7 +153,7 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
                                 
                                 let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                     data!, options: NSJSONReadingOptions.MutableContainers,
-                                    error: nil) as NSDictionary
+                                    error: nil) as! NSDictionary
                                 
                                 if let model_name = jsonResult["model"] as? String{
                                     println(model_name)
@@ -162,7 +162,7 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
                                             var d = results[0] as? NSDictionary
                                             if d != nil{
                                                 dispatch_async(dispatch_get_main_queue(),{
-                                                    self.start_accepted(d!["id"] as Int)
+                                                    self.start_accepted(d!["id"] as! Int)
                                                 })
                                                 
                                             }
@@ -248,7 +248,7 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
     }
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
     func show_alert(title:String, message:String, controller_title:String){
@@ -262,7 +262,7 @@ class NewVerseViewController: UIViewController, UITextFieldDelegate {
     
     
     // MARK: - text delegate
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.verseTitle.resignFirstResponder()
         return true;
     }

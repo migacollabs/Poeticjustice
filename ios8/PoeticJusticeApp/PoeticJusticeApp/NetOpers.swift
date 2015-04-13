@@ -21,7 +21,7 @@ class NetOpers {
         return Static.instance
     }
     
-    let session: NSURLSession? = nil
+    var session: NSURLSession? = nil
     
     var appserver_hostname: String?
     var loginHandler: LoginViewController?
@@ -43,7 +43,7 @@ class NetOpers {
         }
         
         if let dict = myDict {
-            if let ah = dict["appserver_hostname"] as String?{
+            if let ah = dict["appserver_hostname"] as! String?{
                 self.appserver_hostname = ah
             }
         }
@@ -69,8 +69,8 @@ class NetOpers {
         request.HTTPShouldHandleCookies = true
         request.HTTPMethod = "GET"
         
-        var task = self.session?.dataTaskWithRequest(request, completionHandler: completion_handler?)
-        task?.resume()
+        var task = self.session!.dataTaskWithRequest(request, completionHandler: completion_handler)
+        task.resume()
     }
     
     func post(url: String, params: Dictionary<String, AnyObject>, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ) {
@@ -82,9 +82,9 @@ class NetOpers {
         request.HTTPMethod = "POST"
         request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
         
-        var task = self.session?.dataTaskWithRequest(request, completionHandler: completion_handler?)
+        var task = self.session!.dataTaskWithRequest(request, completionHandler: completion_handler)
         
-        task?.resume()
+        task.resume()
     }
     
     func put(url: String, params: Dictionary<String, AnyObject>, completion_handler:((NSData?, NSURLResponse?, NSError?)->Void)? ) {
@@ -96,9 +96,9 @@ class NetOpers {
         request.HTTPMethod = "PUT"
         request.HTTPBody = stringFromParameters(params).dataUsingEncoding(NSUTF8StringEncoding)
         
-        var task = self.session?.dataTaskWithRequest(request, completionHandler: completion_handler?)
+        var task = self.session!.dataTaskWithRequest(request, completionHandler: completion_handler)
         
-        task?.resume()
+        task.resume()
     }
     
     func sync_post(url: String, params: Dictionary<String, AnyObject>) -> NSDictionary?{
@@ -117,7 +117,7 @@ class NetOpers {
             if dataVal != nil {
                 if let actual_response = response as? NSHTTPURLResponse {
                     if actual_response.statusCode == 200{
-                        var jsonDictifiedResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataVal!, options: NSJSONReadingOptions.MutableContainers, error: error) as NSDictionary
+                        var jsonDictifiedResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataVal!, options: NSJSONReadingOptions.MutableContainers, error: error) as! NSDictionary
                         
                         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
                         
@@ -240,7 +240,7 @@ class NetOpers {
             
             var url_string:String = self.appserver_hostname! + "/u/game-state"
             
-            self.get(url_string, on_received_gate_state?)
+            self.get(url_string, completion_handler: on_received_gate_state)
             
             return true
             
@@ -259,7 +259,7 @@ class NetOpers {
             params["id"] = self.user.id
             params["score_increment"] = increment_by
             
-            self.post(url_string, params: params, on_score_updated?)
+            self.post(url_string, params: params, completion_handler: on_score_updated)
             
             return true
             
@@ -278,7 +278,7 @@ class NetOpers {
             params["id"] = self.user.id
             params["score_increment"] = increment_by
             
-            self.post(url_string, params: params, on_score_updated?)
+            self.post(url_string, params: params, completion_handler: on_score_updated)
             
             return true
             
@@ -296,7 +296,7 @@ class NetOpers {
             params["id"] = verse_id
             params["score_increment"] = increment_by
             
-            self.post(url_string, params: params, on_score_updated?)
+            self.post(url_string, params: params, completion_handler: on_score_updated)
             
             return true
             

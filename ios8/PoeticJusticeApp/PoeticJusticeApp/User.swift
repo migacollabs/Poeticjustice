@@ -54,7 +54,7 @@ class User{
     }
     
     func is_logged_in() -> Bool {
-        return self.id > 0 && countElements(self.access_token)>1
+        return self.id > 0 && count(self.access_token)>1
     }
     
     func addUserDelegate(delegate : UserDelegate) {

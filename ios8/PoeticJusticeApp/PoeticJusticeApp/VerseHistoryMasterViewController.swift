@@ -31,7 +31,7 @@ class VerseHistoryMasterViewController: UITableViewController {
             
             NetOpers.sharedInstance._load_topics(loadTopicData)
             
-            NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/verse-history", load_verses)
+            NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/verse-history", completion_handler: load_verses)
             
         } else {
             self.show_alert("You are not signed in", message: "Please sign in before viewing your verse history.", controller_title: "Ok")
@@ -86,8 +86,8 @@ class VerseHistoryMasterViewController: UITableViewController {
                                 self.topics.removeAll(keepCapacity: false)
                                 
                                 for topic in results {
-                                    var t = Topic(rec:topic as NSDictionary)
-                                    var tid = t.id! as Int
+                                    var t = Topic(rec:topic as! NSDictionary)
+                                    var tid = t.id! as! Int
                                     self.topics[tid] = t
                                 }
                             }
@@ -128,9 +128,9 @@ class VerseHistoryMasterViewController: UITableViewController {
                 
                 if var topic = self.topics[vhr.topicId] as? Topic{
                     
-                    (segue.destinationViewController as VerseHistoryDetailViewController).verseId = vhr.id
-                    (segue.destinationViewController as VerseHistoryDetailViewController).verseRec = vhr
-                    (segue.destinationViewController as VerseHistoryDetailViewController).topic = topic
+                    (segue.destinationViewController as! VerseHistoryDetailViewController).verseId = vhr.id
+                    (segue.destinationViewController as! VerseHistoryDetailViewController).verseRec = vhr
+                    (segue.destinationViewController as! VerseHistoryDetailViewController).topic = topic
                 }
                 
             }
@@ -147,7 +147,7 @@ class VerseHistoryMasterViewController: UITableViewController {
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     if let results = jsonResult["results"] as? NSArray{
                         
@@ -185,13 +185,13 @@ class VerseHistoryMasterViewController: UITableViewController {
                                 let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                                 let linesDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                     data!, options: NSJSONReadingOptions.MutableContainers,
-                                    error: nil) as NSDictionary
+                                    error: nil) as! NSDictionary
                                 
                                 for (line_position, line_tuple) in linesDict{
                                     
                                     var p:Int? = (line_position as? String)!.toInt()
                                     if let lp = p{
-                                        var vlr = VerseResultScreenLineRec(position:p!, text:line_tuple[1] as String, player_id:line_tuple[0] as Int, line_score:0)
+                                        var vlr = VerseResultScreenLineRec(position:p!, text:line_tuple[1] as! String, player_id:line_tuple[0] as! Int, line_score:0)
                                         vh.lines_recs[vlr.position] = vlr
                                         
                                     }else{
@@ -205,7 +205,7 @@ class VerseHistoryMasterViewController: UITableViewController {
                                 let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                                 let votesDict: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                     data!, options: NSJSONReadingOptions.MutableContainers,
-                                    error: nil) as NSDictionary
+                                    error: nil) as! NSDictionary
                                 for(voterId, linePos) in votesDict{
                                     var k:Int? = (voterId as? String)!.toInt()
                                     if k != nil{
@@ -219,12 +219,12 @@ class VerseHistoryMasterViewController: UITableViewController {
                                 let data = (x as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                                 let playersArray: NSArray = NSJSONSerialization.JSONObjectWithData(
                                     data!, options: NSJSONReadingOptions.MutableContainers,
-                                    error: nil) as NSArray
+                                    error: nil) as! NSArray
                                 for player in playersArray as NSArray{
                                     
                                     // U.id, U.user_name, U.user_prefs, U.user_score, U.level
-                                    var pid = player[0] as Int
-                                    var usrnm = player[1] as String
+                                    var pid = player[0] as! Int
+                                    var usrnm = player[1] as! String
                                     
                                     var avnStr:String? = player[2] as? String
                                     
@@ -236,16 +236,16 @@ class VerseHistoryMasterViewController: UITableViewController {
                                         let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                                         let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                             upData!, options: NSJSONReadingOptions.MutableContainers,
-                                            error: nil) as NSDictionary
+                                            error: nil) as! NSDictionary
                                         avnStr = userPrefs["avatar_name"] as? String
                                     }else{
                                         avnStr = "avatar_default.png"
                                     }
                                     
-                                    var score = player[3] as Int
-                                    var level = player[4] as Int
-                                    var flag = player[5] as String
-                                    var numFavs = player[6] as Int
+                                    var score = player[3] as! Int
+                                    var level = player[4] as! Int
+                                    var flag = player[5] as! String
+                                    var numFavs = player[6] as! Int
                                     
                                     vh.players[pid] = VerseResultScreenPlayerRec(
                                                         user_id: pid,
@@ -304,14 +304,14 @@ class VerseHistoryMasterViewController: UITableViewController {
         let tableHeight: CGFloat = tableView.bounds.size.height
         
         for i in cells {
-            let cell: UITableViewCell = i as UITableViewCell
+            let cell: UITableViewCell = i as! UITableViewCell
             cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
         }
         
         var index = 0
         
         for a in cells {
-            let cell: UITableViewCell = a as UITableViewCell
+            let cell: UITableViewCell = a as! UITableViewCell
             UIView.animateWithDuration(1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: {
                 cell.transform = CGAffineTransformMakeTranslation(0, 0);
                 }, completion: nil)
@@ -330,14 +330,14 @@ class VerseHistoryMasterViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         if let tc = cell as? VerseHistoryTableViewCell{
             if (self.verses.count>0 && self.topics.count>0) {
                 // ran into a rare error here (depending on sequence of which views the user navigates) where self.verses has data while self.topics does not.  this is just to make sure
                 var verse = self.verses[indexPath.row]
-                var topic = self.topics[verse.topicId] as Topic
+                var topic = self.topics[verse.topicId] as! Topic
                 tc.verseTitle?.text = verse.title
-                tc.topicImage?.image = UIImage(named: topic.main_icon_name as String)
+                tc.topicImage?.image = UIImage(named: topic.main_icon_name as! String)
             }
         }
         return cell
@@ -370,7 +370,7 @@ class VerseHistoryMasterViewController: UITableViewController {
     }
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
 //    func hide_adbanner(){

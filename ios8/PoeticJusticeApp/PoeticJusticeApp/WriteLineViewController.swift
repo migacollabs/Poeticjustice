@@ -232,7 +232,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
                 // println("hitting active-verse url")
                 // println(params)
                 
-                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, loadVerse)
+                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, completion_handler: loadVerse)
                 
                 lastTabbed = NSDate()
             }
@@ -242,39 +242,40 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
         is_busy = false
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         
-        super.touchesBegan(touches, withEvent: event)
+        // super.touchesBegan(touches, withEvent: event)
         
-        var touch : UITouch = touches.anyObject() as UITouch
-        
-        var userCount : Int = countElements(self.verse.user_ids)
-        
-        var showAlert : Bool = false
-        
-        // two player minimum, these always show
-        if (touch.view == player1Avatar ||
-            touch.view == player2Avatar) {
-            showAlert = true
+        for touch : AnyObject in touches {
+            var userCount : Int = count(self.verse.user_ids)
+            
+            var showAlert : Bool = false
+            
+            // two player minimum, these always show
+            if (touch.view == player1Avatar ||
+                touch.view == player2Avatar) {
+                    showAlert = true
+            }
+            
+            // these may not be visible, but are still clickable
+            if (touch.view == player3Avatar && userCount>2) {
+                showAlert = true
+            }
+            
+            if (touch.view == player4Avatar && userCount>3) {
+                showAlert = true
+            }
+            
+            if (touch.view == player5Avatar && userCount>4) {
+                showAlert = true
+            }
+            
+            if (showAlert) {
+                self.show_alert("Player Info", message: "You'll need to finish the verse to see this player's info.", controller_title:"Ok")
+            }
+            break
         }
         
-        // these may not be visible, but are still clickable
-        if (touch.view == player3Avatar && userCount>2) {
-            showAlert = true
-        }
-        
-        if (touch.view == player4Avatar && userCount>3) {
-            showAlert = true
-        }
-        
-        if (touch.view == player5Avatar && userCount>4) {
-            showAlert = true
-        }
-        
-        if (showAlert) {
-            self.show_alert("Player Info", message: "You'll need to finish the verse to see this player's info.", controller_title:"Ok")
-        }
-    
     }
     
     
@@ -287,7 +288,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
     func configureView(){
         if let t_btn = self.topicButton{
             if let t = self.topic{
-                t_btn.setImage(UIImage(named: t.main_icon_name as String), forState: .Normal)
+                t_btn.setImage(UIImage(named: t.main_icon_name as! String), forState: .Normal)
             }
         }
     }
@@ -309,7 +310,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     if let results = jsonResult["results"] as? NSDictionary {
                         
@@ -364,8 +365,8 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
                                 
                                 // println(player)
                                 
-                                var pid = player[0] as Int
-                                var usrnm = player[1] as String
+                                var pid = player[0] as! Int
+                                var usrnm = player[1] as! String
                                 
                                 var avnStr:String? = player[2] as? String
                                 if avnStr == nil{
@@ -376,7 +377,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
                                     let upData = (avnStr! as NSString).dataUsingEncoding(NSUTF8StringEncoding)
                                     let userPrefs: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                         upData!, options: NSJSONReadingOptions.MutableContainers,
-                                        error: nil) as NSDictionary
+                                        error: nil) as! NSDictionary
                                     avnStr = userPrefs["avatar_name"] as? String
                                 }else{
                                     avnStr = "avatar_default.png"
@@ -434,7 +435,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
                                     
                                         line.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: line.length))
                                         
-                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.30), range: NSRange(location: 0, length: countElements(String(lineNum))+1))
+                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.30), range: NSRange(location: 0, length: count(String(lineNum))+1))
                                         
                                         let paraStyle = NSMutableParagraphStyle()
                                         paraStyle.headIndent = 20.0
@@ -448,7 +449,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
                                         
                                         line.addAttribute(NSFontAttributeName, value: font, range: NSRange(location: 0, length: line.length))
                                         
-                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.30), range: NSRange(location: 0, length: countElements(String(lineNum))+1))
+                                        line.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.30), range: NSRange(location: 0, length: count(String(lineNum))+1))
                                         
                                         texts.appendAttributedString(line)
                                         
@@ -599,10 +600,10 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
             
             var line : String = setLine.text
             
-            var count = countElements(line)
+            var counter = count(line)
         
-            if (count>65 || count==0) {
-                self.show_alert("Invalid Line", message: "Please enter a line between 1 and 65 characters in length.  Current character length is \(count).", controller_title:"Ok")
+            if (counter>65 || counter==0) {
+                self.show_alert("Invalid Line", message: "Please enter a line between 1 and 65 characters in length.  Current character length is \(counter).", controller_title:"Ok")
             } else {
                 
                 var params = Dictionary<String,AnyObject>()
@@ -619,7 +620,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
                 
                 createTextViewBlock()
                 
-                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, loadVerse)
+                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/save-line", params: params, completion_handler: loadVerse)
                 
                 self.setLine.text = ""
             }
@@ -643,10 +644,10 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
         dispatch_async(dispatch_get_main_queue(), {
             
             var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
-            var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
+            var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as! VerseResultsScreenViewController
             controller.verseId = verseId
             controller.topic = self.topic
-            var viewControllers: [UIViewController] = self.navigationController!.viewControllers as [UIViewController]
+            var viewControllers: [UIViewController] = self.navigationController!.viewControllers as! [UIViewController]
             
             viewControllers.removeAtIndex(viewControllers.count-1)
             viewControllers.append(controller)
@@ -659,7 +660,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
     // MARK: - Ad Banner
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
 //    func bannerViewWillLoadAd(banner: ADBannerView!) {
@@ -721,7 +722,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
                             
                             let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                 data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSDictionary
+                                error: nil) as! NSDictionary
                             
                             // this should be the verse that we just left
                             // println(jsonResult)
@@ -766,7 +767,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
                             
                             let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                                 data!, options: NSJSONReadingOptions.MutableContainers,
-                                error: nil) as NSDictionary
+                                error: nil) as! NSDictionary
                             
                             // this should be the verse that we just deleted
                             // println(jsonResult)
@@ -857,7 +858,7 @@ class WriteLineViewController: UIViewController, UITextViewDelegate {
         replacementText text: String) -> Bool {
             
         if (is_my_turn) {
-            let newLength = countElements(textView.text!) + countElements(text) - range.length
+            let newLength = count(textView.text!) + count(text) - range.length
             return newLength <= 65
         }
         

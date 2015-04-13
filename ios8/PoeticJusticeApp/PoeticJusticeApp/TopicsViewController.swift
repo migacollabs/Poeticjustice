@@ -138,7 +138,7 @@ class ActiveTopic {
     
     func getCountTurnsLeft() -> Int {
         if let playerPos : Int = find(activeTopicRec.verse_user_ids, NetOpers.sharedInstance.user.id) {
-            // println("playerPos \(playerPos) in verse_user_ids \(activeTopicRec.verse_user_ids) next_index \(activeTopicRec.next_index_user_ids)")
+             println("playerPos \(playerPos) in verse_user_ids \(activeTopicRec.verse_user_ids) next_index \(activeTopicRec.next_index_user_ids)")
             if (playerPos > activeTopicRec.next_index_user_ids) {
                 return playerPos - activeTopicRec.next_index_user_ids
             } else if (playerPos < activeTopicRec.next_index_user_ids) {
@@ -149,6 +149,7 @@ class ActiveTopic {
     }
     
     func refresh() {
+        
         if (self.isUserParticipating()) {
             // joined a topic, so animate
             
@@ -158,15 +159,16 @@ class ActiveTopic {
             
             println("refresh active topic_id \(activeTopicRec.topic_id) - turns left for player \(counts)")
             
-            topicStateAnimDuration = 4.0
+            self.topicStateAnimDuration = 4.0
             
             if (counts==0) {
                 // player's turn to write a line
-                topicStateAnimDuration = 1.0
+                self.topicStateAnimDuration = 1.0
             } else {
                 // player's turn to wait, unless it's time to vote
+                println("active topic lines \(activeTopicRec.num_lines), \(activeTopicRec.max_lines), \(activeTopicRec.current_user_has_voted)")
                 if (activeTopicRec.num_lines>=activeTopicRec.max_lines && !activeTopicRec.current_user_has_voted) {
-                        topicStateAnimDuration = 1.0
+                        self.topicStateAnimDuration = 1.0
                 }
             }
             
@@ -344,7 +346,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         title = "Topics"
         
         // initialize by emptying out all labels
-        for view in self.topicScrollView.subviews as [UIView] {
+        for view in self.topicScrollView.subviews as! [UIView] {
             if let lbl = view as? TopicLabel {
                 lbl.text = ""
             }
@@ -607,7 +609,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     
     @IBAction func handleTopicButton(sender: AnyObject) {
         
-        var topicButton = (sender as TopicButton)
+        var topicButton = (sender as! TopicButton)
         
         if (is_initialized) {
             
@@ -620,7 +622,7 @@ class TopicsViewController: UIViewController, UserDelegate {
             
                         var tag = topicButton.tag
                         var tid = self.topic_order[tag-1]
-                        var topic = self.topics[tid] as Topic
+                        var topic = self.topics[tid] as! Topic
                         
                         // stop the ads on this view
                         self.should_begin_banner = false
@@ -676,7 +678,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                                 params["user_id"]=NetOpers.sharedInstance.user.id
                                 
                                 self.navigatingActiveTopics[vid] = topic
-                                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, openNextView)
+                                NetOpers.sharedInstance.post(NetOpers.sharedInstance.appserver_hostname! + "/u/active-verse", params: params, completion_handler: openNextView)
                                 
                                 //                        let vc = WriteLineViewController(nibName: "WriteLineViewController", bundle:nil)
                                 //                        vc.verseId = vid
@@ -714,7 +716,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     if let results = jsonResult["results"] as? NSDictionary {
                         
@@ -752,7 +754,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                                         var user_count = 0
                                         if let x = results["user_ids"] as? NSArray{
                                             for user_id in x {
-                                                if user_id as Int != -1{
+                                                if user_id as! Int != -1{
                                                     user_count += 1
                                                 }
                                             }
@@ -819,7 +821,7 @@ class TopicsViewController: UIViewController, UserDelegate {
             // println(self.navigationController)
             
             var sb = UIStoryboard(name: "VerseResultsScreenStoryboard", bundle: nil)
-            var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as VerseResultsScreenViewController
+            var controller = sb.instantiateViewControllerWithIdentifier("VerseResultsScreenViewController") as! VerseResultsScreenViewController
             controller.verseId = verseId
             controller.topic = topic
             self.navigationController?.popViewControllerAnimated(false)
@@ -855,8 +857,8 @@ class TopicsViewController: UIViewController, UserDelegate {
                                 self.topic_order.removeAll(keepCapacity: false)
                                 
                                 for topic in results {
-                                    var t = Topic(rec:topic as NSDictionary)
-                                    var tid = t.id! as Int
+                                    var t = Topic(rec:topic as! NSDictionary)
+                                    var tid = t.id! as! Int
                                     self.topics[tid] = t
                                     self.topic_order.append(tid)
                                 }
@@ -903,7 +905,7 @@ class TopicsViewController: UIViewController, UserDelegate {
         // TODO: don't let this be spammed
         is_busy = true
         println("fetchActiveTopics called")
-        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", loadActiveTopicData)
+        NetOpers.sharedInstance.get(NetOpers.sharedInstance.appserver_hostname! + "/u/active-topics", completion_handler: loadActiveTopicData)
     }
     
     func getActiveTopic(activeTopicRec : ActiveTopicRec) -> AnyObject? {
@@ -944,7 +946,7 @@ class TopicsViewController: UIViewController, UserDelegate {
                     
                     let jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(
                         data!, options: NSJSONReadingOptions.MutableContainers,
-                        error: nil) as NSDictionary
+                        error: nil) as! NSDictionary
                     
                     if let level = jsonResult["user_level"] as? Int {
                         NetOpers.sharedInstance.user.level = level
@@ -1081,7 +1083,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     }
     
     func getTopicLabel(index : Int) -> TopicLabel? {
-        for view in self.topicScrollView.subviews as [UIView] {
+        for view in self.topicScrollView.subviews as! [UIView] {
             if let lbl = view as? TopicLabel {
                 if (lbl.index==(index)) {
                     return lbl
@@ -1110,12 +1112,12 @@ class TopicsViewController: UIViewController, UserDelegate {
             for idx in 1...maxTopics{
                 
                 var tid = self.topic_order[idx-1]
-                var topic = self.topics[tid] as Topic
+                var topic = self.topics[tid] as! Topic
                 
                 var btn: TopicButton? = self.view.viewWithTag(idx) as? TopicButton
                 if btn != nil{
                     // println(topic.main_icon_name)
-                    btn!.setImage(UIImage(named: topic.main_icon_name! as String), forState: .Normal)
+                    btn!.setImage(UIImage(named: topic.main_icon_name! as! String), forState: .Normal)
                 } else {
                     println("no button found for tag " + String(idx))
                 }
@@ -1129,7 +1131,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     // MARK: - Ad Banner
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
 //    func hide_adbanner(){
@@ -1156,9 +1158,9 @@ class TopicsViewController: UIViewController, UserDelegate {
     }
     
     func shuffle<C: MutableCollectionType where C.Index == Int>(var list: C) -> C {
-        let count = countElements(list)
-        for i in 0..<(count - 1) {
-            let j = Int(arc4random_uniform(UInt32(count - i))) + i
+        let counter = count(list)
+        for i in 0..<(counter - 1) {
+            let j = Int(arc4random_uniform(UInt32(counter - i))) + i
             swap(&list[i], &list[j])
         }
         return list

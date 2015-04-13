@@ -121,7 +121,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                 
                 if let topic = self.topic{
                     if let t_btn = self.topicButton{
-                        t_btn.setImage(UIImage(named: topic.main_icon_name as String), forState: .Normal)
+                        t_btn.setImage(UIImage(named: topic.main_icon_name as! String), forState: .Normal)
                     }
                     self.title = topic.name as? String
                 }
@@ -294,7 +294,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                             var offset = avatarPlayer!.frame.origin.x
                             self.currentUserName!.frame = CGRectOffset( self.currentUserName!.frame, offset, 0 )
                             self.currentUserNameConstraint.constant = offset
-                            }, nil
+                            }, completion: nil
                         )
                     }
                 }
@@ -326,7 +326,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     }
     
     func setStarOnRow(indexPath:NSIndexPath){
-        var cell = tableView.cellForRowAtIndexPath(indexPath) as PlayerLineTableViewCell
+        var cell = tableView.cellForRowAtIndexPath(indexPath) as! PlayerLineTableViewCell
         cell.votedStar.image = UIImage(named: "star_gold_256.png")
     }
     
@@ -363,14 +363,14 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         let tableHeight: CGFloat = tableView.bounds.size.height
         
         for i in cells {
-            let cell: UITableViewCell = i as UITableViewCell
+            let cell: UITableViewCell = i as! UITableViewCell
             cell.transform = CGAffineTransformMakeTranslation(0, tableHeight)
         }
         
         var index = 0
         
         for a in cells {
-            let cell: UITableViewCell = a as UITableViewCell
+            let cell: UITableViewCell = a as! UITableViewCell
             UIView.animateWithDuration(1.5, delay: 0.05 * Double(index), usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: {
                 cell.transform = CGAffineTransformMakeTranslation(0, 0);
                 }, completion: nil)
@@ -390,7 +390,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
         if let pc = cell as? PlayerLineTableViewCell{
             
             //pc.yourPickLabel.text = "" // clear it
@@ -494,7 +494,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
 //        //        cell?.backgroundColor = UIColor.whiteColor()
 //    }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         var vlr = self.verseLinesForTable[indexPath.row]
         
@@ -640,7 +640,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
     
     
     func appdelegate () -> AppDelegate{
-        return UIApplication.sharedApplication().delegate as AppDelegate
+        return UIApplication.sharedApplication().delegate as! AppDelegate
     }
     
     
@@ -658,7 +658,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
             if result != nil{
                 if let vk = result!["verse_key"] as? String{
                     
-                    var site = result!["site_addr"] as String
+                    var site = result!["site_addr"] as! String
                     
                     var verseUrl = "http://\(site)/v/p/k=\(vk)"
                     
