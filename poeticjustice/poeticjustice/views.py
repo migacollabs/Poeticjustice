@@ -215,6 +215,7 @@ def create_new_user_post(request):
             else:
                 # This is a brand new user
                 user = User(**kwds)
+                user.email_address = kwds['email_address'].lower()
 
             user.access_token = \
                 sha512(
@@ -275,10 +276,7 @@ def create_new_user_post(request):
 def _send_notification(user_obj, 
         auth_hash, device_auth_hash, device_type, email_tmpl_file, 
         subject='Iambic, Are You?', logo_name=None):
-
-    log.info('_send_notification called', str(auth_hash), str(device_auth_hash), str(device_type))
-
-
+    
     def send_mail_gun(to_addr, subject, msg):
         try:
             return requests.post(
@@ -303,9 +301,9 @@ def _send_notification(user_obj,
     site_addr = get_site_addr()
 
     tmpl_vars = {
-        'site_id': 'mividio',
+        'site_id': 'iambicgame',
         'site_hostname': site_addr,
-        'site_display_name': 'Mividio',
+        'site_display_name': 'Iambic, Are You',
         'auth_hash': auth_hash,
         'device_auth_hash': device_auth_hash,
         'device_type': device_type
@@ -316,26 +314,6 @@ def _send_notification(user_obj,
     message_body = Template(filename=email_tmpl).render(**tmpl_vars)
 
     res = send_mail_gun(user_obj.email_address, subject, message_body)
-
-    print 'SENT MAIL GUN', res
-
-    # # email the new user
-    # smtp_psswd = os.environ['POETIC_JUSTICE_SMTP_PASSWORD']
-    # smtp_user = os.environ['POETIC_JUSTICE_SMTP_USER']
-    # smtp_server = os.environ['POETIC_JUSTICE_SMTP_SERVER']
-
-    # log.info("creating emailer")
-
-    # emailer = Emailer(
-    #     smtp_user, 
-    #     smtp_psswd, 
-    #     smtp_server) \
-    # .send_html_email({
-    #     'to': user_obj.email_address,
-    #     'from': smtp_user,
-    #     'subject': subject,
-    #     'message_body': message_body},
-    #     attached_logo=os.path.join(ASSETS_DIR, logo_name) if logo_name else None)
 
     log.info( 'sent email' )
 
@@ -375,6 +353,7 @@ def invite_new_user_post(request):
             else:
                 # This is a brand new user
                 invite_user = User(**kwds)
+                invite_user.email_address = kwds['email_address'].lower()
 
             invite_user.access_token = \
                 sha512(
@@ -422,6 +401,14 @@ def invite_new_user_post(request):
             logged_in=auth_usrid,
         )
 
+        try:
+        # def _send_notification(user_obj, 
+        #         auth_hash, device_auth_hash, device_type, email_tmpl_file, 
+        #         subject='Iambic, Are You?', logo_name=None):
+            _send_notification(invite_user, None, None, None, 'email.invite.mako', logo_name="icon_120.png")
+        except:
+            print traceback.format_exc()
+
         return result
 
     except HTTPGone: raise
@@ -465,7 +452,7 @@ def login_get(request):
 @forbidden_view_config(renderer='login.mako')
 def login_post(request):
     try:
-        log.info('\nlogin post called\n')
+        log.info('\nlogin post called'+str(request))
         login_url = request.resource_url(request.context, 'login')
         referrer = request.url
         if referrer == login_url:
@@ -514,11 +501,13 @@ def login_post(request):
 
 
         if not device_token and device_type != "DEVICETYPEBROWSER":
+            log.info("raising HTTPForbidden")
             raise HTTPForbidden
 
 
         if 'form.submitted' in request.params:
             login = request.params['login']
+            login = login.strip().lower()
             # password = sha512("NOPASSWORD").hexdigest()
             user = get_user(login)
 
@@ -534,6 +523,23 @@ def login_post(request):
                         # update to the latest user
                         user = User(entity=user_obj)
 
+                        if user.email_address.lower() == 'corp+apple.review@miga.me':
+                            log.info("apple logging in")
+                            device_rec = json.loads(user.device_rec) if user.device_rec else {}
+                            user.auth_hash = sha512(user.email_address + default_hashkey).hexdigest()
+                            device_rec[device_token] = True
+                            user.device_rec = json.dumps(device_rec)
+                            user.is_invited = True
+                            user.save(session=session)
+
+                            res = dict(
+                                status='Ok',
+                                verification_req=False,
+                                user=user.to_dict(),
+                                logged_in=None
+                                )
+                            log.info("saving apple user " + str(res))
+
                         ### FIRST CHECK
                         if user.access_token == None:
 
@@ -543,8 +549,7 @@ def login_post(request):
                                 user.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
 
                                 if do_notification(user, user.auth_hash, device_auth_hash, device_type):
-
-                                    user.device_rec = json.dumps({device_token:None})
+                                    # user.device_rec = json.dumps({device_token:None})
                                     user.is_invited = True
                                     user.save(session=session)
 
@@ -577,7 +582,7 @@ def login_post(request):
                             # new device
                             user.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
 
-                            if user.email_address == 'corp+apple.review@miga.me':
+                            if user.email_address.lower() == 'corp+apple.review@miga.me':
                                 device_rec[device_token] = True
                                 user.device_rec = json.dumps(device_rec)
                                 user.save(session=session)
@@ -589,7 +594,7 @@ def login_post(request):
                                     logged_in=None
                                     )
 
-                            elif do_notification(user, user.auth_hash, device_auth_hash, device_type, notification_type="device"):
+                            if do_notification(user, user.auth_hash, device_auth_hash, device_type, notification_type="device"):
                                 # new device, set state to None for unknown
                                 device_rec[device_token] = None
                                 user.device_rec = json.dumps(device_rec)
@@ -705,56 +710,6 @@ def login_post(request):
             session.close()
         except:
             pass
-
-
-# @view_config(
-#     name='verify',
-#     request_method='GET',
-#     context='poeticjustice:contexts.Users',
-#     renderer='user.verified.mako')
-# def verify_new_user(request):
-#     try:
-#         args = list(request.subpath)
-#         kwds = _process_subpath(args)
-#         with SQLAlchemySessionFactory() as session:
-#             U = ~User
-#             user = session.query(U).filter((U).auth_hash == kwds['hash']).first()
-#             if user:
-#                 h = sha512(user.email_address + default_hashkey).hexdigest()
-#                 if h == kwds['hash']:
-
-#                     user.access_token = sha512(
-#                         str(user.id) + str(user.initial_entry_date) + default_hashkey).hexdigest()
-
-#                     session.add(user)
-#                     session.commit()
-#                     user = User(entity=user)
-
-#                     print 'VERIFIED NEW USER'
-                    
-#                 else:
-#                     raise HTTPForbidden()
-#             else:
-#                 raise HTTPUnauthorized()
-
-#             return {
-#                 'verified': True,
-#                 'email_address': user.email_address,
-#                 'logged_in': authenticated_userid(request),
-#                 'user': user
-#             }
-
-#     except HTTPGone: raise
-#     except HTTPFound: raise
-#     except HTTPUnauthorized: raise
-#     except:
-#         log.exception(traceback.format_exc())
-#         raise HTTPBadRequest(explanation='Invalid query parameters')
-#     finally:
-#         try:
-#             session.close()
-#         except:
-#             pass
 
 
 @view_config(

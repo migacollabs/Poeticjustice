@@ -4,6 +4,7 @@ import time
 import copy
 import json
 import datetime
+import requests
 from collections import OrderedDict
 import traceback
 import logging
@@ -37,7 +38,8 @@ from pyaella.metacode import tmpl as pyaella_templates
 from pyaella.server.processes import Emailer
 from pyaella.server.api import LutValues
 
-from poeticjustice import default_hashkey, idcoder_key
+import poeticjustice
+from poeticjustice import default_hashkey, idcoder_key, MAILGUN_API_KEY
 from poeticjustice.models import *
 from poeticjustice.views import _save_user
 
@@ -50,6 +52,10 @@ frmttr = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s
 fh.setFormatter(frmttr)
 log.addHandler(fh)
 log.info('Started')
+
+
+ASSETS_DIR = os.path.dirname(os.path.abspath(poeticjustice.assets.__file__))
+
 
 IDCODER = IdCoder(kseq=idcoder_key)
 
@@ -355,6 +361,50 @@ def remove_user_friend(request):
         except:
             pass
 
+
+def _send_notification(user_obj, 
+        auth_hash, device_auth_hash, device_type, email_tmpl_file, 
+        subject='Iambic, Are You?', logo_name=None):
+
+    def send_mail_gun(to_addr, subject, msg):
+        try:
+            return requests.post(
+                "https://api.mailgun.net/v2/mg.iambicgame.com/messages",
+                auth=("api", MAILGUN_API_KEY),
+                files=[("inline", open(os.path.join(ASSETS_DIR, logo_name)))] if logo_name else [],
+                data={"from": "Iambic! <mailgun@mg.iambicgame.com>",
+                      "to": [to_addr],
+                      "subject": "Hello",
+                      "html": msg
+                      })
+        except:
+            print traceback.format_exc()
+
+
+    ac = get_app_config()
+    dconfig = get_dinj_config(ac)
+
+    # send email
+    email_tmpl = os.path.join(dconfig.Web.TemplateDir, email_tmpl_file)
+
+    site_addr = get_site_addr()
+
+    tmpl_vars = {
+        'site_id': 'iambicgame',
+        'site_hostname': site_addr,
+        'site_display_name': 'Iambic, Are You',
+        'auth_hash': auth_hash,
+        'device_auth_hash': device_auth_hash,
+        'device_type': device_type
+
+    }
+    tmpl_vars.update(user_obj.to_dict(ignore_fields=['id', 'key']))
+
+    message_body = Template(filename=email_tmpl).render(**tmpl_vars)
+
+    res = send_mail_gun(user_obj.email_address, subject, message_body)
+
+
 @view_config(
     name='addfriend',
     request_method='POST',
@@ -374,6 +424,8 @@ def add_user_friend(request):
             )
         )
 
+        do_invite = False
+
         if user and user.is_active and user.email_address==auth_usrid:
 
             friendEmailAddress = request.params['friend_email_address']
@@ -388,6 +440,7 @@ def add_user_friend(request):
                     friend = User(email_address=friendEmailAddress, 
                             user_name=request.params['user_name'] if 'user_name' in request.params else 'N/A')
                     friend = _save_user(friend, session)
+                    do_invite = True
 
                 UxU = ~UserXUser
                 uxu = session.query(UxU).filter(UxU.friend_id==friend.id).\
@@ -409,6 +462,12 @@ def add_user_friend(request):
                     setattr(uxu, 'approved', True)
                     uxu = UserXUser(entity=session.merge(uxu))
                     uxu.save(session=session)
+
+                if do_invite:
+                    try:
+                        _send_notification(friend, None, None, None, 'email.invite.mako', logo_name="icon_120.png")
+                    except:
+                        print traceback.format_exc()
 
                 return get_friends(user.id, session)
 
