@@ -203,25 +203,26 @@
 	<p>&nbsp</p>
 </div>
 
-
+<div id="tag-lines" class="small-12 small-centered 
+		 columns text-center">
+<br>
+<br>
+<br>
+<br>
+© 2015 Miga Col.Labs LLC, Iambic, Are You? is a trademark of Miga Col.Labs, LLC. <br>
+All rights reserved.
+</div>
 
 <div class="footer-bar">
 	<h6 class="subheader">&nbsp<a href="http://migacollabs.com">Miga Col.labs LLC</a> - 
 		<a href="/assets/privacypolicy.html">Privacy Policy</a> - <a href="/credits">About</a></h6>
 </div>
 
-
-
 <script src="/foundation/bower_components/foundation/js/foundation.js"></script>
-
-
-
 
 <script>
 	$(document).foundation();
 </script>
-
-
 
 </body>
 
