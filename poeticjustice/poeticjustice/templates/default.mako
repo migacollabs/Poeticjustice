@@ -36,7 +36,7 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 320px;
+    height: 150px;
     border: 0;
     overflow: auto;
     /*background-color: #E5E5E5;*/
@@ -48,18 +48,19 @@
 }
 
 .center-piece {
-    position: relative;
-    top:300px;
+     position: relative;
+    top:-100px;
+    right:5px;
     margin: 0px auto;
     text-align: center;
     background: rgba(0, 0, 0, 0);
-    z-index: 10;
+    z-index: 50;
 }
 
 .center-logo {
     position: relative;
-    top:-200px;
-    /*right:15px;*/
+    top:-100px;
+    right:5px;
     margin: 0px auto;
     text-align: center;
     background: rgba(0, 0, 0, 0);
@@ -98,7 +99,7 @@
 
 #features{
 	top:-100px;
-	background-color: lightgray;
+	background-color: #E8E8E8;
 }
 
 </style>
@@ -122,9 +123,9 @@
 <div id="announcement"></div>
 
 <div class='center-logo'>
-	<div class="center-wrap">
-	<img src="/assets/shakespeare.png" width="280">
-	</div>
+  <div class="center-wrap">
+  <a href="/"><img src="/assets/shakespeare.png" width="128"></a>
+  </div>
 </div>
 
 <!-- <div id="left-taglines">
@@ -136,7 +137,12 @@
 	
 <div id="game-name" class="small-12 small-centered medium-8 medium-centered columns text-center">
 	<br>
-	<h1 class="subheader">&nbsp&nbsp&nbsp<b>iambic, are you?</b></h1>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<h1 class="subheader">&nbsp&nbsp&nbspIambic, Are You?</h1>
 	<br>
 	<br>
 	<div id="badge">
@@ -154,16 +160,16 @@
 	<h4 class="subheader">Be weird, be unique!<br>Get a Gold Star or your<br>rhymes were weak!</h4>
 </div> -->
 
-<div id="tag-lines" class="small-12 small-centered medium-9 
-		medium-centered columns text-center">
-	<h4 class="subheader">Tap a Topic, Start a Verse</h4>
-	<h4 class="subheader">Everybody gets 4 lines, so make them count!</h4>
-	<h4 class="subheader">Play with just Friends or Open it up to the World!</h4>
-	<h4 class="subheader">Be weird, be unique! Get a Gold Star or your rhymes are weak!</h4>
+<div id="tag-lines" class="small-12 small-centered 
+		 columns text-center">
+	<h4 class="subheader">Tap a topic, start a verse</h4>
+	<h4 class="subheader">Everybody gets four lines, so make them count</h4>
+	<h4 class="subheader">Play with friends or open it up to the world <!--<img src="https://cdn1.iconfinder.com/data/icons/Futurosoft%20Icons%200.5.2/16x16/apps/keyboard_layout.png"></img> --></h4>
+	<h4 class="subheader">Be weird, be unique! Get a gold star <img src="https://cdn2.iconfinder.com/data/icons/crystalproject/16x16/apps/keditbookmarks.png"</img> or your rhymes are weak!</h4>
 </div>
 
 
-<div id="features" class="small-12 small-centered medium-9 medium-centered large-6 large-centered columns">
+<div id="features" class="small-12 small-centered medium-centered large-6 large-centered columns">
 	<p>&nbsp</p>
 	<div class="text-center">
 	<h3 class="subheader">Join the fun in a turn-based social game of poetry</h3>
@@ -172,25 +178,29 @@
 	<p>&nbsp</p>
 	<div class="small-10 small-centered medium-10 large-9 large-centered medium-centered xlarge-5 xlarge-centered columns">
 	<h5 class="subheader">
-	* Supports 2-4 players<br>
-	* Player scores and favorites<br>
-	* Supports unlimited friends<br>
-	* Play against anyone or friends<br>
-	* 64 topics for inspiration<br>
-	* 7 levels<br>
-	* Player avatars<br>
-	* No passwords necessary<br>
-	* Supports multiple devices per player<br>
-	* Use creative usernames, update them any time<br>
-	* Learn about poetry<br>
-	* Global and Friend leaderboards<br>
-	* Share your creative writing skills<br>
-	* View and share your poetry on the web<br>
-	* Just have fun!
+	&middot; Supports 2-4 players<br>
+	&middot; Player scores and favorites<br>
+	&middot; Supports unlimited friends<br>
+	&middot; Play against anyone or friends<br>
+	&middot; 64 topics for inspiration<br>
+	&middot; 7 levels<br>
+	&middot; Player avatars<br>
+	&middot; No passwords necessary<br>
+	&middot; Supports multiple devices per player<br>
+	&middot; Use creative usernames<br>
+	&middot; Learn about poetry<br>
+	&middot; Global and Friend leaderboards<br>
+	&middot; Share your creative writing skills<br>
+	&middot; View and share your poetry on the web<br>
+	&middot; Casual gameplay<br>
+	&middot; Just have fun!
 	</h5>
 	<p>&nbsp</p>
-	<p>&nbsp</p>
 	</div>
+	<center>
+	<img src="http://a5.mzstatic.com/us/r30/Purple3/v4/8e/f8/5f/8ef85fb9-7d87-c8b9-f27a-7d9d7b630570/screen322x572.jpeg"></img>
+	</center>
+	<p>&nbsp</p>
 </div>
 
 
