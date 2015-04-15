@@ -19,6 +19,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var userLabel: UILabel!
     @IBOutlet var goButton: UIButton!
     @IBOutlet var avatarLogo: UIButton!
+    @IBOutlet weak var historyButton: UIButton!
+    
+    @IBOutlet weak var avatarButton: UIButton!
+    
+    @IBOutlet weak var historyLogo: UIButton!
     
     private var loginTimerCount : Int = 0
     private var is_busy : Bool = false
@@ -53,6 +58,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         NetOpers.sharedInstance.alertHandler = self
         
         updateUserLabel()
+    }
+    @IBAction func handleCreateAccount(sender: AnyObject) {
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -99,6 +107,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if (user.is_logged_in()) {
             self.userLabel.text = "You're Signed In"
             
+            self.avatarLogo.hidden = false
+            self.avatarButton.hidden = false
+            self.historyButton.hidden = false
+            self.historyLogo.hidden = false
+            
             title = user.user_name
             self.navigationController?.navigationBar.topItem?.title = "Home"
             
@@ -106,6 +119,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
         } else {
             self.userLabel.text = "Sign In"
+            
+            self.avatarButton.hidden = true
+            self.avatarLogo.hidden = true
+            self.historyButton.hidden = true
+            self.historyLogo.hidden = true
             
             title = "Home"
             self.navigationController?.navigationBar.topItem?.title = "Home"
