@@ -180,7 +180,7 @@ class NetOpers {
                                     
                                     if requires_verification{
                                         if self.alertHandler != nil{
-                                            self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok!")
+                                            self.alertHandler!.show_alert("Verify", message:"Please check your email for verification.  If the email appears to be missing, it may be inside your spam/junk folder.", controller_title:"Ok!")
                                         }
                                         
                                         if self.loginHandler != nil{
@@ -208,7 +208,7 @@ class NetOpers {
                     println("Forbidden")
                     dispatch_async(dispatch_get_main_queue(),{
                         if self.alertHandler != nil{
-                            self.alertHandler!.show_alert("Verify", message:"Please check your email for verification", controller_title:"Ok")
+                            self.alertHandler!.show_alert("Verify", message:"Please check your email for verification.  If the email appears to be missing, it may be inside your spam/junk folder.", controller_title:"Ok")
                         }
                         
                         if self.loginHandler != nil{

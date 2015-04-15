@@ -59,8 +59,35 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         updateUserLabel()
     }
+    
+    @IBOutlet weak var createUsername: UITextField!
+    @IBOutlet weak var createEmail: UITextField!
+    
     @IBAction func handleCreateAccount(sender: AnyObject) {
         
+        var alert = UIAlertController(title: "Create New Account", message: "Please enter a user name and email address", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "user name"
+            textField.secureTextEntry = false
+            self.createUsername = textField
+        })
+        
+        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "email address"
+            textField.secureTextEntry = false
+            self.createEmail = textField
+        })
+        
+        alert.addAction(UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: {
+            (alert: UIAlertAction!) in
+            self.email_address.text = self.createEmail.text
+            self.user_name.text = self.createUsername.text
+            self.on_go(alert)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -290,7 +317,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func on_email_notification() {
         self.isVerifyingEmail = true
         self.is_busy = false
-        hideActivityIndicator();
+        hideActivityIndicator()
+        self.updateUserLabel()
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
