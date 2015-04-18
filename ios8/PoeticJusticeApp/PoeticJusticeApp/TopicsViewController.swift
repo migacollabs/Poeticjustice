@@ -190,6 +190,9 @@ class ActiveTopic {
             if (self.isUserParticipating()) {
                 // if the user is a participant and the turns left changes, display it
                 self.rotateImage(self.topicStateImage, duration: self.topicStateAnimDuration)
+            } else {
+                // a still orbit, but still animated
+                self.scaleImage(self.topicStateImage, duration: 2.0)
             }
         }
     }
@@ -198,7 +201,30 @@ class ActiveTopic {
         return contains(activeTopicRec.verse_user_ids, NetOpers.sharedInstance.user.id)
     }
     
+    private func scaleImage(image : UIImageView, duration : NSTimeInterval) {
+        let delay = 0.0
+        let options = UIViewKeyframeAnimationOptions.Repeat | UIViewKeyframeAnimationOptions.CalculationModePaced
+        
+        UIView.animateKeyframesWithDuration(duration, delay: delay, options: options, animations: {
+            
+            UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
+                image.transform = CGAffineTransformMakeScale(0.75, 0.75)
+            })
+            
+            UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
+                image.transform = CGAffineTransformMakeScale(1.25, 1.25)
+            })
+            
+            UIView.addKeyframeWithRelativeStartTime(0, relativeDuration: 0, animations: {
+                image.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            })
+            
+            }, completion: nil
+        )
+    }
+    
     private func rotateImage(image : UIImageView, duration : NSTimeInterval) {
+        image.transform = CGAffineTransformMakeScale(1.0, 1.0)
         let delay = 0.0
         let fullRotation = CGFloat(M_PI * 2)
         let options = UIViewKeyframeAnimationOptions.Repeat | UIViewKeyframeAnimationOptions.CalculationModePaced

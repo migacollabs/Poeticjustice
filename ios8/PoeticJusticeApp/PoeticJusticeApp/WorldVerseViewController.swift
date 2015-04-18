@@ -183,10 +183,10 @@ class WorldVerseViewController: UIViewController, UITableViewDelegate, UITableVi
                 switch httpResponse.statusCode{
                 case 401:
                     // 401 Unauthorized, verse not is not open to world
-                    dispatch_alert("Unauthorized", message:"Verse is no longer open to the World", controller_title:"Ok", goBackToTopics:true)
+                    dispatch_alert("Oops", message:"This verse is no longer available.  Start a new one instead!", controller_title:"Ok", goBackToTopics:true)
                 case 409:
                     // 409 Conflict err, verse no longer available
-                    dispatch_alert("Unauthorized", message:"Verse is not open to the World", controller_title:"Ok", goBackToTopics:true)
+                    dispatch_alert("Oops", message:"This verse is no longer available.  Start a new one instead!", controller_title:"Ok", goBackToTopics:true)
                 default:
                     println("Unhandled Err Code \(httpResponse.statusCode)")
                     break;
