@@ -873,12 +873,20 @@ def get_active_topics(request):
                     votes_d = json.loads(r[0].votes) if r[0].votes else {}
                     current_user_has_voted = str(user.id) in votes_d.keys()
 
-                    topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
-                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
-                        "num_lines":r[0].num_lines, "max_lines":r[0].max_lines
-                        }
+                    if topics[r[1].id]!=None:
+                        # randomly overwrite an existing topic/verse
+                        if (random.random()>0.5):
+                            topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                                "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
+                                "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
+                                "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
+                                "num_lines":r[0].num_lines, "max_lines":r[0].max_lines}
+                    else:
+                        topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                            "user_name":r[2].user_name, "src":'friend', "next_index_user_ids":r[0].next_index_user_ids, 
+                            "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
+                            "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
+                            "num_lines":r[0].num_lines, "max_lines":r[0].max_lines}
 
                 # put global open verses last, so mine and friends show up first in topics view
                 # global open verses and topics that are not mine

@@ -346,38 +346,40 @@ class FriendsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let dqd = tableView.dequeueReusableCellWithIdentifier("FriendCell", forIndexPath: indexPath) as! UITableViewCell
         
-        if let cell = dqd as? FriendsTableViewCell{
-            if let fr = self.friends[indexPath.row] as FriendRec? {
-                
-                // for now, hide information until friendship is confirmed
-                if (isIncoming(fr)) {
-                    cell.requestStatus.image = UIImage(named: "incoming.png")
-                    cell.username.text = "Friend Request"
-                    cell.username.textColor = UIColor.lightGrayColor()
-                    cell.avatar.image = UIImage(named: "avatar_default.png")
-                    cell.points.text = String(format: "x%03d", 0)
-                    cell.favs.text = String(format: "x%03d", 0)
-                    cell.level.image = UIImage(named: "lvl_1.png")
-                } else if (isOutgoing(fr)) {
-                    cell.requestStatus.image = UIImage(named: "outgoing.png")
-                    cell.username.text = "Friend Request"
-                    cell.username.textColor = UIColor.lightGrayColor()
-                    cell.avatar.image = UIImage(named: "avatar_default.png")
-                    cell.points.text = String(format: "x%03d", 0)
-                    cell.favs.text = String(format: "x%03d", 0)
-                    cell.level.image = UIImage(named: "lvl_1.png")
-                } else {
-                    cell.requestStatus.image = UIImage(named : "group.png")
-                    cell.username.text = fr.user_name
-                    cell.username.textColor = UIColor.blackColor()
-                    cell.avatar.image = UIImage(named: fr.avatar_name)
-                    cell.points.text = String(format: "x%03d", fr.user_score)
-                    cell.favs.text = String(format: "x%03d", fr.num_favs)
-                    cell.level.image = UIImage(named: "lvl_" + String(fr.level) + ".png")
+        if self.friends.count>0 {
+            if let cell = dqd as? FriendsTableViewCell{
+                if let fr = self.friends[indexPath.row] as FriendRec? {
+                    
+                    // for now, hide information until friendship is confirmed
+                    if (isIncoming(fr)) {
+                        cell.requestStatus.image = UIImage(named: "incoming.png")
+                        cell.username.text = "Friend Request"
+                        cell.username.textColor = UIColor.lightGrayColor()
+                        cell.avatar.image = UIImage(named: "avatar_default.png")
+                        cell.points.text = String(format: "x%03d", 0)
+                        cell.favs.text = String(format: "x%03d", 0)
+                        cell.level.image = UIImage(named: "lvl_1.png")
+                    } else if (isOutgoing(fr)) {
+                        cell.requestStatus.image = UIImage(named: "outgoing.png")
+                        cell.username.text = "Friend Request"
+                        cell.username.textColor = UIColor.lightGrayColor()
+                        cell.avatar.image = UIImage(named: "avatar_default.png")
+                        cell.points.text = String(format: "x%03d", 0)
+                        cell.favs.text = String(format: "x%03d", 0)
+                        cell.level.image = UIImage(named: "lvl_1.png")
+                    } else {
+                        cell.requestStatus.image = UIImage(named : "group.png")
+                        cell.username.text = fr.user_name
+                        cell.username.textColor = UIColor.blackColor()
+                        cell.avatar.image = UIImage(named: fr.avatar_name)
+                        cell.points.text = String(format: "x%03d", fr.user_score)
+                        cell.favs.text = String(format: "x%03d", fr.num_favs)
+                        cell.level.image = UIImage(named: "lvl_" + String(fr.level) + ".png")
+                    }
+                    
+                    cell.emailAddress.text = fr.email_address
+                    
                 }
-                
-                cell.emailAddress.text = fr.email_address
-                
             }
         }
         
