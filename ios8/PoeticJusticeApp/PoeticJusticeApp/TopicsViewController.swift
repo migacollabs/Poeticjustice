@@ -1179,7 +1179,7 @@ class TopicsViewController: UIViewController, UserDelegate {
     
     override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
         if motion == .MotionShake {
-            self.loadTopicButtons()
+            refresh()
         }
     }
     

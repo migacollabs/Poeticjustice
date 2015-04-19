@@ -5,6 +5,7 @@ import copy
 import json
 import datetime
 import requests
+import random
 from collections import OrderedDict
 import traceback
 import logging
@@ -892,12 +893,22 @@ def get_active_topics(request):
                     votes_d = json.loads(r[0].votes) if r[0].votes else {}
                     current_user_has_voted = str(user.id) in votes_d.keys()
 
-                    topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
-                        "user_name":r[2].user_name, "src":'world', "next_index_user_ids":r[0].next_index_user_ids, 
-                        "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
-                        "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
-                        "num_lines":r[0].num_lines, "max_lines":r[0].max_lines
-                        }
+                    # do a random check to see if the next verse in the result set
+                    # should override the first or not (for the same topic), and so on
+                    if topics[r[1].id]!=None:
+                        # randomly overwrite an existing topic/verse
+                        if (random.random()>0.5):
+                            topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                                "user_name":r[2].user_name, "src":'world', "next_index_user_ids":r[0].next_index_user_ids, 
+                                "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
+                                "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
+                                "num_lines":r[0].num_lines, "max_lines":r[0].max_lines}
+                    else:
+                        topics[r[1].id]={"verse_id":r[0].id, "topic_id":r[1].id, "email_address":r[2].email_address,
+                            "user_name":r[2].user_name, "src":'world', "next_index_user_ids":r[0].next_index_user_ids, 
+                            "user_ids":r[0].user_ids, "owner_id":r[0].owner_id, "title":r[0].title,
+                            "current_user_has_voted":current_user_has_voted, "complete":r[0].complete,
+                            "num_lines":r[0].num_lines, "max_lines":r[0].max_lines}
 
                 # TODO: optimize this - definitely a better way
                 results = []
