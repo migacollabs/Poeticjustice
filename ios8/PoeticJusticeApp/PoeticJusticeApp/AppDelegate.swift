@@ -42,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, ADBannerViewDelegate {
         
         NetOpers.sharedInstance._load_topics(loadTopicData)
         
+        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient, error: nil)
+        
         return true
     }
 
