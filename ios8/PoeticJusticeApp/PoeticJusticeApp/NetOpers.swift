@@ -217,6 +217,16 @@ class NetOpers {
                         
                     })
                     
+                } else if httpResponse.statusCode == 409 {
+                    
+                    println("Conflict")
+                    dispatch_async(dispatch_get_main_queue(),{
+                        if self.alertHandler != nil{
+                            self.alertHandler!.show_alert("Whoops", message:"That user name may be already taken, please choose a unique user name", controller_title:"Ok")
+                        }
+                        
+                    })
+                    
                 }else{
                     println("error signing in")
                 }

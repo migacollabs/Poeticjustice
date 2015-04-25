@@ -64,6 +64,14 @@
 </div>
 
 
+<div id="messages-reveal" class="reveal-modal medium" data-reveal>
+    <h4 class="subheader" id="message-title"></h4>
+    <hr>
+    <h5 class="subheader" id="message-body"></h5>
+    <a class="close-reveal-modal">&#215;</a>
+</div>
+
+
 <script src="/foundation/bower_components/foundation/js/foundation.js"></script>
 
 
@@ -98,7 +106,7 @@ $("#login-btn").click(function(event){
         error: function(jqXHR, textStatus, errorThrown){
             if(jqXHR.status==409){
                     $("#message-title").html("Error");
-                    $("#message-body").html("This account already exists. Please log in normally.");
+                    $("#message-body").html(jqXHR.responseText);
                     $("#messages-reveal").foundation('reveal', 'open');
             }else if(jqXHR.status==422){
                     $("#message-title").html("Error");

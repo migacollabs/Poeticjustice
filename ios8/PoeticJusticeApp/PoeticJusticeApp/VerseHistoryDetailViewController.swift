@@ -193,7 +193,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                     
                     for(lineId, starCount) in starsForLines{
                         var rowNumber = find(self.sortedLineIndexes, lineId)
-                        self.verseLinesForTable[rowNumber!].line_score += 1
+                        self.verseLinesForTable[rowNumber!].line_score = starCount //+= 1
                         
                         if rowNumber != nil{
                             self.setVoteStarOnRow(NSIndexPath(forRow:rowNumber!, inSection:0), numOfStars: starCount)
@@ -395,52 +395,52 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
             
             //pc.yourPickLabel.text = "" // clear it
             pc.votedStar.image = nil
+            pc.starTwo.image = nil
+            pc.starThree.image = nil
+            pc.starFour.image = nil
             
             // get the line
             var vlr = verseLinesForTable[indexPath.row]
             
+            var numOfStars = vlr.line_score
+            
+            if numOfStars >= 1{
+                pc.votedStar.image = UIImage(named: "star_gold_256.png")
+                pc.votedStar.alpha = 0.25
+            }
+            if numOfStars >= 2{
+                pc.starTwo.image = UIImage(named: "star_gold_256.png")
+                pc.starTwo.alpha = 0.25
+            }
+            if numOfStars >= 3{
+                pc.starThree.image = UIImage(named: "star_gold_256.png")
+                pc.starThree.alpha = 0.25
+            }
+            if numOfStars >= 4{
+                pc.starFour.image = UIImage(named: "star_gold_256.png")
+                pc.starFour.alpha = 0.25
+            }
+            
             // get the player record so we can
             // set the avatar and userName
             // TODO: should we display the players who joined but then left?
-            if let vr = self.verseRec {
-                var found : Bool = false
-                for id in vr.players.keys {
-                    if (id==vlr.player_id) {
-                        found = true
-                        let playerRec : VerseResultScreenPlayerRec = vr.players[vlr.player_id]!
-
-                        if pc.userName != nil{
-                            pc.userName.text = playerRec.user_name
-                        }
-                        
-//                        if self.currentPlayerVotedFor != nil && self.currentPlayerVotedFor!.row == indexPath.row{
-//                            pc.votedStar.image = UIImage(named: "star_gold_256.png")
+            
+//            if let vr = self.verseRec {
+//                var found : Bool = false
+//                for id in vr.players.keys {
+//                    if (id==vlr.player_id) {
+//                        found = true
+//                        let playerRec : VerseResultScreenPlayerRec = vr.players[vlr.player_id]!
+//
+//                        if pc.userName != nil{
+//                            pc.userName.text = playerRec.user_name
 //                        }
-                        
-                        var numOfStars = vlr.line_score
-                        
-                        if numOfStars >= 1{
-                            pc.votedStar.image = UIImage(named: "star_gold_256.png")
-                            pc.votedStar.alpha = 0.25
-                        }
-                        if numOfStars >= 2{
-                            pc.starTwo.image = UIImage(named: "star_gold_256.png")
-                            pc.starTwo.alpha = 0.25
-                        }
-                        if numOfStars >= 3{
-                            pc.starThree.image = UIImage(named: "star_gold_256.png")
-                            pc.starThree.alpha = 0.25
-                        }
-                        if numOfStars >= 4{
-                            pc.starFour.image = UIImage(named: "star_gold_256.png")
-                            pc.starFour.alpha = 0.25
-                        }
-                        
-                        break
-                    }
-                }
-                
-            }
+//
+//                        break
+//                    }
+//                }
+//                
+//            }
             
             pc.verseLabel.text = vlr.text
             pc.verseLabel.font.fontName
@@ -662,7 +662,7 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                     
                     var verseUrl = "http://\(site)/v/p/k=\(vk)"
                     
-                    var verseText:String = "A Verse from Iambic, Are You?\n----\n\(verseUrl)\n\n"
+                    var verseText:String = "A Verse from Iambic, Are You?\n\n\(verseUrl)\n\n"
                     
                     verseText += self.verseRec!.title + "\n\n"
                     
@@ -670,7 +670,11 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                         verseText += line.text + "\n"
                     }
                     
-                    let objectsToShare = [verseText]
+                    var ac = ActivityCard()
+                    ac.url = verseUrl
+                    ac.verseText = verseText
+
+                    let objectsToShare = [ac]
                     let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
                     self.presentViewController(activityVC, animated: true, completion: nil)
                     
@@ -682,6 +686,61 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
         
     }
     
+}
+
+
+//class TwitterActivityProvider: UIActivityItemProvider{
+//    var obj: AnyObject?
+//    
+//    override func item() -> AnyObject! {
+//        return self.obj
+//    }
+//    
+//    override func activityViewController(activityViewController: UIActivityViewController, itemForActivityType activityType: String) -> AnyObject? {
+//        NSLog("Place holder itemForActivity")
+//        if(activityType == UIActivityTypeMail){
+//            return self.obj
+//        } else if(activityType == UIActivityTypePostToTwitter){
+//            return " "
+//        } else {
+//            return " url"
+//        }
+//    }
+//}
+
+
+class ActivityCard: NSObject, UIActivityItemSource {
+    var verseText: String = ""
+    var url : String = ""
+    
+    func activityViewControllerPlaceholderItem(activityViewController: UIActivityViewController) -> AnyObject {
+        NSLog("Place holder")
+        return verseText
+    }
+    
+    func activityViewController(activityViewController: UIActivityViewController, itemForActivityType activityType: String) -> AnyObject? {
+        NSLog("Place holder itemForActivity")
+        if(activityType == UIActivityTypeMail){
+            return verseText
+        } else if(activityType == UIActivityTypePostToTwitter){
+            return "Check out my Verse! " + url + " #poetry #lyrics #iambicareyou"
+        } else if(activityType == UIActivityTypePostToFacebook){
+            return "Check out my Verse! " + url + " #poetry #lyrics #iambicareyou \n\n" + verseText
+        } else {
+            return verseText
+        }
+    }
+    
+    func activityViewController(activityViewController: UIActivityViewController, subjectForActivityType activityType: String?) -> String {
+        NSLog("Place holder subjectForActivity")
+        if(activityType == UIActivityTypeMail){
+            return "Hey, check out this Verse from Iambic, Are You?"
+        } else if(activityType == UIActivityTypePostToTwitter){
+            return verseText
+        } else {
+            return verseText
+        }
+    }
 }
 
 

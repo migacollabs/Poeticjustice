@@ -163,7 +163,7 @@ PYAELLAC:
                 CheckConstraint('id<111111111111'), 
                 server_default=text("nextval('users_id_seq')"), 
                 primary_key=True)
-        user_name: Column(String(12), nullable=False)
+        user_name: Column(String(12), nullable=False, unique=True)
         email_address: Column(String(255), nullable=False, unique=True)
         twitter_name: Column(String(255))
         facebook_name: Column(String(255))
@@ -188,8 +188,6 @@ PYAELLAC:
         level: Column(Integer, default=1, nullable=False)
     Relations:
         user_types: relationship('UserXUserTypeLookup')
-    Rules:
-        Unique: [user_name, email_address]
     EntityMixes: [
         poeticjustice.mixes.UserMix
     ]

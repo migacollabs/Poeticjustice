@@ -20,6 +20,8 @@ from boto.s3.key import Key
 
 from geoip import geolite2
 
+from sqlalchemy.exc import *
+
 # pyaella imports
 from pyaella import *
 from pyaella import dinj
@@ -206,8 +208,10 @@ def create_new_user_post(request):
         dconfig = get_dinj_config(ac)
         with SQLAlchemySessionFactory() as session:
 
+            email_address = kwds['email_address'].lower().strip()
+
             user = (session.query(~User)
-                        .filter((~User).email_address==kwds['email_address'].lower())
+                        .filter((~User).email_address==email_address)
                         ).first()
 
             if user:
@@ -215,7 +219,8 @@ def create_new_user_post(request):
             else:
                 # This is a brand new user
                 user = User(**kwds)
-                user.email_address = kwds['email_address'].lower()
+                user.email_address = email_address
+                user.user_name = user.user_name.lower().strip()
 
             user.access_token = \
                 sha512(
@@ -443,6 +448,7 @@ def login_get(request):
         'message': '',
         'logged_in': authenticated_userid(request)
     }
+    
 
 @view_config(
     name='login',
@@ -488,7 +494,6 @@ def login_post(request):
         device_token = request.params['device_token'] if 'device_token' in request.params else None
         device_type = request.params['device_type'] if 'device_type' in request.params else None
         device_auth_hash = sha512(device_token + default_hashkey).hexdigest()
-
 
         user_country = "zz"
         try:
@@ -650,7 +655,9 @@ def login_post(request):
                         user_obj.auth_hash = sha512(user_obj.email_address + default_hashkey).hexdigest()
                         user_obj.device_rec = json.dumps(device_rec_json)
 
+                        
                         user_obj.save(session=session, upsert=True)
+
 
                         log.info("saved user")
 
@@ -702,6 +709,8 @@ def login_post(request):
         )
 
     except HTTPFound: raise
+    except IntegrityError:
+        raise HTTPConflict("User name already exists")
     except:
         log.exception(traceback.format_exc())
         raise HTTPBadRequest(explanation='Bad Request')
