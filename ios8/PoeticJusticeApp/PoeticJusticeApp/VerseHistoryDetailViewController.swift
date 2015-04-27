@@ -680,68 +680,12 @@ UITableViewDelegate, UIGestureRecognizerDelegate, PlayerDataViewDelegate {
                     
                 }
             }
-            
-
         }
-        
     }
+    
     
 }
 
-
-//class TwitterActivityProvider: UIActivityItemProvider{
-//    var obj: AnyObject?
-//    
-//    override func item() -> AnyObject! {
-//        return self.obj
-//    }
-//    
-//    override func activityViewController(activityViewController: UIActivityViewController, itemForActivityType activityType: String) -> AnyObject? {
-//        NSLog("Place holder itemForActivity")
-//        if(activityType == UIActivityTypeMail){
-//            return self.obj
-//        } else if(activityType == UIActivityTypePostToTwitter){
-//            return " "
-//        } else {
-//            return " url"
-//        }
-//    }
-//}
-
-
-class ActivityCard: NSObject, UIActivityItemSource {
-    var verseText: String = ""
-    var url : String = ""
-    
-    func activityViewControllerPlaceholderItem(activityViewController: UIActivityViewController) -> AnyObject {
-        NSLog("Place holder")
-        return verseText
-    }
-    
-    func activityViewController(activityViewController: UIActivityViewController, itemForActivityType activityType: String) -> AnyObject? {
-        NSLog("Place holder itemForActivity")
-        if(activityType == UIActivityTypeMail){
-            return verseText
-        } else if(activityType == UIActivityTypePostToTwitter){
-            return "Check out my Verse! " + url + " #poetry #lyrics #iambicareyou"
-        } else if(activityType == UIActivityTypePostToFacebook){
-            return "Check out my Verse! " + url + " #poetry #lyrics #iambicareyou \n\n" + verseText
-        } else {
-            return verseText
-        }
-    }
-    
-    func activityViewController(activityViewController: UIActivityViewController, subjectForActivityType activityType: String?) -> String {
-        NSLog("Place holder subjectForActivity")
-        if(activityType == UIActivityTypeMail){
-            return "Hey, check out this Verse from Iambic, Are You?"
-        } else if(activityType == UIActivityTypePostToTwitter){
-            return verseText
-        } else {
-            return verseText
-        }
-    }
-}
 
 
 

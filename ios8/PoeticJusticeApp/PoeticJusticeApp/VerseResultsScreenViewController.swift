@@ -999,7 +999,7 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                     
                     var verseUrl = "http://\(site)/v/p/k=\(vk)"
                     
-                    var verseText:String = "A Verse from Iambic, Are You?\n----\n\(verseUrl)\n\n"
+                    var verseText:String = "A Verse from Iambic, Are You?\n\n\(verseUrl)\n\n"
                     
                     verseText += self.verseRec!.title + "\n\n"
                     
@@ -1007,16 +1007,17 @@ class VerseResultsScreenViewController: UIViewController, UITableViewDataSource,
                         verseText += line.text + "\n"
                     }
                     
-                    let objectsToShare = [verseText]
+                    var ac = ActivityCard()
+                    ac.url = verseUrl
+                    ac.verseText = verseText
+                    
+                    let objectsToShare = [ac]
                     let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
                     self.presentViewController(activityVC, animated: true, completion: nil)
                     
                 }
             }
-            
-            
         }
-        
     }
     
 
