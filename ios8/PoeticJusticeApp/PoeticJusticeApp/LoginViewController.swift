@@ -322,6 +322,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
     
+    func on_sign_up_error() {
+        self.isVerifyingEmail = true
+        self.is_busy = false
+        hideActivityIndicator()
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    }
+    
     func on_login(){
         
         println("on_login called")

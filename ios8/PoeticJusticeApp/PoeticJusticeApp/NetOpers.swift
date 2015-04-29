@@ -222,7 +222,11 @@ class NetOpers {
                     println("Conflict")
                     dispatch_async(dispatch_get_main_queue(),{
                         if self.alertHandler != nil{
-                            self.alertHandler!.show_alert("Whoops", message:"That user name may be already taken, please choose a unique user name", controller_title:"Ok")
+                            self.alertHandler!.show_alert("Whoops", message:"That user name may already be taken, please choose a unique user name", controller_title:"Ok")
+                        }
+                        
+                        if self.loginHandler != nil{
+                            self.loginHandler!.on_sign_up_error()
                         }
                         
                     })
